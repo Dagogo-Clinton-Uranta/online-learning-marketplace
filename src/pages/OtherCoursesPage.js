@@ -47,8 +47,7 @@ function OtherCoursesPage() {
     
   ]
 
-  const { user } = useSelector((state) => state.auth);
-  console.log("user details are:",user)
+
 
   /*const [releaseDate,setReleaseDate] =useState('')
   const [director,setDirector] =useState('')
@@ -56,13 +55,7 @@ function OtherCoursesPage() {
   const [description,setDescription] =useState('')
   const [trivia,setTrivia] =useState('')*/
   
-  const groupData = {
-    email:user.email,
-    password:user.password,
-    newPassword,
-    companySize,
-    uid:user.uid
-  }
+
 
 
   const handleselectedFile = event => {

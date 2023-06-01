@@ -40,8 +40,7 @@ function PopularCoursesPage() {
     {title:"Chemie TSE/TSM",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
   ]
 
-  const { user } = useSelector((state) => state.auth);
-  console.log("user details are:",user)
+
 
   /*const [releaseDate,setReleaseDate] =useState('')
   const [director,setDirector] =useState('')
@@ -49,13 +48,6 @@ function PopularCoursesPage() {
   const [description,setDescription] =useState('')
   const [trivia,setTrivia] =useState('')*/
   
-  const groupData = {
-    email:user.email,
-    password:user.password,
-    newPassword,
-    companySize,
-    uid:user.uid
-  }
 
 
   const handleselectedFile = event => {

@@ -28,8 +28,7 @@ function MobileLoginPage() {
   const [confirmPassword,setConfirmPassword] =useState('')
   const [companySize,setCompanySize] =useState('')
 
-  const { user } = useSelector((state) => state.auth);
-  console.log("user details are:",user)
+ 
 
   /*const [releaseDate,setReleaseDate] =useState('')
   const [director,setDirector] =useState('')
@@ -37,13 +36,7 @@ function MobileLoginPage() {
   const [description,setDescription] =useState('')
   const [trivia,setTrivia] =useState('')*/
   
-  const groupData = {
-    email:user.email,
-    password:user.password,
-    newPassword,
-    companySize,
-    uid:user.uid
-  }
+
 
 
   const handleselectedFile = event => {
