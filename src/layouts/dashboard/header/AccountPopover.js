@@ -20,7 +20,7 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
-  const { user } = useSelector((state) => state.auth);
+ // const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={user?user.profileImage:randomGuy} alt="photoURL" />
+        <Avatar src={randomGuy} alt="photoURL" />
       </IconButton>
       <ArrowDropDownIcon sx={{color: 'black'}} onClick={handleOpen}/>
       <Popover
@@ -81,14 +81,14 @@ export default function AccountPopover() {
           alignItems="flex-start"
         >
           <Grid sx={{mt: 1, ml: 1}}>
-          <Avatar src={user?user.profileImage:randomGuy} alt="photoURL" />
+          <Avatar src={randomGuy} alt="photoURL" />
           </Grid>
           <Box sx={{ my: 1.5, px: 1 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?user.firstName + " " + user.lastName:"Globus Contractors"}
+            {"Bonecole Etudiante"}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user?user.email:'ut1@cmc.com'}
+            {'ut1@cmc.com'}
           </Typography>
         </Box>
         </Grid>

@@ -44,8 +44,8 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/loginTest" />, index: true },
-        { path: 'home', element: <HomePage1 /> },
+        { element: <Navigate to="loginTest" />, index: true },
+        { path: 'home', element: <MobileLoginPage /> },
         { path: 'feed', element: <FeedPage /> },
         { path: 'video', element: <VideoPage /> },
         { path: 'video-details', element: <VideoDetailsPage /> },
@@ -68,9 +68,10 @@ export default function Router() {
     {
       path: 'loginTest',
       element: <DashboardLayout />,
-      children: [
-      { path: 'login',element:<MobileLoginPage/>}
+      children:[
+        {path:'', element:<LoginUpdatedPage/>}
       ]
+     
     },
 
     {
