@@ -5,6 +5,8 @@ import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
 import startQuote from 'src/assets/images/startQuote.png'
 import endQuote from 'src/assets/images/endQuote.png'
+import bonLogo from 'src/assets/images/bonlogo.png'
+import ShortDashboardLayout from 'src/layouts/dashboard';
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
 
@@ -80,7 +82,15 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
   return (
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
-    
+
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between', padding:"5px"}}>
+       <img src ={bonLogo}/> 
+      {/*<ShortDashboardLayout/>*/}
+    </Grid>
+
+    <Divider/>
+    <br/><br/>
+
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
     <center>
     <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Préparez le BAC,</h1>

@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
+import bonLogo from 'src/assets/images/bonlogo.png'
 import startQuote from 'src/assets/images/startQuote.png'
 import endQuote from 'src/assets/images/endQuote.png'
 import math from 'src/assets/images/math.jpeg'
@@ -100,6 +101,15 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
     
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between', padding:"5px"}}>
+       <img src ={bonLogo}/> 
+      {/*<ShortDashboardLayout/>*/}
+    </Grid>
+
+    <Divider/>
+    <br/><br/>
+
+
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
     <center>
     <h2 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Cours</h2>
