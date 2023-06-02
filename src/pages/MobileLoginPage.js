@@ -6,7 +6,7 @@ import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
 import startQuote from 'src/assets/images/startQuote.png'
 import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
-import ShortDashboardLayout from 'src/layouts/dashboard';
+import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
 
@@ -83,9 +83,13 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between', padding:"5px"}}>
+    <Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
+     
        <img src ={bonLogo}/> 
-      {/*<ShortDashboardLayout/>*/}
+       
+      <ShortDashboardLayout/>
+     
+
     </Grid>
 
     <Divider/>

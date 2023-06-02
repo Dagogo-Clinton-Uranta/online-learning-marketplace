@@ -10,50 +10,26 @@ const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ 
 
 const navConfig = [
   {
-    title: 'dashboard',
-   // path: '/dashboard/home',
+    title: 'Welcome',
+    path: '/dashboard/home',
     icon:<AiOutlineHome/>
     // icon: icon('ic_analytics'),
   },
   {
-    title: 'feed',
-    //path: '/dashboard/feed',
+    title: 'Popular Courses',
+    path: '/dashboard/popular-courses',
     icon:<AiOutlineInbox/>
     // icon: icon('ic_analytics'),
   },
+ 
   {
-    title: 'incubator',
-    //path: '/dashboard/categories-videos',
-    icon:<AiOutlineBulb/>
-    // icon: icon('ic_disabled'),
-    /*children: [
-      {
-        title: 'videos',
-        type: 'item',
-        // icon: 'Savings',
-        path: '/dashboard/video',
-      },
-      {
-        title: 'docs',
-        type: 'item',
-        // icon: 'LockIcon',
-        path: '/dashboard/docs',
-      },
-    ],*/
-  },
-  {
-    title: `bids`,
-    // path: '/dashboard/chat',
+    title: `Courses`,
+     path: '/dashboard/other-courses',
     // icon: icon('ic_msg'),
     //iconLabel: 'msg',
     icon:<CgToolbox/>
   },
-  {
-    title: 'settings',
-    // path: '/dashboard/settings',
-   // iconLabel: 'settings',
-   icon:<FiSettings/>
-  },
+  
 ];
 
 export default navConfig;

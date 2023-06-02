@@ -10,6 +10,7 @@ import endQuote from 'src/assets/images/endQuote.png'
 import math from 'src/assets/images/math.jpeg'
 import chem from 'src/assets/images/chembeak.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
+import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
 
@@ -96,9 +97,13 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between', padding:"5px"}}>
+    <Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
+     
        <img src ={bonLogo}/> 
-      {/*<ShortDashboardLayout/>*/}
+       
+      <ShortDashboardLayout/>
+     
+
     </Grid>
 
     <Divider/>

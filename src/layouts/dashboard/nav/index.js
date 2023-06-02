@@ -81,13 +81,13 @@ export default function Nav({ openNav, onCloseNav }) {
       </Box>
 
       <NavSection data={navConfig} />
-      <span style={{color:"white", 
+     {/* <span style={{color:"white", 
                     fontSize:"1.2rem",
                    position:'relative',
                    top:'-92px',
                    left:'45%'
                    
-                   }}><AiOutlineLock/></span>
+                   }}><AiOutlineLock/></span>*/}
      
       <Box sx={{ flexGrow: 1 }} />
 
