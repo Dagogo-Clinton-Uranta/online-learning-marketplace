@@ -83,7 +83,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
 
-    <Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
+    <Grid item xs={12} style={{display: 'flex', gap:"8rem",justifyContent: 'space-between', padding:"5px"}}>
      
        <img src ={bonLogo}/> 
        
