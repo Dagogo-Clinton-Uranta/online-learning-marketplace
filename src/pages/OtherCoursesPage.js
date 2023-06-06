@@ -102,7 +102,9 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
     
-    <Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
+   {/* i AM USING THE DASHBOARD LAYOUT NOW WHICH APPEARS ON ALL PAGES
+   
+   <Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
      
        <img src ={bonLogo}/> 
        
@@ -112,7 +114,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
 
     <Divider/>
-    <br/><br/>
+  <br/><br/>*/}
 
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>

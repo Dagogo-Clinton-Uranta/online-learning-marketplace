@@ -7,6 +7,8 @@ import { bgBlur } from '../../../utils/cssStyles';
 // components
 import Iconify from '../../../components/iconify';
 //
+import bonLogo from 'src/assets/images/bonlogo.png'
+
 import Searchbar from './Searchbar2';
 import AccountPopover from './AccountPopover';
 import NotificationsPopover from './NotificationsPopover';
@@ -60,9 +62,10 @@ export default function Header({ onOpenNav }) {
             display: { lg: 'block' },
           }}
         >
-          <Iconify icon="eva:menu-2-fill" />
+           <img  style={{height:"50px"}} src ={bonLogo}/> 
+          {/*<Iconify icon="eva:menu-2-fill" />*/}
         </IconButton>
-       {/*currentPathname === '/dashboard/incubator-videos' &&  <CustomSearchBar /> */}
+       
         
         {/* <Searchbar /> */}
         {/* <Searchbar2 /> */}
@@ -76,8 +79,17 @@ export default function Header({ onOpenNav }) {
             sm: 1,
           }}
         >
-          {/* <NotificationsPopover /> */}
-          <AccountPopover />
+         <IconButton
+          onClick={onOpenNav}
+          sx={{
+            mr: 1,
+            color: 'text.primary',
+            display: { lg: 'block' },
+          }}
+        >
+          <Iconify icon="eva:menu-2-fill" />
+        </IconButton>
+         {/*<AccountPopover />*/}
         </Stack>
       </StyledToolbar>
     </StyledRoot>

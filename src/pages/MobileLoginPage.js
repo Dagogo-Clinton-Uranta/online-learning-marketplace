@@ -83,7 +83,9 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
 
-    <Grid item xs={12} style={{display: 'flex', gap:"8rem",justifyContent: 'space-between', padding:"5px"}}>
+    {/* I am using the navbar in Dashboard layout now, 
+    
+    <Grid item xs={12} style={{display: 'flex', gap:"7rem",justifyContent: 'space-between', padding:"5px"}}>
      
        <img src ={bonLogo}/> 
        
@@ -93,7 +95,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
 
     <Divider/>
-    <br/><br/>
+    <br/><br/>*/}
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
     <center>

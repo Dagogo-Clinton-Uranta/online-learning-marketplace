@@ -97,6 +97,8 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
 
+    {/* INSTEAD OF THIS, I AM USING THE NAVBAR IN DASHBOARD PAGES, WHICH SHOWS UP IN EVERY PAGE
+    
     <Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
      
        <img src ={bonLogo}/> 
@@ -107,7 +109,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
 
     <Divider/>
-    <br/><br/>
+  <br/><br/>*/}
 
 
     <center>
