@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -32,6 +33,8 @@ const ExpandMore = styled((props) => {
 
 export default function SmallerCardPage({title,author,price,lessons,time,image}) {
   const [expanded, setExpanded] = React.useState(false);
+  const navigate = useNavigate();
+  
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -57,6 +60,7 @@ export default function SmallerCardPage({title,author,price,lessons,time,image})
         component="img"
         height="100"
         image={image}
+        onClick={()=>{navigate('/dashboard/selected-course')}}
         alt="Paella dish"
       />
       <CardContent>

@@ -33,6 +33,7 @@ import ViewIncubatorPage from './pages/ViewIncubatorPage';
 import SampleCardPage from './pages/SampleCardPage';
 import PopularCoursesPage from './pages/PopularCoursesPage';
 import OtherCoursesPage from './pages/OtherCoursesPage';
+import SelectedCoursePage from './pages/SelectedCoursePage';
 
 export default function Router() {
   const routes = useRoutes([
@@ -56,6 +57,7 @@ export default function Router() {
         { path: 'sample-card', element: <SampleCardPage /> },
         { path: 'popular-courses', element: <PopularCoursesPage /> },
         { path: 'other-courses', element: <OtherCoursesPage /> },
+        { path: 'selected-course', element: <SelectedCoursePage /> },
 
         
         { path: 'chat', element: <InboxPage /> },
