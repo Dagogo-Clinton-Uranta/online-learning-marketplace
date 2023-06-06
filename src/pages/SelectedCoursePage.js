@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import Avatar from '@mui/material/Avatar';
 
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
+import profile from 'src/assets/images/profile.jpeg'
 import startQuote from 'src/assets/images/startQuote.png'
 import endQuote from 'src/assets/images/endQuote.png'
 import math from 'src/assets/images/math.jpeg'
@@ -107,15 +109,39 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
     
 
-    <Grid container xs={12} style={{paddingTop:"1.5rem", background:`linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),url(${chem})`}}>
+    <Grid container xs={12} style={{marginTop:"2rem",padding:"1.5rem", background:`linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),url(${chem})`,borderRadius:"0.5rem",}}>
       <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"1rem",color:"white"}}>
       
-      <h3>CHIMIE TSE/TSM</h3>
+      <h3 style={{fontSize:"20px"}}>CHIMIE TSE/TSM</h3>
       
-       <p>
+       <p style={{marginTop:"0.5rem"}}>
        Conçu par le MENA en collaboration avec L’INRAP, 
        ce programme de chimie Terminales est un programme harmonisé.
        </p>
+
+       <p style={{marginTop:"2rem"}}>
+         <p style={{marginBottom:"1rem"}}> Ce cours couvre ce qui suit:</p>
+        <ol>
+
+          <li>1.) La notion de pH de quantité et concentration</li>
+          <li>2.) Un acide fort, une base forte, un acide </li>
+          <li>3.) La constante d’acidité</li>
+          <li>4.) L’évolution des systèmes</li>
+          <li>5.) La stéréochimie,</li>
+        </ol>
+       </p>
+
+       <p style={{marginTop:"2rem",display:"flex",gap:"1rem",justifyContent:"flex-start"}}>
+        <Avatar alt="placeholder avatar" sx={{ width: 48, height: 48 }} src={profile}/>
+        
+        <p>
+          BAFODE BANGOURA
+          <br/>
+          Terminales
+        </p>
+       </p>
+    
+
       </Grid>
     </Grid>
    
@@ -132,11 +158,46 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     
     <p style={{position:"relative",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"18px",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
       Chapitre 1: Acide et base en solution aqueuese
-     <PictureAsPdfIcon/>
+     <PictureAsPdfIcon style={{fontSize:"2.5rem"}} />
      </p>
     
     </Grid>
     
+
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
+     <p>1.)  Dissociation et produit ionique</p>
+     <p>8:00</p>
+     <Divider/>
+    </Grid>
+
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
+     <p>1.)  Dissociation et produit ionique</p>
+     <p>8:00</p>
+     <Divider/>
+    </Grid>
+
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
+     <p>1.)  Dissociation et produit ionique</p>
+     <p>8:00</p>
+     <Divider/>
+    </Grid>
+
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
+     <p>1.)  Dissociation et produit ionique</p>
+     <p>8:00</p>
+     <Divider/>
+    </Grid>
+
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
+     <p>1.)  Dissociation et produit ionique</p>
+     <p>8:00</p>
+     <Divider/>
+    </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
@@ -165,7 +226,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     
     <p style={{position:"relative",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"18px",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
       Chapitre 2: Acide et base en solution aqueuese
-     <PictureAsPdfIcon/>
+     <PictureAsPdfIcon style={{fontSize:"2.5rem"}} />
      </p>
     
     </Grid>
@@ -178,12 +239,21 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
      <Divider/>
     </Grid>
 
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
+     <p>1.)  Dissociation et produit ionique</p>
+     <p>8:00</p>
+     <Divider/>
+    </Grid>
+
+
+
 
     <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
     <PictureAsPdfIcon style={{color:"blue",fontSize:"2.5rem"}} />
-     QCM - Chapitre 1
+     QCM - Chapitre 2
      </p>
      <Divider/>
     
