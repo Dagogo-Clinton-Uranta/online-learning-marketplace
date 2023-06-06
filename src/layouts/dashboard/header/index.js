@@ -62,7 +62,7 @@ export default function Header({ onOpenNav }) {
             display: { lg: 'block' },
           }}
         >
-           <img  style={{height:"50px"}} src ={bonLogo}/> 
+           <img  style={{height:"25px"}} src ={bonLogo}/> 
           {/*<Iconify icon="eva:menu-2-fill" />*/}
         </IconButton>
        
