@@ -23,12 +23,21 @@ const navConfig = [
   },
  
   {
-    title: `Courses`,
+    title: `All Courses`,
      path: '/dashboard/other-courses',
     // icon: icon('ic_msg'),
     //iconLabel: 'msg',
     icon:<CgToolbox/>
   },
+
+  {
+    title: `Course Details`,
+     path: '/dashboard/selected-course',
+    // icon: icon('ic_msg'),
+    //iconLabel: 'msg',
+    icon:<CgToolbox/>
+  },
+  
   
 ];
 

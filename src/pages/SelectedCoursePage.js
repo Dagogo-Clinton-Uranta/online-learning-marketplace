@@ -145,6 +145,25 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
       </Grid>
     </Grid>
    
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center',alignItems:"center",marginBottom:"2rem",marginTop:"2rem",flexDirection:"column",gap:"1rem",border:"1px solid lightgrey",width:"85%",padding:"1rem",borderRadius:"0.5rem"}}>
+   
+    <center >
+    <b style={{fontSize:"1.3rem"}}> 30,000 GNF</b> <s>50,000 GNF</s>
+    </center>
+    
+    <p >
+    Achat unique, accès à toutes les leçons
+    </p>
+
+    <Button   variant="contained" 
+            style={{ backgroundColor: "red",color:"#FFFFFF", fontSize:"18px",width:"100%",
+            padding: '8px'}}
+            
+            >
+            Acheter maintenant
+            </Button>
+   
+    </Grid>
 
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"1rem"}}>
@@ -164,50 +183,50 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
     
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"0.8rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
      <p>1.)  Dissociation et produit ionique</p>
      <p>8:00</p>
      <Divider/>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"0.8rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
-     <p>1.)  Dissociation et produit ionique</p>
+     <p>2.)  Dissociation et produit ionique</p>
      <p>8:00</p>
      <Divider/>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"0.8rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
-     <p>1.)  Dissociation et produit ionique</p>
+     <p>3.)  Dissociation et produit ionique</p>
      <p>8:00</p>
      <Divider/>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"0.8rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
-     <p>1.)  Dissociation et produit ionique</p>
+     <p>4.)  Dissociation et produit ionique</p>
      <p>8:00</p>
      <Divider/>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"0.8rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
-     <p>1.)  Dissociation et produit ionique</p>
+     <p>5.)  Dissociation et produit ionique</p>
      <p>8:00</p>
      <Divider/>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"0.8rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
-     <p>1.)  Dissociation et produit ionique</p>
+     <p>6.)  Dissociation et produit ionique</p>
      <p>8:00</p>
      <Divider/>
     </Grid>
 
 
-    <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
+    <Grid item xs={12} style={{padding:"1rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
     <PictureAsPdfIcon style={{color:"blue",fontSize:"2.5rem"}} />
@@ -232,16 +251,16 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
     
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"0.8rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
      <p>1.)  Dissociation et produit ionique</p>
      <p>8:00</p>
      <Divider/>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"2rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', gap:"0.8rem",padding:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.5rem"}}/></p>
-     <p>1.)  Dissociation et produit ionique</p>
+     <p>2.)  Dissociation et produit ionique</p>
      <p>8:00</p>
      <Divider/>
     </Grid>
@@ -249,7 +268,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
 
-    <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
+    <Grid item xs={12} style={{padding:"1rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
     <PictureAsPdfIcon style={{color:"blue",fontSize:"2.5rem"}} />

@@ -96,52 +96,49 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
     
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
+   
 
-    {/* INSTEAD OF THIS, I AM USING THE NAVBAR IN DASHBOARD PAGES, WHICH SHOWS UP IN EVERY PAGE
-    
-    <Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
-     
-       <img src ={bonLogo}/> 
-       
-      <ShortDashboardLayout/>
-     
-
-    </Grid>
-
-    <Divider/>
-  <br/><br/>*/}
-
-
-    <center>
-    <h2 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Cours Populaires</h2>
-    </center>
-
-    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"40px" }}>
+    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
     
            <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
-            paddingRight: '4px', paddingLeft: '4px'}}
+            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
+            padding: '8px'}}
+            onClick={()=>{navigate('/dashboard/other-courses')}}
+            >
+            Tous
+            </Button>
+
+            <Button   variant="contained" 
+            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            padding: '8px'}}
             onClick={()=>{navigate('/dashboard/other-courses')}}
             >
             Terminales
             </Button>
 
-            <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
-            paddingRight: '4px', paddingLeft: '4px'}}
+   
+    </center>
+
+
+
+    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
+    
+           <Button   variant="contained" 
+            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            padding: '8px'}}
             onClick={()=>{navigate('/dashboard/other-courses')}}
             >
-            10e Année
+             6eme Année
             </Button>
 
             <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
-            paddingRight: '4px', paddingLeft: '4px'}}
+            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            padding: '8px'}}
             onClick={()=>{navigate('/dashboard/other-courses')}}
             >
-            6e Année
+            10eme Année
             </Button>
-   
+
     
     </center>
     </Grid>

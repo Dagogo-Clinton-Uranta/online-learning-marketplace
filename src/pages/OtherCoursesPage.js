@@ -118,23 +118,21 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
-    <center>
-    <h2 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Cours</h2>
-    </center>
+   
 
-    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"40px" }}>
+    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
     
            <Button   variant="contained" 
-            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"100px",
-            paddingRight: '4px', paddingLeft: '4px'}}
+            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
+            padding: '8px'}}
             onClick={()=>{navigate('/dashboard/popular-courses')}}
             >
             Tous
             </Button>
 
             <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"100px",
-            paddingRight: '4px', paddingLeft: '4px'}}
+            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            padding: '8px'}}
             onClick={()=>{navigate('/dashboard/popular-courses')}}
             >
             Terminales
@@ -145,19 +143,19 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
 
-    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"40px" }}>
+    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
     
            <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"100px",
-            paddingRight: '4px', paddingLeft: '4px'}}
+            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            padding: '8px'}}
             onClick={()=>{navigate('/dashboard/popular-courses')}}
             >
              6eme Année
             </Button>
 
             <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"100px",
-            paddingRight: '4px', paddingLeft: '4px'}}
+            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            padding: '8px'}}
             onClick={()=>{navigate('/dashboard/popular-courses')}}
             >
             10eme Année
@@ -192,38 +190,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         </Grid>
       </Grid>
     
-      
-      <div container xs={12} md={12}  lg={12} spacing={0} style={{width:"444px",backgroundColor:"blue",marginTop:"30px",fontSize:"0.8rem" ,display: 'flex', justifyContent: 'center',position:"relative",left:"-6%",paddingLeft:"0.5rem",paddingTop:"0.5rem",paddingBottom:"0.5rem" }}>
-      <div item xs={12} spacing={0}  md={12}  lg={12} style={{color:"white" , display: 'flex', justifyContent: 'center',gap:"30px",paddingLeft:"20px",paddingRight:"20px"}}>
-       
-     
-       <div  className="cursive" style={{flex:4 ,position:"relative"}}>
-       <img style={{height:"20px",position:"absolute",left:"-10%"}} src={startQuote}/>
-        Le monde dans lequel vivrent les futures generations est different
-        de celui auquel nous sommes habituer, Il est primordial que nous preparius nos 
-        enfants ainsi que nous-memes pour ce monde. 
-        <img style={{height:"20px",position:"absolute",right:"23%", bottom:"0%"}} src={endQuote}/>
-       </div>
-       
-
-     
-
-       <div style={{flex:1,display: 'flex', flexDirection:"column", justifyContent: 'space-around'}}>
-         <p>Etudiez sans limites!</p>
-
-         <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",gap:"0px"}}>
-         <FacebookIcon style={{height:"16px"}}/>  <InstagramIcon style={{height:"16px"}}/> <span style={{fontSize:"11px"}}>/@bonecole</span>
-         </div>
-
-       </div>
-
-
-
-      </div>
-
-        
-    </div>
-
+  
 </Container>
     </>
   );

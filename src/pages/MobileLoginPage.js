@@ -173,7 +173,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
      
 
-       <div style={{display: 'flex',gap:"1rem", flexDirection:"column", justifyContent: 'center',alignItems:"center",}}>
+       <div style={{display: 'flex',gap:"1rem", flexDirection:"column", justifyContent: 'center',alignItems:"center"}}>
          <p>Etudiez sans limites!</p>
 
          <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",}}>
@@ -188,6 +188,57 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
         
     </div>
+
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"2rem"}}>
+
+{/* INSTEAD OF THIS, I AM USING THE NAVBAR IN DASHBOARD PAGES, WHICH SHOWS UP IN EVERY PAGE
+
+<Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
+ 
+   <img src ={bonLogo}/> 
+   
+  <ShortDashboardLayout/>
+ 
+
+</Grid>
+
+<Divider/>
+<br/><br/>*/}
+
+
+<center>
+<h2 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Cours Populaires</h2>
+</center>
+
+<center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"15px" }}>
+
+       <Button   variant="contained" 
+        style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
+        paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
+        onClick={()=>{navigate('/dashboard/popular-courses')}}
+        >
+        Terminales
+        </Button>
+
+        <Button   variant="contained" 
+        style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
+        paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
+        onClick={()=>{navigate('/dashboard/popular-courses')}}
+        >
+        10e Année
+        </Button>
+
+        <Button   variant="contained" 
+        style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
+        paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
+        onClick={()=>{navigate('/dashboard/popular-courses')}}
+        >
+        6e Année
+        </Button>
+
+
+</center>
+</Grid>
 
 </Container>
     </>
