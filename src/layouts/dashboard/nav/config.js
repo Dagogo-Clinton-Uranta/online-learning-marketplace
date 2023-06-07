@@ -16,23 +16,30 @@ const navConfig = [
     // icon: icon('ic_analytics'),
   },
   {
-    title: 'Popular Courses',
-    path: '/dashboard/popular-courses',
+    title: 'Tous',
+    path: '/dashboard/other-courses',
     icon:<AiOutlineInbox/>
     // icon: icon('ic_analytics'),
   },
  
   {
-    title: `All Courses`,
-     path: '/dashboard/other-courses',
+    title: `Terminales`,
+     path: '/dashboard/popular-courses',
+    // icon: icon('ic_msg'),
+    //iconLabel: 'msg',
+    icon:<CgToolbox/>
+  },
+  {
+    title: `10 eme`,
+     path: '/dashboard/popular-courses',
     // icon: icon('ic_msg'),
     //iconLabel: 'msg',
     icon:<CgToolbox/>
   },
 
   {
-    title: `Course Details`,
-     path: '/dashboard/selected-course',
+    title: `6 eme`,
+     path: '/dashboard/popular-courses',
     // icon: icon('ic_msg'),
     //iconLabel: 'msg',
     icon:<CgToolbox/>
