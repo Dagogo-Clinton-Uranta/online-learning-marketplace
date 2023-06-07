@@ -172,37 +172,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
       </Grid>
     
       
-      <div container xs={12} md={12}  lg={12} spacing={0} style={{width:"444px",backgroundColor:"blue",marginTop:"30px",fontSize:"0.8rem" ,display: 'flex', justifyContent: 'center',position:"relative",left:"-6%",paddingLeft:"0.5rem",paddingTop:"0.5rem",paddingBottom:"0.5rem" }}>
-      <div item xs={12} spacing={0}  md={12}  lg={12} style={{color:"white" , display: 'flex', justifyContent: 'center',gap:"30px",paddingLeft:"20px",paddingRight:"20px"}}>
-       
      
-       <div  className="cursive" style={{flex:4 ,position:"relative"}}>
-       <img style={{height:"20px",position:"absolute",left:"-10%"}} src={startQuote}/>
-        Le monde dans lequel vivrent les futures generations est different
-        de celui auquel nous sommes habituer, Il est primordial que nous preparius nos 
-        enfants ainsi que nous-memes pour ce monde. 
-        <img style={{height:"20px",position:"absolute",right:"23%", bottom:"0%"}} src={endQuote}/>
-       </div>
-       
-
-     
-
-       <div style={{flex:1,display: 'flex', flexDirection:"column", justifyContent: 'space-around'}}>
-         <p>Etudiez sans limites!</p>
-
-         <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",gap:"0px"}}>
-         <FacebookIcon style={{height:"16px"}}/>  <InstagramIcon style={{height:"16px"}}/> <span style={{fontSize:"11px"}}>/@bonecole</span>
-         </div>
-
-       </div>
-
-
-
-      </div>
-
-        
-    </div>
-
 </Container>
     </>
   );
