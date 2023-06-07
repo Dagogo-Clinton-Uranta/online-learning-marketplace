@@ -42,7 +42,7 @@ export default function SmallerCardPage({title,author,price,lessons,time,image})
 
   return (
     <Card sx={{ maxWidth: 190 }}>
-      <CardHeader 
+      {/*<CardHeader 
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
             P
@@ -55,31 +55,45 @@ export default function SmallerCardPage({title,author,price,lessons,time,image})
         }
         title={title} 
         subheader={author}
-      />
+      />*/}
       <CardMedia
+      sx={{ padding: "10px",borderRadius:"1rem",marginBottom:"-15px !important" }}
         component="img"
         height="100"
         image={image}
         onClick={()=>{navigate('/dashboard/selected-course')}}
         alt="Paella dish"
       />
+
+
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-         {price} GNF  <s>50,000 GNF</s>
+   
+      <Typography sx={{fontSize:"11px",display:"flex",flexDirection:"column" ,gap:"5px"}} >
+         <p style={{color:"black"}}>{title}</p>
+        
+         <p style={{color:"black"}}>{author} </p>
+        </Typography>
+
+
+      <Divider/>
+       <br/>
+
+        <Typography sx={{fontSize:"11px",marginTop:"-10px",marginBottom:"-20px"}} variant="body2" color="text.secondary">
+         <b style={{color:"black"}}>{price} GNF</b>&nbsp;  <s>50,000 GNF</s>
         </Typography>
       </CardContent>
       
-      <Divider/>
+      
       
 
-      <CardActions disableSpacing>
-        <IconButton sx={{fontSize:"12px"}} aria-label="add to favorites">
-          <MenuBookIcon /> {lessons} Lecons
+      <CardActions >
+        <IconButton sx={{fontSize:"8px",fontWeight:"bold",position:"relative",left:"-5%"}} >
+          <MenuBookIcon sx={{height:"15px"}} /> {lessons} Lecons
         </IconButton>
-        <IconButton sx={{fontSize:"12px"}} aria-label="share">
-          <AccessTimeIcon /> {time}
+        <IconButton sx={{fontSize:"8px",fontWeight:"bold",position:"relative",left:"-15%"}} >
+          <AccessTimeIcon sx={{height:"15px"}} /> {time}
         </IconButton>
-        <ExpandMore
+        <ExpandMore //the icon is off screen for each card
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}

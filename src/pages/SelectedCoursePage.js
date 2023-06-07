@@ -145,6 +145,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
       </Grid>
     </Grid>
    
+    <center>
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center',alignItems:"center",marginBottom:"2rem",marginTop:"2rem",flexDirection:"column",gap:"1rem",border:"1px solid lightgrey",width:"85%",padding:"1rem",borderRadius:"0.5rem"}}>
    
     <center >
@@ -164,7 +165,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
             </Button>
    
     </Grid>
-
+    </center>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"1rem"}}>
     <center>

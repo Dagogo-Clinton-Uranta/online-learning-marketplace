@@ -40,12 +40,12 @@ function OtherCoursesPage() {
 
  
   const topics = [
-    {title:"Chemie ",author:"Sidiki...",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem2},
-    {title:"Anglais ",author:"Kabinet...",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
-    {title:"Biologie ",author:"Elhadj... ",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
-    {title:"Philosophie",author:"Sidiki...",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
-    {title:"Mathematiques",author:"Fode...",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
-    {title:"Chemie",author:"Sidiki...",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
+    {title:"Chemie ",author:"Sidiki Keita",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem2},
+    {title:"Anglais ",author:"Kabinet Keita",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
+    {title:"Biologie ",author:"Elhadj Keita",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
+    {title:"Philosophie",author:"Sidiki Keita",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
+    {title:"Mathematiques",author:"Fode Keita",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
+    {title:"Chemie",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
     
   ]
 
@@ -170,7 +170,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
      <Grid container spacing={2} >
          
-       <Grid container item xs={12} spacing={0} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"40px" }}>
+       <Grid container item xs={12} spacing={3} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"40px" }}>
          
      {topics.map((topic)=>(   
          <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
