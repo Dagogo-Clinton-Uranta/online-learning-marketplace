@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -14,7 +15,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Philos from 'src/assets/images/philoslib.jpeg';
+import MathCover from 'src/assets/images/mathcover.jpeg';
 import Divider from '@mui/material/Divider';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -32,14 +33,16 @@ const ExpandMore = styled((props) => {
 
 export default function SampleCardPage({title,author,price,lessons,time,image}) {
   const [expanded, setExpanded] = React.useState(false);
+  const navigate = useNavigate();
+  
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
+    <Card sx={{ maxWidth: "100%" }}>
+      {/*<CardHeader 
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
             P
@@ -50,40 +53,58 @@ export default function SampleCardPage({title,author,price,lessons,time,image}) 
             <MoreVertIcon />
           </IconButton>
         }
-        title={title}
+        title={title} 
         subheader={author}
-      />
+      />*/}
       <CardMedia
+      sx={{ padding: "10px",borderRadius:"1rem",marginBottom:"-15px !important" }}
         component="img"
-        height="194"
+        height="200"
         image={image}
+        onClick={()=>{navigate('/dashboard/selected-course')}}
         alt="Paella dish"
       />
+
+       <center>
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-         {price} GNF  <s>50,000 GNF</s>
+   
+      <Typography sx={{fontSize:"16px",display:"flex",flexDirection:"column" ,gap:"5px"}} >
+         <p style={{color:"black"}}>{title}</p>
+        
+         <p style={{color:"black"}}>toutes les matieres {/*author*/} </p>
+        </Typography>
+
+
+      <Divider/>
+       <br/>
+
+        <Typography sx={{fontSize:"16px",marginTop:"-10px",marginBottom:"-20px"}} variant="body2" color="text.secondary">
+         <b style={{color:"black"}}>{price} GNF</b>&nbsp;  <s>50,000 GNF</s>
         </Typography>
       </CardContent>
+      </center>
       
-      <Divider/>
       
 
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <MenuBookIcon /> {lessons} Lecons
+      <CardActions >
+       
+        <IconButton sx={{fontSize:"16px",fontWeight:"bold",margin:"0 auto"}} >
+          <MenuBookIcon sx={{height:"15px"}} /> {lessons} matieres
         </IconButton>
-        <IconButton aria-label="share">
-          <AccessTimeIcon /> {time}
-        </IconButton>
-        <ExpandMore
+        
+       {/* <ExpandMore //COMMENT - I AM HIDING EXPAND MORE ICON FOR NOW
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
           <ExpandMoreIcon />
-        </ExpandMore>
+    </ExpandMore>*/}
+
       </CardActions>
+     
+
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Method:</Typography>

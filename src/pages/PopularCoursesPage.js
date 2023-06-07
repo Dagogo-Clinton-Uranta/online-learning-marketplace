@@ -1,14 +1,20 @@
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
-import { useRef, useState } from 'react';
+import { useRef, useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
-
-import bonLogo from 'src/assets/images/bonlogo.png'
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
+import bonLogo from 'src/assets/images/bonlogo.png'
 import startQuote from 'src/assets/images/startQuote.png'
 import endQuote from 'src/assets/images/endQuote.png'
 import math from 'src/assets/images/math.jpeg'
+import MathCover from 'src/assets/images/mathcover.jpeg'
+import library from 'src/assets/images/library.jpeg'
+import DNA  from 'src/assets/images/DNA.jpeg'
+
 import chem from 'src/assets/images/chembeak.jpeg'
+import chem2 from 'src/assets/images/chem2.jpeg'
+import biology from 'src/assets/images/biology.jpeg'
+import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
@@ -20,81 +26,45 @@ import users from 'src/_mock/user';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
+import SmallerCardPage from './SmallerCardPage';
 import SampleCardPage from './SampleCardPage';
 
 function PopularCoursesPage() {
   const navigate = useNavigate();
-  const [file, setFile] = useState();
-  const [file2, setFile2] = useState();
-  const [fileSize, setFileSize] = useState();
-  const [fileSize2, setFileSize2] = useState();
-  const [selectedFile, setSelectedFile] = useState({selectedFile: [], selectedFileName: []});
-  const [selectedFile2, setSelectedFile2] = useState({selectedFile2: [], selectedFileName2: []});
-  const dispatch = useDispatch();
-
-  const [newPassword,setNewPassword] =useState('')
-  const [confirmPassword,setConfirmPassword] =useState('')
-  const [companySize,setCompanySize] =useState('')
+  const [chosen,setChosen] = useState(1);
 
  
   const topics = [
-    {title:"Philosophie TSE/TSM",author:"Sidiki Keita",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
-    {title:"Mathematiques TSS",author:"Fode Yattara",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
-    {title:"Chemie TSE/TSM",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
+    {title:"Chemie 10e Annee ",author:"Sidiki Keita",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem},
+    {title:"Anglais 10e Annee ",author:"Kabinet Keita",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
+    {title:"Biologie 10e Annee ",author:"Elhadj Keita",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
+    {title:"Philosophie 10e Annee",author:"Sidiki Keita",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
+    {title:"Mathematiques 10e Annee",author:"Fode Keita",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
+    {title:"Chemie 10e Annee",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
+    
   ]
 
 
-
-  /*const [releaseDate,setReleaseDate] =useState('')
-  const [director,setDirector] =useState('')
-  const [cast,setCast] =useState([])
-  const [description,setDescription] =useState('')
-  const [trivia,setTrivia] =useState('')*/
-  
-
-
-  const handleselectedFile = event => {
-    console.log("these are the picture deets!",event.target.files[0])
-    setSelectedFile({
-        selectedFile: event.target.files[0],
-        selectedFileName: event.target.files[0].name
-    });
-    
-    setFile(URL.createObjectURL(event.target.files[0]));
-    setFileSize(event.target.files[0].size)
-};
- /* const handleselectedFile2 = event => {
-    console.log("these are the video deets!",event.target.files[0])
-    setSelectedFile2({
-        selectedFile2: event.target.files[0],
-        selectedFileName2: event.target.files[0].name
-    });
-    setFile2(URL.createObjectURL(event.target.files[0]));
-    setFileSize2(event.target.files[0].size)
-};*/
-
-
-
-const uploadMovie = (movieData = 0,image = 0,) => {
-if(!companySize.length && !newPassword.length &&  file === undefined ){
-  console.log("THE EMPTY FIELDS ARE:",file)
-  notifyErrorFxn("Please fill in the field(s) you want to update!")
-}else{
- if( fileSize  > 300000){
-  notifyErrorFxn("Image size too large! please upload a smaller picture.")
- }
- /*else if( fileSize2  > 20000000){
-  notifyErrorFxn("Video size too large! please upload a smaller video.")
- }*/else{
-  dispatch(uploadUserSettings(movieData,image))
- }
-}
-}
 
   return (
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
     
+   {/* i AM USING THE DASHBOARD LAYOUT NOW WHICH APPEARS ON ALL PAGES
+   
+   <Grid item xs={12} style={{display: 'flex', gap:"11rem",justifyContent: 'space-between', padding:"5px"}}>
+     
+       <img src ={bonLogo}/> 
+       
+      <ShortDashboardLayout/>
+     
+
+    </Grid>
+
+    <Divider/>
+  <br/><br/>*/}
+
+
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
    
 
@@ -111,7 +81,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
             <Button   variant="contained" 
             style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/other-courses')}}
+            onClick={()=>{setChosen(1)}}
             >
             Terminales
             </Button>
@@ -126,7 +96,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
            <Button   variant="contained" 
             style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/other-courses')}}
+            onClick={()=>{setChosen(2)}}
             >
              6eme Année
             </Button>
@@ -134,7 +104,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
             <Button   variant="contained" 
             style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/other-courses')}}
+            onClick={()=>{setChosen(3)}}
             >
             10eme Année
             </Button>
@@ -147,29 +117,31 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
    
 
      <Grid container spacing={2} >
-         
-       <Grid container item xs={12} spacing={0} style={{ display: 'flex', justifyContent: 'center',marginTop:"80px",marginBottom:"40px" }}>
-         
-     {topics.map((topic)=>(   
-         <Grid item xs={11} style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
-          <SampleCardPage title={topic.title} image = {topic.image} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
+
+     
+     <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
+      
+     {topics.slice(0,1).map((topic)=>(   
+         <Grid item xs={11} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
+          <SampleCardPage title={topic.title} image = {chosen===1?MathCover:(chosen===2?DNA:library)} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
          </Grid>
       ))}
+
+
+     </Grid>
          
-         {/*<Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-          <SampleCardPage/> 
+       <Grid container item xs={12} spacing={3} style={{ display: 'flex', justifyContent: 'center',marginBottom:"20px" }}>
+         
+     {topics.map((topic)=>(   
+         <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
+          <SmallerCardPage title={topic.title} image = {topic.image} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
          </Grid>
-
-         <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-          <SampleCardPage/> 
-         </Grid>*/}
-
+      ))}
          
         </Grid>
       </Grid>
     
-      
-     
+  
 </Container>
     </>
   );

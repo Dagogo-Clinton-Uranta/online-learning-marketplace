@@ -40,12 +40,12 @@ function OtherCoursesPage() {
 
  
   const topics = [
-    {title:"Chemie ",author:"Sidiki Keita",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem2},
-    {title:"Anglais ",author:"Kabinet Keita",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
-    {title:"Biologie ",author:"Elhadj Keita",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
-    {title:"Philosophie",author:"Sidiki Keita",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
-    {title:"Mathematiques",author:"Fode Keita",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
-    {title:"Chemie",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
+    {title:"Chemie 10e Annee ",author:"Sidiki Keita",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem},
+    {title:"Anglais 10e Annee ",author:"Kabinet Keita",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
+    {title:"Biologie 10e Annee ",author:"Elhadj Keita",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
+    {title:"Philosophie 10e Annee",author:"Sidiki Keita",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
+    {title:"Mathematiques 10e Annee",author:"Fode Keita",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
+    {title:"Chemie 10e Annee",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
     
   ]
 
@@ -177,15 +177,6 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           <SmallerCardPage title={topic.title} image = {topic.image} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
          </Grid>
       ))}
-         
-         {/*<Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-          <SampleCardPage/> 
-         </Grid>
-
-         <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-          <SampleCardPage/> 
-         </Grid>*/}
-
          
         </Grid>
       </Grid>
