@@ -32,6 +32,9 @@ import IncubatorVideoPage from './pages/IncubatorVideosPage';
 import ViewIncubatorPage from './pages/ViewIncubatorPage';
 import SampleCardPage from './pages/SampleCardPage';
 import PopularCoursesPage from './pages/PopularCoursesPage';
+import TenePage from './pages/TenePage';
+import SixePage from './pages/SixePage';
+import TerminalesPage from './pages/TerminalesPage';
 import OtherCoursesPage from './pages/OtherCoursesPage';
 import SelectedCoursePage from './pages/SelectedCoursePage';
 
@@ -58,6 +61,8 @@ export default function Router() {
         { path: 'popular-courses', element: <PopularCoursesPage /> },
         { path: 'other-courses', element: <OtherCoursesPage /> },
         { path: 'selected-course', element: <SelectedCoursePage /> },
+        { path: '10e', element: <TenePage /> },
+        { path: '6e', element: <SixePage /> },
 
         
         { path: 'chat', element: <InboxPage /> },

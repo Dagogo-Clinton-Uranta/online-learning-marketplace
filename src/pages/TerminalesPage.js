@@ -71,7 +71,7 @@ function PopularCoursesPage() {
     <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
     
            <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
             onClick={()=>{navigate('/dashboard/other-courses')}}
             >
@@ -79,10 +79,9 @@ function PopularCoursesPage() {
             </Button>
 
             <Button   variant="contained" 
-
-            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
+            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/popular-courses')}}
+            onClick={()=>{setChosen(1)}}
             >
             Terminales
             </Button>
@@ -97,7 +96,7 @@ function PopularCoursesPage() {
            <Button   variant="contained" 
             style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/6e')}}
+            onClick={()=>{setChosen(2)}}
             >
              6eme Année
             </Button>
@@ -105,7 +104,7 @@ function PopularCoursesPage() {
             <Button   variant="contained" 
             style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/10e')}}
+            onClick={()=>{setChosen(3)}}
             >
             10eme Année
             </Button>
@@ -124,7 +123,7 @@ function PopularCoursesPage() {
       
      {topics.slice(0,1).map((topic)=>(   
          <Grid item xs={11} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
-          <SampleCardPage title={topic.title} image = {chosen===1?MathCover:(chosen===2?DNA:library)} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
+          <SampleCardPage title={topic.title} image = {MathCover} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
          </Grid>
       ))}
 

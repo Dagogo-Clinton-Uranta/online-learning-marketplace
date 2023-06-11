@@ -29,9 +29,9 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import SmallerCardPage from './SmallerCardPage';
 import SampleCardPage from './SampleCardPage';
 
-function PopularCoursesPage() {
+function SixePage() {
   const navigate = useNavigate();
-  const [chosen,setChosen] = useState(1);
+  const [chosen,setChosen] = useState(3);
 
  
   const topics = [
@@ -73,14 +73,14 @@ function PopularCoursesPage() {
            <Button   variant="contained" 
             style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
+           
             onClick={()=>{navigate('/dashboard/other-courses')}}
             >
             Tous
             </Button>
 
             <Button   variant="contained" 
-
-            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
+            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
             onClick={()=>{navigate('/dashboard/popular-courses')}}
             >
@@ -95,7 +95,9 @@ function PopularCoursesPage() {
     <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
     
            <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+           
+
+            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
             onClick={()=>{navigate('/dashboard/6e')}}
             >
@@ -124,7 +126,7 @@ function PopularCoursesPage() {
       
      {topics.slice(0,1).map((topic)=>(   
          <Grid item xs={11} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
-          <SampleCardPage title={topic.title} image = {chosen===1?MathCover:(chosen===2?DNA:library)} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
+          <SampleCardPage title={topic.title} image = {library} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
          </Grid>
       ))}
 
@@ -148,4 +150,4 @@ function PopularCoursesPage() {
   );
 }
 
-export default PopularCoursesPage;
+export default SixePage;

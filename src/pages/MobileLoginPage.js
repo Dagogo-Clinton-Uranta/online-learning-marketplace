@@ -158,7 +158,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
       </Grid>
     
       
-      <div container xs={12} md={12}  lg={12} spacing={0} style={{width:"100%",backgroundColor:"blue",marginTop:"30px",marginBottom:"30px",fontSize:"0.8rem" ,display: 'flex', justifyContent: 'center',position:"relative",paddingLeft:"0.5rem",paddingTop:"0.5rem",paddingBottom:"0.5rem",borderRadius:"1rem" }}>
+      <div container xs={12} md={12}  lg={12} spacing={0} style={{width:"100%",backgroundColor:"#485FEB",marginTop:"30px",marginBottom:"30px",fontSize:"0.8rem" ,display: 'flex', justifyContent: 'center',position:"relative",paddingLeft:"0.5rem",paddingTop:"0.5rem",paddingBottom:"0.5rem",borderRadius:"1rem" }}>
       <div item xs={12} spacing={0}  md={12}  lg={12} style={{color:"white" , display: 'flex',flexDirection:"column", justifyContent: 'center',gap:"30px",paddingTop:"1rem",paddingLeft:"20px",paddingRight:"20px"}}>
        
      
@@ -223,7 +223,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         <Button   variant="contained" 
         style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
         paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
-        onClick={()=>{navigate('/dashboard/popular-courses')}}
+        onClick={()=>{navigate('/dashboard/10e')}}
         >
         10e Année
         </Button>
@@ -231,7 +231,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         <Button   variant="contained" 
         style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
         paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
-        onClick={()=>{navigate('/dashboard/popular-courses')}}
+        onClick={()=>{navigate('/dashboard/6e')}}
         >
         6e Année
         </Button>
