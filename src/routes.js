@@ -25,6 +25,7 @@ import SettingsPage from './pages/SettingsPage';
 //import CreateCoolerPage from './pages/CreateCoolerPage';
 import Login from './pages/Login';
 import MobileLoginPage from './pages/MobileLoginPage';
+import MobileWelcomePage from './pages/MobileWelcomePage';
 import LoginUpdatedPage from './pages/LoginUpdatedPage/LoginUpdatedPage'
 import RegisterUpdatedPage from './pages/RegisterUpdatedPage/RegisterUpdatedPage'
 import CategoriesVideoPage from './pages/CategoriesVideosPage';
@@ -48,8 +49,8 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="dashboard/home" />, index: true },
-        { path: 'home', element: <MobileLoginPage /> },
+        { element: <Navigate to="login" />, index: true },
+        { path: 'home', element: <MobileWelcomePage /> },
         { path: 'feed', element: <FeedPage /> },
         { path: 'video', element: <VideoPage /> },
         { path: 'video-details', element: <VideoDetailsPage /> },
@@ -73,10 +74,10 @@ export default function Router() {
       ],
     },
     {
-      path: 'loginTest',
+      path: 'login',
       element: <DashboardLayout />,
       children:[
-        {path:'', element:<LoginUpdatedPage/>}
+        {path:'', element:<MobileLoginPage/>}
       ]
      
     },
@@ -93,7 +94,7 @@ export default function Router() {
       element: <SimpleLayout />,
       children: [
         // { element: <Navigate to="/login" />, index: true },
-        { element: <Navigate to="dashboard/home" />, index: true },
+        { element: <Navigate to="login" />, index: true },
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],
