@@ -30,7 +30,7 @@ export const TextInput = () => {
             <form className={classes.wrapForm}  noValidate autoComplete="off">
             <TextField
                 id="standard-text"
-                label="メッセージを入力"
+                label="send a new message..."
                 className={classes.wrapText}
                 //margin="normal"
             />

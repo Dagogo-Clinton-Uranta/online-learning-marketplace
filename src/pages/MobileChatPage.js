@@ -2,11 +2,7 @@ import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UPLOADIMG from '../assets/images/upload.png';
-import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
-import startQuote from 'src/assets/images/startQuote.png'
-import endQuote from 'src/assets/images/endQuote.png'
-import bonLogo from 'src/assets/images/bonlogo.png'
+import randomGuy from 'src/assets/images/random-guy.jpg'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
@@ -41,9 +37,11 @@ const useStyles = makeStyles((theme) =>
     container: {
       maxWidth:"xs",
       width: "100vw",
-      
+      border:"1px solid lightgray",
       height: "100vh",
       display: "flex",
+      flexDirection:"column",
+      position:"relative",
       alignItems: "center",
       justifyContent: "center"
     },
@@ -64,42 +62,53 @@ function MobileChatPage() {
 
   return (
     
+
+   <>
+    
     <div className={classes.container}>
+    <Button   variant="contained" 
+            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black",fontSize:"15px",
+            paddingRight: '3px', paddingLeft: '3px',position:"absolute",left:"3%",top:"3%"}}
+            onClick ={()=>{navigate('/dashboard/home')}}
+            >
+           Back
+    </Button>
+
       <Paper className={classes.paper} zDepth={2}>
-        <Paper id="style-1" className={classes.messagesBody}>
+        <Paper id="style-1" style={{border:"1px solid black",padding:"0.5rem"}} className={classes.messagesBody}>
           <MessageLeft
-            message="あめんぼあかいなあいうえお"
-            timestamp="MM/DD 00:00"
-            photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-            displayName=""
+            message="You are welcome to Bon Ecole, we are happy to have you! We hope our platform will change your learning Experience !"
+            timestamp="13/06 07:00"
+            photoURL={randomGuy}
+            displayName="Bon-Ecole Assistant"
             avatarDisp={true}
           />
           <MessageLeft
-            message="xxxxxhttps://yahoo.co.jp xxxxxxxxxあめんぼあかいなあいうえおあいうえおかきくけこさぼあかいなあいうえおあいうえおかきくけこさぼあかいなあいうえおあいうえおかきくけこさいすせそ"
-            timestamp="MM/DD 00:00"
-            photoURL=""
-            displayName="テスト"
+            message="We suggest starting out with our popular courses Page !"
+            timestamp="13/06 07:00"
+            photoURL={randomGuy}
+            displayName="Bon-Ecole Assistant"
             avatarDisp={false}
           />
           <MessageRight
-            message="messageRあめんぼあかいなあいうえおあめんぼあかいなあいうえおあめんぼあかいなあいうえお"
-            timestamp="MM/DD 00:00"
+            message="Hi, I am Jacques Paul, thanks for your suggestion."
+            timestamp="13/06 07:10"
             photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-            displayName="まさりぶ"
+            displayName="Jacques paul"
             avatarDisp={true}
           />
           <MessageRight
-            message="messageRあめんぼあかいなあいうえおあめんぼあかいなあいうえお"
-            timestamp="MM/DD 00:00"
+            message="Yes I think I will do that, any more suggestions?"
+            timestamp="13/06 07:00"
             photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-            displayName="まさりぶ"
+            displayName="Jacques Paul"
             avatarDisp={false}
           />
         </Paper>
         <TextInput />
       </Paper>
     </div>
-    
+  </> 
   );
 }
 

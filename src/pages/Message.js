@@ -84,13 +84,14 @@ const useStyles = makeStyles((theme) =>
     },
 
     messageContent: {
-      padding: 0,
+      paddingBottom:"15px",
       margin: 0
     },
     messageTimeStampRight: {
       position: "absolute",
       fontSize: ".85em",
       fontWeight: "300",
+      color:"grey",
       marginTop: "10px",
       bottom: "-3px",
       right: "5px"
