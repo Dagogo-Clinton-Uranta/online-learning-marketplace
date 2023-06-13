@@ -25,6 +25,7 @@ import SettingsPage from './pages/SettingsPage';
 //import CreateCoolerPage from './pages/CreateCoolerPage';
 import Login from './pages/Login';
 import MobileLoginPage from './pages/MobileLoginPage';
+import MobileChatPage from './pages/MobileChatPage';
 import MobileWelcomePage from './pages/MobileWelcomePage';
 import LoginUpdatedPage from './pages/LoginUpdatedPage/LoginUpdatedPage'
 import RegisterUpdatedPage from './pages/RegisterUpdatedPage/RegisterUpdatedPage'
@@ -66,7 +67,7 @@ export default function Router() {
         { path: '6e', element: <SixePage /> },
 
         
-        { path: 'chat', element: <InboxPage /> },
+        { path: 'chat', element: <MobileChatPage /> },
         { path: 'settings', element: <SettingsPage /> },
         // { path: 'my-cooler', element: <MyCoolersPage /> },
        
