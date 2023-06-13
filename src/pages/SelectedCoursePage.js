@@ -174,6 +174,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
 
   <Grid container xs={12} style={{paddingTop:"1.5rem"}}>
+   
     <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
     
     <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
@@ -184,45 +185,40 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
     
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"2rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/>&nbsp; 1.)</p>
-     <p>  Dissociation et produit ionique</p>
-     <p>8:00</p>
-    
-    </Grid>
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"2rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/>&nbsp; 2.) </p>
-     <p> Dissociation et produit ionique</p>
-     <p>8:00</p>
-    
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"7%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"2rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
-     <p>  Dissociation et produit ionique</p>
-     <p>8:00</p>
-    
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"7%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"2rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/>&nbsp; 4.) </p>
-     <p> Dissociation et produit ionique</p>
-     <p>8:00</p>
-    
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"7%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"2rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/>&nbsp; 5.) </p>
-     <p> Dissociation et produit ionique</p>
-     <p>8:00</p>
-    
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"7%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"2rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/>&nbsp; 6.)</p>
-     <p>  Dissociation et produit ionique</p>
-     <p>8:00</p>
-    
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"7%"}}>8:00</p>
+    </Grid>
+
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"7%"}}>8:00</p>
     </Grid>
 
 
@@ -241,6 +237,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
    <Grid container xs={12} style={{paddingTop:"1.5rem"}}>
+   
     <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
     
     <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
@@ -251,19 +248,17 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
     
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"2rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/>&nbsp;  1.)</p>
-     
-     <p > Dissociation et produit ionique</p>
-     <p>8:00</p>
-    
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"7%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"2rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/>&nbsp; 2.) </p>
-     <p> Dissociation et produit ionique</p>
-     <p>8:00</p>
-    
+   
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"7%"}}>8:00</p>
     </Grid>
 
 
