@@ -200,7 +200,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"%"}}>8:00</p>
+     <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
