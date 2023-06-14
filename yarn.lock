@@ -9153,6 +9153,13 @@
     "regenerator-runtime" "^0.13.9"
     "whatwg-fetch" "^3.6.2"
 
+"react-audio-player@^0.17.0":
+  "integrity" "sha512-aCZgusPxA9HK7rLZcTdhTbBH9l6do9vn3NorgoDZRxRxJlOy9uZWzPaKjd7QdcuP2vXpxGA/61JMnnOEY7NXeA=="
+  "resolved" "https://registry.npmjs.org/react-audio-player/-/react-audio-player-0.17.0.tgz"
+  "version" "0.17.0"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-chartjs-2@^5.0.1":
   "integrity" "sha512-u38C9OxynlNCBp+79grgXRs7DSJ9w8FuQ5/HO5FbYBbri8HSZW+9SWgjVshLkbXBfXnMGWakbHEtvN0nL2UG7Q=="
   "resolved" "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-5.0.1.tgz"

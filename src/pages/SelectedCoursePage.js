@@ -6,22 +6,19 @@ import { useNavigate } from 'react-router-dom';
 
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+
 import Avatar from '@mui/material/Avatar';
 
-import UPLOADIMG from '../assets/images/upload.png';
-import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
-import bonLogo from 'src/assets/images/bonlogo.png'
 import profile from 'src/assets/images/profile.jpeg'
-import startQuote from 'src/assets/images/startQuote.png'
-import endQuote from 'src/assets/images/endQuote.png'
 import math from 'src/assets/images/math.jpeg'
 import chem from 'src/assets/images/chembeak.jpeg'
 import chem2 from 'src/assets/images/chem2.jpeg'
 import biology from 'src/assets/images/biology.jpeg'
 import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
-import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import ReactPlayer from 'react-player'
+import LogoSwitch from './LogoSwitch';
+
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
 
@@ -29,7 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import Modal from '@mui/material/Modal';
 
-import SmallerCardPage from './SmallerCardPage';
+
 
 function SelectedCoursePage() {
   
@@ -47,10 +44,6 @@ function SelectedCoursePage() {
   };
  
 
-  const VideoModal = styled('Modal')({
-   
-  });
-  
 
 
 
@@ -63,6 +56,8 @@ function SelectedCoursePage() {
     {title:"Chemie",author:"Sidiki...",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
     
   ]
+
+
 
 
 
@@ -137,6 +132,10 @@ function SelectedCoursePage() {
   return (
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray",fontSize:"0.85rem"}}> 
+
+
+
+
 
 
      {/*PDF MODAL */}
@@ -257,37 +256,37 @@ function SelectedCoursePage() {
     
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 1.)</p>
+     <p ><LogoSwitch/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 2.)</p>
+     <p ><LogoSwitch/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p ><LogoSwitch/> &nbsp; 3.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 4.)</p>
+     <p ><LogoSwitch/> &nbsp; 4.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 5.)</p>
+     <p ><LogoSwitch/> &nbsp; 5.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 6.)</p>
+     <p ><LogoSwitch/> &nbsp; 6.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
