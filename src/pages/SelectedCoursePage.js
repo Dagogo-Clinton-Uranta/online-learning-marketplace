@@ -19,6 +19,7 @@ import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ReactPlayer from 'react-player'
 import { Document, Page ,pdfjs} from 'react-pdf';
+import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
 import LogoSwitch from './LogoSwitch';
 
@@ -161,12 +162,15 @@ function SelectedCoursePage() {
       >
         <Box sx={style}>
            
-      <iframe src={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>
+     {/* <iframe src={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>*/}
        
-       {/* <Document className="pdfCenter" file={samplePdf} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={pageNumber} />
-  </Document>*/}
+        {/*<Document  className="pdfCenter"  file={samplePdf} onLoadSuccess={onDocumentLoadSuccess}>
+        <Page className="pdfCenter" pageNumber={pageNumber} />
+       </Document>*/}
+
+       <MobilePDFReader url={samplePdf}/>
      
+      
         </Box>
   </Modal>
 
