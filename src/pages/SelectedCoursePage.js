@@ -18,6 +18,8 @@ import biology from 'src/assets/images/biology.jpeg'
 import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ReactPlayer from 'react-player'
+import { Document, Page ,pdfjs} from 'react-pdf';
+
 import LogoSwitch from './LogoSwitch';
 
 
@@ -36,7 +38,7 @@ function SelectedCoursePage() {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "80%",
+    width: "95%",
     height:"90%",
     bgcolor: 'background.paper',
     border: '2px solid #000',
@@ -58,9 +60,20 @@ function SelectedCoursePage() {
     
   ]
 
+/*PDF MANIPULATION LOGIC*/
+  const [numPages, setNumPages] = useState(2);
+  const [pageNumber, setPageNumber] = useState(1);
 
+  function onDocumentLoadSuccess(/*{ numPages }*/) {
+    setNumPages(numPages);
+  }
 
+  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.js',
+    import.meta.url,
+  ).toString();
 
+/*PDF MANIPULATION LOGIC END */
 
 /*MODAL MANIPULATION LOGIC */
 
@@ -148,8 +161,12 @@ function SelectedCoursePage() {
       >
         <Box sx={style}>
            
-          <object data={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></object>
-          
+        { /* <iframe src={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>*/}
+        <div style={{width:"100%",height:"100%"}}>
+        <Document file={samplePdf} onLoadSuccess={onDocumentLoadSuccess}>
+        <Page pageNumber={pageNumber} />
+      </Document>
+      </div>
         </Box>
   </Modal>
 
