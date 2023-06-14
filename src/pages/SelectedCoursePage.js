@@ -148,7 +148,7 @@ function SelectedCoursePage() {
       >
         <Box sx={style}>
            
-          <embed src={samplePdf} style={{width:"100%",height:"100%"}} />
+          <object data={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></object>
           
         </Box>
   </Modal>
