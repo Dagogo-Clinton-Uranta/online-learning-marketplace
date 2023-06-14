@@ -1,5 +1,6 @@
 import React,{useState,useEffect,useRef} from 'react'
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
+import { styled } from '@mui/system';
 import { findDOMNode } from 'react-dom'
 import { useNavigate } from 'react-router-dom';
 
@@ -45,6 +46,14 @@ function SelectedCoursePage() {
     p: 4,
   };
  
+
+  const VideoModal = styled('Modal')({
+   
+  });
+  
+
+
+
   const topics = [
     {title:"Chemie ",author:"Sidiki...",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem2},
     {title:"Anglais ",author:"Kabinet...",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
@@ -55,22 +64,37 @@ function SelectedCoursePage() {
     
   ]
 
- /*video manipulation states */
-  const [screenTest, setScreenTest] = useState(false);
+
+
+/*MODAL MANIPULATION LOGIC */
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {doVideoActions()}
+  const handleClose = () => {setOpen(false);setVideoTime(false)};
+
+
+  const [openPdf, setOpenPdf] = React.useState(false);
+  const handleOpenPdf = () => {setOpenPdf(true)}
+  const handleClosePdf = () => {setOpenPdf(false)};
+
+/*MODAL MANIPULATION LOGIC */
+
+
+ /*video manipulation logic */
+ 
   const [videoTime,setVideoTime] = useState(false)
   const [fullScreen, setFullScreen] = useState(false);
- // window.addEventListener('fullscreenchange', handleEsc);
+
 
   
   const videoRef = useRef(true)
  
 
   const handleEsc = (event) => {
-   // setFullScreen(!fullScreen)
-   // setVideoTime(false)
+   
     window.removeEventListener('fullscreenchange', handleEsc)
     setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
-    console.log("full screen is",fullScreen)
+    
   };
 
 
@@ -79,7 +103,7 @@ function SelectedCoursePage() {
     
     setTimeout(
      ()=> {
-      // window.addEventListener('fullscreenchange', handleEsc);
+    
     setVideoTime(!videoTime)
     
      if(!videoTime){
@@ -90,34 +114,20 @@ function SelectedCoursePage() {
     setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
   }
 
-
   
-
+  
+  
   useEffect(()=>{
  
-    setOpen(false)
-  
-   
-   /*  setScreenTest(!screenTest) 
- if(fullScreen === screenTest){
-   if(fullScreen){
-      setVideoTime(true)
-    }else if (!fullScreen){
-      setVideoTime(false)   
+    if(open === false){
+      setTimeout(()=>(window.removeEventListener('fullscreenchange', handleEsc)),10)
     }
-  }*/
-  
-  },[fullScreen])
 
-  /*video manipulation states end */
+  },[open])
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {doVideoActions()}
-  const handleClose = () => {setOpen(false);setVideoTime(false)};
-  
+  /*video manipulation logic end */
 
-
-  
+ 
 
 
 
@@ -129,10 +139,10 @@ function SelectedCoursePage() {
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray",fontSize:"0.85rem"}}> 
 
 
-
-    {/*<Modal
-        open={open}
-        onClose={handleClose}
+     {/*PDF MODAL */}
+    <Modal
+        open={openPdf}
+        onClose={handleClosePdf}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -141,8 +151,9 @@ function SelectedCoursePage() {
           <iframe src="http://www.africau.edu/images/default/sample.pdf" style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>
           
         </Box>
-  </Modal>*/}
+  </Modal>
 
+     {/*VIDEO MODAL */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -239,7 +250,7 @@ function SelectedCoursePage() {
     
     <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
       Chapitre 1: Acide et base en solution aqueuese
-     <PictureAsPdfIcon style={{fontSize:"2.2rem"}} />
+     <PictureAsPdfIcon onClick={handleOpenPdf} style={{fontSize:"2.2rem"}} />
      </p>
     
     </Grid>
@@ -285,7 +296,7 @@ function SelectedCoursePage() {
     <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <PictureAsPdfIcon  onClick={handleOpen} style={{color:"blue",fontSize:"2.2rem"}} />
+    <PictureAsPdfIcon  onClick={handleOpenPdf} style={{color:"blue",fontSize:"2.2rem"}} />
      QCM - Chapitre 1
      </p>
      <Divider/>
@@ -302,7 +313,7 @@ function SelectedCoursePage() {
     
     <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
       Chapitre 2: Acide et base en solution aqueuese
-     <PictureAsPdfIcon  style={{fontSize:"2.2rem"}} />
+     <PictureAsPdfIcon onClick={handleOpenPdf} style={{fontSize:"2.2rem"}} />
      </p>
     
     </Grid>
@@ -327,7 +338,7 @@ function SelectedCoursePage() {
     <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <PictureAsPdfIcon  onClick={handleOpen} style={{color:"blue",fontSize:"2.2rem"}} />
+    <PictureAsPdfIcon  onClick={handleOpenPdf} style={{color:"blue",fontSize:"2.2rem"}} />
      QCM - Chapitre 2
      </p>
      <Divider/>
