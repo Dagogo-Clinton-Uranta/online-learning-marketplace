@@ -1,5 +1,6 @@
+import React,{useState,useEffect} from 'react'
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
-import { useRef, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
@@ -19,31 +20,30 @@ import biology from 'src/assets/images/biology.jpeg'
 import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
+import ReactPlayer from 'react-player'
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
-import users from 'src/_mock/user';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import Modal from '@mui/material/Modal';
 
 import SmallerCardPage from './SmallerCardPage';
 
-function OtherCoursesPage() {
-  const navigate = useNavigate();
-  const [file, setFile] = useState();
-  const [file2, setFile2] = useState();
-  const [fileSize, setFileSize] = useState();
-  const [fileSize2, setFileSize2] = useState();
-  const [selectedFile, setSelectedFile] = useState({selectedFile: [], selectedFileName: []});
-  const [selectedFile2, setSelectedFile2] = useState({selectedFile2: [], selectedFileName2: []});
-  const dispatch = useDispatch();
-
-  const [newPassword,setNewPassword] =useState('')
-  const [confirmPassword,setConfirmPassword] =useState('')
-  const [companySize,setCompanySize] =useState('')
-
+function SelectedCoursePage() {
+  
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: "80%",
+    height:"90%",
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
  
   const topics = [
     {title:"Chemie ",author:"Sidiki...",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem2},
@@ -57,56 +57,55 @@ function OtherCoursesPage() {
 
 
 
-  /*const [releaseDate,setReleaseDate] =useState('')
-  const [director,setDirector] =useState('')
-  const [cast,setCast] =useState([])
-  const [description,setDescription] =useState('')
-  const [trivia,setTrivia] =useState('')*/
-  
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
 
-
-  const handleselectedFile = event => {
-    console.log("these are the picture deets!",event.target.files[0])
-    setSelectedFile({
-        selectedFile: event.target.files[0],
-        selectedFileName: event.target.files[0].name
-    });
-    
-    setFile(URL.createObjectURL(event.target.files[0]));
-    setFileSize(event.target.files[0].size)
-};
- /* const handleselectedFile2 = event => {
-    console.log("these are the video deets!",event.target.files[0])
-    setSelectedFile2({
-        selectedFile2: event.target.files[0],
-        selectedFileName2: event.target.files[0].name
-    });
-    setFile2(URL.createObjectURL(event.target.files[0]));
-    setFileSize2(event.target.files[0].size)
-};*/
-
-
-
-const uploadMovie = (movieData = 0,image = 0,) => {
-if(!companySize.length && !newPassword.length &&  file === undefined ){
-  console.log("THE EMPTY FIELDS ARE:",file)
-  notifyErrorFxn("Please fill in the field(s) you want to update!")
-}else{
- if( fileSize  > 300000){
-  notifyErrorFxn("Image size too large! please upload a smaller picture.")
- }
- /*else if( fileSize2  > 20000000){
-  notifyErrorFxn("Video size too large! please upload a smaller video.")
- }*/else{
-  dispatch(uploadUserSettings(movieData,image))
- }
-}
-}
 
   return (
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray",fontSize:"0.85rem"}}> 
+
+
+
+    {/*<Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+           
+          <iframe src="http://www.africau.edu/images/default/sample.pdf" style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>
+          
+        </Box>
+  </Modal>*/}
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+         <ReactPlayer   
+                width="100%"
+                height="100%"
+                id="full-screenVideo"                                              
+                className="videoFrame"
+                url={"https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4"}
+                //light={thumbnail}
+                playing={true}
+                playIcon={' '}
+                controls
+                //ref={videoRef}
+              //onClickPreview = {()=>{setTouch(false);}}
+               
+             />
+        </Box>
+      </Modal>
     
 
     <Grid container xs={12} style={{marginTop:"2rem",padding:"1.5rem", background:`linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),url(${chem})`,borderRadius:"0.5rem",}}>
@@ -186,37 +185,37 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 1.)</p>
+     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 2.)</p>
+     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
+     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 3.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 4.)</p>
+     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 4.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 5.)</p>
+     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 5.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 6.)</p>
+     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 6.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
@@ -225,7 +224,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <PictureAsPdfIcon style={{color:"blue",fontSize:"2.2rem"}} />
+    <PictureAsPdfIcon  onClick={handleOpen} style={{color:"blue",fontSize:"2.2rem"}} />
      QCM - Chapitre 1
      </p>
      <Divider/>
@@ -242,21 +241,21 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     
     <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
       Chapitre 2: Acide et base en solution aqueuese
-     <PictureAsPdfIcon style={{fontSize:"2.2rem"}} />
+     <PictureAsPdfIcon  style={{fontSize:"2.2rem"}} />
      </p>
     
     </Grid>
     
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 1.)</p>
+     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
    
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 2.)</p>
+     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"2.2rem"}}/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
@@ -267,7 +266,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <PictureAsPdfIcon style={{color:"blue",fontSize:"2.2rem"}} />
+    <PictureAsPdfIcon  onClick={handleOpen} style={{color:"blue",fontSize:"2.2rem"}} />
      QCM - Chapitre 2
      </p>
      <Divider/>
@@ -281,4 +280,4 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
   );
 }
 
-export default OtherCoursesPage;
+export default SelectedCoursePage;
