@@ -9,6 +9,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 import Avatar from '@mui/material/Avatar';
 
+import samplePdf from 'src/assets/images/sample.pdf'
 import profile from 'src/assets/images/profile.jpeg'
 import math from 'src/assets/images/math.jpeg'
 import chem from 'src/assets/images/chembeak.jpeg'
@@ -147,7 +148,7 @@ function SelectedCoursePage() {
       >
         <Box sx={style}>
            
-          <iframe src="http://www.africau.edu/images/default/sample.pdf" style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>
+          <iframe src={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>
           
         </Box>
   </Modal>
