@@ -38,7 +38,7 @@ const LogoSwitch = () => {
    
 <audio  ref ={audioRef} src={soundBytes}/>
 
-<span onClick={()=>{playAudio()}} style={{color:"red",fontSize:"2.2rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
+<span onClick={()=>{playAudio()}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
 
     </div>
   )
