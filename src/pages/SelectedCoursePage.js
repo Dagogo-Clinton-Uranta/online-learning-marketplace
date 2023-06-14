@@ -168,7 +168,7 @@ function SelectedCoursePage() {
         <Page className="pdfCenter" pageNumber={pageNumber} />
        </Document>*/}
 
-       <MobilePDFReader url={samplePdf}/>
+       <MobilePDFReader isShowHeader={false} isShowFooter={false} url={samplePdf}/>
      
       
         </Box>
