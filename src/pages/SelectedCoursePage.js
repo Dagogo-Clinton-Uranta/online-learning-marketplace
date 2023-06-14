@@ -161,12 +161,12 @@ function SelectedCoursePage() {
       >
         <Box sx={style}>
            
-        { /* <iframe src={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>*/}
-        <div style={{width:"100%",height:"100%"}}>
-        <Document file={samplePdf} onLoadSuccess={onDocumentLoadSuccess}>
+      <iframe src={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>
+       
+       {/* <Document className="pdfCenter" file={samplePdf} onLoadSuccess={onDocumentLoadSuccess}>
         <Page pageNumber={pageNumber} />
-      </Document>
-      </div>
+  </Document>*/}
+     
         </Box>
   </Modal>
 

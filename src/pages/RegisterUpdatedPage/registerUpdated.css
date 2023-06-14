@@ -29,6 +29,13 @@ text-decoration: none;
         
     }
 
+
+    .pdfCenter{
+        height:100%;
+        width:100%;
+        margin: 0 auto;
+    }
+
 .container-center-horizontal {
 display: flex;
 flex-direction: row;
