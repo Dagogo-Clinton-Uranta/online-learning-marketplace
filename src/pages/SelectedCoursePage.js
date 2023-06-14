@@ -1,6 +1,6 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
-
+import { findDOMNode } from 'react-dom'
 import { useNavigate } from 'react-router-dom';
 
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
@@ -55,12 +55,68 @@ function SelectedCoursePage() {
     
   ]
 
+ /*video manipulation states */
+  const [screenTest, setScreenTest] = useState(false);
+  const [videoTime,setVideoTime] = useState(false)
+  const [fullScreen, setFullScreen] = useState(false);
+ // window.addEventListener('fullscreenchange', handleEsc);
+
+  
+  const videoRef = useRef(true)
+ 
+
+  const handleEsc = (event) => {
+    setFullScreen(!fullScreen)
+    setOpen(false)
+    console.log("full screen is",fullScreen)
+  };
 
 
+  const doVideoActions = () => {
+    setOpen(true)
+    
+    setTimeout(
+     ()=> {
+      // window.addEventListener('fullscreenchange', handleEsc);
+    setVideoTime(!videoTime)
+    
+     if(!videoTime){
+      findDOMNode(videoRef.current).requestFullscreen()
+      }
+    },10) 
+  }
+
+
+  
+
+  useEffect(()=>{
+ 
+    setScreenTest(!screenTest)
+  
+  if(fullScreen === screenTest){
+    
+    if(fullScreen){
+      setVideoTime(true)
+    }else if (!fullScreen){
+      setVideoTime(false)
+      
+    }
+  }
+  
+  },[fullScreen])
+
+  /*video manipulation states end */
 
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {doVideoActions()}
+  const handleClose = () => {setOpen(false);setVideoTime(false)};
+  
+
+
+  
+
+
+
 
 
 
@@ -88,6 +144,7 @@ function SelectedCoursePage() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        
       >
         <Box sx={style}>
          <ReactPlayer   
@@ -100,7 +157,7 @@ function SelectedCoursePage() {
                 playing={true}
                 playIcon={' '}
                 controls
-                //ref={videoRef}
+                ref={videoRef}
               //onClickPreview = {()=>{setTouch(false);}}
                
              />
