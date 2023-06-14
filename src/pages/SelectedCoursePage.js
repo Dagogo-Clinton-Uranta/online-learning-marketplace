@@ -66,8 +66,10 @@ function SelectedCoursePage() {
  
 
   const handleEsc = (event) => {
-    setFullScreen(!fullScreen)
-    setOpen(false)
+   // setFullScreen(!fullScreen)
+   // setVideoTime(false)
+    window.removeEventListener('fullscreenchange', handleEsc)
+    setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
     console.log("full screen is",fullScreen)
   };
 
@@ -84,6 +86,8 @@ function SelectedCoursePage() {
       findDOMNode(videoRef.current).requestFullscreen()
       }
     },10) 
+
+    setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
   }
 
 
@@ -91,17 +95,17 @@ function SelectedCoursePage() {
 
   useEffect(()=>{
  
-    setScreenTest(!screenTest)
+    setOpen(false)
   
-  if(fullScreen === screenTest){
-    
-    if(fullScreen){
+   
+   /*  setScreenTest(!screenTest) 
+ if(fullScreen === screenTest){
+   if(fullScreen){
       setVideoTime(true)
     }else if (!fullScreen){
-      setVideoTime(false)
-      
+      setVideoTime(false)   
     }
-  }
+  }*/
   
   },[fullScreen])
 
