@@ -84,7 +84,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
     
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"40px"}}>
     <center>
     <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Bienvenue à bonÉcole!</h1>
     </center>
@@ -98,7 +98,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
   
          <Grid container item xs={12} spacing={2}>
             <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-              <img src={bonecoleIntro}/>
+              <img style={{width:"80%"}} src={bonecoleIntro}/>
             </Grid>
          
         </Grid>
@@ -107,7 +107,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
 
-      <Grid container item xs={12} spacing={2} style={{ display: 'flex',flexDirection:"column" ,justifyContent: 'center',marginTop:"20px",marginBottom:"40px" }}>
+      <Grid container item xs={12} spacing={2} style={{ display: 'flex',flexDirection:"column" ,justifyContent: 'center',marginTop:"80px",marginBottom:"40px" }}>
          
       <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
      <TextField
