@@ -3,6 +3,9 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import randomGuy from 'src/assets/images/random-guy.jpg'
+import randomWoman from 'src/assets/images/randomwoman.jpeg'
+import randomWoman2 from 'src/assets/images/randomwoman2.jpg'
+
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
@@ -80,28 +83,43 @@ function MobileChatPage() {
             message="You are welcome to Bon Ecole, we are happy to have you! We hope our platform will change your learning Experience !"
             timestamp="13/06 07:00"
             photoURL={randomGuy}
-            displayName="Bon-Ecole Assistant"
+            displayName="Stromae"
             avatarDisp={true}
           />
           <MessageLeft
             message="We suggest starting out with our popular courses Page !"
             timestamp="13/06 07:00"
             photoURL={randomGuy}
-            displayName="Bon-Ecole Assistant"
+            displayName="Stromae"
             avatarDisp={false}
           />
           <MessageRight
             message="Hi, I am Jacques Paul, thanks for your suggestion."
             timestamp="13/06 07:10"
-            photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
+            photoURL={randomWoman}
             displayName="Jacques paul"
             avatarDisp={true}
           />
           <MessageRight
             message="Yes I think I will do that, any more suggestions?"
             timestamp="13/06 07:00"
-            photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
+            photoURL={randomWoman}
             displayName="Jacques Paul"
+            avatarDisp={false}
+          />
+  
+       <MessageLeft
+            message="You are welcome to Bon Ecole, we are happy to have you! We hope our platform will change your learning Experience !"
+            timestamp="13/06 07:00"
+            photoURL={randomWoman2}
+            displayName="Lillian Thuram"
+            avatarDisp={true}
+          />
+          <MessageLeft
+            message="We suggest starting out with our popular courses Page !"
+            timestamp="13/06 07:00"
+            photoURL={randomWoman2}
+            displayName="Lillian Thuram"
             avatarDisp={false}
           />
         </Paper>

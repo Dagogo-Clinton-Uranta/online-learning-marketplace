@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) =>
     },
     messageRowRight: {
       display: "flex",
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
+     
     },
     messageBlue: {
       position: "relative",
@@ -49,8 +50,9 @@ const useStyles = makeStyles((theme) =>
     },
     messageOrange: {
       position: "relative",
-      marginRight: "20px",
+      marginRight: "40px",
       marginBottom: "10px",
+      marginTop: "35px",
       padding: "10px",
       backgroundColor: "#f8e896",
       width: "60%",
@@ -115,7 +117,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-//avatarが左にあるメッセージ（他人）
+//avatar
 export const MessageLeft = (props) => {
   const message = props.message ? props.message : "no message";
   const timestamp = props.timestamp ? props.timestamp : "";
@@ -143,17 +145,37 @@ export const MessageLeft = (props) => {
     </>
   );
 };
-//avatarが右にあるメッセージ（自分）
+//avatar
+
 export const MessageRight = (props) => {
   const classes = useStyles();
   const message = props.message ? props.message : "no message";
   const timestamp = props.timestamp ? props.timestamp : "";
+  const photoURL = props.photoURL ? props.photoURL : "dummy.js";
+  const displayName = props.displayName ? props.displayName : "名無しさん";
   return (
+
     <div className={classes.messageRowRight}>
-      <div className={classes.messageOrange}>
+     
+       <div style={{display:"flex",gap:"10px",position:"relative",left:"67%"}}>
+       <div style={{width:"max-content",position:"relative",top:"10%" }} className={classes.displayName}>
+            {displayName}
+            </div>
+
+        <Avatar
+            alt={displayName}
+            className={classes.orange}
+            src={photoURL}
+          ></Avatar>
+      </div>
+
+       <div className={classes.messageOrange}>
         <p className={classes.messageContent}>{message}</p>
         <div className={classes.messageTimeStampRight}>{timestamp}</div>
       </div>
-    </div>
+
+    
+  
+   </div>
   );
 };
