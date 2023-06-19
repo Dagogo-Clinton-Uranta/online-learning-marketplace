@@ -277,38 +277,38 @@ function SelectedCoursePage() {
     </Grid>
     
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><LogoSwitch/> &nbsp; 1.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><LogoSwitch/> &nbsp; 2.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><LogoSwitch/> &nbsp; 3.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch/> &nbsp; 3.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><LogoSwitch/> &nbsp; 4.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 4.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><LogoSwitch/> &nbsp; 5.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 5.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><LogoSwitch/> &nbsp; 6.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch/> &nbsp; 6.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"4.5%"}}>8:00</p>
     </Grid>
