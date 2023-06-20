@@ -82,7 +82,7 @@ const [noticeFeed,setNoticeFeed] = useState(candidates.length?candidates:rowData
   return (
     <>
       <Helmet>
-        <title> CMC | Dashboard </title>
+        <title> Bon-Ecole | Dashboard </title>
       </Helmet>
 
       <Container maxWidth="xl" >

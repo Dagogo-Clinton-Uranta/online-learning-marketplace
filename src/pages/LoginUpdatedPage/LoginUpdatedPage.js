@@ -20,7 +20,7 @@ const loginPageData = {
   spanText4: "Login",
   spanText5: "Don't have an account yet?",
   spanText6: "Register here",
-  spanText7: "Welcome to CMC Network",
+  spanText7: "Welcome to Bon-Ecole",
   spanText8: "We're on a mission to help MBE & WBE Contractors grow",
   spanText9: "Connect with other contractors, resources and more in our community.",
   spanText10: "Apply to our foundation program & project matching",

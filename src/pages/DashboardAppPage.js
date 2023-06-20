@@ -26,7 +26,7 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | CMC Network </title>
+        <title> Dashboard | Bon-Ecole </title>
       </Helmet>
 
       <Container maxWidth="xl">

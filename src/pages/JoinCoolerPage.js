@@ -78,7 +78,7 @@ useEffect(() => {
   return (
     <>
       <Helmet>
-        <title> CMC | CMC</title>
+        <title> Bon-Ecole | Bon-Ecole</title>
       </Helmet>
 
       <Container maxWidth="xl">

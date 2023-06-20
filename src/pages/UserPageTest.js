@@ -149,7 +149,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> CMC | 404 </title>
+        <title> Bon-Ecole| 404 </title>
       </Helmet>
 
       <Container>

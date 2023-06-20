@@ -15,7 +15,7 @@ export default function InboxPage() {
   return (
     <>
       <Helmet>
-        <title> CMC | INBOX </title>
+        <title>Bon-Ecole | INBOX </title>
       </Helmet>
 
       <Container maxWidth="xl">
