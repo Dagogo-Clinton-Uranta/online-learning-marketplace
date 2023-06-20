@@ -131,7 +131,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", width:"70%",fontSize:"15px",
             paddingRight: '8px', paddingLeft: '8px'}}
-            onClick ={()=>{navigate('/dashboard/chat')}}
+            onClick ={()=>{navigate('/dashboard/other-courses')}}
             >
             S'inscrire maintenant
             </Button>
