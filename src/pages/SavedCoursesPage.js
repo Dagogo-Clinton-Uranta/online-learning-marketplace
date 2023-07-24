@@ -31,7 +31,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import Modal from '@mui/material/Modal';
 
-import {Dexie} from 'dexie'
+
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '../browserDb/db'
 
@@ -67,9 +67,7 @@ function SavedCoursesPage() {
   ]
 
 /*DEXIE MANIPULATION LOGIC */
-const friends = useLiveQuery(
-  () => db.friends.toArray()
-);
+//const friends = useLiveQuery(() => db.friends.toArray(),[]);
 
 /*DEXIE MANIPULATION LOGIC END */
 
