@@ -39,6 +39,11 @@ import SixePage from './pages/SixePage';
 import TerminalesPage from './pages/TerminalesPage';
 import OtherCoursesPage from './pages/OtherCoursesPage';
 import SelectedCoursePage from './pages/SelectedCoursePage';
+import SavedCoursesPage from './pages/SavedCoursesPage';
+
+import ExternalLoginPage from './pages/ExternalLoginPage';
+import ExternalRegisterPage from './pages/ExternalRegisterPage';
+import ProfilePage from './pages/ProfilePage';
 
 export default function Router() {
   const routes = useRoutes([
@@ -53,6 +58,7 @@ export default function Router() {
         { element: <Navigate to="dashboard/home" />, index: true },
         { path: 'home', element: <MobileWelcomePage /> },
         { path: 'feed', element: <FeedPage /> },
+        { path: 'profile', element: <ProfilePage /> },
         { path: 'video', element: <VideoPage /> },
         { path: 'video-details', element: <VideoDetailsPage /> },
         { path: 'docs', element: <DocsPage /> },
@@ -63,6 +69,7 @@ export default function Router() {
         { path: 'popular-courses', element: <PopularCoursesPage /> },
         { path: 'other-courses', element: <OtherCoursesPage /> },
         { path: 'selected-course', element: <SelectedCoursePage /> },
+        { path: 'saved-courses', element: <SavedCoursesPage /> },
         { path: '10e', element: <TenePage /> },
         { path: '6e', element: <SixePage /> },
 
@@ -79,6 +86,23 @@ export default function Router() {
       element: <DashboardLayout />,
       children:[
         {path:'', element:<MobileLoginPage/>}
+      ]
+     
+    },
+
+    {
+      path: 'external-login',
+      element: <DashboardLayout />,
+      children:[
+        {path:'', element:<ExternalLoginPage/>}
+      ]
+     
+    },
+    {
+      path: 'external-register',
+      element: <DashboardLayout />,
+      children:[
+        {path:'', element:<ExternalRegisterPage/>}
       ]
      
     },

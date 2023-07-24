@@ -61,6 +61,8 @@
     "chart.js": "^4.0.1",
     "chartjs-plugin-doughnut-innertext": "^3.1.0",
     "date-fns": "^2.29.3",
+    "dexie": "^3.2.4",
+    "dexie-react-hooks": "^1.1.6",
     "emoji-mart": "3.0.0",
     "firebase": "8.10.1",
     "formik": "^2.2.9",

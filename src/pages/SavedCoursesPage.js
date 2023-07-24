@@ -31,9 +31,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import Modal from '@mui/material/Modal';
 
+import {Dexie} from 'dexie'
+import { useLiveQuery } from 'dexie-react-hooks';
+import db from '../browserDb/db'
 
 
-function SelectedCoursePage() {
+
+function SavedCoursesPage() {
   
   const style = {
     position: 'absolute',
@@ -61,6 +65,14 @@ function SelectedCoursePage() {
     {title:"Chemie",author:"Sidiki...",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
     
   ]
+
+/*DEXIE MANIPULATION LOGIC */
+const friends = useLiveQuery(
+  () => db.friends.toArray()
+);
+
+/*DEXIE MANIPULATION LOGIC END */
+
 
 /*PDF MANIPULATION LOGIC*/
   const [numPages, setNumPages] = useState(2);
@@ -163,12 +175,6 @@ function SelectedCoursePage() {
       >
         <Box sx={style}>
            
-     {/* <iframe src={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>*/}
-       
-        {/*<Document  className="pdfCenter"  file={samplePdf} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page className="pdfCenter" pageNumber={pageNumber} />
-       </Document>*/}
-
        <MobilePDFReader isShowHeader={false} isShowFooter={false} url={samplePdf}/>
      
       
@@ -202,67 +208,13 @@ function SelectedCoursePage() {
       </Modal>
     
 
-    <Grid container xs={12} style={{marginTop:"2rem",padding:"1.5rem", background:`linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),url(${chem})`,borderRadius:"0.5rem",}}>
-      <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"1rem",color:"white"}}>
-      
-      <h3 style={{fontSize:"0.9rem"}}>CHIMIE TSE/TSM</h3>
-      
-       <p style={{marginTop:"0.5rem"}}>
-       Conçu par le MENA en collaboration avec L’INRAP, 
-       ce programme de chimie Terminales est un programme harmonisé.
-       </p>
-
-       <p style={{marginTop:"2rem"}}>
-         <p style={{marginBottom:"1rem"}}> Ce cours couvre ce qui suit:</p>
-        <ol>
-
-          <li>1.) La notion de pH de quantité et concentration</li>
-          <li>2.) Un acide fort, une base forte, un acide </li>
-          <li>3.) La constante d’acidité</li>
-          <li>4.) L’évolution des systèmes</li>
-          <li>5.) La stéréochimie,</li>
-        </ol>
-       </p>
-
-       <p style={{marginTop:"2rem",display:"flex",gap:"1rem",justifyContent:"flex-start"}}>
-        <Avatar alt="placeholder avatar" sx={{ width: 48, height: 48 }} src={profile}/>
-        
-        <p>
-          BAFODE BANGOURA
-          <br/>
-          Terminales
-        </p>
-       </p>
-    
-
-      </Grid>
-    </Grid>
    
-    <center>
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center',alignItems:"center",marginBottom:"2rem",marginTop:"2rem",flexDirection:"column",gap:"1rem",border:"1px solid lightgrey",width:"85%",padding:"1rem",borderRadius:"0.5rem"}}>
    
-    <center >
-    <b style={{fontSize:"1.2rem"}}> 30,000 GNF</b> <s>50,000 GNF</s>
-    </center>
-    
-    <p >
-    Achat unique, accès à toutes les leçons
-    </p>
-
-    <Button   variant="contained" 
-            style={{ backgroundColor: "red",color:"#FFFFFF", fontSize:"0.9rem",width:"100%",
-            padding: '8px'}}
-            
-            >
-            Acheter maintenant
-            </Button>
    
-    </Grid>
-    </center>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"1rem"}}>
     <center>
-    <p style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"0.9rem",borderBottom:"3px solid red",width:"max-content"}}>Curriculum</p>
+    <p style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"0.9rem",borderBottom:"3px solid red",width:"max-content"}}>Cours Enregistrés</p>
     </center>
     </Grid>
 
@@ -271,8 +223,8 @@ function SelectedCoursePage() {
     <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
     
     <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
-      Chapitre 1: Acide et base en solution aqueuese
-     <PictureAsPdfIcon onClick={handleOpenPdf} style={{fontSize:"2.2rem"}} />
+      Chimie Terminales
+    
      </p>
     
     </Grid>
@@ -281,49 +233,41 @@ function SelectedCoursePage() {
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
      <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
      <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
      <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch/> &nbsp; 3.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
      <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 4.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
      <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 5.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
      <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch/> &nbsp; 6.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
 
-    <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
-    <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <PictureAsPdfIcon  onClick={handleOpenPdf} style={{color:"blue",fontSize:"2.2rem"}} />
-     QCM - Chapitre 1
-     </p>
-     <Divider/>
-    
-    </Grid>
 
 
    </Grid>
@@ -334,8 +278,8 @@ function SelectedCoursePage() {
     <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
     
     <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
-      Chapitre 2: Acide et base en solution aqueuese
-     <PictureAsPdfIcon onClick={handleOpenPdf} style={{fontSize:"2.2rem"}} />
+      Histoire Terminales
+    
      </p>
     
     </Grid>
@@ -344,28 +288,20 @@ function SelectedCoursePage() {
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"1.6rem"}}/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
    
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"1.6rem"}}/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
 
 
 
-    <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
-    <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <PictureAsPdfIcon  onClick={handleOpenPdf} style={{color:"blue",fontSize:"2.2rem"}} />
-     QCM - Chapitre 2
-     </p>
-     <Divider/>
-    
-    </Grid>
    </Grid>
        
 
@@ -374,4 +310,4 @@ function SelectedCoursePage() {
   );
 }
 
-export default SelectedCoursePage;
+export default SavedCoursesPage;

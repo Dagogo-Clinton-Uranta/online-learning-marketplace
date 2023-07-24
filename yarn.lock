@@ -5177,6 +5177,16 @@
     "defined" "^1.0.0"
     "minimist" "^1.2.6"
 
+"dexie-react-hooks@^1.1.6":
+  "integrity" "sha512-xSblWtmPwhafWNWMECsW7zMMmBu8goH3QqTxEfwBNoNG1mgsM0oFclippev7ss9HhKICqBwTjgqpscci5Ed4mA=="
+  "resolved" "https://registry.npmjs.org/dexie-react-hooks/-/dexie-react-hooks-1.1.6.tgz"
+  "version" "1.1.6"
+
+"dexie@^3.2.4":
+  "integrity" "sha512-VKoTQRSv7+RnffpOJ3Dh6ozknBqzWw/F3iqMdsZg958R0AS8AnY9x9d1lbwENr0gzeGJHXKcGhAMRaqys6SxqA=="
+  "resolved" "https://registry.npmjs.org/dexie/-/dexie-3.2.4.tgz"
+  "version" "3.2.4"
+
 "dezalgo@^1.0.4":
   "integrity" "sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig=="
   "resolved" "https://registry.npmjs.org/dezalgo/-/dezalgo-1.0.4.tgz"
