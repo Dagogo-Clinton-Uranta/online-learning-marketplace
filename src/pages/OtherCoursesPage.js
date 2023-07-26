@@ -163,6 +163,21 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
     
     </center>
+
+
+    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
+  
+
+     <Button   variant="contained" 
+     style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+     padding: '8px'}}
+     onClick={()=>{navigate('/dashboard/saved-courses')}}
+     >
+     My Courses
+     </Button>
+
+
+</center>
     </Grid>
 
     
