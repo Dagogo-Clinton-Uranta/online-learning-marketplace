@@ -177,7 +177,8 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
      </Button>
 
 
-</center>
+   </center>
+   
     </Grid>
 
     

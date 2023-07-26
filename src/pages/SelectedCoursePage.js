@@ -39,7 +39,7 @@ import db from '../browserDb/db'
 import { blobToDataURL,dataURLToBlob,imgSrcToBlob } from 'blob-util'
 
 function SelectedCoursePage() {
-  
+  const navigate = useNavigate();
   const style = {
     position: 'absolute',
     top: '50%',
@@ -435,6 +435,20 @@ async function saveCourse() {
     </Grid>
    </Grid>
        
+
+   <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"20px",gap:"10px" }}>
+  
+
+  <Button   variant="contained" 
+  style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+  padding: '8px'}}
+  onClick={()=>{navigate('/dashboard/saved-courses')}}
+  >
+  View My Courses
+  </Button>
+
+
+</center>
 
 </Container>
     </>
