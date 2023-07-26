@@ -1,19 +1,52 @@
-import React,{useState,useEffect,useRef} from 'react'
+import React,{useState,useEffect,useRef,useMemo} from 'react'
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import ReactAudioPlayer from 'react-audio-player';
 import soundBytes from 'src/assets/images/soundBytes.mp3'
+import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
-const LogoSwitch = () => {
+
+import { blobToDataURL } from 'blob-util'
+
+const LogoSwitch = ({audioFile}) => {
 
 
     /*AUDIO MANIPULATION LOGIC */
   const audioRef = useRef(true)
   const [play,setPlay] = useState(false)
+  const [urlLink,setUrlLink] = useState('')
+  /*const URLSound = window.URL || window.webkitURL;*/
 
-  useEffect(()=>{
-    console.log("AUDIO REF PROPERTIES are:",audioRef.current)
-  },[])
+  const linkMaker = (blob) => {
+    let link;
+   
+     blobToDataURL(blob).then((url)=>{
+      link =url
+      console.log("final url is",url)
+      setUrlLink(url)
+       return url
+     })
+   
+    
+   
+   }
+
+
+  function blobToUrl (blob) {
+    const urlSound = URL.createObjectURL(blob)
+   //const urlSound=  new File([blob], "incomingaudioclip.wav");
+    
+    console.log("url OF BLOB",urlSound )
+   setUrlLink(urlSound)
+  
+     //return urlSound;
+   }
+   useEffect(()=>{
+    linkMaker(audioFile)
+   },[])
+
+
+   
 
   const playAudio = audio => {
    
@@ -22,7 +55,8 @@ const LogoSwitch = () => {
     if (play){
     audioRef.current.pause()
     }else if(!play){
-      audioRef.current.play(soundBytes)
+      console.log("current.play looks like!:",audioRef.current)
+      audioRef.current.play(urlLink)
     }
 
     
@@ -36,12 +70,14 @@ const LogoSwitch = () => {
 
  {/*AUDIO PLAYER */}
    
-<audio  ref ={audioRef} src={soundBytes}/>
+<audio  ref ={audioRef} src={soundBytes} type="audio/mp3"/>
+
 
 <span onClick={()=>{playAudio()}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
 
     </div>
   )
 }
+ 
 
 export default LogoSwitch

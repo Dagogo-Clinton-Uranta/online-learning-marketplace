@@ -1,8 +1,11 @@
-import React,{useState,useEffect,useRef} from 'react'
+import React,{useState,useEffect,useRef,useMemo} from 'react'
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
 import { styled } from '@mui/system';
 import { findDOMNode } from 'react-dom'
 import { useNavigate } from 'react-router-dom';
+import { blobToDataURL } from 'blob-util'
+
+
 
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
@@ -22,6 +25,8 @@ import { Document, Page ,pdfjs} from 'react-pdf';
 import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
 import LogoSwitch from './LogoSwitch';
+import VideoSwitch from './VideoSwitch';
+
 
 import {AiOutlineDownload} from "react-icons/ai";
 
@@ -35,7 +40,8 @@ import Modal from '@mui/material/Modal';
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '../browserDb/db'
 
-
+import soundBytes from 'src/assets/images/soundBytes.mp3'
+import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
 function SavedCoursesPage() {
   
@@ -67,7 +73,38 @@ function SavedCoursesPage() {
   ]
 
 /*DEXIE MANIPULATION LOGIC */
-//const friends = useLiveQuery(() => db.friends.toArray(),[]);
+const URLSound = window.URL || window.webkitURL;
+const [savedMedia,setSavedMedia] = useState([])
+const [videoLink,setVideoLink] = useState(null)
+const Files = useLiveQuery(() => db.savedCourses.toArray(),[]);
+const linkMaker = (blob) => {
+ let link;
+
+  blobToDataURL(blob).then((url)=>{
+   link =url
+   console.log("final url is",url)
+    
+    setVideoLink(url)
+    
+  })
+
+  
+
+}
+
+useEffect(()=>{
+
+setSavedMedia(Files)
+
+//linkMaker(savedMedia[0].fileObject)
+},[Files])
+
+
+
+
+
+
+
 
 /*DEXIE MANIPULATION LOGIC END */
 
@@ -228,42 +265,52 @@ function SavedCoursesPage() {
     </Grid>
     
 
+ { savedMedia && savedMedia.map((item,index)=>{console.log("NAME OF TEST FILE URL IS:",URL.createObjectURL(item.fileObject)
+    )
+
+   return (
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 1.)</p>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {<VideoSwitch audioFile={URL.createObjectURL(item.fileObject)}/> }&nbsp; {index+1})</p>
+     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
+    </Grid>
+   )
+ }
+)}
+
+  {/*  THIS WAS THE HARD CODED DATA BEFORE I MAPPED FROM DEXIE DB 
+  
+  <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={item.fileObject}/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 2.)</p>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={item.fileObject}/> &nbsp; 3.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch/> &nbsp; 3.)</p>
+     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={item.fileObject}/> &nbsp; 4.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 4.)</p>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={item.fileObject}/> &nbsp; 5.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 5.)</p>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={item.fileObject}/> &nbsp; 6.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
-
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch/> &nbsp; 6.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
-    </Grid>
-
+ 
+ */}
 
    
 
@@ -276,7 +323,7 @@ function SavedCoursesPage() {
     <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
     
     <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
-      Histoire Terminales
+      Histoire Terminaless
     
      </p>
     

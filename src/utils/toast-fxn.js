@@ -21,3 +21,14 @@ toast.error(message, {
   draggable: true,
   progress: undefined
 });
+
+export const notifyInfoFxn = (message,loadingState) =>
+toast.info(message, {
+  position: 'bottom-right',
+  autoClose: 100000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined
+});

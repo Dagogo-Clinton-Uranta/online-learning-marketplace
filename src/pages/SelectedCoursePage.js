@@ -28,10 +28,15 @@ import {AiOutlineDownload} from "react-icons/ai";
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { notifyErrorFxn } from 'src/utils/toast-fxn';
+import { notifyErrorFxn, notifyInfoFxn,notifySuccessFxn } from 'src/utils/toast-fxn';
 import Modal from '@mui/material/Modal';
 
+import soundBytes from 'src/assets/images/soundBytes.mp3'
+import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
+import db from '../browserDb/db'
+
+import { blobToDataURL,dataURLToBlob,imgSrcToBlob } from 'blob-util'
 
 function SelectedCoursePage() {
   
@@ -140,10 +145,72 @@ function SelectedCoursePage() {
 
  
 
+/*SAVING TO BROWSER DATABASE */
+
+const [name,setName] = useState("Sample name")
+//const [fileObject,setFileObj] = useState("ababa namna")
+const [status,setStatus] = useState(false)
+const [view,setView] = useState("Nothing for now")
+const [loading,setLoading] = useState("Not loafing")
+const URLSound = window.URL || window.webkitURL
+
+/*useEffect(async()=>{
+
+ const image= await fetch("https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4")
+
+
+ image.blob().then((final)=>{ setView(final)})
+
+ console.log(view)
+
+ 
+
+},[])*/
 
 
 
 
+
+async function saveCourse() {
+  try {
+    
+    notifyInfoFxn("Downloading, please wait...")
+
+   const res = await fetch("https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4")
+
+  let returnImage= res.blob()
+  
+  
+  returnImage.then((item)=>{setView(item);setLoading(true);
+    }).then(()=>{
+    // THESE ARE PART OF THE dot then above
+   setTimeout(()=>{
+    const id =db.savedCourses.add({
+      courseName:name,
+      fileObject:view
+   
+    });
+
+    setStatus(`Media file ${name} successfully added. Got id ${id}`);
+    setLoading(false)
+    notifySuccessFxn("Successfully Downloaded !")
+    console.log("status is now:",status)
+    console.log("loading is now:",loading)
+  },800)
+
+})
+  
+
+  } catch (error) {
+    setStatus(`Failed to add ${name}: ${error}`);
+    console.log("status is now:",status)
+
+  }
+}
+
+
+
+/*SAVING TO BROWSER DATABASE END */
 
   return (
     <>
@@ -152,7 +219,7 @@ function SelectedCoursePage() {
 
 
 
-
+  
 
      {/*PDF MODAL */}
     <Modal
@@ -278,40 +345,40 @@ function SelectedCoursePage() {
     </Grid>
     
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 1.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 2.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch/> &nbsp; 3.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={soundBytes2}/> &nbsp; 3.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 4.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 4.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch/> &nbsp; 5.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 5.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
     </Grid>
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch/> &nbsp; 6.)</p>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={soundBytes2}/> &nbsp; 6.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
     </Grid>
 
 
@@ -341,17 +408,17 @@ function SelectedCoursePage() {
     </Grid>
     
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"1.6rem"}}/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
     </Grid>
 
    
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
      <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"1.6rem"}}/> &nbsp; 2.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload style={{fontSize:"1.5rem"}}/></p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
     </Grid>
 
 

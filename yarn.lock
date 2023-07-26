@@ -3987,6 +3987,16 @@
   "resolved" "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
   "version" "2.2.0"
 
+"blob-polyfill@^7.0.20220408":
+  "integrity" "sha512-oD8Ydw+5lNoqq+en24iuPt1QixdPpe/nUF8azTHnviCZYu9zUC+TwdzIp5orpblJosNlgNbVmmAb//c6d6ImUQ=="
+  "resolved" "https://registry.npmjs.org/blob-polyfill/-/blob-polyfill-7.0.20220408.tgz"
+  "version" "7.0.20220408"
+
+"blob-util@^2.0.2":
+  "integrity" "sha512-T7JQa+zsXXEa6/8ZhHcQEW1UFfVM49Ts65uBkFL6fz2QmrElqmbajIDJvuA0tEhRe5eIjpV9ZF+0RfZR9voJFQ=="
+  "resolved" "https://registry.npmjs.org/blob-util/-/blob-util-2.0.2.tgz"
+  "version" "2.0.2"
+
 "bluebird@^3.5.5":
   "integrity" "sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg=="
   "resolved" "https://registry.npmjs.org/bluebird/-/bluebird-3.7.2.tgz"
@@ -8818,6 +8828,11 @@
     "lower-case" "^2.0.2"
     "tslib" "^2.0.3"
 
+"node-blob@^0.0.2":
+  "integrity" "sha512-82wiGzMht96gPQDUYaZBdZEVvYD9aEhU6Bt9KLCr4rADZPRd7dQVY2Yj0ZG/1vp4DhVkL49nJT/M3CiMTAt3ag=="
+  "resolved" "https://registry.npmjs.org/node-blob/-/node-blob-0.0.2.tgz"
+  "version" "0.0.2"
+
 "node-emoji@^1.8.1":
   "integrity" "sha512-wo2DpQkQp7Sjm2A0cq+sN7EHKO6Sl0ctXeBdFZrL9T9+UywORbufTcTZxom8YqpLQt/FqNMUkOpkZrJVYSKD3A=="
   "resolved" "https://registry.npmjs.org/node-emoji/-/node-emoji-1.11.0.tgz"
@@ -8854,6 +8869,11 @@
   "integrity" "sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w=="
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-2.0.10.tgz"
   "version" "2.0.10"
+
+"node-wav@^0.0.2":
+  "integrity" "sha512-M6Rm/bbG6De/gKGxOpeOobx/dnGuP0dz40adqx38boqHhlWssBJZgLCPBNtb9NkrmnKYiV04xELq+R6PFOnoLA=="
+  "resolved" "https://registry.npmjs.org/node-wav/-/node-wav-0.0.2.tgz"
+  "version" "0.0.2"
 
 "nopt@^5.0.0":
   "integrity" "sha512-Tbj67rffqceeLpcRXrT7vKAN8CwfPeIBgM7E6iBkmKLV7bEMwpGgYLGv0jACUsECaa/vuxP0IjEont6umdMgtQ=="
@@ -12605,6 +12625,16 @@
   dependencies:
     "glob-to-regexp" "^0.4.1"
     "graceful-fs" "^4.1.2"
+
+"wav-blob-util@^1.0.1", "wav-blob-util@^1.0.21":
+  "integrity" "sha512-wOOyUXU2jjMWtt2FzislKar1IUCCBhz97Xx0KFR4CfJl0a2xZp6nr9gbUC5t+S2/n2rIQMn6bi3Gd5Xn28zUFQ=="
+  "resolved" "https://registry.npmjs.org/wav-blob-util/-/wav-blob-util-1.0.21.tgz"
+  "version" "1.0.21"
+  dependencies:
+    "blob-polyfill" "^7.0.20220408"
+    "node-blob" "^0.0.2"
+    "node-wav" "^0.0.2"
+    "wav-blob-util" "^1.0.1"
 
 "wbuf@^1.1.0", "wbuf@^1.7.3":
   "integrity" "sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA=="
