@@ -25,7 +25,7 @@ toast.error(message, {
 export const notifyInfoFxn = (message,loadingState) =>
 toast.info(message, {
   position: 'bottom-right',
-  autoClose: 100000,
+  autoClose: 13000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,

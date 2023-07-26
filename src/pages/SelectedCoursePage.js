@@ -150,7 +150,7 @@ function SelectedCoursePage() {
 const [name,setName] = useState("Sample name")
 //const [fileObject,setFileObj] = useState("ababa namna")
 const [status,setStatus] = useState(false)
-const [view,setView] = useState("Nothing for now")
+const [view,setView] = useState(null)
 const [loading,setLoading] = useState("Not loafing")
 const URLSound = window.URL || window.webkitURL
 
@@ -174,20 +174,20 @@ const URLSound = window.URL || window.webkitURL
 async function saveCourse() {
   try {
     
-    notifyInfoFxn("Downloading, please wait...")
+    notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
 
    const res = await fetch("https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4")
 
   let returnImage= res.blob()
   
   
-  returnImage.then((item)=>{setView(item);setLoading(true);
-    }).then(()=>{
+  returnImage.then((item)=>{setView(item);setLoading(true);return item
+    }).then((blink)=>{
     // THESE ARE PART OF THE dot then above
    setTimeout(()=>{
     const id =db.savedCourses.add({
       courseName:name,
-      fileObject:view
+      fileObject:view !== null?view:blink
    
     });
 
