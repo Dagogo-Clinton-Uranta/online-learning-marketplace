@@ -78,7 +78,7 @@ const allIncubatorVideos = data?.length ? (
   return (
     <>
       <Helmet>
-        <title> Incubator | Videos </title>
+        <title>Bon Ecole </title>
       </Helmet>
       <Container maxWidth="xl">
         
