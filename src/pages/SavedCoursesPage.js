@@ -76,7 +76,7 @@ function SavedCoursesPage() {
 const URLSound = window.URL || window.webkitURL;
 const [savedMedia,setSavedMedia] = useState([])
 const [videoLink,setVideoLink] = useState(null)
-const Files = useLiveQuery(() => db.savedCourses.toArray(),[]);
+let Files = useLiveQuery(() => db.savedCourses.toArray(),[]);
 const linkMaker = (blob) => {
  let link;
 
@@ -93,6 +93,7 @@ const linkMaker = (blob) => {
 }
 
 useEffect(()=>{
+
 
 setSavedMedia(Files)
 
@@ -258,25 +259,28 @@ setSavedMedia(Files)
     <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
     
     <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
-      Chimie Terminales
+      Downloads
     
      </p>
     
     </Grid>
     
 
- { savedMedia && savedMedia.map((item,index)=>{console.log("NAME OF TEST FILE URL IS:",URL.createObjectURL(item.fileObject)
-    )
-
+ { savedMedia && savedMedia.map((item,index)=>{
    return (
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+    <div key={index}>
+    <Grid item xs={12}   style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
      <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {<VideoSwitch audioFile={URL.createObjectURL(item.fileObject)}/> }&nbsp; {index+1})</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
      <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
+    </div>
    )
  }
 )}
+{ !savedMedia && 
+  <center style={{ display: 'flex',gap:"0.5rem",alignItems:"center",justifyContent:"center", padding:"1rem"}}>No downloads for now.</center>
+}
 
   {/*  THIS WAS THE HARD CODED DATA BEFORE I MAPPED FROM DEXIE DB 
   
@@ -318,11 +322,11 @@ setSavedMedia(Files)
    </Grid>
 
 
-   <Grid container xs={12} style={{paddingTop:"1.5rem"}}>
+   <p style={{paddingTop:"1.5rem",paddingBottom:"1.5rem"}}>
    
-    <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
+    {/*  <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
     
-    <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
+  <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
       Histoire Terminaless
     
      </p>
@@ -343,11 +347,11 @@ setSavedMedia(Files)
      <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
     </Grid>
 
-
+  */}
 
 
    
-   </Grid>
+   </p>
        
 
 </Container>

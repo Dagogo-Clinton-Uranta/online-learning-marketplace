@@ -150,22 +150,27 @@ function SelectedCoursePage() {
 const [name,setName] = useState("Sample name")
 //const [fileObject,setFileObj] = useState("ababa namna")
 const [status,setStatus] = useState(false)
-const [view,setView] = useState(null)
+const [view,setView] = useState(new Blob())
 const [loading,setLoading] = useState("Not loafing")
 const URLSound = window.URL || window.webkitURL
 
-/*useEffect(async()=>{
+useEffect(()=>{
 
+ const callFunc = async()=>{
  const image= await fetch("https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4")
 
 
- image.blob().then((final)=>{ setView(final)})
+const blobby = image.blob()
 
- console.log(view)
+blobby.then((final)=>{ setView(final)})
 
+ console.log("first view is:",view)
+  }
+
+callFunc()
  
 
-},[])*/
+},[])
 
 
 
