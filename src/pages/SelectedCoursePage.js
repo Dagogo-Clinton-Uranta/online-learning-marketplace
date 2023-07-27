@@ -154,26 +154,6 @@ const [view,setView] = useState(new Blob())
 const [loading,setLoading] = useState("Not loafing")
 const URLSound = window.URL || window.webkitURL
 
-useEffect(()=>{
-
- const callFunc = async()=>{
- const image= await fetch("https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4")
-
-
-const blobby = image.blob()
-
-blobby.then((final)=>{ setView(final)})
-
- console.log("first view is:",view)
-  }
-
-callFunc()
- 
-
-},[])
-
-
-
 
 
 async function saveCourse() {
@@ -186,12 +166,33 @@ async function saveCourse() {
   let returnImage= res.blob()
   
   
-  returnImage.then((item)=>{setView(item);setLoading(true);
-    }).then(()=>{
-    // THESE ARE PART OF THE dot then above
-   setTimeout(()=>{
+  returnImage.then((item)=>{ setView(item);setLoading(true);
+    let second = item
+
+
+      const id =db.savedCourses.add({
+        courseName:"Video 1",
+        fileObject:item
+     
+      });
+  
+      setStatus(`Media file ${name} successfully added. Got id ${id}`);
+      setLoading(false)
+      notifySuccessFxn("Successfully Downloaded !")
+      console.log("status is now:",status)
+      console.log("loading is now:",loading)
+
+
+    return second
+    })/*.then((third)=>{
+      setView(third)
+}
+  ).then(()=>{
+  setTimeout(()=>
+  
+  {if(view.size > 0 ){
     const id =db.savedCourses.add({
-      courseName:name,
+      courseName:"Video 1",
       fileObject:view
    
     });
@@ -201,9 +202,16 @@ async function saveCourse() {
     notifySuccessFxn("Successfully Downloaded !")
     console.log("status is now:",status)
     console.log("loading is now:",loading)
-  },2600)
+  }
+  else{
+    notifyErrorFxn("Something went wrong, please try again.")
+  }
+ } , 4000)
 
-})
+
+
+
+})*/
   
 
   } catch (error) {

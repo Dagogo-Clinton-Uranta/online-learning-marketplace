@@ -76,7 +76,7 @@ function SavedCoursesPage() {
 const URLSound = window.URL || window.webkitURL;
 const [savedMedia,setSavedMedia] = useState([])
 const [videoLink,setVideoLink] = useState(null)
-let Files = useLiveQuery(() => db.savedCourses.toArray(),[]);
+let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
 const linkMaker = (blob) => {
  let link;
 
@@ -266,7 +266,7 @@ setSavedMedia(Files)
     </Grid>
     
 
- { savedMedia && savedMedia.map((item,index)=>{
+ { savedMedia && savedMedia.filter((item)=>(item.fileObject.size > 0)).map((item,index)=>{ console.log("the created courses URL",item.fileObject)
    return (
     <div key={index}>
     <Grid item xs={12}   style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
@@ -278,7 +278,7 @@ setSavedMedia(Files)
    )
  }
 )}
-{ !savedMedia && 
+{ savedMedia && savedMedia.length === 0 &&
   <center style={{ display: 'flex',gap:"0.5rem",alignItems:"center",justifyContent:"center", padding:"1rem"}}>No downloads for now.</center>
 }
 
