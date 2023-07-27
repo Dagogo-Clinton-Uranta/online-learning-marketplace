@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
@@ -22,6 +22,7 @@ import {AiOutlineLock} from 'react-icons/ai'
 // const NAV_WIDTH = 280;
 const NAV_WIDTH = 250;
 
+
 const StyledAccount = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -39,6 +40,7 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
+  
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -62,7 +64,7 @@ export default function Nav({ openNav, onCloseNav }) {
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5,display:'flex',justifyContent:"center" }}>
-        <Link underline="none">
+        <Link  underline="none">
           {/* <StyledAccount>
             <Avatar src={account.photoURL} alt="photoURL" />
 
@@ -76,7 +78,7 @@ export default function Nav({ openNav, onCloseNav }) {
               </Typography>
             </Box>
           </StyledAccount> */}
-          <img src={CMCLOGO} width="60" height="60"/>
+          <img   src={CMCLOGO} width="60" height="60"/>
         </Link>
       </Box>
 

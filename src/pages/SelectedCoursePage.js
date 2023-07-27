@@ -181,13 +181,13 @@ async function saveCourse() {
   let returnImage= res.blob()
   
   
-  returnImage.then((item)=>{setView(item);setLoading(true);return item
-    }).then((blink)=>{
+  returnImage.then((item)=>{setView(item);setLoading(true);
+    }).then(()=>{
     // THESE ARE PART OF THE dot then above
    setTimeout(()=>{
     const id =db.savedCourses.add({
       courseName:name,
-      fileObject:view !== null?view:blink
+      fileObject:view
    
     });
 
@@ -196,13 +196,14 @@ async function saveCourse() {
     notifySuccessFxn("Successfully Downloaded !")
     console.log("status is now:",status)
     console.log("loading is now:",loading)
-  },800)
+  },2600)
 
 })
   
 
   } catch (error) {
     setStatus(`Failed to add ${name}: ${error}`);
+    notifyErrorFxn(`Failed to add media: please check your connction and try again.`)
     console.log("status is now:",status)
 
   }
