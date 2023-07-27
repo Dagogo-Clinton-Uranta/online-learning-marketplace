@@ -78,7 +78,7 @@ export default function Nav({ openNav, onCloseNav }) {
               </Typography>
             </Box>
           </StyledAccount> */}
-          <img   src={CMCLOGO} width="60" height="60"/>
+          <img   src={CMCLOGO} width="130" height="90"/>
         </Link>
       </Box>
 
@@ -108,6 +108,7 @@ export default function Nav({ openNav, onCloseNav }) {
       {isDesktop ? (
          <>
         {<Drawer
+        anchor='right'
           open={openNav}
           onClose={onCloseNav}
           ModalProps={{
@@ -137,6 +138,7 @@ export default function Nav({ openNav, onCloseNav }) {
         </>
       ) : (
         <Drawer
+        anchor='right'
           open={openNav}
           onClose={onCloseNav}
           ModalProps={{
