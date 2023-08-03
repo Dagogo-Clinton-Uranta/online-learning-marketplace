@@ -410,7 +410,7 @@ async function saveCourse() {
     <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <PictureAsPdfIcon  onClick={handleOpenPdf} style={{color:"blue",fontSize:"2.2rem"}} />
+    <span onClick={handleOpenPdf}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
      QCM - Chapitre 1
      </p>
      <Divider/>
@@ -452,7 +452,7 @@ async function saveCourse() {
     <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
     <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <PictureAsPdfIcon  onClick={handleOpenPdf} style={{color:"blue",fontSize:"2.2rem"}} />
+    <span onClick={handleOpenPdf}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
      QCM - Chapitre 2
      </p>
      <Divider/>
