@@ -25,6 +25,7 @@ import SettingsPage from './pages/SettingsPage';
 //import CreateCoolerPage from './pages/CreateCoolerPage';
 import Login from './pages/Login';
 import MobileLoginPage from './pages/MobileLoginPage';
+import MobileRegisterPage from './pages/MobileRegisterPage';
 import MobileChatPage from './pages/MobileChatPage';
 import MobileWelcomePage from './pages/MobileWelcomePage';
 import LoginUpdatedPage from './pages/LoginUpdatedPage/LoginUpdatedPage'
@@ -55,7 +56,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="dashboard/home" />, index: true },
+        { element: <Navigate to="login" />, index: true },
         { path: 'home', element: <MobileWelcomePage /> },
         { path: 'feed', element: <FeedPage /> },
         { path: 'profile', element: <ProfilePage /> },
@@ -89,6 +90,14 @@ export default function Router() {
       ]
      
     },
+    {
+      path: 'register',
+      element: <DashboardLayout />,
+      children:[
+        {path:'', element:<MobileRegisterPage/>}
+      ]
+     
+    },
 
     {
       path: 'external-login',
@@ -119,7 +128,7 @@ export default function Router() {
       element: <SimpleLayout />,
       children: [
         // { element: <Navigate to="/login" />, index: true },
-        { element: <Navigate to="/dashboard/home" />, index: true },
+        { element: <Navigate to="/login" />, index: true },
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],

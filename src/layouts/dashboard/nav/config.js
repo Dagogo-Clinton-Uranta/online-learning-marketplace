@@ -22,6 +22,12 @@ const navConfig = [
     icon:<AiOutlineInbox/>
     // icon: icon('ic_analytics'),
   },
+  {
+    title: 'My Profle',
+    path: '/dashboard/profile',
+    icon:<AiOutlineInbox/>
+    // icon: icon('ic_analytics'),
+  },
  
   {
     title: `All Courses`,

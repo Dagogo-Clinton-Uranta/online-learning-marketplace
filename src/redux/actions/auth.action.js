@@ -40,21 +40,16 @@ export const signup = (user,navigate) => async (dispatch) => {
   ).then((res)=>{
      db.collection('users').doc(res.user.uid).set({
       uid: res.user.uid,
-      firstName: user.fName,
-      lastName:user.lName,
+      fullName: user.fullName,
       email: user.email,
-      phone: user.phone,
       password: user.password,
+      facebook:user.facebook,
+      pvExamen:user.pvExamen,
+      telephone:user.telephone,
+      classOption:user.classOption,
+      schoolOrigin:user.schoolOrigin,
       registeredOn:new Date(),
-      businessName:user.bName,
-      companySize:user.companySize, 
-      regType:user.regType, 
-      country:user.country,
-      certified:user.certified,
-      state:user.state,
-      industry:user.industry,
-      city:user.city,
-       profileImage:'src/assets/images/rec.png'
+     
     })
     
 

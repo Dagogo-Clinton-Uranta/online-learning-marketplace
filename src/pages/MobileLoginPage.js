@@ -1,5 +1,5 @@
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
-import { useRef, useState } from 'react';
+import { useEffect,useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
@@ -7,8 +7,11 @@ import startQuote from 'src/assets/images/startQuote.png'
 import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
+import Alert from '@mui/material/Alert';
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import { signin} from 'src/redux/actions/auth.action';
+import { logoutSuccess} from 'src/redux/reducers/auth.slice';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -29,15 +32,37 @@ function MobileLoginPage() {
   const [confirmPassword,setConfirmPassword] =useState('')
   const [companySize,setCompanySize] =useState('')
 
- 
+  const { user,error } = useSelector((state) => state.auth);
 
-  /*const [releaseDate,setReleaseDate] =useState('')
-  const [director,setDirector] =useState('')
-  const [cast,setCast] =useState([])
-  const [description,setDescription] =useState('')
-  const [trivia,setTrivia] =useState('')*/
+  const [email,setEmail] = useState('')
+ 
+  const [password,setPassword] = useState('')
   
 
+  const existingUser = 
+  {
+    email,
+    password 
+  }
+
+
+ 
+  console.log("error is",error)
+
+  useEffect(()=>{
+     if(user){
+      navigate('/dashboard/home')
+     }
+  },[])
+
+
+  const LoginFxn = (user,navigate) =>{
+    if(!email  || !password){
+      notifyErrorFxn("Please make sure to fill in all fields")
+    }else{
+      dispatch(signin(user,navigate))
+    }
+  }
 
 
   const handleselectedFile = event => {
@@ -107,7 +132,19 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
 
-      <Grid container item xs={12} spacing={2} style={{ display: 'flex',flexDirection:"column" ,justifyContent: 'center',marginTop:"80px",marginBottom:"40px" }}>
+      {error && error.length &&  <div><Alert
+        severity="error" color="error"
+        action={
+          <Button color="inherit" size="small" style={{ fontSize: '15px' }} onClick={() => {dispatch(logoutSuccess())}}>
+            <b>X</b>
+          </Button>
+        }
+      >
+        <p style={{ fontSize: '14px' }}><b>{error}</b></p>
+      </Alert><br/></div>}
+
+
+      <Grid container item xs={12} spacing={2} style={{ display: 'flex',flexDirection:"column" ,justifyContent: 'center',marginTop:error?"20px":"80px",marginBottom:"40px" }}>
          
       <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
      <TextField
@@ -116,6 +153,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           label="Email address"
           type="email"
           autoComplete="current-email"
+          onChange={(e)=>{setEmail(e.target.value)}}
         />
       </Grid>  
      
@@ -129,6 +167,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           label="Password"
           type="password"
           autoComplete="current-password"
+          onChange={(e)=>{setPassword(e.target.value)}}
         />
       </Grid> 
          
@@ -140,17 +179,33 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"75%",height:"3rem",fontSize:"15px",
             }}
-            onClick ={()=>{navigate('/dashboard/home')}}
+            onClick ={()=>{LoginFxn(existingUser,navigate)}}
+
             >
-            SUBMIT
+            LOGIN
             </Button>
          
           
             <br/><br/><br/>
   
           </Grid>
-          
+
+
+   
+          <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"10px"}}>
+         <br/>
+       <center>
+        <p> Vous n'avez pas déjà un compte? &nbsp; <span onClick ={()=>{navigate('/register')}} style={{color:"red",cursor:"pointer",textDecoration:"underline"}}>S'inscrire</span> </p>
+      </center>
+
         </Grid>
+
+
+
+
+
+          
+    </Grid>
 
     
       

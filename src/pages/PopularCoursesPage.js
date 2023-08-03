@@ -44,7 +44,14 @@ function PopularCoursesPage() {
     
   ]
 
-
+  const { user,error } = useSelector((state) => state.auth);
+  console.log("error is",error)
+  
+  useEffect(()=>{
+     if(!user){
+      navigate('/login')
+     }
+  },[])
 
   return (
     <>

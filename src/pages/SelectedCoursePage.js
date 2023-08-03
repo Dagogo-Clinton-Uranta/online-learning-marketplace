@@ -67,6 +67,17 @@ function SelectedCoursePage() {
     
   ]
 
+/*login check */
+  const { user,error } = useSelector((state) => state.auth);
+  console.log("error is",error)
+  
+  useEffect(()=>{
+     if(!user){
+      navigate('/login')
+     }
+  },[])
+/*login check end */
+
 /*PDF MANIPULATION LOGIC*/
   const [numPages, setNumPages] = useState(2);
   const [pageNumber, setPageNumber] = useState(1);

@@ -1,5 +1,5 @@
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
-import { useRef, useState } from 'react';
+import { useEffect,useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
@@ -80,6 +80,15 @@ function OtherCoursesPage() {
     setFileSize2(event.target.files[0].size)
 };*/
 
+
+const { user,error } = useSelector((state) => state.auth);
+console.log("error is",error)
+
+useEffect(()=>{
+   if(!user){
+    navigate('/login')
+   }
+},[])
 
 
 const uploadMovie = (movieData = 0,image = 0,) => {
