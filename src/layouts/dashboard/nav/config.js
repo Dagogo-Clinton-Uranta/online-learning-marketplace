@@ -25,17 +25,11 @@ const navConfig = [
   {
     title: 'My Profle',
     path: '/dashboard/profile',
-    icon:<AiOutlineInbox/>
+    icon:<CgToolbox/>
     // icon: icon('ic_analytics'),
   },
  
-  {
-    title: `All Courses`,
-     path: '/dashboard/popular-courses',
-    // icon: icon('ic_msg'),
-    //iconLabel: 'msg',
-    icon:<CgToolbox/>
-  },
+  
   {
     title: `Chat`,
      //path: '/dashboard/popular-courses',
