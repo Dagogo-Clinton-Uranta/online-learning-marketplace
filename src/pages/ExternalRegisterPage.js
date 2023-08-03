@@ -144,7 +144,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
             }}
-            onClick ={()=>{navigate('/login')}}
+            onClick ={()=>{navigate('/register')}}
             >
             S'inscrire avec Email
             </Button>
@@ -161,7 +161,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"40px"}}>
     <center>
     
-    <p style={{textDecoration:"underline"}} onClick ={()=>{navigate('/login')}}>En vous inscrivant, vous acceptez nos conditions generales d'utilisation et notre politique de confidentialite </p>
+    <p style={{textDecoration:"underline"}} onClick ={()=>{navigate('/register')}}>En vous inscrivant, vous acceptez nos conditions generales d'utilisation et notre politique de confidentialite </p>
    
    <br/>
    
