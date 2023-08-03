@@ -195,7 +195,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"10px"}}>
          <br/>
        <center>
-        <p> Vous n'avez pas déjà un compte? &nbsp; <span onClick ={()=>{navigate('/register')}} style={{color:"red",cursor:"pointer",textDecoration:"underline"}}>S'inscrire</span> </p>
+        <p> Vous n'avez pas déjà un compte? &nbsp; <span onClick ={()=>{navigate('/external-register')}} style={{color:"red",cursor:"pointer",textDecoration:"underline"}}>S'inscrire</span> </p>
       </center>
 
         </Grid>
