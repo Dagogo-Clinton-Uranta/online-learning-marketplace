@@ -56,7 +56,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="login" />, index: true },
+        { element: <Navigate to="external-login" />, index: true },
         { path: 'home', element: <MobileWelcomePage /> },
         { path: 'feed', element: <FeedPage /> },
         { path: 'profile', element: <ProfilePage /> },
@@ -128,7 +128,7 @@ export default function Router() {
       element: <SimpleLayout />,
       children: [
         // { element: <Navigate to="/login" />, index: true },
-        { element: <Navigate to="/login" />, index: true },
+        { element: <Navigate to="/external-login" />, index: true },
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],

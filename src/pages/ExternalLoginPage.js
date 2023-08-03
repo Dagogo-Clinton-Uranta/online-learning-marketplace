@@ -1,5 +1,5 @@
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
-import { useRef, useState } from 'react';
+import { useRef, useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
@@ -29,7 +29,7 @@ function ExternalLoginPage() {
   const [confirmPassword,setConfirmPassword] =useState('')
   const [companySize,setCompanySize] =useState('')
 
- 
+  const { user,error } = useSelector((state) => state.auth);
 
   /*const [releaseDate,setReleaseDate] =useState('')
   const [director,setDirector] =useState('')
@@ -38,6 +38,11 @@ function ExternalLoginPage() {
   const [trivia,setTrivia] =useState('')*/
   
 
+  useEffect(()=>{
+    if(user){
+     navigate('/dashboard/home')
+    }
+ },[])
 
 
   const handleselectedFile = event => {
