@@ -159,7 +159,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
 
-      {error  && <div><Alert
+      {error && <div><Alert
         severity="error" color="error"
         action={
           <Button color="inherit" size="small" style={{ fontSize: '15px' }} onClick={() => {dispatch(logoutSuccess())}}>
@@ -284,6 +284,10 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
    <p style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center" ,width:"95%"}}>  <span>REGISTRATION (2)</span> <FaCaretDown/></p>
    <Divider variant="fullWidth" sx={{backgroundColor:"#000000",width:"100%"}}  />
     
+
+
+
+
    <Grid item xs={12} md={8} lg={6}>
     
       <Typography variant="p" component="p">
@@ -424,22 +428,27 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
      </Grid>
 
-
    
-      
     </Grid>
 
 
-    
 
-
-
+{error && <div><Alert
+        severity="error" color="error"
+        action={
+          <Button color="inherit" size="small" style={{ fontSize: '15px' }} onClick={() => {dispatch(logoutSuccess())}}>
+            <b>X</b>
+          </Button>
+        }
+      >
+        <p style={{ fontSize: '14px' }}><b>{error.errorMessage}</b></p>
+      </Alert><br/></div>}
 
 
 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"10px"}}>
          <br/>
        <center>
-       <p> Vous avez déjà un compte? &nbsp; <span onClick ={()=>{navigate('/login')}}  style={{color:"red",cursor:"pointer",textDecoration:"underline"}}>Se connecter</span> </p>
+       <p> Vous avez déjà un compte? &nbsp; <span onClick ={()=>{navigate('/external-login')}}  style={{color:"red",cursor:"pointer",textDecoration:"underline"}}>Se connecter</span> </p>
       </center>
 
         </Grid>
