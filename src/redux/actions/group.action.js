@@ -866,7 +866,8 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
  /*============== FETCH THE CHAPTERS OF A PARTICULAR SUBJECT================ */
  /*============== AND ALSO FETCH THE LESSONS OF ALL CHAPTERS =============== */
  export const fetchSubjectChapters = (uid) => async (dispatch) => {
- 
+  globalLessonsArray = []
+
   db.collection("chapters")
    .where("sectionId", "==", uid )
    .get()
@@ -878,7 +879,7 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
      dispatch(saveSubjectChapters(chaptersArray));
      return chaptersArray
    } else {
-     
+    dispatch(saveSubjectChapters([]));
        console.log(`No chapters for the subject; ${uid}`);
        return []
    }
@@ -891,8 +892,6 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
   chaptersArray.forEach((item)=>{
  dispatch(fetchVideosOneChapter(item.uid))
    
-  
-
   })
 
 

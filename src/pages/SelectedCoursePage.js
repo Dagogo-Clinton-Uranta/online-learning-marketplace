@@ -64,8 +64,8 @@ function SelectedCoursePage() {
   const [allVids,setAllVids] =  React.useState([]);
 
   const { subjectChapters,allChapterLessons,presentSubject } = useSelector((state) => state.group);
-  console.log("the present SAVED  subject is:",presentSubject)
-  console.log("the chapters are:",subjectChapters)
+  //console.log("the present SAVED  subject is:",presentSubject)
+  console.log("the chapters for this subject are:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
 
@@ -358,9 +358,10 @@ console.log("subjectList is:",subjectList)
 
 
 
- {subjectChapters.map((chapter)=>(
+ {subjectChapters && subjectChapters.length >0?
+ subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)).map((chapter,index)=>(
   <>
-<Grid item xs={12} style={{paddingTop:"0.5rem"}}>
+<Grid item xs={12} style={{paddingTop:index==0?"2rem":"4rem",paddingBottom:"1rem"}}>
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.title}
@@ -370,14 +371,17 @@ console.log("subjectList is:",subjectList)
 </Grid>
  
 
-{allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).map((lesson,index)=>(
+{ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).length?
+
+allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>((a.lessonNumber && b.lessonNumber)?(a.lessonNumber - b.lessonNumber):1)).map((lesson,index)=>(
 
  <>
- {lesson.duration !== "quiz"?
+
+{lesson.duration !== "quiz"?
  (
-  <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={soundBytes2}/> &nbsp; {index + 1}.)</p>
-  <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 && "..."}`}</p>
+  <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={soundBytes2}/> &nbsp; {index + 1}.</p>
+  <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
   <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>
  )
@@ -393,110 +397,38 @@ console.log("subjectList is:",subjectList)
 
 </Grid>
 )
-
 }
+
+
 </>
 
 ))
+:
+
+<Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+
+<p style={{display:"inline"}}> No lessons for this chapter</p>
+
+</Grid>
 }
 </>
 
 
- ))} 
+ )):
+ 
+ 
+ <Grid item xs={12} style={{paddingTop:"4rem",paddingBottom:"1rem"}}>
+    
+<p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
+  {"NO CHAPTERS AVAILABLE FOR THIS SUBJECT"}
+ </p>
+
+</Grid>
+ 
+ 
+ } 
   </Grid>  
     
-{/*
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 1.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
-    </Grid>
-
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 2.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
-    </Grid>
-
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={soundBytes2}/> &nbsp; 3.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
-    </Grid>
-
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p  style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 4.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
-    </Grid>
-
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 5.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
-    </Grid>
-
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={soundBytes2}/> &nbsp; 6.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
-    </Grid>
-
-
-    <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
-   
-    <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <span onClick={handleOpenPdf}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
-     QCM - Chapitre 1
-     </p>
-     <Divider/>
-    
-    </Grid>
-
-
-   </Grid>
-
-
-   <Grid container xs={12} style={{paddingTop:"1.5rem"}}>
-   
-    <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
-    
-    <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
-      Chapitre 2: Acide et base en solution aqueuese
-     <PictureAsPdfIcon onClick={handleOpenPdf} style={{fontSize:"2.2rem"}} />
-     </p>
-    
-    </Grid>
-    
-
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"1.6rem"}}/> &nbsp; 1.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
-    </Grid>
-
-   
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"1.6rem"}}/> &nbsp; 2.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
-    </Grid>
-
-
-
-
-    <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
-   
-    <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-    <span onClick={handleOpenPdf}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
-     QCM - Chapitre 2
-     </p>
-     <Divider/>
-    
-    </Grid>
-   </Grid>
-     */}  
-
    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"20px",gap:"10px" }}>
   
 
