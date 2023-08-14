@@ -31,11 +31,7 @@ function ExternalLoginPage() {
 
   const { user,error } = useSelector((state) => state.auth);
 
-  /*const [releaseDate,setReleaseDate] =useState('')
-  const [director,setDirector] =useState('')
-  const [cast,setCast] =useState([])
-  const [description,setDescription] =useState('')
-  const [trivia,setTrivia] =useState('')*/
+  
   
 
   useEffect(()=>{

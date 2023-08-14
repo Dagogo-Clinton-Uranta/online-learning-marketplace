@@ -6,8 +6,12 @@ const initialState = {
        allCategories:[],
        allSectionVideos:[],
        categoryVideos:[],
+       categorySubjects:[],
+       subjectChapters:[],
+       presentSubject:{},
        presentOpenMenu:null,
        requestedSection:null,
+       allChapterLessons:[],
        nextUpVideo:null,
        lastWatchedVideo:null,
        publicGroups: [], 
@@ -37,6 +41,18 @@ const groupSlice = createSlice({
 
 saveCategoryVideos: (state, action) => {
   state.categoryVideos = action.payload;
+},
+saveCategorySubjects: (state, action) => {
+  state.categorySubjects = action.payload;
+},
+savePresentSubject: (state, action) => {
+  state.presentSubject = action.payload;
+},
+saveSubjectChapters: (state, action) => {
+  state.subjectChapters = action.payload;
+},
+saveAllChapterLessons: (state, action) => {
+  state.allChapterLessons = action.payload;
 },
 savePresentOpenMenu: (state, action) => {
   state.presentOpenMenu = action.payload;
@@ -80,8 +96,12 @@ export const {
  saveAllGroup,
  saveSectionVideos,
  saveCategoryVideos,
+ saveCategorySubjects,
+ saveSubjectChapters,
+ saveAllChapterLessons,
  saveNextUpVideo,
  savePresentOpenMenu,
+ savePresentSubject,
  savePublicGroup,
  saveCategories,
  savelastWatchedVideo,

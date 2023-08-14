@@ -2,8 +2,15 @@ import { db, fb, auth, storage } from '../../config/firebase';
 import { clearUser, loginFailed, loginSuccess, logoutFxn, signupFailed, storeUserData } from '../reducers/auth.slice';
 import { v4 as uuidv4 } from 'uuid'
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
-import { isItLoading, saveAllGroup ,saveEmployeer,saveCategories ,saveGroupMembers, saveMyGroup, savePrivateGroup, savePublicGroup, saveSectionVideos,saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos } from '../reducers/group.slice';
+import { isItLoading, saveAllGroup ,saveEmployeer,
+  saveCategories ,saveGroupMembers, saveMyGroup,
+   savePrivateGroup, savePublicGroup, saveSectionVideos,
+   saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos,
+   saveCategorySubjects,savePresentSubject,saveSubjectChapters,saveAllChapterLessons } from '../reducers/group.slice';
 import firebase from "firebase/app";
+
+
+let globalLessonsArray = []
 
 export const createGroup = (groupData, user, file, navigate, setLoading, url) => async (dispatch) => {
   var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -479,243 +486,6 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
 
  
 
-export const fetchPublicGroup = () => async (dispatch) => {
- dispatch(isItLoading(true));
- db.collection("groups")
-  .where("status", "==", "public")
-  .get()
-  .then((snapshot) => {
-    const publicGroups = snapshot.docs.map((doc) => ({ ...doc.data() }));
-  if (publicGroups.length) {
-    dispatch(isItLoading(false));
-    console.log("Public Groups Data:", publicGroups);
-    dispatch(savePublicGroup(publicGroups));
-  } else {
-      dispatch(isItLoading(false));
-      console.log("No public groups!");
-  }
-}).catch((error) => {
-  console.log("Error getting document:", error);
-  dispatch(isItLoading(false));
-});
-};
-
-export const fetchPrivateGroup = () => async (dispatch) => {
-    dispatch(isItLoading(true));
-    db.collection("groups")
-     .where("status", "==", "private")
-     .get()
-     .then((snapshot) => {
-       const privateGroups = snapshot.docs.map((doc) => ({ ...doc.data() }));
-     if (privateGroups.length) {
-       dispatch(isItLoading(false));
-       console.log("Private Groups Data:", privateGroups);
-       dispatch(savePrivateGroup(privateGroups));
-     } else {
-         dispatch(isItLoading(false));
-         console.log("No private groups!");
-     }
-   }).catch((error) => {
-     console.log("Error getting document:", error);
-     dispatch(isItLoading(false));
-   });
-   };
-
-
-   export const joinGroup = (groupID, user, today, navigate, userWalletBal, groupFee, groupBal, groupName, accruedBalance) => async (dispatch) => {
-    let todaysDate = new Date().toISOString().slice(0, 10) //2018-08-03
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    var today  = new Date();
-    const date = today.toISOString();  
-
-   
-    let newUserBal = userWalletBal - groupFee;
-    let newGroupBal = groupBal + groupFee;
-    let newAccruedBal = accruedBalance + groupFee;
-      // console.log("New Group Bal: ", newGroupBal);
-    dispatch(isItLoading(true));
-    let newMembers;
-    var docRef = db.collection("groups").doc(groupID);
-    docRef.get().then((doc) => {
-    const data = doc.data();
-    const members = data.members;
-    newMembers = [...members, user.id];
-}).then(() => {
-  db.collection('groups')
-  var userRef = db.collection("groups").doc(groupID);
-  userRef.update({
-    accountBalance: newGroupBal,
-    members: [...newMembers],
-  }).then((res) => {
-    db.collection('employees')
-    .doc(user.id)
-    .update({
-      walletBalance: newUserBal,
-      accruedBalance: newAccruedBal,
-      coolers: [...user?.coolers, groupID],
-    })
-   .then(() => {
-    db.collection('groups').doc(groupID).collection('membersCollection').add({
-      memberName: user.firstName + " " + user.lastName,
-      memberEmail: user.email,
-      memberImageUrl: "",
-      invitedBy: user.id,
-      invite: 0,
-      paid: 1,
-      users: user.id,
-      sentAt: today,
-    }).then((resp) => {
-      console.log("membersCollection RESPONSE: ", resp);
-      db.collection('groups').doc(groupID).collection('membersCollection').doc(resp.id).update({
-        id: resp.id,
-      }).then(() => {
-        return db.collection('inbox')
-          .add({
-              id: user.id,
-              msg: `You have joined ${groupName}`,
-              coolerName: groupName,
-              amount: groupFee,
-              isViewed: false,
-              unread: 0,
-              time: date,
-          })
-      }).then(() => {
-        return db.collection('transactions')
-          .add({
-              userID: user.id,
-              coolerID: groupID,
-              type: 'Payment',
-              amount: groupFee,
-              date: todaysDate,
-              createdAt: today.toLocaleDateString("en-US", options),
-          })
-      })
-  }).then(() => {
-    dispatch(isItLoading(false));
-    notifySuccessFxn("Joined Group")
-    // window.location = '/dashboard/home';
-    navigate('/dashboard/home', { replace: true });
-    }).catch((error) => {
-    console.log("Error joining group:", error);
-    var errorMessage = error.message;
-    notifyErrorFxn(errorMessage)
-    dispatch(isItLoading(false));
-  });
-   }) 
-   })
-})
- };
-
-
-
-
-export const joinPublicGroup = (groupID, user, today, navigate) => async (dispatch) => {
-    dispatch(isItLoading(true));
-    let newMembers;
-    var docRef = db.collection("groups").doc(groupID);
-    docRef.get().then((doc) => {
-    const data = doc.data();
-    const members = data.members;
-    newMembers = [...members, user.id];
-}).then(() => {
-  db.collection('groups')
-  var userRef = db.collection("groups").doc(groupID);
-  userRef.update({
-    members: [...newMembers],
-  }).then((res) => {
-    db.collection('groups').doc(groupID).collection('membersCollection').add({
-      memberName: user.firstName + " " + user.lastName,
-      memberEmail: user.email,
-      memberImageUrl: user.imageUrl,
-      invitedBy: user.id,
-      invite: 0,
-      paid: 1,
-      users: [user.id, user.id],
-      sentAt: today,
-    }).then((resp) => {
-      console.log("membersCollection RESPONSE: ", resp);
-      db.collection('groups').doc(groupID).collection('membersCollection').doc(resp.id).update({
-        id: resp.id,
-      })
-  }).then(() => {
-    dispatch(isItLoading(false));
-    notifySuccessFxn("Joined Group")
-    navigate('/dashboard/home', { replace: true });
-    }).catch((error) => {
-    console.log("Error joining group:", error);
-    var errorMessage = error.message;
-    notifyErrorFxn(errorMessage)
-    dispatch(isItLoading(false));
-  });
-   })
-})
- };
-
- 
-export const joinPrivateGroup = (groupID, user, today, navigate) => async (dispatch) => {
-  dispatch(isItLoading(true));
-  let newMembers;
-  var docRef = db.collection("groups").doc(groupID);
-  docRef.get().then((doc) => {
-  const data = doc.data();
-  const members = data.members;
-  newMembers = [...members, user.id];
-}).then(() => {
-db.collection('groups')
-var userRef = db.collection("groups").doc(groupID);
-userRef.update({
-  members: [...newMembers],
-}).then((res) => {
-  db.collection('groups').doc(groupID).collection('membersCollection').add({
-    memberName: user.firstName + " " + user.lastName,
-    memberEmail: user.email,
-    memberImageUrl: user.imageUrl,
-    invitedBy: user.id,
-    invite: 0,
-    paid: 1,
-    users: [user.id, user.id],
-    sentAt: today,
-  }).then((resp) => {
-    console.log("membersCollection RESPONSE: ", resp);
-    db.collection('groups').doc(groupID).collection('membersCollection').doc(resp.id).update({
-      id: resp.id,
-    })
-}).then(() => {
-  dispatch(isItLoading(false));
-  notifySuccessFxn("Joined Group")
-  navigate('/dashboard/home', { replace: true });
-  }).catch((error) => {
-  console.log("Error joining group:", error);
-  var errorMessage = error.message;
-  notifyErrorFxn(errorMessage)
-  dispatch(isItLoading(false));
-});
- })
-})
-};
-
-
-export const fetchGroupMembers = (groupMembers) => async (dispatch) => {
-  dispatch(isItLoading(true));
-  db.collection('employees')
-    .where('id', 'in', groupMembers)
-    .get()
-    .then((snapshot) => {
-      const groupMembers = snapshot.docs.map((doc) => ({ ...doc.data() }));
-      if (groupMembers.length) {
-        dispatch(isItLoading(false));
-        console.log('groupMembers Data:', groupMembers);
-        dispatch(saveGroupMembers(groupMembers));
-      } else {
-        dispatch(isItLoading(false));
-        console.log('No group members!');
-      }
-    })
-    .catch((error) => {
-      console.log('Error getting document:', error);
-      dispatch(isItLoading(false));
-    });
-};
 
 /*========== do group fetching of categories HERE ======================= */
 
@@ -1027,21 +797,6 @@ db.collection("courses")
 
 /*===============Add to video watchlist and user watchlict ABOVE ===================== */
 
-
-export const fetchEmployeer = (id) => async (dispatch) => {
-  var user = db.collection("employers").doc(id);
-  user.get().then((doc) => {
-  if (doc.exists) {
-    dispatch(saveEmployeer(doc.data()));
-  } else {
-      console.log("No such document!");
-  }
-}).catch((error) => {
-  console.log("Error getting document:", error);
-});
-return user;
-};
-
 export const addNewBadge = (userId,currentLevel) => async (dispatch)=>{
 
   
@@ -1083,3 +838,102 @@ export const addNewBadge = (userId,currentLevel) => async (dispatch)=>{
 
 
 }
+
+/*FETCH ALL SUBJECTS UNDER ONE CATEGORY - ONLY WORKS WITH 6E FOR NOW */
+
+export const fetchCategorySubjects = (category) => async (dispatch) => {
+ 
+  db.collection("sections")
+   .where("category", "==", category )
+   .get()
+   .then((snapshot) => {
+     const subjectsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
+   if (subjectsArray.length) {
+    
+     console.log(`subjecto for ${category} are:`, subjectsArray);
+     dispatch(saveCategorySubjects(subjectsArray));
+   } else {
+     
+       console.log(`No subjects for the category; ${category}`);
+   }
+ }).catch((error) => {
+   console.log("Error getting document:", error);
+   dispatch(isItLoading(false));
+ });
+ };
+
+
+ /*============== FETCH THE CHAPTERS OF A PARTICULAR SUBJECT================ */
+ /*============== AND ALSO FETCH THE LESSONS OF ALL CHAPTERS =============== */
+ export const fetchSubjectChapters = (uid) => async (dispatch) => {
+ 
+  db.collection("chapters")
+   .where("sectionId", "==", uid )
+   .get()
+   .then((snapshot) => {
+     const chaptersArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
+   if (chaptersArray.length) {
+    
+     console.log(`chapters for  subject ${uid} are:`, chaptersArray);
+     dispatch(saveSubjectChapters(chaptersArray));
+     return chaptersArray
+   } else {
+     
+       console.log(`No chapters for the subject; ${uid}`);
+       return []
+   }
+ }).then((result)=>{
+
+  let chaptersArray = [...result]
+  console.log("the chapters array ARE WENT",chaptersArray)
+
+
+  chaptersArray.forEach((item)=>{
+ dispatch(fetchVideosOneChapter(item.uid))
+   
+  
+
+  })
+
+
+  setTimeout(()=>{dispatch(saveAllChapterLessons(globalLessonsArray))},1500)
+ 
+})
+
+ 
+ .catch((error) => {
+   console.log("Error getting chapters for the subject:", error);
+  
+ });
+ };
+
+
+ /*========== SAVING THE SELECTED SUBJECT FOR WHEN A CARD IS CLICKED===========*/
+ export const fetchCurrentSubject = (subject) => async (dispatch) => {
+
+  dispatch(savePresentSubject(subject))
+
+ }
+
+ export const fetchVideosOneChapter = (uid) => async (dispatch) => {
+ 
+  db.collection("boneCourses")
+   .where("chapterId", "==", uid )
+   .get()
+   .then((snapshot) => {
+     const videosArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
+   if (videosArray.length) {
+    
+     //console.log(`lessons for ${uid} are:`, videosArray);
+    // dispatch(saveSubjectChapters(videosArray));
+
+    globalLessonsArray = [...globalLessonsArray,...videosArray]
+   } else {
+     
+       console.log(`No videos for the chapter; ${uid}`);
+       globalLessonsArray = [...globalLessonsArray,...videosArray]
+   }
+ }).catch((error) => {
+   console.log("Error getting videos for the chapter:", error);
+ });
+ };

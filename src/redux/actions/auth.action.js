@@ -38,7 +38,7 @@ export const signup = (user,navigate) => async (dispatch) => {
       user.email,
       user.password
   ).then((res)=>{
-     db.collection('users').doc(res.user.uid).set({
+     db.collection('userData').doc(res.user.uid).set({
       uid: res.user.uid,
       fullName: user.fullName,
       email: user.email,

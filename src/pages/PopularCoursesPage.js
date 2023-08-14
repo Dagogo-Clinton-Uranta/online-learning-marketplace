@@ -18,7 +18,7 @@ import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import { fetchGroups, fetchMyGroups, uploadUserSettings,fetchCategorySubjects} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -28,10 +28,13 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 
 import SmallerCardPage from './SmallerCardPage';
 import SampleCardPage from './SampleCardPage';
+//import { fetchCategorySubjects } from 'src/redux/reducers/group.slice';
 
 function PopularCoursesPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [chosen,setChosen] = useState(1);
+  const [loading,setLoading] =useState(false)
 
  
   const topics = [
@@ -52,6 +55,14 @@ function PopularCoursesPage() {
       navigate('/login')
      }
   },[])
+
+  const FetchSixEsubjects =(category) =>{
+
+    dispatch(fetchCategorySubjects(category))
+    setLoading(true)
+
+    setTimeout(( navigate('/dashboard/6e')),1000)
+  }
 
   return (
     <>
@@ -104,9 +115,9 @@ function PopularCoursesPage() {
            <Button   variant="contained" 
             style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/6e')}}
+            onClick={()=>{FetchSixEsubjects('6e Annee')}}
             >
-             6eme Année
+             {loading?'Please wait...':'6eme Année'}
             </Button>
 
             <Button   variant="contained" 
@@ -145,7 +156,7 @@ function PopularCoursesPage() {
       
      {topics.slice(0,1).map((topic)=>(   
          <Grid item xs={11} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
-          <SampleCardPage title={topic.title} image = {chosen===1?MathCover:(chosen===2?DNA:library)} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
+          <SampleCardPage uid={topic.uid} title={topic.title} image = {chosen===1?MathCover:(chosen===2?DNA:library)} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
          </Grid>
       ))}
 

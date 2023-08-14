@@ -18,7 +18,7 @@ import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import { fetchCurrentSubject} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -31,10 +31,29 @@ import SampleCardPage from './SampleCardPage';
 
 function SixePage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [chosen,setChosen] = useState(3);
+  
+
+  const { categorySubjects } = useSelector((state) => state.group);
+
+  const { user,error } = useSelector((state) => state.auth);
+console.log("error is",error)
+
+const [topics,setTopics] = useState(categorySubjects);
+console.log("category subs are ",categorySubjects)
+
+
+useEffect(()=>{
+   if(!user){
+    navigate('/login')
+   }
+
+   setTopics(categorySubjects)
+},[])
 
  
-  const topics = [
+  const oldTopics = [
     {title:"Chemie 10e Annee ",author:"Sidiki Keita",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem},
     {title:"Anglais 10e Annee ",author:"Kabinet Keita",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
     {title:"Biologie 10e Annee ",author:"Elhadj Keita",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
@@ -140,8 +159,11 @@ function SixePage() {
      <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
      {topics.slice(0,1).map((topic)=>(   
-         <Grid item xs={11} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
-          <SampleCardPage title={topic.title} image = {library} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
+         <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
+         style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
+          <SampleCardPage 
+          uid={topic.uid} title={topic.title} image = {oldTopics[Math.floor(Math.random()*4)].image} author ={"sidike keita"} price={topic.price} lessons={15} time={"2H 26 MINS"} /> 
+         {/*gotta pass the id into the card so we can use it when clicked */}
          </Grid>
       ))}
 
@@ -150,9 +172,11 @@ function SixePage() {
          
        <Grid container item xs={12} spacing={3} style={{ display: 'flex', justifyContent: 'center',marginBottom:"20px" }}>
          
-     {topics.map((topic)=>(   
-         <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
-          <SmallerCardPage title={topic.title} image = {topic.image} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
+     {topics.slice(1,topics.length).map((topic)=>(   
+         <Grid item xs={6} onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
+         style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
+          <SmallerCardPage 
+          uid={topic.uid}  title={topic.title} image = {oldTopics[Math.floor(Math.random()*4)].image} author ={"sidike keita"} price={"22,000"} lessons={15} time={"2H 26 MINS"} /> 
          </Grid>
       ))}
          

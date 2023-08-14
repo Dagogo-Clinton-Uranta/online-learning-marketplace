@@ -8,7 +8,7 @@ import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import {fetchCategorySubjects} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -18,48 +18,12 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 
 function MobileWelcomePage() {
   const navigate = useNavigate();
-  const [file, setFile] = useState();
-  const [file2, setFile2] = useState();
-  const [fileSize, setFileSize] = useState();
-  const [fileSize2, setFileSize2] = useState();
-  const [selectedFile, setSelectedFile] = useState({selectedFile: [], selectedFileName: []});
-  const [selectedFile2, setSelectedFile2] = useState({selectedFile2: [], selectedFileName2: []});
+ 
   const dispatch = useDispatch();
 
-  const [newPassword,setNewPassword] =useState('')
-  const [confirmPassword,setConfirmPassword] =useState('')
-  const [companySize,setCompanySize] =useState('')
-
  
-
-  /*const [releaseDate,setReleaseDate] =useState('')
-  const [director,setDirector] =useState('')
-  const [cast,setCast] =useState([])
-  const [description,setDescription] =useState('')
-  const [trivia,setTrivia] =useState('')*/
   
 
-
-
-  const handleselectedFile = event => {
-    console.log("these are the picture deets!",event.target.files[0])
-    setSelectedFile({
-        selectedFile: event.target.files[0],
-        selectedFileName: event.target.files[0].name
-    });
-    
-    setFile(URL.createObjectURL(event.target.files[0]));
-    setFileSize(event.target.files[0].size)
-};
- /* const handleselectedFile2 = event => {
-    console.log("these are the video deets!",event.target.files[0])
-    setSelectedFile2({
-        selectedFile2: event.target.files[0],
-        selectedFileName2: event.target.files[0].name
-    });
-    setFile2(URL.createObjectURL(event.target.files[0]));
-    setFileSize2(event.target.files[0].size)
-};*/
 
 const { user,error } = useSelector((state) => state.auth);
 console.log("error is",error)
@@ -71,21 +35,15 @@ useEffect(()=>{
 },[])
 
 
-const uploadMovie = (movieData = 0,image = 0,) => {
-if(!companySize.length && !newPassword.length &&  file === undefined ){
-  console.log("THE EMPTY FIELDS ARE:",file)
-  notifyErrorFxn("Please fill in the field(s) you want to update!")
-}else{
- if( fileSize  > 300000){
-  notifyErrorFxn("Image size too large! please upload a smaller picture.")
- }
- /*else if( fileSize2  > 20000000){
-  notifyErrorFxn("Video size too large! please upload a smaller video.")
- }*/else{
-  dispatch(uploadUserSettings(movieData,image))
- }
-}
-}
+  const populateCategory = (category) => {
+   
+    dispatch(fetchCategorySubjects("6eme Annee"))
+    console.log("NOW REDIRECTING!!!")
+      
+    setTimeout(()=>{ navigate('/dashboard/6e')},1000)
+
+  }
+
 
   return (
     <>
@@ -139,7 +97,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", width:"70%",fontSize:"15px",
             paddingRight: '8px', paddingLeft: '8px'}}
-            onClick ={()=>{navigate('/dashboard/other-courses')}}
+            //onClick ={()=>{navigate('/dashboard/other-courses')}}
             >
             S'inscrire maintenant
             </Button>
@@ -239,7 +197,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         <Button   variant="contained" 
         style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
         paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
-        onClick={()=>{navigate('/dashboard/6e')}}
+        onClick={()=>{populateCategory("6eme Annee")}}
         >
         6e Année
         </Button>

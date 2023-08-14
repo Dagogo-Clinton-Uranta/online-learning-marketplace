@@ -18,6 +18,7 @@ import biology from 'src/assets/images/biology.jpeg'
 import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ReactPlayer from 'react-player'
+
 import { Document, Page ,pdfjs} from 'react-pdf';
 import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
@@ -34,12 +35,16 @@ import Modal from '@mui/material/Modal';
 import soundBytes from 'src/assets/images/soundBytes.mp3'
 import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
+import { fetchVideosOneChapter} from 'src/redux/actions/group.action';
+
 import db from '../browserDb/db'
 
 import { blobToDataURL,dataURLToBlob,imgSrcToBlob } from 'blob-util'
 
 function SelectedCoursePage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -55,17 +60,15 @@ function SelectedCoursePage() {
  
 
 
+  const [fetching, setFetching] = React.useState(false);
+  const [allVids,setAllVids] =  React.useState([]);
 
+  const { subjectChapters,allChapterLessons,presentSubject } = useSelector((state) => state.group);
+  console.log("the present SAVED  subject is:",presentSubject)
+  console.log("the chapters are:",subjectChapters)
+  console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
+  
 
-  const topics = [
-    {title:"Chemie ",author:"Sidiki...",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem2},
-    {title:"Anglais ",author:"Kabinet...",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
-    {title:"Biologie ",author:"Elhadj... ",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
-    {title:"Philosophie",author:"Sidiki...",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
-    {title:"Mathematiques",author:"Fode...",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
-    {title:"Chemie",author:"Sidiki...",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
-    
-  ]
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
@@ -233,10 +236,12 @@ async function saveCourse() {
   }
 }
 
-
-
 /*SAVING TO BROWSER DATABASE END */
 
+/*SUBJECT INFO SAVING */
+
+const [subjectList,setSubjectList] = useState(((presentSubject.body.split('.')[1]).split(':')[1]).split(/[0-9]/))
+console.log("subjectList is:",subjectList)
   return (
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray",fontSize:"0.85rem"}}> 
@@ -253,19 +258,10 @@ async function saveCourse() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-           
-     {/* <iframe src={samplePdf} style={{width:"100%",height:"100%"}}  frameborder="0"></iframe>*/}
-       
-        {/*<Document  className="pdfCenter"  file={samplePdf} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page className="pdfCenter" pageNumber={pageNumber} />
-       </Document>*/}
-
+        <Box sx={style}> 
        <MobilePDFReader isShowHeader={false} isShowFooter={false} url={samplePdf}/>
-     
-      
         </Box>
-  </Modal>
+    </Modal>
 
      {/*VIDEO MODAL */}
       <Modal
@@ -297,22 +293,22 @@ async function saveCourse() {
     <Grid container xs={12} style={{marginTop:"2rem",padding:"1.5rem", background:`linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),url(${chem})`,borderRadius:"0.5rem",}}>
       <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"1rem",color:"white"}}>
       
-      <h3 style={{fontSize:"0.9rem"}}>CHIMIE TSE/TSM</h3>
+      <h3 style={{fontSize:"0.9rem"}}>{presentSubject.title}</h3>
       
        <p style={{marginTop:"0.5rem"}}>
-       Conçu par le MENA en collaboration avec L’INRAP, 
-       ce programme de chimie Terminales est un programme harmonisé.
+       {presentSubject.body.split('.')[0]}
        </p>
 
        <p style={{marginTop:"2rem"}}>
-         <p style={{marginBottom:"1rem"}}> Ce cours couvre ce qui suit:</p>
+         <p style={{marginBottom:"1rem"}}>{ (presentSubject.body.split('.')[1]).split(':')[0]}</p>
         <ol>
+      {subjectList.length > 1  &&  subjectList.slice(1,subjectList.length).map((item,index)=>(
 
-          <li>1.) La notion de pH de quantité et concentration</li>
-          <li>2.) Un acide fort, une base forte, un acide </li>
-          <li>3.) La constante d’acidité</li>
-          <li>4.) L’évolution des systèmes</li>
-          <li>5.) La stéréochimie,</li>
+          <li>{index+1}.{item}</li>
+
+      ))
+
+      }
         </ol>
        </p>
 
@@ -322,7 +318,7 @@ async function saveCourse() {
         <p>
           BAFODE BANGOURA
           <br/>
-          Terminales
+          {presentSubject.subLevel}
         </p>
        </p>
     
@@ -359,17 +355,57 @@ async function saveCourse() {
     </Grid>
 
   <Grid container xs={12} style={{paddingTop:"1.5rem"}}>
-   
-    <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
-    
-    <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
-      Chapitre 1: Acide et base en solution aqueuese
-     <PictureAsPdfIcon onClick={handleOpenPdf} style={{fontSize:"2.2rem"}} />
-     </p>
-    
-    </Grid>
-    
 
+
+
+ {subjectChapters.map((chapter)=>(
+  <>
+<Grid item xs={12} style={{paddingTop:"0.5rem"}}>
+    
+<p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
+  {chapter.title}
+ <PictureAsPdfIcon onClick={handleOpenPdf} style={{fontSize:"2.2rem"}} />
+ </p>
+
+</Grid>
+ 
+
+{allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).map((lesson,index)=>(
+
+ <>
+ {lesson.duration !== "quiz"?
+ (
+  <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={soundBytes2}/> &nbsp; {index + 1}.)</p>
+  <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 && "..."}`}</p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
+ </Grid>
+ )
+:
+(
+<Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
+   
+<p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
+<span onClick={handleOpenPdf}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
+  {lesson.title}
+ </p>
+ <Divider/>
+
+</Grid>
+)
+
+}
+</>
+
+))
+}
+</>
+
+
+ ))} 
+  </Grid>  
+    
+{/*
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
      <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}><LogoSwitch audioFile={soundBytes2}/> &nbsp; 1.)</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
@@ -459,7 +495,7 @@ async function saveCourse() {
     
     </Grid>
    </Grid>
-       
+     */}  
 
    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"20px",gap:"10px" }}>
   
