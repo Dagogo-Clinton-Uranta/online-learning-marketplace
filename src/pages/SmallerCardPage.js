@@ -36,7 +36,7 @@ export default function SmallerCardPage({uid,title,author,price,lessons,time,ima
     setExpanded(!expanded);
   };
 
-    const FetchChapters =(subjectId) =>{
+    const fetchChapters =(subjectId) =>{
 
     dispatch(fetchSubjectChapters(subjectId))
     setLoading(true)
@@ -65,7 +65,7 @@ export default function SmallerCardPage({uid,title,author,price,lessons,time,ima
         component="img"
         height="100"
         image={image}
-        onClick={()=>{FetchChapters(uid)}}
+        onClick={()=>{fetchChapters(uid)}}
         alt="Paella dish"
       />
 
@@ -73,7 +73,7 @@ export default function SmallerCardPage({uid,title,author,price,lessons,time,ima
       <CardContent>
    
       <Typography sx={{fontSize:"11px",display:"flex",flexDirection:"column" ,gap:"5px"}} >
-         <p style={{color:"black"}}>{title}</p>
+         <p style={{color:"black"}}>{`${title.substring(0,20) + `${title.length > 20?"...":""}`}`}</p>
         
          <p style={{color:"black"}}>{author} </p>
         </Typography>

@@ -37,8 +37,8 @@ useEffect(()=>{
 
   const populateCategory = (category) => {
    
-    dispatch(fetchCategorySubjects("6eme Annee"))
-    console.log("NOW REDIRECTING!!!")
+    dispatch(fetchCategorySubjects(category))
+    console.log(`NOW REDIRECTING to ${category}!!!`)
       
     setTimeout(()=>{ navigate('/dashboard/6e')},1000)
 
@@ -181,7 +181,7 @@ useEffect(()=>{
        <Button   variant="contained" 
         style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
         paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
-        onClick={()=>{navigate('/dashboard/popular-courses')}}
+        onClick={()=>{populateCategory("Terminales")}}
         >
         Terminales
         </Button>
@@ -189,7 +189,7 @@ useEffect(()=>{
         <Button   variant="contained" 
         style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
         paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
-        onClick={()=>{navigate('/dashboard/10e')}}
+        onClick={()=>{populateCategory("10eme Annee")}}
         >
         10e Année
         </Button>

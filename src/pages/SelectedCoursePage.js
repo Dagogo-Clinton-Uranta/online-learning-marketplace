@@ -316,7 +316,7 @@ console.log("subjectList is:",subjectList)
         <Avatar alt="placeholder avatar" sx={{ width: 48, height: 48 }} src={profile}/>
         
         <p>
-          BAFODE BANGOURA
+        {presentSubject.instructor.toUpperCase()}
           <br/>
           {presentSubject.subLevel}
         </p>

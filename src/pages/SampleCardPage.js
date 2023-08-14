@@ -47,7 +47,7 @@ export default function SampleCardPage({uid,title,author,price,lessons,time,imag
     setExpanded(!expanded);
   };
 
-  const FetchChapters =(subjectId) =>{
+  const fetchChapters =(subjectId) =>{
 
     dispatch(fetchSubjectChapters(subjectId))
     setLoading(true)
@@ -63,7 +63,7 @@ export default function SampleCardPage({uid,title,author,price,lessons,time,imag
         component="img"
         height="200"
         image={image}
-        onClick={()=>{FetchChapters(uid)}}
+        onClick={()=>{fetchChapters(uid)}}
         alt="Paella dish"
       />
 

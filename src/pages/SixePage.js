@@ -28,11 +28,12 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 
 import SmallerCardPage from './SmallerCardPage';
 import SampleCardPage from './SampleCardPage';
+import {fetchCategorySubjects} from 'src/redux/actions/group.action';
 
 function SixePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [chosen,setChosen] = useState(3);
+  const [chosen,setChosen] = useState('');
   
 
   const { categorySubjects } = useSelector((state) => state.group);
@@ -50,7 +51,8 @@ useEffect(()=>{
    }
 
    setTopics(categorySubjects)
-},[])
+   setChosen(categorySubjects[0].category)
+},[categorySubjects])
 
  
   const oldTopics = [
@@ -62,6 +64,15 @@ useEffect(()=>{
     {title:"Chemie 10e Annee",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
     
   ]
+
+  const populateCategory = (category) => {
+   
+    dispatch(fetchCategorySubjects(category))
+    console.log(`NOW REDIRECTING to ${category}!!!`)
+      
+    setTimeout(()=>{ navigate('/dashboard/6e')},1000)
+
+  }
 
 
 
@@ -90,18 +101,20 @@ useEffect(()=>{
     <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
     
            <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            style={{ backgroundColor:chosen==="Tous"?"#000000": "#FFFFFF",color:chosen==="Tous"?"#FFFFFF":"#000000",
+            border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
            
-            onClick={()=>{navigate('/dashboard/other-courses')}}
+            onClick={()=>{populateCategory("Terminales")}}
             >
             Tous
             </Button>
 
             <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            style={{ backgroundColor:chosen==="Terminales"?"#000000": "#FFFFFF",color:chosen==="Terminales"?"#FFFFFF":"#000000",
+            border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/popular-courses')}}
+            onClick={()=>{populateCategory("Terminales")}}
             >
             Terminales
             </Button>
@@ -116,17 +129,19 @@ useEffect(()=>{
            <Button   variant="contained" 
            
 
-            style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
+            style={{ backgroundColor:chosen==="6eme Annee"?"#000000": "#FFFFFF",color:chosen==="6eme Annee"?"#FFFFFF":"#000000",
+            border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/6e')}}
+            onClick={()=>{populateCategory("6eme Annee")}}
             >
              6eme Année
             </Button>
 
             <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
+            style={{ backgroundColor:chosen==="10eme Annee"?"#000000": "#FFFFFF",color:chosen==="10eme Annee"?"#FFFFFF":"#000000",
+            border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/10e')}}
+            onClick={()=>{populateCategory("10eme Annee")}}
             >
             10eme Année
             </Button>
@@ -162,7 +177,7 @@ useEffect(()=>{
          <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
          style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
           <SampleCardPage 
-          uid={topic.uid} title={topic.title} image = {oldTopics[Math.floor(Math.random()*4)].image} author ={"sidike keita"} price={topic.price} lessons={15} time={"2H 26 MINS"} /> 
+          uid={topic.uid} title={topic.title} image = {oldTopics[Math.floor(Math.random()*4)].image} author ={topic.instructor} price={topic.price} lessons={15} time={"2H 26 MINS"} /> 
          {/*gotta pass the id into the card so we can use it when clicked */}
          </Grid>
       ))}
@@ -176,7 +191,7 @@ useEffect(()=>{
          <Grid item xs={6} onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
          style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
           <SmallerCardPage 
-          uid={topic.uid}  title={topic.title} image = {oldTopics[Math.floor(Math.random()*4)].image} author ={"sidike keita"} price={"22,000"} lessons={15} time={"2H 26 MINS"} /> 
+          uid={topic.uid}  title={topic.title} image = {oldTopics[Math.floor(Math.random()*4)].image} author ={topic.instructor} price={"22,000"} lessons={15} time={"2H 26 MINS"} /> 
          </Grid>
       ))}
          
