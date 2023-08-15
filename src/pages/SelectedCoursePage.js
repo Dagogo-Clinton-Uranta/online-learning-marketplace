@@ -64,7 +64,7 @@ function SelectedCoursePage() {
   const [allVids,setAllVids] =  React.useState([]);
 
   const { subjectChapters,allChapterLessons,presentSubject } = useSelector((state) => state.group);
-  //console.log("the present SAVED  subject is:",presentSubject)
+  console.log("the present SAVED  subject is autotune:",presentSubject)
   console.log("the chapters for this subject are:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
@@ -239,8 +239,11 @@ async function saveCourse() {
 /*SAVING TO BROWSER DATABASE END */
 
 /*SUBJECT INFO SAVING */
+const firstSplit =presentSubject.body.split('.')[1]
+const secondSplit = firstSplit? firstSplit.split(':')[1]:""
+const thirdSplit =  secondSplit? secondSplit.split(/[0-9]/):""
 
-const [subjectList,setSubjectList] = useState(((presentSubject.body.split('.')[1]).split(':')[1]).split(/[0-9]/))
+const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.body && firstSplit && secondSplit && thirdSplit ?thirdSplit:[])
 console.log("subjectList is:",subjectList)
   return (
     <>
@@ -296,11 +299,11 @@ console.log("subjectList is:",subjectList)
       <h3 style={{fontSize:"0.9rem"}}>{presentSubject.title}</h3>
       
        <p style={{marginTop:"0.5rem"}}>
-       {presentSubject.body.split('.')[0]}
+       {presentSubject && presentSubject.body.split('.')[0]}
        </p>
 
        <p style={{marginTop:"2rem"}}>
-         <p style={{marginBottom:"1rem"}}>{ (presentSubject.body.split('.')[1]).split(':')[0]}</p>
+         <p style={{marginBottom:"1rem"}}>{presentSubject && (presentSubject.body.split('.')[1]).split(':')[0]}</p>
         <ol>
       {subjectList.length > 1  &&  subjectList.slice(1,subjectList.length).map((item,index)=>(
 
@@ -316,7 +319,7 @@ console.log("subjectList is:",subjectList)
         <Avatar alt="placeholder avatar" sx={{ width: 48, height: 48 }} src={profile}/>
         
         <p>
-        {presentSubject.instructor.toUpperCase()}
+        {presentSubject && presentSubject.instructor? presentSubject.instructor.toUpperCase():" "}
           <br/>
           {presentSubject.subLevel}
         </p>
