@@ -487,7 +487,7 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
  
 
 
-/*========== do group fetching of categories HERE ======================= */
+/*========== do group fetching of categories  FOR BONECOLEHERE ======================= */
 
 export const fetchAllCategories = () => async (dispatch) => {
   var categories = db.collection("categories");
@@ -498,6 +498,7 @@ export const fetchAllCategories = () => async (dispatch) => {
     dispatch(saveCategories(groupMembers));
   } else {
       console.log("No categories in database!");
+      dispatch(saveCategories([]));
   }
 }).catch((error) => {
   console.log("Error getting categories:", error);
@@ -506,7 +507,7 @@ export const fetchAllCategories = () => async (dispatch) => {
 };
 
 
-/*===============do fetching of categories ABOVE ===================== */
+/*===============do fetching of categories  FOR BONECOLE ABOVE ===================== */
 
 export const updateCurrentlyWatchingOnly = (userId,videoId) => async (dispatch) => {
 

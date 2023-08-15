@@ -36,7 +36,8 @@ function SixePage() {
   const [chosen,setChosen] = useState('');
   
 
-  const { categorySubjects } = useSelector((state) => state.group);
+  const { categorySubjects, allCategories} = useSelector((state) => state.group);
+
 
   const { user,error } = useSelector((state) => state.auth);
 console.log("error is",error)
@@ -96,8 +97,28 @@ useEffect(()=>{
 
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
-   
+    
 
+
+    {allCategories.length > 0 ?
+     
+
+   <center  style={{ display: 'flex', width:"100%",justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
+    {allCategories.map((item)=>(
+
+      <Button   variant="contained" 
+      style={{ flex:"50%" ,backgroundColor:chosen===item.title?"#000000": "#FFFFFF",color:chosen===item.title?"#FFFFFF":"#000000",
+      border:"1px solid black", fontSize:"12px",width:"40%",
+      padding: '8px'}}
+      onClick={()=>{populateCategory(item.title)}}
+      >
+      {item.title}
+      </Button>
+
+     ))}
+   </center> 
+    :
+    <>
     <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
     
            <Button   variant="contained" 
@@ -148,7 +169,8 @@ useEffect(()=>{
 
     
     </center>
-
+  </>
+    }
 
     <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
   

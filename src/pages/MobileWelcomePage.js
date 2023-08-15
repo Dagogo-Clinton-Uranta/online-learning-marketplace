@@ -8,7 +8,7 @@ import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import {fetchCategorySubjects} from 'src/redux/actions/group.action';
+import {fetchCategorySubjects,fetchAllCategories} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -26,12 +26,14 @@ function MobileWelcomePage() {
 
 
 const { user,error } = useSelector((state) => state.auth);
-console.log("error is",error)
+const { allCategories } = useSelector((state) => state.group);
+console.log("categories/COURSES",allCategories)
 
 useEffect(()=>{
    if(!user){
     navigate('/login')
    }
+   dispatch(fetchAllCategories())
 },[])
 
 
@@ -177,7 +179,24 @@ useEffect(()=>{
 </center>
 
 <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"15px" }}>
+   
+    {allCategories.length > 0 ?
+     
+      allCategories.map((item)=>(
 
+        <Button   variant="contained" 
+        style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
+        paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
+        onClick={()=>{populateCategory(item.title)}}
+        >
+        {item.title}
+        </Button>
+
+      ))
+
+      
+      :
+      <>
        <Button   variant="contained" 
         style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
         paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
@@ -202,6 +221,8 @@ useEffect(()=>{
         6e Année
         </Button>
 
+        </>
+   }
 
 </center>
 </Grid>
