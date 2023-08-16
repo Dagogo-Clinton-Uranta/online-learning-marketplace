@@ -319,7 +319,7 @@ console.log("subjectList is:",subjectList)
         <Avatar alt="placeholder avatar" sx={{ width: 48, height: 48 }} src={profile}/>
         
         <p>
-        {presentSubject && presentSubject.instructor? presentSubject.instructor.toUpperCase():" "}
+        {presentSubject && presentSubject.instructor? presentSubject.instructor:" "}
           <br/>
           {presentSubject.subLevel}
         </p>
