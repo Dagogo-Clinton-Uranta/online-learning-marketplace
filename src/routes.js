@@ -6,7 +6,7 @@ import SimpleLayout from './layouts/simple';
 //import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 //import HomePage from './pages/HomePage';
-import HomePage1 from './pages/HomePage1';
+//import HomePage1 from './pages/HomePage1';
 //import HomePage2 from './pages/HomePage2';
 import FeedPage from './pages/FeedPage';
 import VideoPage from './pages/VideoPage';

@@ -17,8 +17,8 @@ import ChatAccount from './ChatAccount';
 // import ChatConversationList from './ChatConversationList';
 import InboxListItem from './InboxListItem';
 
-import FeedListItem from './FeedListItem';
-import FeedMiniBox from '../../../../components/home/feed-mini-box';
+//import FeedListItem from './FeedListItem';
+//import FeedMiniBox from '../../../../components/home/feed-mini-box';
 
 import { fetchFeed} from 'src/redux/actions/candidate.action';
 
@@ -188,7 +188,7 @@ const [noticeFeed,setNoticeFeed] = useState(candidates.length?candidates:rowData
           /> */}
           {/*<FeedListItem inboxMessages={inboxMessages} user={user} />*/}
          
-          {candidates.length &&<FeedMiniBox  feed = {candidates}/>}
+          {/*candidates.length &&<FeedMiniBox  feed = {candidates}/>*/}
       </Scrollbar>
     </>
   );
