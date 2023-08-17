@@ -66,7 +66,7 @@ function SelectedCoursePage() {
 
   const [fetching, setFetching] = React.useState(false);
   const [allVids,setAllVids] =  React.useState([]);
-  const [renderNavButtons, setRenderNavButtons] = useState(false)
+  const [renderNavButtons, setRenderNavButtons] = useState(true)
   
 
   const { subjectChapters,allChapterLessons,presentSubject } = useSelector((state) => state.group);
@@ -90,7 +90,7 @@ function SelectedCoursePage() {
 
 /*PDF MANIPULATION LOGIC*/
   const [numPages, setNumPages] = useState(10);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(2);
   const [numberPages,setNumberPages] = useState(6)
   const previousPage = () => { setPageNumber(pageNumber -1 ) }
   const nextPage = () => { setPageNumber(pageNumber +1 ); }
@@ -343,7 +343,7 @@ console.log("subjectList is:",subjectList)
                 url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
             }}
 
-            page={2}
+            page={pageNumber}
             scale={0.8}
            externalInput
            //getMaxPageCount={(maxPageCount)=>{setPageNumber(1);{numberPages < 0 && setNumberPages(maxPageCount)};setRenderNavButtons(true);console.log("THE PAGE COUNT IS",maxPageCount)}}
