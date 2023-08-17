@@ -75,9 +75,7 @@ function SelectedCoursePage() {
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
 
-  const changePage = (offset) => {
-    setPageNumber(prevPageNumber => prevPageNumber + offset);
-  }
+
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
@@ -91,18 +89,17 @@ function SelectedCoursePage() {
 /*login check end */
 
 /*PDF MANIPULATION LOGIC*/
-  const [numPages, setNumPages] = useState(2);
+  const [numPages, setNumPages] = useState(10);
   const [pageNumber, setPageNumber] = useState(1);
-  const [numberPages,setNumberPages] = useState(1)
-  const previousPage = () => { changePage(-1); }
-  const nextPage = () => { changePage(+1); }
+  const [numberPages,setNumberPages] = useState(6)
+  const previousPage = () => { setPageNumber(pageNumber -1 ) }
+  const nextPage = () => { setPageNumber(pageNumber +1 ); }
 
 
 
-  function onDocumentLoadSuccess(/*{ numPages }*/) {
-    setNumPages(numPages);
+  const changePage = (offset) => {
+    setPageNumber(prevPageNumber => prevPageNumber + offset);
   }
-
     
  /* pdfjs.GlobalWorkerOptions.workerSrc = new URL(
       //'pdfjs-dist/build/pdf.worker.min.js',
@@ -320,15 +317,41 @@ console.log("subjectList is:",subjectList)
     </div>*/}
 
 
+{renderNavButtons &&
+    <div style={{display:"flex",justifyContent:"space-between"}}>
+      <Button
+        disabled={pageNumber <= 1}
+        onClick={()=>{previousPage()}}
+        variant='primary'
+      >
+      { "< Previous Page"}
+      </Button>
+      {"  "}
+      <Button
+        disabled={pageNumber === numberPages}
+        onClick={()=>{nextPage()}}
+        variant='primary'
+      >
+        {"Next Page >"}
+      </Button>
+    </div>}
+
+
+
     <PDFViewer
             document={{
                 url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
             }}
 
-            page={3}
+            page={pageNumber?pageNumber:1}
+            scale={0.8}
+           externalInput
+           getMaxPageCount={(maxPageCount)=>{setPageNumber(1);{numberPages < 0 && setNumberPages(maxPageCount)};setRenderNavButtons(true);console.log("THE PAGE COUNT IS",maxPageCount)}}
           
-        />
+        />   
 
+
+    
 
         </Box>
     </Modal>

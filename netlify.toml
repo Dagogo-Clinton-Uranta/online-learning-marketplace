@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "https://thingproxy.freeboard.io/fetch/*"
+  to = "https://thingproxy.freeboard.io/fetch//:splat"
+  status = 200
