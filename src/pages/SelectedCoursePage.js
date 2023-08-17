@@ -65,6 +65,8 @@ function SelectedCoursePage() {
 
   const [fetching, setFetching] = React.useState(false);
   const [allVids,setAllVids] =  React.useState([]);
+  const [renderNavButtons, setRenderNavButtons] = useState(false)
+  
 
   const { subjectChapters,allChapterLessons,presentSubject } = useSelector((state) => state.group);
   console.log("the present SAVED  subject is autotune:",presentSubject)
@@ -72,6 +74,9 @@ function SelectedCoursePage() {
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
 
+  const changePage = (offset) => {
+    setPageNumber(prevPageNumber => prevPageNumber + offset);
+  }
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
@@ -87,6 +92,11 @@ function SelectedCoursePage() {
 /*PDF MANIPULATION LOGIC*/
   const [numPages, setNumPages] = useState(2);
   const [pageNumber, setPageNumber] = useState(1);
+  const [numberPages,setNumberPages] = useState(1)
+  const previousPage = () => { changePage(-1); }
+  const nextPage = () => { changePage(+1); }
+
+
 
   function onDocumentLoadSuccess(/*{ numPages }*/) {
     setNumPages(numPages);
@@ -171,7 +181,7 @@ function SelectedCoursePage() {
 /*SAVING TO BROWSER DATABASE */
 
 const [name,setName] = useState("Sample name")
-const [numberPages,setNumberPages] = useState(1)
+
 //const [fileObject,setFileObj] = useState("ababa namna")
 const [status,setStatus] = useState(false)
 const [view,setView] = useState(new Blob())
@@ -273,19 +283,40 @@ console.log("subjectList is:",subjectList)
       >
         <Box sx={style}> 
       {/* <MobilePDFReader onDocumentComplete={function(totalPage,title,otherObj){console.log("PDF INFORMATION IS:",otherObj)}}
-       isShowHeader={false} isShowFooter={false} url={'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
+       isShowHeader={false} isShowFooter={false} url={'http://www.whateverorigin.org/get?url=https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
       
        {<Document
           file= "https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
           
           
-          onLoadSuccess={({ numPages })=>{setNumberPages(numPages);console.log("Number of pages of this document is:",numPages)}}
+          onLoadSuccess={({ numPages })=>{setNumberPages(numPages);setRenderNavButtons(true);
+          ;console.log("Number of pages of this document is:",numPages)}}
           onLoadError={(error) => console.log("Inside Error", error)}
         >
-          {Array.apply(null, Array(numPages))
-    .map((x, i)=>i+1)
-    .map(page => <Page pageNumber={page}/>)}
-  </Document>}
+        
+    <Page pageNumber={pageNumber}/>
+  </Document>
+  
+  }
+
+{renderNavButtons &&
+    <div className="buttonc">
+      <Button
+        disabled={pageNumber <= 1}
+        onClick={previousPage}
+        variant='primary'
+      >
+        Previous Page
+      </Button>
+      {"  "}
+      <Button
+        disabled={pageNumber === numberPages}
+        onClick={nextPage}
+        variant='primary'
+      >
+        Next Page
+      </Button>
+    </div>}
 
 
         </Box>
