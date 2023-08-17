@@ -20,6 +20,7 @@ import philosophy from 'src/assets/images/philoslib.jpeg'
 import ReactPlayer from 'react-player'
 
 import { Document, Page ,pdfjs} from 'react-pdf';
+import PDFViewer from 'pdf-viewer-reactjs'
 
 
 
@@ -285,7 +286,7 @@ console.log("subjectList is:",subjectList)
       {/* <MobilePDFReader onDocumentComplete={function(totalPage,title,otherObj){console.log("PDF INFORMATION IS:",otherObj)}}
        isShowHeader={false} isShowFooter={false} url={'http://www.whateverorigin.org/get?url=https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
       
-       {<Document
+       {/*<Document
           file= "https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
           
           
@@ -297,9 +298,9 @@ console.log("subjectList is:",subjectList)
     <Page pageNumber={pageNumber}/>
   </Document>
   
-  }
+          */}
 
-{renderNavButtons &&
+{/*renderNavButtons &&
     <div className="buttonc">
       <Button
         disabled={pageNumber <= 1}
@@ -316,7 +317,17 @@ console.log("subjectList is:",subjectList)
       >
         Next Page
       </Button>
-    </div>}
+    </div>*/}
+
+
+    <PDFViewer
+            document={{
+                url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
+            }}
+
+            page={3}
+          
+        />
 
 
         </Box>

@@ -78,6 +78,7 @@
     "mobile-detect": "^1.4.5",
     "notistack": "^2.0.8",
     "numeral": "^2.0.6",
+    "pdf-viewer-reactjs": "^2.2.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
