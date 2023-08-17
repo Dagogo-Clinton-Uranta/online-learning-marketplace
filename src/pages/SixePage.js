@@ -224,7 +224,7 @@ useEffect(()=>{
          <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
          style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
           <SampleCardPage 
-          uid={topic.uid} title={topic.title} image = {oldTopics[i]?oldTopics[i].image:a10} author ={topic.instructor} price={topic.price} lessons={15} time={"2H 26 MINS"} /> 
+          uid={topic.uid} title={topic.title} image = {topic && topic.subjectImageUrl?topic.subjectImageUrl:(oldTopics[i]?oldTopics[i].image:a10)} author ={topic.instructor} price={topic.price} lessons={15} time={"2H 26 MINS"} /> 
          {/*gotta pass the id into the card so we can use it when clicked */}
          </Grid>
       ))}
@@ -238,7 +238,7 @@ useEffect(()=>{
          <Grid item xs={6} onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
          style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
           <SmallerCardPage 
-          uid={topic.uid}  title={topic.title} image = {oldTopics[i]?oldTopics[i].image:a10} author ={topic.instructor} price={"22,000"} lessons={15} time={"2H 26 MINS"} /> 
+          uid={topic.uid}  title={topic.title} image = {topic && topic.subjectImageUrl ?topic.subjectImageUrl:(oldTopics[i]?oldTopics[i].image:a10)} author ={topic.instructor} price={"22,000"} lessons={15} time={"2H 26 MINS"} /> 
          </Grid>
       ))}
          

@@ -14,7 +14,8 @@ const LogoSwitch = ({audioFile}) => {
     /*AUDIO MANIPULATION LOGIC */
   const audioRef = useRef(true)
   const [play,setPlay] = useState(false)
-  const [urlLink,setUrlLink] = useState('')
+  const [urlLink,setUrlLink] = useState(audioFile?audioFile:" ")
+  const [urlSample,setUrlSample] = useState("https://streaming.bonecole.com/courses_new/ecm_6e/original/1.+Le+mariage.mp3")
   /*const URLSound = window.URL || window.webkitURL;*/
 
   const linkMaker = (blob) => {
@@ -56,7 +57,7 @@ const LogoSwitch = ({audioFile}) => {
     audioRef.current.pause()
     }else if(!play){
       console.log("current.play looks like!:",audioRef.current)
-      audioRef.current.play(urlLink)
+      audioRef.current.play(audio)
     }
 
     
@@ -70,10 +71,10 @@ const LogoSwitch = ({audioFile}) => {
 
  {/*AUDIO PLAYER */}
    
-<audio  ref ={audioRef} src={soundBytes} type="audio/mp3"/>
+<audio  ref ={audioRef} src={urlLink} type="audio/mp3"/>
 
 
-<span onClick={()=>{playAudio()}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
+<span onClick={()=>{playAudio(urlLink)}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
 
     </div>
   )

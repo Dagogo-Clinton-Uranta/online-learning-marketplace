@@ -20,6 +20,9 @@ import philosophy from 'src/assets/images/philoslib.jpeg'
 import ReactPlayer from 'react-player'
 
 import { Document, Page ,pdfjs} from 'react-pdf';
+
+
+
 import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
 import LogoSwitch from './LogoSwitch';
@@ -89,10 +92,16 @@ function SelectedCoursePage() {
     setNumPages(numPages);
   }
 
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.js',
+    
+ /* pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+      //'pdfjs-dist/build/pdf.worker.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js',
     import.meta.url,
-  ).toString();
+  ).toString();*/
+
+
+  //pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+ pdfjs.GlobalWorkerOptions.workerSrc =  `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js`
 
 /*PDF MANIPULATION LOGIC END */
 
@@ -262,7 +271,20 @@ console.log("subjectList is:",subjectList)
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}> 
-       <MobilePDFReader isShowHeader={false} isShowFooter={false} url={samplePdf}/>
+      {/* <MobilePDFReader isShowHeader={false} isShowFooter={false} url={'https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
+      
+       <Document
+          file={
+            "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
+          }
+          // link={link}
+          onLoadSuccess={onDocumentLoadSuccess}
+          onLoadError={(error) => console.log("Inside Error", error)}
+        >
+          <Page pageNumber={1} style={{ display: "none" }} />
+        </Document>
+
+
         </Box>
     </Modal>
 
@@ -383,7 +405,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 {lesson.duration !== "quiz"?
  (
   <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={soundBytes2}/> &nbsp; {index + 1}.</p>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={lesson.lessonUrl}/> &nbsp; {index + 1}.</p>
   <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
   <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>
