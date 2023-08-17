@@ -226,7 +226,7 @@ export const logout = (navigate) => async (dispatch) => {
     dispatch(logoutFxn());
     dispatch(clearUser());
     dispatch(clearGroup());
-    navigate('/loginTest', { replace: true });
+    navigate('/external-login', { replace: true });
     console.log('logout successful!');
   }).catch((error) => {
     // An error happened.

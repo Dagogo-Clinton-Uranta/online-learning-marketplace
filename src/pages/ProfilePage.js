@@ -12,6 +12,7 @@ import {FaCaretDown} from 'react-icons/fa'
 
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import {logout} from 'src/redux/actions/auth.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -253,7 +254,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     <Button   variant="contained" 
             style={{ backgroundColor: "transparent",color:"#000000",width:"50%",height:"2.5rem",fontSize:"12px",
             }}
-            //onClick ={()=>{navigate('/login')}}
+            onClick ={()=>{dispatch(logout(navigate))}}
             >
             Se déconnecter
             </Button>
