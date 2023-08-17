@@ -101,7 +101,7 @@ function SelectedCoursePage() {
 
 
   //pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
- pdfjs.GlobalWorkerOptions.workerSrc =  `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js`
+ pdfjs.GlobalWorkerOptions.workerSrc =  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 /*PDF MANIPULATION LOGIC END */
 
@@ -171,6 +171,7 @@ function SelectedCoursePage() {
 /*SAVING TO BROWSER DATABASE */
 
 const [name,setName] = useState("Sample name")
+const [numberPages,setNumberPages] = useState(1)
 //const [fileObject,setFileObj] = useState("ababa namna")
 const [status,setStatus] = useState(false)
 const [view,setView] = useState(new Blob())
@@ -271,18 +272,20 @@ console.log("subjectList is:",subjectList)
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}> 
-      {/* <MobilePDFReader isShowHeader={false} isShowFooter={false} url={'https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
+      {/* <MobilePDFReader onDocumentComplete={function(totalPage,title,otherObj){console.log("PDF INFORMATION IS:",otherObj)}}
+       isShowHeader={false} isShowFooter={false} url={'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
       
-       <Document
-          file={
-            "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
-          }
-          // link={link}
-          onLoadSuccess={onDocumentLoadSuccess}
+       {<Document
+          file= "https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
+          
+          
+          onLoadSuccess={({ numPages })=>{setNumberPages(numPages);console.log("Number of pages of this document is:",numPages)}}
           onLoadError={(error) => console.log("Inside Error", error)}
         >
-          <Page pageNumber={1} style={{ display: "none" }} />
-        </Document>
+          {Array.apply(null, Array(numPages))
+    .map((x, i)=>i+1)
+    .map(page => <Page pageNumber={page}/>)}
+  </Document>}
 
 
         </Box>
