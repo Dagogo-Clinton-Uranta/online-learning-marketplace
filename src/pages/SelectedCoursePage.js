@@ -21,7 +21,7 @@ import ReactPlayer from 'react-player'
 
 import { Document, Page ,pdfjs} from 'react-pdf';
 import PDFViewer from 'pdf-viewer-reactjs'
-//import PDFViewer from 'mgr-pdf-viewer-react';
+
 
 
 import { MobilePDFReader,PDFReader } from 'react-read-pdf';

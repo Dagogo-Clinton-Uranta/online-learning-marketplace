@@ -1,4 +1,15 @@
 [[redirects]]
-  from = "https://thingproxy.freeboard.io/fetch/*"
+  from = "dashboard/selected-course/*"
   to = "https://thingproxy.freeboard.io/fetch//:splat"
   status = 200
+
+  [[redirects]]
+  from = "/selected-course"
+  to = "https://thingproxy.freeboard.io/fetch//:splat"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
