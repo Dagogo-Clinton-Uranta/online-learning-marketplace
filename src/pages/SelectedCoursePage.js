@@ -21,7 +21,7 @@ import ReactPlayer from 'react-player'
 
 import { Document, Page ,pdfjs} from 'react-pdf';
 import PDFViewer from 'pdf-viewer-reactjs'
-
+//import PDFViewer from 'mgr-pdf-viewer-react';
 
 
 import { MobilePDFReader,PDFReader } from 'react-read-pdf';
@@ -280,8 +280,8 @@ console.log("subjectList is:",subjectList)
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}> 
-      {/* <MobilePDFReader onDocumentComplete={function(totalPage,title,otherObj){console.log("PDF INFORMATION IS:",otherObj)}}
-       isShowHeader={false} isShowFooter={false} url={'http://www.whateverorigin.org/get?url=https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
+      {/* <MobilePDFReader onDocumentComplete={function(totalPage,title,otherObj){console.log("PDF INFORMATION FROM Source IS:",totalPage)}}
+       isShowHeader={false} isShowFooter={false} url={'https://thingproxy.freeboard.io/fetch/get?url=https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
       
        {/*<Document
           file= "https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
@@ -297,29 +297,12 @@ console.log("subjectList is:",subjectList)
   
           */}
 
-{/*renderNavButtons &&
-    <div className="buttonc">
-      <Button
-        disabled={pageNumber <= 1}
-        onClick={previousPage}
-        variant='primary'
-      >
-        Previous Page
-      </Button>
-      {"  "}
-      <Button
-        disabled={pageNumber === numberPages}
-        onClick={nextPage}
-        variant='primary'
-      >
-        Next Page
-      </Button>
-    </div>*/}
+
 
 
 {renderNavButtons &&
     <div style={{display:"flex",justifyContent:"space-between"}}>
-      <Button
+      <Button style={{color:"white",backgroundColor:"black",borderRadius:"5%"}}
         disabled={pageNumber <= 1}
         onClick={()=>{previousPage()}}
         variant='primary'
@@ -327,7 +310,7 @@ console.log("subjectList is:",subjectList)
       { "< Previous Page"}
       </Button>
       {"  "}
-      <Button
+      <Button style={{color:"white",backgroundColor:"black",borderRadius:"10%"}}
         disabled={pageNumber === numberPages}
         onClick={()=>{nextPage()}}
         variant='primary'
@@ -338,17 +321,17 @@ console.log("subjectList is:",subjectList)
 
 
 
-    <PDFViewer
+    {<PDFViewer
             document={{
                 url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
             }}
 
             page={pageNumber}
             scale={0.8}
-           externalInput
+           //externalInput
            //getMaxPageCount={(maxPageCount)=>{setPageNumber(1);{numberPages < 0 && setNumberPages(maxPageCount)};setRenderNavButtons(true);console.log("THE PAGE COUNT IS",maxPageCount)}}
           
-        />   
+          /> } 
 
 
     
