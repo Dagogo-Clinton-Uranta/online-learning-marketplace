@@ -1,1 +1,1 @@
-/dashboard/selected-course/* https://thingproxy.freeboard.io/fetch/:splat 200
+/https://streaming.bonecole.com/* https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/:splat 200

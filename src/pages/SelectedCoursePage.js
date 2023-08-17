@@ -328,7 +328,7 @@ console.log("subjectList is:",subjectList)
 
             page={pageNumber}
             scale={0.8}
-           //externalInput
+           externalInput
            //getMaxPageCount={(maxPageCount)=>{setPageNumber(1);{numberPages < 0 && setNumberPages(maxPageCount)};setRenderNavButtons(true);console.log("THE PAGE COUNT IS",maxPageCount)}}
           
           /> } 
