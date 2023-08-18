@@ -3,6 +3,7 @@ import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,
 import { styled } from '@mui/system';
 import { findDOMNode } from 'react-dom'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
@@ -92,6 +93,8 @@ function SelectedCoursePage() {
   const [numPages, setNumPages] = useState(10);
   const [pageNumber, setPageNumber] = useState(2);
   const [numberPages,setNumberPages] = useState(6)
+  const [pdfUrl,setPdfUrl] = useState('')
+  const [b64,setB64]=  useState('')
   const previousPage = () => { setPageNumber(pageNumber -1 ) }
   const nextPage = () => { setPageNumber(pageNumber +1 ); }
 
@@ -108,8 +111,59 @@ function SelectedCoursePage() {
   ).toString();*/
 
 
-  //pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+ // pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
  pdfjs.GlobalWorkerOptions.workerSrc =  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
+
+ const  loadPdfUrl = async()=> {
+
+  try {
+    console.log("our pdf url is",pdfUrl)
+  
+   const res = await fetch("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")
+
+  let returnImage= res.blob()
+ 
+  returnImage.then((item)=>{ 
+    blobToDataURL(item).then((url)=>{
+     
+      console.log("final url is",url)
+      setPdfUrl(url)
+      
+     })
+
+  const newUrl = URL.createObjectURL(item)
+  console.log("our pdf url is NEW RUL",newUrl)
+  setPdfUrl(`${newUrl}`)
+  setB64(item)
+
+    }).then(()=>{
+      setTimeout(()=>{setOpenPdf(true)},1000)
+     
+    }).catch((error)=>{
+      notifyErrorFxn(error)
+      console.log("EERAWR",error)
+    })
+
+  }catch(error){
+  console.log("error in creating URL",error)
+  }
+
+ }
+
+
+const loadAlso =()=>{
+ axios({
+  method: 'GET',
+  url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
+  responseType: 'arraybuffer',
+})
+.then(response => {setPdfUrl(response.data);setOpenPdf(true)})
+.catch((error)=>{
+  notifyErrorFxn(error)
+  console.log("EERAWR",error)
+})
+
+};
 
 /*PDF MANIPULATION LOGIC END */
 
@@ -248,7 +302,7 @@ async function saveCourse() {
 
   } catch (error) {
     setStatus(`Failed to add ${name}: ${error}`);
-    notifyErrorFxn(`Failed to add media: please check your connction and try again.`)
+    notifyErrorFxn(`Failed to add media: please check your connection and try again.`)
     console.log("status is now:",status)
 
   }
@@ -280,9 +334,9 @@ console.log("subjectList is:",subjectList)
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}> 
-      {/* <MobilePDFReader onDocumentComplete={function(totalPage,title,otherObj){console.log("PDF INFORMATION FROM Source IS:",totalPage)}}
-       isShowHeader={false} isShowFooter={false} url={'https://thingproxy.freeboard.io/fetch/get?url=https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf' }/> */}
+     
       
+       
        {/*<Document
           file= "https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
           
@@ -293,14 +347,14 @@ console.log("subjectList is:",subjectList)
         >
         
     <Page pageNumber={pageNumber}/>
-  </Document>
+  </Document>*/}
   
-          */}
+      
 
 
 
 
-{renderNavButtons &&
+{/*renderNavButtons &&
     <div style={{display:"flex",justifyContent:"space-between"}}>
       <Button style={{color:"white",backgroundColor:"black",borderRadius:"5%"}}
         disabled={pageNumber <= 1}
@@ -317,13 +371,16 @@ console.log("subjectList is:",subjectList)
       >
         {"Next Page >"}
       </Button>
-    </div>}
+    </div>*/}
 
+    {/* <MobilePDFReader 
+       isShowHeader={false} isShowFooter={false} url={samplePdf }/>*/ }
 
+       <iframe style={{width:"100%",height:"100%"}} src={'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf'} ></iframe>
 
-    {<PDFViewer
+    {/*<PDFViewer
             document={{
-                url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
+                base64: {pdfUrl},//'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
             }}
 
             page={pageNumber}
@@ -331,7 +388,9 @@ console.log("subjectList is:",subjectList)
            externalInput
            //getMaxPageCount={(maxPageCount)=>{setPageNumber(1);{numberPages < 0 && setNumberPages(maxPageCount)};setRenderNavButtons(true);console.log("THE PAGE COUNT IS",maxPageCount)}}
           
-          /> } 
+          /> */} 
+
+          
 
 
     
@@ -441,7 +500,7 @@ console.log("subjectList is:",subjectList)
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.title}
- <PictureAsPdfIcon onClick={handleOpenPdf} style={{fontSize:"2.2rem"}} />
+ <PictureAsPdfIcon onClick={()=>{handleOpenPdf()}}  style={{fontSize:"2.2rem"}} />
  </p>
 
 </Grid>
@@ -466,7 +525,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
 <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-<span onClick={handleOpenPdf}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
+<span onClick={()=>{handleOpenPdf()}}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
   {lesson.title}
  </p>
  <Divider/>
