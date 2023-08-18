@@ -376,7 +376,7 @@ console.log("subjectList is:",subjectList)
     {/* <MobilePDFReader 
        isShowHeader={false} isShowFooter={false} url={samplePdf }/>*/ }
 
-       <iframe style={{width:"100%",height:"100%"}} src={'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf'} ></iframe>
+       <iframe style={{width:"100%",height:"100%"}} src={'https://thingproxy.freeboard.io/fetch/https://research.google.com/pubs/archive/44678.pdf'} ></iframe>
 
     {/*<PDFViewer
             document={{
