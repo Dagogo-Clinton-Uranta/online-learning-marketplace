@@ -9,6 +9,7 @@ const initialState = {
        categorySubjects:[],
        subjectChapters:[],
        presentSubject:{},
+       selectedAudioId:null,
        presentOpenMenu:null,
        requestedSection:null,
        allChapterLessons:[],
@@ -75,6 +76,9 @@ savelastWatchedVideo: (state, action) => {
     saveGroupMembers: (state, action) => {
       state.groupMembers = action.payload;
   },
+  saveSelectedAudioId: (state, action) => {
+    state.selectedAudioId = action.payload;
+},
     saveEmployeer: (state, action) => {
       state.employeer = action.payload;
   },
@@ -104,6 +108,7 @@ export const {
  savePresentSubject,
  savePublicGroup,
  saveCategories,
+ saveSelectedAudioId,
  savelastWatchedVideo,
  savePrivateGroup,
  saveGroupMembers,

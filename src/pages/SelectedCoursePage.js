@@ -44,7 +44,7 @@ import { fetchVideosOneChapter} from 'src/redux/actions/group.action';
 
 import db from '../browserDb/db'
 
-import { blobToDataURL,dataURLToBlob,imgSrcToBlob } from 'blob-util'
+import { blobToDataURL,dataURLToBlob,imgSrcToBlob,arrayBufferToBlob } from 'blob-util'
 
 function SelectedCoursePage() {
   const navigate = useNavigate();
@@ -242,22 +242,34 @@ const URLSound = window.URL || window.webkitURL
 
 
 
-async function saveCourse() {
+async function saveCourse(url) {
   try {
     
     notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
 
-   const res = await fetch("https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4")
+   //const res = await fetch(`https://thingproxy.freeboard.io/fetch/${url}`) UNCOMMENT THIS LATER, AND COMMENT OUT TH ONE BELOW
+   const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
 
   let returnImage= res.blob()
-  
+
+  //console.log("RETURN IMAGE FUNCTIONALITY",returnImage)
+
+  /*if(returnImage.type === "audio/mp3"){
+    
+    const id =db.savedCourses.add({
+    courseName:"Audio 1",
+    fileObject:returnImage
+ 
+  });
+}*/
   
   returnImage.then((item)=>{ setView(item);setLoading(true);
     let second = item
-
-
+    
+    item.type = 'audio/mp3'
+    console.log("RETURN IMAGE FUNCTIONALITY",item)
       const id =db.savedCourses.add({
-        courseName:"Video 1",
+        courseName:"Audio 1",
         fileObject:item
      
       });
@@ -270,7 +282,14 @@ async function saveCourse() {
 
 
     return second
-    })/*.then((third)=>{
+    }).catch((error)=>{
+      notifyErrorFxn("error with downloading audio")
+      console.log("error with downloading audio",error)
+    })
+  
+    
+    
+    /*.then((third)=>{
       setView(third)
 }
   ).then(()=>{
@@ -515,9 +534,9 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 {lesson.duration !== "quiz"?
  (
   <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch audioFile={lesson.lessonUrl}/> &nbsp; {index + 1}.</p>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> &nbsp; {index + 1}.</p>
   <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
-  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse()}} style={{fontSize:"1.5rem"}}/></p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(lesson.lessonUrl)}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>
  )
 :

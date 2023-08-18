@@ -4,11 +4,13 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import ReactAudioPlayer from 'react-audio-player';
 import soundBytes from 'src/assets/images/soundBytes.mp3'
 import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
+import { useDispatch, useSelector } from 'react-redux';
 
+import { setSelectedAudioId} from 'src/redux/actions/group.action';
 
 import { blobToDataURL } from 'blob-util'
 
-const LogoSwitch = ({audioFile}) => {
+const LogoSwitch = ({uid,audioFile}) => {
 
 
     /*AUDIO MANIPULATION LOGIC */
@@ -17,6 +19,9 @@ const LogoSwitch = ({audioFile}) => {
   const [urlLink,setUrlLink] = useState(audioFile?audioFile:" ")
   const [urlSample,setUrlSample] = useState("https://streaming.bonecole.com/courses_new/ecm_6e/original/1.+Le+mariage.mp3")
   /*const URLSound = window.URL || window.webkitURL;*/
+ const dispatch = useDispatch()
+
+ const { selectedAudioId } = useSelector((state) => state.group);
 
   const linkMaker = (blob) => {
     let link;
@@ -43,14 +48,24 @@ const LogoSwitch = ({audioFile}) => {
      //return urlSound;
    }
    useEffect(()=>{
-    linkMaker(audioFile)
-   },[])
+    
+    if(uid !== selectedAudioId ){
+      setPlay(false)
+      audioRef.current.pause()
+    }
+
+   },[selectedAudioId])
 
 
    
 
   const playAudio = audio => {
    
+   dispatch(setSelectedAudioId(uid))
+
+
+ 
+
     setPlay(!play)
 
     if (play){
@@ -60,7 +75,7 @@ const LogoSwitch = ({audioFile}) => {
       audioRef.current.play(audio)
     }
 
-    
+
     /*const audioToPlay = new Audio(audio);
     audioToPlay.play();*/
 };

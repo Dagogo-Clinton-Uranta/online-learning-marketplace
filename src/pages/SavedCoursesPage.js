@@ -24,7 +24,7 @@ import ReactPlayer from 'react-player'
 import { Document, Page ,pdfjs} from 'react-pdf';
 import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
-import LogoSwitch from './LogoSwitch';
+import AudioSwitch from './AudioSwitch';
 import VideoSwitch from './VideoSwitch';
 
 
@@ -217,31 +217,6 @@ setSavedMedia(Files)
         </Box>
   </Modal>
 
-     {/*VIDEO MODAL */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        
-      >
-        <Box sx={style}>
-         <ReactPlayer   
-                width="100%"
-                height="100%"
-                id="full-screenVideo"                                              
-                className="videoFrame"
-                url={"https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4"}
-                //light={thumbnail}
-                playing={true}
-                playIcon={' '}
-                controls
-                ref={videoRef}
-              //onClickPreview = {()=>{setTouch(false);}}
-               
-             />
-        </Box>
-      </Modal>
     
 
    
@@ -270,9 +245,9 @@ setSavedMedia(Files)
    return (
     <div key={index}>
     <Grid item xs={12}   style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {<VideoSwitch audioFile={URL.createObjectURL(item.fileObject)}/> }&nbsp; {index+1})</p>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {item.fileObject && item.fileObject.type !==null && item.fileObject.type === 'video/mp4'  ?<VideoSwitch audioFile={URL.createObjectURL(item.fileObject)} />:<AudioSwitch audioFile={URL.createObjectURL(item.fileObject)}/> }&nbsp; {index+1})</p>
      <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
+     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}} >8:00</p>
     </Grid>
     </div>
    )

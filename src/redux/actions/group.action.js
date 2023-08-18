@@ -6,7 +6,8 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
   saveCategories ,saveGroupMembers, saveMyGroup,
    savePrivateGroup, savePublicGroup, saveSectionVideos,
    saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos,
-   saveCategorySubjects,savePresentSubject,saveSubjectChapters,saveAllChapterLessons } from '../reducers/group.slice';
+   saveCategorySubjects,savePresentSubject,saveSubjectChapters
+   ,saveAllChapterLessons,saveSelectedAudioId } from '../reducers/group.slice';
 import firebase from "firebase/app";
 
 
@@ -937,3 +938,11 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
    console.log("Error getting videos for the chapter:", error);
  });
  };
+
+
+ /*========== SAVING THE SELECTED AUDIO SO THAT ONLY ONE AUDIO CAN PLAY AT A TIME===========*/
+ export const setSelectedAudioId = (uid) => async (dispatch) => {
+
+  dispatch(saveSelectedAudioId(uid))
+
+ }
