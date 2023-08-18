@@ -89,6 +89,56 @@ function SelectedCoursePage() {
   },[])
 /*login check end */
 
+
+/*AUDIO MANIPULATION LOGIC */
+const audioRef = useRef(true)
+const [play,setPlay] = useState(false)
+const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+const  [showPlayer,setShowPlayer] = useState(true)
+
+
+useEffect(()=>{
+
+
+
+if(selectedAudioState === false)  {
+  pauseAudio()
+  }else{
+    setShowPlayer(true)
+    playAudio()
+  }
+
+
+},[selectedAudio,selectedAudioId,selectedAudioState])
+
+  const playAudio = audio => {
+   
+  
+   /* setPlay(!play)
+
+    if (play){
+    audioRef.current.pause()
+    }else if(!play){
+      
+      audioRef.current.play(audio)
+    }*/
+
+    audioRef.current.play(audio)
+
+
+  
+};
+
+
+const pauseAudio = audio => {
+   
+   audioRef.current.pause()
+
+};
+
+
+/*AUDIO MANIPULATION LOGIC END */
+
 /*PDF MANIPULATION LOGIC*/
   const [numPages, setNumPages] = useState(10);
   const [pageNumber, setPageNumber] = useState(2);
@@ -596,6 +646,29 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 
 
 </center>
+
+<Container maxWidth="xs">
+
+<Grid item xs={12}>
+  <center style={{position:"relative"}}>
+
+
+<div  style={{position:"fixed",bottom:"2%",marginLeft:"1rem"}}>
+
+{ showPlayer &&
+  <div onClick={()=>{setShowPlayer(false)}} style={{position:"absolute",right:"0.5rem",bottom:"1rem", zIndex:"1",color:"red"}} >
+  x
+ </div> 
+ }
+
+<audio controls={showPlayer}  ref={audioRef} src={selectedAudio} type="audio/mp3"/>
+
+</div>
+
+  </center>
+</Grid>
+
+</Container>
 
 </Container>
     </>

@@ -7,7 +7,7 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    savePrivateGroup, savePublicGroup, saveSectionVideos,
    saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos,
    saveCategorySubjects,savePresentSubject,saveSubjectChapters
-   ,saveAllChapterLessons,saveSelectedAudioId } from '../reducers/group.slice';
+   ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,saveSelectedAudioState } from '../reducers/group.slice';
 import firebase from "firebase/app";
 
 
@@ -944,5 +944,20 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
  export const setSelectedAudioId = (uid) => async (dispatch) => {
 
   dispatch(saveSelectedAudioId(uid))
+
+ }
+
+
+ export const setSelectedAudio = (urlLink) => async (dispatch) => {
+
+  dispatch(saveSelectedAudio(urlLink))
+  dispatch(saveSelectedAudioState(true))
+
+ }
+
+
+ export const setSelectedAudioState = (state) => async (dispatch) => {
+
+  dispatch(saveSelectedAudioState(state))
 
  }

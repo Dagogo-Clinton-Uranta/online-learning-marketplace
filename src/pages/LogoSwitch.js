@@ -6,7 +6,7 @@ import soundBytes from 'src/assets/images/soundBytes.mp3'
 import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSelectedAudioId} from 'src/redux/actions/group.action';
+import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/redux/actions/group.action';
 
 import { blobToDataURL } from 'blob-util'
 
@@ -14,14 +14,14 @@ const LogoSwitch = ({uid,audioFile}) => {
 
 
     /*AUDIO MANIPULATION LOGIC */
-  const audioRef = useRef(true)
+  //const audioRef = useRef(true)
   const [play,setPlay] = useState(false)
   const [urlLink,setUrlLink] = useState(audioFile?audioFile:" ")
   const [urlSample,setUrlSample] = useState("https://streaming.bonecole.com/courses_new/ecm_6e/original/1.+Le+mariage.mp3")
   /*const URLSound = window.URL || window.webkitURL;*/
  const dispatch = useDispatch()
 
- const { selectedAudioId } = useSelector((state) => state.group);
+ const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
 
   const linkMaker = (blob) => {
     let link;
@@ -51,7 +51,7 @@ const LogoSwitch = ({uid,audioFile}) => {
     
     if(uid !== selectedAudioId ){
       setPlay(false)
-      audioRef.current.pause()
+      //audioRef.current.pause()
     }
 
    },[selectedAudioId])
@@ -61,18 +61,24 @@ const LogoSwitch = ({uid,audioFile}) => {
 
   const playAudio = audio => {
    
-   dispatch(setSelectedAudioId(uid))
+    setPlay(!play)
 
 
+    if(uid === selectedAudioId ){dispatch(setSelectedAudioState(!selectedAudioState))}
+  
+    if(uid !== selectedAudioId ){
+    dispatch(setSelectedAudioId(uid))
+   dispatch(setSelectedAudio(audioFile))
+    }
  
 
     setPlay(!play)
 
     if (play){
-    audioRef.current.pause()
+    //audioRef.current.pause()
     }else if(!play){
-      console.log("current.play looks like!:",audioRef.current)
-      audioRef.current.play(audio)
+      //console.log("current.play looks like!:",audioRef.current)
+      //audioRef.current.play(audio)
     }
 
 
@@ -84,10 +90,10 @@ const LogoSwitch = ({uid,audioFile}) => {
   return (
     <div style={{display:"inline"}}>
 
- {/*AUDIO PLAYER */}
+ {/*AUDIO PLAYER*/}
    
-<audio  ref ={audioRef} src={urlLink} type="audio/mp3"/>
-
+<audio   src={urlLink} type="audio/mp3"/>
+ 
 
 <span onClick={()=>{playAudio(urlLink)}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
 

@@ -10,6 +10,8 @@ const initialState = {
        subjectChapters:[],
        presentSubject:{},
        selectedAudioId:null,
+       selectedAudio:null,
+       selectedAudioState:false,
        presentOpenMenu:null,
        requestedSection:null,
        allChapterLessons:[],
@@ -79,6 +81,15 @@ savelastWatchedVideo: (state, action) => {
   saveSelectedAudioId: (state, action) => {
     state.selectedAudioId = action.payload;
 },
+saveSelectedAudio: (state, action) => {
+  state.selectedAudio = action.payload;
+  state.selectedAudioState = true 
+},
+
+saveSelectedAudioState: (state, action) => {
+  state.selectedAudioState = action.payload;
+ 
+},
     saveEmployeer: (state, action) => {
       state.employeer = action.payload;
   },
@@ -109,6 +120,8 @@ export const {
  savePublicGroup,
  saveCategories,
  saveSelectedAudioId,
+ saveSelectedAudio,
+ saveSelectedAudioState,
  savelastWatchedVideo,
  savePrivateGroup,
  saveGroupMembers,
