@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -16,21 +17,17 @@ const persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const warnIfOffline = ()=>{
 
-  if(window.navigator.onLine){
-  if(window.confirm("you are about to leave the page, you will have to go online to get back, proceed ?")){
-   console.log("THEY LEFT ANYWAY, POOR THEM")
-  }
-}
-}
+
+
+
 
 root.render(
   <HelmetProvider>
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
     <BrowserRouter>
-      <App onUnload={()=>{warnIfOffline()}} />
+      <App  />
     </BrowserRouter>
     </PersistGate>
     </Provider>

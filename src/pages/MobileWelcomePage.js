@@ -1,6 +1,9 @@
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
-import { useEffect,useRef, useState } from 'react';
+import { useContext,useEffect,useRef, useState,useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UNSAFE_NavigationContext as NavigationContext } from 'react-router-dom';
+
+
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
 import startQuote from 'src/assets/images/startQuote.png'
@@ -11,7 +14,7 @@ import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import {fetchCategorySubjects,fetchAllCategories} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { notifyErrorFxn } from 'src/utils/toast-fxn';
+import { notifyErrorFxn, notifyInfoFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -23,11 +26,16 @@ function MobileWelcomePage() {
 
  
   
-
+ // window.onbeforeunload = function () {
+ //   usePrompt("you may have to go online to retrieve this page")
+ // 
+ // }
 
 const { user,error } = useSelector((state) => state.auth);
 const { allCategories } = useSelector((state) => state.group);
 console.log("categories/COURSES",allCategories)
+
+
 
 useEffect(()=>{
    if(!user){
@@ -37,6 +45,8 @@ useEffect(()=>{
 
    
 },[])
+
+
 
 
   const populateCategory = (category) => {
@@ -51,7 +61,7 @@ useEffect(()=>{
 
   return (
     <>
-    <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
+    <Container  maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
 
     {/* I am using the navbar in Dashboard layout now, 
     

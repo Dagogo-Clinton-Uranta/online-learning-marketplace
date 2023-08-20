@@ -10619,6 +10619,11 @@
   dependencies:
     "prop-types" "^15.7.2"
 
+"react-beforeunload@^2.6.0":
+  "integrity" "sha512-aKrGaRNc7fZQlDnmSYrXu4cbz9QEPhScA4A2mLxhjcULDy4VILLyLhSEjg2goIw3o5LQ1zss44kmQh5LXWYGCw=="
+  "resolved" "https://registry.npmjs.org/react-beforeunload/-/react-beforeunload-2.6.0.tgz"
+  "version" "2.6.0"
+
 "react-chartjs-2@^5.0.1":
   "integrity" "sha512-u38C9OxynlNCBp+79grgXRs7DSJ9w8FuQ5/HO5FbYBbri8HSZW+9SWgjVshLkbXBfXnMGWakbHEtvN0nL2UG7Q=="
   "resolved" "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-5.0.1.tgz"
