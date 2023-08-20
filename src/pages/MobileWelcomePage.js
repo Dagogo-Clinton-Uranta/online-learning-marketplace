@@ -34,6 +34,8 @@ useEffect(()=>{
     navigate('/login')
    }
    dispatch(fetchAllCategories())
+
+   
 },[])
 
 
