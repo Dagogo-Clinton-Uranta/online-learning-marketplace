@@ -30,10 +30,9 @@ export default function App() {
   const HandleUnload = (e) => {
     //e.preventDefault()
    
-    if(!window.navigator.onLine){
+   /* if(!window.navigator.onLine){*/
    
      // notifyInfoFxn("please wait..")
-
     setTimeout( ()=>{if(window.confirm("You are offline,if you leave the page now,you may have to reload, continue?")){
       console.log("THEY LEFT ANYWAY, POOR USER")
      
@@ -41,7 +40,7 @@ export default function App() {
     },2000)
      
     
-    } 
+  /*  } */
   };
   
 
