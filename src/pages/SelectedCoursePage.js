@@ -316,7 +316,7 @@ async function saveCourse(url) {
   returnImage.then((item)=>{ setView(item);setLoading(true);
     let second = item
     
-    item.type = 'audio/mp3'
+ 
     console.log("RETURN IMAGE FUNCTIONALITY",item)
       const id =db.savedCourses.add({
         courseName:"Audio 1",
