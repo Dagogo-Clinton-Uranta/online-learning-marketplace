@@ -8,9 +8,10 @@ import ScrollToTop from './components/scroll-to-top';
 import { StyledChart } from './components/chart';
 import './index.css';
 import { ToastContainer } from 'react-toastify';
-import { Beforeunload } from 'react-beforeunload';
+
 import { notifyInfoFxn ,notifySuccessFxn} from './utils/toast-fxn';
 
+import { useDispatch, useSelector } from 'react-redux';
 import { Offline, Online,Detector } from "react-detect-offline";
 
 // ----------------------------------------------------------------------
@@ -44,13 +45,20 @@ export default function App() {
    // 
    //} 
    //};
-
+   const { user,error } = useSelector((state) => state.auth);
    const [isOnline, setIsOnline] = useState(navigator.onLine);
+ 
+   const [wentOffline,setWentOffline] = useState(false)
 
    useEffect(() => {
     // Update network status
     const handleStatusChange = () => {
       setIsOnline(navigator.onLine);
+
+      if(!navigator.onLine){
+        setWentOffline(true)
+      }
+
     };
 
     // Listen to the online status
@@ -65,6 +73,9 @@ export default function App() {
       window.removeEventListener('offline', handleStatusChange);
     };
 }, [isOnline]);
+
+
+
   
 
 
@@ -96,9 +107,9 @@ export default function App() {
          
          }
 
-         {isOnline && 
+         {isOnline && wentOffline &&
           <>
-          {notifySuccessFxn(`online`)}
+          {notifySuccessFxn(`Back online`)}
           </>
          
          }

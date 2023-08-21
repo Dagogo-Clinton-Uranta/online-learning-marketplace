@@ -14,7 +14,7 @@ import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import {fetchCategorySubjects,fetchAllCategories} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { notifyErrorFxn, notifyInfoFxn } from 'src/utils/toast-fxn';
+
 import users from 'src/_mock/user';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
