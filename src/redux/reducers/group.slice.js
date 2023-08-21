@@ -13,6 +13,7 @@ const initialState = {
        selectedAudio:null,
        selectedAudioState:false,
        presentOpenMenu:null,
+       allQuizzesForSubject:[],
        requestedSection:null,
        allChapterLessons:[],
        nextUpVideo:null,
@@ -56,6 +57,9 @@ saveSubjectChapters: (state, action) => {
 },
 saveAllChapterLessons: (state, action) => {
   state.allChapterLessons = action.payload;
+},
+saveAllQuizzesForSubject: (state, action) => {
+  state.allQuizzesForSubject = action.payload;
 },
 savePresentOpenMenu: (state, action) => {
   state.presentOpenMenu = action.payload;
@@ -114,6 +118,7 @@ export const {
  saveCategorySubjects,
  saveSubjectChapters,
  saveAllChapterLessons,
+ saveAllQuizzesForSubject,
  saveNextUpVideo,
  savePresentOpenMenu,
  savePresentSubject,

@@ -7,11 +7,13 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    savePrivateGroup, savePublicGroup, saveSectionVideos,
    saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos,
    saveCategorySubjects,savePresentSubject,saveSubjectChapters
-   ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,saveSelectedAudioState } from '../reducers/group.slice';
+   ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,
+   saveSelectedAudioState,saveAllQuizzesForSubject } from '../reducers/group.slice';
 import firebase from "firebase/app";
 
 
 let globalLessonsArray = []
+let globalQuizzesArray = []
 
 export const createGroup = (groupData, user, file, navigate, setLoading, url) => async (dispatch) => {
   var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -867,8 +869,11 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
 
  /*============== FETCH THE CHAPTERS OF A PARTICULAR SUBJECT================ */
  /*============== AND ALSO FETCH THE LESSONS OF ALL CHAPTERS =============== */
+ /*============== AND ALSO FETCH THE QUIZZES OF ALL CHAPTERS =============== */
+
  export const fetchSubjectChapters = (uid) => async (dispatch) => {
   globalLessonsArray = []
+  globalQuizzesArray =[]
 
   db.collection("chapters")
    .where("sectionId", "==", uid )
@@ -888,17 +893,17 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
  }).then((result)=>{
 
   let chaptersArray = [...result]
-  console.log("the chapters array ARE WENT",chaptersArray)
+  console.log("the chapters array FOR ALL CHAPTERS RELATING TO THIS SUBJECT IS:",chaptersArray)
 
 
   chaptersArray.forEach((item)=>{
  dispatch(fetchVideosOneChapter(item.uid))
-   
+ dispatch(fetchQuizzesOneChapter(item.uid)) 
   })
 
 
   setTimeout(()=>{dispatch(saveAllChapterLessons(globalLessonsArray))},1500)
- 
+  setTimeout(()=>{dispatch(saveAllQuizzesForSubject(globalQuizzesArray))},1500)
 })
 
  
@@ -931,11 +936,36 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
     globalLessonsArray = [...globalLessonsArray,...videosArray]
    } else {
      
-       console.log(`No videos for the chapter; ${uid}`);
+       console.log(`No lessons for the chapter,when database was checked; ${uid}`);
        globalLessonsArray = [...globalLessonsArray,...videosArray]
    }
  }).catch((error) => {
-   console.log("Error getting videos for the chapter:", error);
+   console.log("Error getting lessons for the chapter:", error);
+ });
+ };
+
+
+ /*========== FETCHING ALL THE QUIZZES FOR ONE CHAPTER===========*/
+ export const fetchQuizzesOneChapter = (uid) => async (dispatch) => {
+ 
+  db.collection("quizzes")
+   .where("chapterId", "==", uid )
+   .get()
+   .then((snapshot) => {
+     const quizArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
+   if (quizArray.length) {
+    
+     //console.log(`lessons for ${uid} are:`, videosArray);
+    // dispatch(saveSubjectChapters(videosArray));
+
+    globalQuizzesArray = [...globalQuizzesArray,...quizArray]
+   } else {
+     
+       console.log(`No quiz for the chapter, when database was checked; ${uid}`);
+       globalQuizzesArray = [...globalQuizzesArray,...quizArray]
+   }
+ }).catch((error) => {
+   console.log("Error getting quizzes for the chapter:", error);
  });
  };
 

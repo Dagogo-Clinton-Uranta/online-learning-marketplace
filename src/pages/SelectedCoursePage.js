@@ -22,7 +22,7 @@ import ReactPlayer from 'react-player'
 
 import { Document, Page ,pdfjs} from 'react-pdf';
 import PDFViewer from 'pdf-viewer-reactjs'
-
+import MyPDFViewer from './myPdfViewer'
 
 
 import { MobilePDFReader,PDFReader } from 'react-read-pdf';
@@ -45,6 +45,7 @@ import { fetchVideosOneChapter} from 'src/redux/actions/group.action';
 import db from '../browserDb/db'
 
 import { blobToDataURL,dataURLToBlob,imgSrcToBlob,arrayBufferToBlob } from 'blob-util'
+
 
 function SelectedCoursePage() {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ function SelectedCoursePage() {
   const [renderNavButtons, setRenderNavButtons] = useState(true)
   
 
-  const { subjectChapters,allChapterLessons,presentSubject } = useSelector((state) => state.group);
+  const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
   console.log("the present SAVED  subject is autotune:",presentSubject)
   console.log("the chapters for this subject are:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
@@ -442,23 +443,10 @@ console.log("subjectList is:",subjectList)
       </Button>
     </div>*/}
 
-    {/* <MobilePDFReader 
-       isShowHeader={false} isShowFooter={false} url={samplePdf }/>*/ }
+      { <iframe style={{width:"100%",height:"100%"}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
 
-       <iframe style={{width:"100%",height:"100%"}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>
-
-    {/*<PDFViewer
-            document={{
-                base64: {pdfUrl},//'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
-            }}
-
-            page={pageNumber}
-            scale={0.8}
-           externalInput
-           //getMaxPageCount={(maxPageCount)=>{setPageNumber(1);{numberPages < 0 && setNumberPages(maxPageCount)};setRenderNavButtons(true);console.log("THE PAGE COUNT IS",maxPageCount)}}
-          
-          /> */} 
-
+      {/*<MyPDFViewer pdfUrl={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} />*/}
+   
           
 
 
@@ -615,6 +603,34 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 
 </Grid>
 }
+
+{ allQuizzesForSubject.filter((item)=>(item.chapterId === chapter.uid)).length > 0 &&
+
+ allQuizzesForSubject.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>((a.lessonNumber && b.lessonNumber)?(a.lessonNumber - b.lessonNumber):1)).map((quiz,index)=>(
+
+ <>
+
+{
+
+<Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
+   
+<p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
+<span onClick={()=>{handleOpenPdf()}}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
+  {quiz.title}
+ </p>
+ <Divider/>
+
+</Grid>
+
+}
+
+
+</>
+
+))
+
+}
+
 </>
 
 
