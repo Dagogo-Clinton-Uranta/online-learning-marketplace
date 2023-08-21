@@ -10638,6 +10638,11 @@
     "lodash" "^4.16.6"
     "object-unfreeze" "^1.1.0"
 
+"react-detect-offline@^2.4.5":
+  "integrity" "sha512-sI13NPEKl3uQp95FT5CwrYzH3DnXCwNP6TnY6NRF5gFDM4NU9KDlbtA6HG2dwhDVS0RYQGXwZW/mHbdf8fCnaw=="
+  "resolved" "https://registry.npmjs.org/react-detect-offline/-/react-detect-offline-2.4.5.tgz"
+  "version" "2.4.5"
+
 "react-dev-utils@^12.0.1":
   "integrity" "sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ=="
   "resolved" "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-12.0.1.tgz"
