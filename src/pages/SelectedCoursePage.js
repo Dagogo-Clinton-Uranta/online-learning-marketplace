@@ -141,80 +141,32 @@ const pauseAudio = audio => {
 /*AUDIO MANIPULATION LOGIC END */
 
 /*PDF MANIPULATION LOGIC*/
-  const [numPages, setNumPages] = useState(10);
-  const [pageNumber, setPageNumber] = useState(2);
-  const [numberPages,setNumberPages] = useState(6)
-  const [pdfUrl,setPdfUrl] = useState('')
-  const [b64,setB64]=  useState('')
-  const previousPage = () => { setPageNumber(pageNumber -1 ) }
-  const nextPage = () => { setPageNumber(pageNumber +1 ); }
-
-
-
-  const changePage = (offset) => {
-    setPageNumber(prevPageNumber => prevPageNumber + offset);
-  }
-    
- /* pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-      //'pdfjs-dist/build/pdf.worker.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js',
-    import.meta.url,
-  ).toString();*/
-
-
- // pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
- pdfjs.GlobalWorkerOptions.workerSrc =  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
-
- const  loadPdfUrl = async()=> {
-
-  try {
-    console.log("our pdf url is",pdfUrl)
   
-   const res = await fetch("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")
+const iFrameRef = useRef(null);
+const iFrameRef2 = useRef(null);
+const [isIFrameLoaded, setIsIFrameLoaded] = useState(false);
+const [isIFrameLoaded2, setIsIFrameLoaded2] = useState(false);
+let iframeCurrent = iFrameRef.current;
 
-  let returnImage= res.blob()
+
+  const [openPdf, setOpenPdf] = React.useState(false);
+  const handleOpenPdf = () => {setTimeout(()=>{setOpenPdf(true)},0);setTimeout(()=>{setIsIFrameLoaded(true)},0)}
+  const handleClosePdf = () => {setTimeout(()=>{setOpenPdf(false)},0);setIsIFrameLoaded(false)};
+
  
-  returnImage.then((item)=>{ 
-    blobToDataURL(item).then((url)=>{
+  useEffect(() => {
      
-      console.log("final url is",url)
-      setPdfUrl(url)
-      
-     })
 
-  const newUrl = URL.createObjectURL(item)
-  console.log("our pdf url is NEW RUL",newUrl)
-  setPdfUrl(`${newUrl}`)
-  setB64(item)
-
-    }).then(()=>{
-      setTimeout(()=>{setOpenPdf(true)},1000)
-     
-    }).catch((error)=>{
-      notifyErrorFxn(error)
-      console.log("EERAWR",error)
-    })
-
-  }catch(error){
-  console.log("error in creating URL",error)
-  }
-
- }
+    iframeCurrent?.addEventListener('load', () => {setIsIFrameLoaded(true)});
+    console.log("iframe current is",iframeCurrent)
+    return () => {
+      iframeCurrent?.removeEventListener('load', () => setIsIFrameLoaded(true));
+    };
+  }, [iframeCurrent,openPdf]);
+ 
 
 
-const loadAlso =()=>{
- axios({
-  method: 'GET',
-  url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
-  responseType: 'arraybuffer',
-})
-.then(response => {setPdfUrl(response.data);setOpenPdf(true)})
-.catch((error)=>{
-  notifyErrorFxn(error)
-  console.log("EERAWR",error)
-})
 
-};
 
 /*PDF MANIPULATION LOGIC END */
 
@@ -225,9 +177,7 @@ const loadAlso =()=>{
   const handleClose = () => {setOpen(false);setVideoTime(false)};
 
 
-  const [openPdf, setOpenPdf] = React.useState(false);
-  const handleOpenPdf = () => {setOpenPdf(true)}
-  const handleClosePdf = () => {setOpenPdf(false)};
+
 
 /*MODAL MANIPULATION LOGIC */
 
@@ -289,6 +239,7 @@ const [name,setName] = useState("Sample name")
 const [status,setStatus] = useState(false)
 const [view,setView] = useState(new Blob())
 const [loading,setLoading] = useState("Not loafing")
+
 const URLSound = window.URL || window.webkitURL
 
 
@@ -407,46 +358,18 @@ console.log("subjectList is:",subjectList)
      
       
        
-       {/*<Document
-          file= "https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
-          
-          
-          onLoadSuccess={({ numPages })=>{setNumberPages(numPages);setRenderNavButtons(true);
-          ;console.log("Number of pages of this document is:",numPages)}}
-          onLoadError={(error) => console.log("Inside Error", error)}
-        >
-        
-    <Page pageNumber={pageNumber}/>
-  </Document>*/}
-  
       
 
 
 
 
-{/*renderNavButtons &&
-    <div style={{display:"flex",justifyContent:"space-between"}}>
-      <Button style={{color:"white",backgroundColor:"black",borderRadius:"5%"}}
-        disabled={pageNumber <= 1}
-        onClick={()=>{previousPage()}}
-        variant='primary'
-      >
-      { "< Previous Page"}
-      </Button>
-      {"  "}
-      <Button style={{color:"white",backgroundColor:"black",borderRadius:"10%"}}
-        disabled={pageNumber === numberPages}
-        onClick={()=>{nextPage()}}
-        variant='primary'
-      >
-        {"Next Page >"}
-      </Button>
-    </div>*/}
+      { <iframe ref={iFrameRef2} onLoad={()=>{setIsIFrameLoaded(true);console.log("IFRAME ACTUALLY DID SOMETHING")}}  style={{ opacity:isIFrameLoaded2?"1":"1"  , width:"100%",height:"100%"}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
+      
+      {isIFrameLoaded===false && <iframe ref={iFrameRef} onLoad={()=>{setIsIFrameLoaded2(true);console.log("IFRAME ACTUALLY DID SOMETHING")}}  style={{width:"100%",height:"100%"}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
+      
+      
 
-      { <iframe style={{width:"100%",height:"100%"}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
-
-      {/*<MyPDFViewer pdfUrl={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} />*/}
-   
+     
           
 
 

@@ -14,15 +14,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 
+import FacebookLogin from 'react-facebook-login';
+import './facebookLogin.css';
 
 function ExternalLoginPage() {
   const navigate = useNavigate();
-  const [file, setFile] = useState();
-  const [file2, setFile2] = useState();
-  const [fileSize, setFileSize] = useState();
-  const [fileSize2, setFileSize2] = useState();
-  const [selectedFile, setSelectedFile] = useState({selectedFile: [], selectedFileName: []});
-  const [selectedFile2, setSelectedFile2] = useState({selectedFile2: [], selectedFileName2: []});
+  
   const dispatch = useDispatch();
 
   const [newPassword,setNewPassword] =useState('')
@@ -41,43 +38,15 @@ function ExternalLoginPage() {
  },[])
 
 
-  const handleselectedFile = event => {
-    console.log("these are the picture deets!",event.target.files[0])
-    setSelectedFile({
-        selectedFile: event.target.files[0],
-        selectedFileName: event.target.files[0].name
-    });
-    
-    setFile(URL.createObjectURL(event.target.files[0]));
-    setFileSize(event.target.files[0].size)
-};
- /* const handleselectedFile2 = event => {
-    console.log("these are the video deets!",event.target.files[0])
-    setSelectedFile2({
-        selectedFile2: event.target.files[0],
-        selectedFileName2: event.target.files[0].name
-    });
-    setFile2(URL.createObjectURL(event.target.files[0]));
-    setFileSize2(event.target.files[0].size)
-};*/
-
-
-
-const uploadMovie = (movieData = 0,image = 0,) => {
-if(!companySize.length && !newPassword.length &&  file === undefined ){
-  console.log("THE EMPTY FIELDS ARE:",file)
-  notifyErrorFxn("Please fill in the field(s) you want to update!")
-}else{
- if( fileSize  > 300000){
-  notifyErrorFxn("Image size too large! please upload a smaller picture.")
- }
- /*else if( fileSize2  > 20000000){
-  notifyErrorFxn("Video size too large! please upload a smaller video.")
- }*/else{
-  dispatch(uploadUserSettings(movieData,image))
- }
+ 
+const responseFacebook = (response) => {
+  console.log(response);
 }
+
+const componentClicked = (data)=>{
+   console.log("data from facebook",data)
 }
+
 
   return (
     <>
@@ -116,6 +85,31 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         </Grid>
 
 
+       
+        <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center',alignItems:"center" }}>
+           
+          
+           <Button   variant="contained" 
+          style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
+          }}
+          onClick ={()=>{navigate('/login')}}
+          >
+                 <FacebookLogin
+           appId="1482147535954732" // sotre this in an environment vairable app secret - ad921b0cff5668ec822354f6e4758f28
+           autoLoad={true}
+           fields="name,email,picture"
+           onClick={componentClicked}
+           callback={responseFacebook} 
+           cssClass="my-facebook-button-class"/>
+             
+             Se connecter avec Facebook   
+
+          </Button>
+       
+        
+       
+
+        </Grid>
 
       
 
