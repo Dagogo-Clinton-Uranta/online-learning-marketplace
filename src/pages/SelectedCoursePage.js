@@ -145,22 +145,15 @@ const pauseAudio = audio => {
   const [pageNumber, setPageNumber] = useState(2);
   const [numberPages,setNumberPages] = useState(6)
   const [pdfUrl,setPdfUrl] = useState('')
-  const [b64,setB64]=  useState('')
-  const previousPage = () => { setPageNumber(pageNumber -1 ) }
-  const nextPage = () => { setPageNumber(pageNumber +1 ); }
-
-
-
-  const changePage = (offset) => {
-    setPageNumber(prevPageNumber => prevPageNumber + offset);
-  }
+  const [frame1,setFrame1]=  useState(true)
+  const [frame2,setFrame2]=  useState(true)
+  const [showErrorPdf,setShowErrorPdf] = useState(false)
+ 
+  const iFrameRef = useRef(null);
+  const iFrameRef2 = useRef(null);
+  const [isIFrameLoaded, setIsIFrameLoaded] = useState(false);
+  const iframeCurrent = iFrameRef.current;
     
- /* pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-      //'pdfjs-dist/build/pdf.worker.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js',
-    import.meta.url,
-  ).toString();*/
-
 
  // pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
  pdfjs.GlobalWorkerOptions.workerSrc =  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
@@ -185,7 +178,7 @@ const pauseAudio = audio => {
   const newUrl = URL.createObjectURL(item)
   console.log("our pdf url is NEW RUL",newUrl)
   setPdfUrl(`${newUrl}`)
-  setB64(item)
+ 
 
     }).then(()=>{
       setTimeout(()=>{setOpenPdf(true)},1000)
@@ -202,19 +195,14 @@ const pauseAudio = audio => {
  }
 
 
-const loadAlso =()=>{
- axios({
-  method: 'GET',
-  url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
-  responseType: 'arraybuffer',
-})
-.then(response => {setPdfUrl(response.data);setOpenPdf(true)})
-.catch((error)=>{
-  notifyErrorFxn(error)
-  console.log("EERAWR",error)
-})
 
-};
+ useEffect(() => {
+   iframeCurrent?.addEventListener('load', () => setIsIFrameLoaded(true));
+   return () => {
+     iframeCurrent?.removeEventListener('load', () => setIsIFrameLoaded(true));
+   };
+ }, [iframeCurrent]);
+
 
 /*PDF MANIPULATION LOGIC END */
 
@@ -226,8 +214,8 @@ const loadAlso =()=>{
 
 
   const [openPdf, setOpenPdf] = React.useState(false);
-  const handleOpenPdf = () => {setOpenPdf(true)}
-  const handleClosePdf = () => {setOpenPdf(false)};
+  const handleOpenPdf = () => {setOpenPdf(true);setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true)},3000)}
+  const handleClosePdf = () => {setOpenPdf(false);setFrame1(true);setFrame2(true);setShowErrorPdf(false)};
 
 /*MODAL MANIPULATION LOGIC */
 
@@ -407,46 +395,16 @@ console.log("subjectList is:",subjectList)
      
       
        
-       {/*<Document
-          file= "https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"
-          
-          
-          onLoadSuccess={({ numPages })=>{setNumberPages(numPages);setRenderNavButtons(true);
-          ;console.log("Number of pages of this document is:",numPages)}}
-          onLoadError={(error) => console.log("Inside Error", error)}
-        >
-        
-    <Page pageNumber={pageNumber}/>
-  </Document>*/}
-  
       
+      
+        {(iframeCurrent === null && showErrorPdf) && <center>SOMETHING WENT WRONG,PLEASE TRY AGAIN.</center>}
 
 
+       { <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
 
+      {frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
 
-{/*renderNavButtons &&
-    <div style={{display:"flex",justifyContent:"space-between"}}>
-      <Button style={{color:"white",backgroundColor:"black",borderRadius:"5%"}}
-        disabled={pageNumber <= 1}
-        onClick={()=>{previousPage()}}
-        variant='primary'
-      >
-      { "< Previous Page"}
-      </Button>
-      {"  "}
-      <Button style={{color:"white",backgroundColor:"black",borderRadius:"10%"}}
-        disabled={pageNumber === numberPages}
-        onClick={()=>{nextPage()}}
-        variant='primary'
-      >
-        {"Next Page >"}
-      </Button>
-    </div>*/}
-
-      { <iframe style={{width:"100%",height:"100%"}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
-
-      {/*<MyPDFViewer pdfUrl={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} />*/}
-   
+     
           
 
 
