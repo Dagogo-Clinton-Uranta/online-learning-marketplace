@@ -215,7 +215,7 @@ const pauseAudio = audio => {
 
   const [openPdf, setOpenPdf] = React.useState(false);
   const handleOpenPdf = () => {setOpenPdf(true);setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true)},3000)}
-  const handleClosePdf = () => {setOpenPdf(false);setFrame1(true);setFrame2(true);setShowErrorPdf(false)};
+  const handleClosePdf = () => {setOpenPdf(false);setFrame1(true);setFrame2(true);setShowErrorPdf(false);iframeCurrent=null};
 
 /*MODAL MANIPULATION LOGIC */
 
