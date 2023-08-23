@@ -14,7 +14,7 @@ import { findDOMNode } from 'react-dom'
 
 import { blobToDataURL } from 'blob-util'
 
-const VideoSwitch = ({audioFile}) => {
+const AudioSwitch = ({audioFile}) => {
 
 
   const style = {
@@ -89,4 +89,4 @@ const handleClosePdf = () => {setOpenPdf(false)};
 }
  
 
-export default VideoSwitch
+export default AudioSwitch

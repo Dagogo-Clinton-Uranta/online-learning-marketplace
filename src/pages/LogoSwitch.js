@@ -47,12 +47,17 @@ const LogoSwitch = ({uid,audioFile}) => {
   
      //return urlSound;
    }
-   
+
    useEffect(()=>{
     
     if(uid !== selectedAudioId ){
       setPlay(false)
       //audioRef.current.pause()
+    }
+
+    if(uid === selectedAudioId ){
+      dispatch(setSelectedAudio(audioFile))
+      dispatch(setSelectedAudioState(true))
     }
 
    },[selectedAudioId])
@@ -70,9 +75,11 @@ const LogoSwitch = ({uid,audioFile}) => {
     if(uid !== selectedAudioId ){
     dispatch(setSelectedAudioId(uid))
    dispatch(setSelectedAudio(audioFile))
+   dispatch(setSelectedAudioState(true))
     }
- 
 
+    
+ 
 };
 
 

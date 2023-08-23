@@ -96,7 +96,7 @@ function SelectedCoursePage() {
 
 
 /*AUDIO MANIPULATION LOGIC */
-const audioRef = useRef(true)
+const audioRef = useRef(null)
 const [play,setPlay] = useState(false)
 const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
 const  [showPlayer,setShowPlayer] = useState(true)
@@ -108,30 +108,18 @@ useEffect(()=>{
 
 if(selectedAudioState === false)  {
   pauseAudio()
-  }else{
+  }else if(selectedAudioState === true){
     setShowPlayer(true)
-    playAudio()
+    playAudio(selectedAudio)
   }
 
 
 },[selectedAudio,selectedAudioId,selectedAudioState])
 
-  const playAudio = audio => {
+  const playAudio = (audio) => {
    
-  
-   /* setPlay(!play)
-
-    if (play){
-    audioRef.current.pause()
-    }else if(!play){
-      
-      audioRef.current.play(audio)
-    }*/
-
     audioRef.current.play(audio)
-
-
-  
+ 
 };
 
 
