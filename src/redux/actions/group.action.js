@@ -8,7 +8,11 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos,
    saveCategorySubjects,savePresentSubject,saveSubjectChapters
    ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,
-   saveSelectedAudioState,saveAllQuizzesForSubject } from '../reducers/group.slice';
+   saveSelectedAudioState,saveAllQuizzesForSubject,
+    } from '../reducers/group.slice';
+
+ import {markRegisteredWithSocials}   from '../reducers/auth.slice';
+
 import firebase from "firebase/app";
 
 
@@ -842,6 +846,46 @@ export const addNewBadge = (userId,currentLevel) => async (dispatch)=>{
 
 
 }
+
+ /*============== UPDATE A USER'S PROFILE ================ */
+export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => {
+  console.log("I have reached the users profile again")
+  db.collection("users").doc(uid).update(
+    {
+      telephone:updateObject.telephone,
+      pvExamen:updateObject.pvExamen,
+      classOption:updateObject.classes,
+      schoolOrigin:updateObject.school,
+      fullName:updateObject.fullName,
+      facebook:updateObject.facebook,
+      uid:uid
+    }
+  ).then((snapshot) => {
+    
+    db.collection("userData").doc(uid).update(
+      {
+        telephone:updateObject.telephone,
+        pvExamen:updateObject.pvExamen,
+        classOption:updateObject.classes,
+        schoolOrigin:updateObject.school,
+        fullName:updateObject.fullName,
+        facebook:updateObject.facebook,
+      }
+    )
+
+ }).then((snapshot) => {
+  //const publicGroups = snapshot.docs.map((doc) => ({ ...doc.data() }));
+ dispatch(markRegisteredWithSocials(false))
+  notifySuccessFxn("updated your Profile successfully")
+  navigate('/dashboard/home')
+})
+ .catch((error) => {
+   console.log("Error updating profile because:", error);
+   notifyErrorFxn(error)
+
+
+ });
+ };
 
 /*FETCH ALL SUBJECTS UNDER ONE CATEGORY - ONLY WORKS WITH 6E FOR NOW */
 

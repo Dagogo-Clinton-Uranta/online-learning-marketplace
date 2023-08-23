@@ -11,7 +11,7 @@ import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import {FaCaretDown} from 'react-icons/fa'
 
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import {updateProfile} from 'src/redux/actions/group.action';
 import {logout} from 'src/redux/actions/auth.action';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,76 +19,43 @@ import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 
 
-function ExternalLoginPage() {
-  const navigate = useNavigate();
-  const [file, setFile] = useState();
-  const [file2, setFile2] = useState();
-  const [fileSize, setFileSize] = useState();
-  const [fileSize2, setFileSize2] = useState();
-  const [selectedFile, setSelectedFile] = useState({selectedFile: [], selectedFileName: []});
-  const [selectedFile2, setSelectedFile2] = useState({selectedFile2: [], selectedFileName2: []});
+function ProfilePage() {
+  const navigate = useNavigate(); 
   const dispatch = useDispatch();
-
-  const [newPassword,setNewPassword] =useState('')
-  const [confirmPassword,setConfirmPassword] =useState('')
-  const [companySize,setCompanySize] =useState('')
-
  
 
-  /*const [releaseDate,setReleaseDate] =useState('')
-  const [director,setDirector] =useState('')
-  const [cast,setCast] =useState([])
-  const [description,setDescription] =useState('')
-  const [trivia,setTrivia] =useState('')*/
-  
+  const { user,error,registeredWithSocials } = useSelector((state) => state.auth);
+console.log("registered with socials is",registeredWithSocials)
 
-
-
-  const handleselectedFile = event => {
-    console.log("these are the picture deets!",event.target.files[0])
-    setSelectedFile({
-        selectedFile: event.target.files[0],
-        selectedFileName: event.target.files[0].name
-    });
-    
-    setFile(URL.createObjectURL(event.target.files[0]));
-    setFileSize(event.target.files[0].size)
-};
- /* const handleselectedFile2 = event => {
-    console.log("these are the video deets!",event.target.files[0])
-    setSelectedFile2({
-        selectedFile2: event.target.files[0],
-        selectedFileName2: event.target.files[0].name
-    });
-    setFile2(URL.createObjectURL(event.target.files[0]));
-    setFileSize2(event.target.files[0].size)
-};*/
-
-const { user,error } = useSelector((state) => state.auth);
-console.log("error is",error)
 
 useEffect(()=>{
    if(!user){
     navigate('/login')
    }
+
+   
+  
 },[])
 
 
-const uploadMovie = (movieData = 0,image = 0,) => {
-if(!companySize.length && !newPassword.length &&  file === undefined ){
-  console.log("THE EMPTY FIELDS ARE:",file)
-  notifyErrorFxn("Please fill in the field(s) you want to update!")
-}else{
- if( fileSize  > 300000){
-  notifyErrorFxn("Image size too large! please upload a smaller picture.")
- }
- /*else if( fileSize2  > 20000000){
-  notifyErrorFxn("Video size too large! please upload a smaller video.")
- }*/else{
-  dispatch(uploadUserSettings(movieData,image))
- }
+const [telephone,setTelephone] = useState(user && user.telephone?user.telephone:"")
+const [pvExamen,setPvExamen] = useState(user && user.pvExamen?user.pvExamen:"")
+const [classes,setClasses] = useState(user && user.classOption?user.classOption:"")
+const [school,setSchool] = useState(user && user.schoolOrigin?user.schoolOrigin:"")
+const [fullName,setFullName] = useState(user && user.fullName?user.fullName:"")
+const [facebook,setFacebook] = useState(user && user.fullName?user.fullName:"")
+
+const updateObject = {
+  telephone,
+  pvExamen,
+  classes,
+  school,
+  fullName,
+  facebook,
 }
-}
+
+
+
 
   return (
     <>
@@ -100,7 +67,16 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
    
      <br/> 
      <h1>Bienvenue,</h1>
-    <p style={{color:"gray"}}>Sidike Keita</p>
+    {user && user.fullName && user.fullName.length > 0 && <p style={{color:"gray"}}>{user.fullName}</p>}
+
+  
+   { registeredWithSocials &&
+     <>
+     <br/> 
+     <h1 style={{color:"red"}}>Please Include the rest of your data now, or at another time.</h1>
+
+     </>
+    }
     </Grid>
 
   
@@ -126,7 +102,8 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         variant="outlined"
         multiline
         maxRows={2}
-        //onChange = {(e)=>{setConfirmPassword(e.target.value)}}
+        value={fullName}
+        onChange = {(e)=>{setFullName(e.target.value)}}
         label= "NOM"
         />
         </Grid>
@@ -139,6 +116,8 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         variant="outlined"
         multiline
         maxRows={2}
+        value={user && user.email.length > 0 &&user.email}
+        disabled={true}
         //onChange = {(e)=>{setConfirmPassword(e.target.value)}}
         label= "EMAIL"
         />
@@ -152,7 +131,8 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         variant="outlined"
         multiline
         maxRows={2}
-        //onChange = {(e)=>{setConfirmPassword(e.target.value)}}
+        value={facebook}
+        onChange = {(e)=>{setFacebook(e.target.value)}}
         label= "Facebook"
         />
         </Grid>
@@ -165,7 +145,8 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         variant="outlined"
         multiline
         maxRows={2}
-        //onChange = {(e)=>{setConfirmPassword(e.target.value)}}
+        value={school}
+        onChange = {(e)=>{setSchool(e.target.value)}}
         label= "Ecole d'origine"
         />
         </Grid>
@@ -178,11 +159,40 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         variant="outlined"
         multiline
         maxRows={2}
-        //onChange = {(e)=>{setConfirmPassword(e.target.value)}}
+        value={classes}
+        onChange = {(e)=>{setClasses(e.target.value)}}
         label= "Classe et option"
         />
         </Grid>
 
+
+        <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+        <TextField
+        fullWidth
+        placeholder=" "
+        variant="outlined"
+        multiline
+        maxRows={2}
+        value={pvExamen}
+        onChange = {(e)=>{setPvExamen(e.target.value)}}
+        label= "PV examen"
+        />
+        </Grid>
+
+        <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+        <TextField
+        fullWidth
+        placeholder=" "
+        variant="outlined"
+        multiline
+        maxRows={2}
+        value={telephone}
+        onChange = {(e)=>{setTelephone(e.target.value)}}
+        label= "Numero de Telephone"
+        />
+        </Grid>
+
+       {/* WE WILL USE THESE TWO GRID ITEMS BELOW FOR UPDATING PASSWORD, BUT LATER
 
         <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
         <TextField
@@ -208,25 +218,28 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         />
         </Grid>
 
+  */}
+        
+
        
 
       
 
-
+     
+      <>
         <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center',alignItems:"center" }}>
            
           
            <Button   variant="contained" 
           style={{ backgroundColor: "#f00c44",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
           }}
-          //onClick ={()=>{navigate('/login')}}
+          onClick ={()=>{dispatch(updateProfile(user.uid,updateObject,navigate))}}
           >
           Sauvegarder changement
           </Button>
        
         </Grid>
-
-
+       
 
 
     
@@ -245,6 +258,9 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
             <br/><br/><br/>
   
           </Grid>
+
+          </>
+
           
         </Grid>
 
@@ -267,4 +283,4 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
   );
 }
 
-export default ExternalLoginPage;
+export default ProfilePage;

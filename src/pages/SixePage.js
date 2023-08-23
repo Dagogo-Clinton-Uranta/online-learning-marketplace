@@ -61,6 +61,10 @@ useEffect(()=>{
     navigate('/login')
    }
 
+   if(user && !user.fullName){
+    navigate('/dashboard/profile')
+   }
+
    setTopics(categorySubjects)
    setChosen(categorySubjects[0].category)
 },[categorySubjects])

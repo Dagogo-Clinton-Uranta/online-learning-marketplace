@@ -88,6 +88,10 @@ useEffect(()=>{
    if(!user){
     navigate('/login')
    }
+
+   if(user && !user.fullName){
+    navigate('/dashboard/login')
+   }
 },[])
 
 

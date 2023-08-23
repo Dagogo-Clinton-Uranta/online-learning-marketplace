@@ -62,6 +62,13 @@ function MobileRegisterPage() {
      }
   },[])
 
+
+  useEffect(()=>{
+    if(user){
+     navigate('/dashboard/home')
+    }
+ },[])
+
   const newUser = 
   {
     email,

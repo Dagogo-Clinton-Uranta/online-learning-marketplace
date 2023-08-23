@@ -1,5 +1,5 @@
-import { db, fb, auth, storage } from '../../config/firebase';
-import { clearUser, loginFailed, loginSuccess, logoutFxn, signupPending, signupFailed, storeUserData,storeProfileImages } from '../reducers/auth.slice';
+import { db, fb, auth,provider, storage } from '../../config/firebase';
+import { clearUser, loginFailed, loginSuccess, logoutFxn, signupPending, signupFailed, storeUserData,storeProfileImages, markRegisteredWithSocials } from '../reducers/auth.slice';
 import { v4 as uuidv4 } from 'uuid';
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { clearGroup } from '../reducers/group.slice';
@@ -29,6 +29,32 @@ import { clearGroup } from '../reducers/group.slice';
 
 };
 
+export const signInWithGoogle = (navigate) => async (dispatch) => {
+
+  fb.auth().signInWithPopup(provider)
+  .then((userCredential)=>{
+
+    
+    var user = userCredential.user;
+    console.log('Signed In user is: ', user.email);
+    console.log('ALL THE DETAILS THAT COME BACK FROM THE GOOGLE SIGN IN ARE:',userCredential)
+     dispatch(fetchUserData(user.uid, "sigin", navigate));
+
+  }).catch((error) => {
+    console.log( ' PROBLEM REPORT ', error.message);
+    dispatch(loginFailed(error.message));
+   
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    //notifyErrorFxn(errorMessage);
+    
+    console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
+   
+  });
+
+}
+
+
 
 export const signup = (user,navigate) => async (dispatch) => {
   console.log(user);
@@ -51,9 +77,24 @@ export const signup = (user,navigate) => async (dispatch) => {
       registeredOn:new Date(),
      
     })
+
+
+    db.collection('users').doc(res.user.uid).set({
+      uid: res.user.uid,
+      fullName: user.fullName,
+      email: user.email,
+      password: user.password,
+      facebook:user.facebook,
+      pvExamen:user.pvExamen,
+      telephone:user.telephone,
+      classOption:user.classOption,
+      schoolOrigin:user.schoolOrigin,
+      registeredOn:new Date(),
+     
+    })
     
 
-    dispatch(fetchUserData(res.user.uid, "sigin"));
+    dispatch(fetchUserData(res.user.uid, "sigin",navigate));
   }).then(() => {
    
     navigate("/dashboard/home");
@@ -63,6 +104,54 @@ export const signup = (user,navigate) => async (dispatch) => {
     dispatch(signupFailed({ errorMessage }));
   })
 }
+
+
+
+export const signUpWithGoogle = (navigate) => async (dispatch) => {
+
+ 
+  dispatch(signupPending());
+  console.log("Just before the google sign up happens!!!!")
+  fb.auth().signInWithPopup(provider)
+    
+ .then((userCredential)=>{
+  var user = userCredential.user;
+  
+  db.collection('userData').doc(user.uid).set({
+     uid: user.uid,
+     email: user.email,
+     registeredOn:new Date(),
+    
+   })
+
+
+   db.collection('users').doc(user.uid).set({
+     uid: user.uid,
+     email: user.email,
+     registeredOn:new Date(),
+    
+   })
+   
+
+   dispatch(fetchUserData(user.uid, "registerSocials",navigate));
+ }).then(() => {
+    dispatch(markRegisteredWithSocials(true))
+
+   if(navigate){navigate("/dashboard/profile")};
+
+
+ }).catch((err) => {
+   console.error("Error signing up: ", err);
+   var errorMessage = err.message;
+   dispatch(signupFailed({ errorMessage }));
+ })
+
+
+
+}
+
+
+
 
 
 export const uploadImage = (user, file, navigate, setLoading) => async (dispatch) => {
@@ -104,6 +193,11 @@ export const fetchUserData = (id, type, navigate) => async (dispatch) => {
      
       notifySuccessFxn("Logged In😊");
       navigate('/dashboard/home', { replace: true });
+    }
+    if(type === "registerSocials"){
+     
+      notifySuccessFxn("Logged In😊");
+      navigate('/dashboard/profile', { replace: true });
     }
   } else {
      

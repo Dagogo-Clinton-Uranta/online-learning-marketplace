@@ -5,7 +5,8 @@ const initialState = {
        error: '',
        message: '',
       isLoading: false,
-      profileImages:[]
+      profileImages:[],
+      registeredWithSocials:false
 };
 
 const loginSlice = createSlice({
@@ -33,6 +34,9 @@ const loginSlice = createSlice({
       },
       storeUserData: (state, action) => {
         state.user = action.payload;
+      },
+      markRegisteredWithSocials: (state, action) => {
+        state.registeredWithSocials = action.payload;
       },
       storeProfileImages: (state, action) => {
         state.profileImages = action.payload;
@@ -65,6 +69,7 @@ export const {
  signupFailed,
  storeUserData,
  storeProfileImages,
+ markRegisteredWithSocials,
  clearUser,
  logoutFxn,
  logoutSuccess,

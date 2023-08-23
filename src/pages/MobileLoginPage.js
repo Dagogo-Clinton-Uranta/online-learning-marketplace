@@ -9,8 +9,8 @@ import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import Alert from '@mui/material/Alert';
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
-import { signin} from 'src/redux/actions/auth.action';
+import {  uploadUserSettings} from 'src/redux/actions/group.action';
+import { signin,signInWithGoogle} from 'src/redux/actions/auth.action';
 import { logoutSuccess} from 'src/redux/reducers/auth.slice';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ function MobileLoginPage() {
   const [confirmPassword,setConfirmPassword] =useState('')
   const [companySize,setCompanySize] =useState('')
 
-  const { user,error } = useSelector((state) => state.auth);
+ 
 
   const [email,setEmail] = useState('')
  
@@ -45,7 +45,7 @@ function MobileLoginPage() {
     password 
   }
 
-
+  const { user,error } = useSelector((state) => state.auth);
  
   console.log("error is",error)
 
@@ -63,6 +63,8 @@ function MobileLoginPage() {
       dispatch(signin(user,navigate))
     }
   }
+
+  
 
 
   const handleselectedFile = event => {

@@ -13,6 +13,7 @@ import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
+import { signUpWithGoogle } from 'src/redux/actions/auth.action';
 
 
 function ExternalRegisterPage() {
@@ -37,48 +38,12 @@ function ExternalRegisterPage() {
     if(user){
      navigate('/dashboard/home')
     }
- },[])
+ },[user])
   
 
 
 
-  const handleselectedFile = event => {
-    console.log("these are the picture deets!",event.target.files[0])
-    setSelectedFile({
-        selectedFile: event.target.files[0],
-        selectedFileName: event.target.files[0].name
-    });
-    
-    setFile(URL.createObjectURL(event.target.files[0]));
-    setFileSize(event.target.files[0].size)
-};
- /* const handleselectedFile2 = event => {
-    console.log("these are the video deets!",event.target.files[0])
-    setSelectedFile2({
-        selectedFile2: event.target.files[0],
-        selectedFileName2: event.target.files[0].name
-    });
-    setFile2(URL.createObjectURL(event.target.files[0]));
-    setFileSize2(event.target.files[0].size)
-};*/
 
-
-
-const uploadMovie = (movieData = 0,image = 0,) => {
-if(!companySize.length && !newPassword.length &&  file === undefined ){
-  console.log("THE EMPTY FIELDS ARE:",file)
-  notifyErrorFxn("Please fill in the field(s) you want to update!")
-}else{
- if( fileSize  > 300000){
-  notifyErrorFxn("Image size too large! please upload a smaller picture.")
- }
- /*else if( fileSize2  > 20000000){
-  notifyErrorFxn("Video size too large! please upload a smaller video.")
- }*/else{
-  dispatch(uploadUserSettings(movieData,image))
- }
-}
-}
 
   return (
     <>
@@ -127,7 +92,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
            <Button   variant="contained" 
           style={{ backgroundColor: "#f00c44",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
           }}
-          onClick ={()=>{navigate('/login')}}
+          onClick ={()=>{dispatch(signUpWithGoogle(navigate))}}
           >
           S'inscrire avec Google
           </Button>

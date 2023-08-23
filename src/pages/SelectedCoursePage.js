@@ -87,6 +87,9 @@ function SelectedCoursePage() {
      if(!user){
       navigate('/login')
      }
+
+
+   
   },[])
 /*login check end */
 
