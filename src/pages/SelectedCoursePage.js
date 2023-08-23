@@ -157,8 +157,8 @@ const pauseAudio = audio => {
   const iFrameRef = useRef(null);
   const iFrameRef2 = useRef(null);
   const [isIFrameLoaded, setIsIFrameLoaded] = useState(false);
-  const iframeCurrent = iFrameRef.current;
-  const iframeCurrent2 = iFrameRef2.current;
+  let iframeCurrent = iFrameRef.current;
+  let iframeCurrent2 = iFrameRef2.current;
 
  // pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
  pdfjs.GlobalWorkerOptions.workerSrc =  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
@@ -402,7 +402,7 @@ console.log("subjectList is:",subjectList)
        
         {loader && <center style={{position:"absolute",top:"50%",left:"50%"}}> <CircularProgress/> </center>}
       
-        { ((iframeCurrent ===null || iframeCurrent2===null) && showErrorPdf) && <center style={{position:"absolute",top:"50%",left:"30%"}}>SOMETHING WENT WRONG,PLEASE CHECK YOUR CONNECTION AND TRY AGAIN.</center>}
+        { ((iframeCurrent ===null || iframeCurrent2===null) && showErrorPdf) && <center style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}}><p>SOMETHING WENT WRONG,PLEASE CHECK YOUR CONNECTION AND TRY AGAIN.</p></center>}
 
 
        { <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
