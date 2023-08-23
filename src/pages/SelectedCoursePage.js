@@ -152,12 +152,13 @@ const pauseAudio = audio => {
   const [frame1,setFrame1]=  useState(true)
   const [frame2,setFrame2]=  useState(true)
   const [showErrorPdf,setShowErrorPdf] = useState(false)
+  const [loader,setLoader] = useState(true)
  
   const iFrameRef = useRef(null);
   const iFrameRef2 = useRef(null);
   const [isIFrameLoaded, setIsIFrameLoaded] = useState(false);
   const iframeCurrent = iFrameRef.current;
-    
+  const iframeCurrent2 = iFrameRef2.current;
 
  // pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
  pdfjs.GlobalWorkerOptions.workerSrc =  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
@@ -218,8 +219,8 @@ const pauseAudio = audio => {
 
 
   const [openPdf, setOpenPdf] = React.useState(false);
-  const handleOpenPdf = () => {setOpenPdf(true);setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true)},3000)}
-  const handleClosePdf = () => {setOpenPdf(false);setFrame1(true);setFrame2(true);setShowErrorPdf(false);iframeCurrent=null};
+  const handleOpenPdf = () => {setOpenPdf(true);setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true);setLoader(false)},6000)}
+  const handleClosePdf = () => {setOpenPdf(false);setFrame1(true);setFrame2(true);setShowErrorPdf(false);setLoader(true);iframeCurrent=null;iframeCurrent2=null};
 
 /*MODAL MANIPULATION LOGIC */
 
@@ -399,14 +400,14 @@ console.log("subjectList is:",subjectList)
      
       
        
-        {<center style={{position:"absolute",top:"50%"}}> <CircularProgress/> </center>}
+        {loader && <center style={{position:"absolute",top:"50%",left:"50%"}}> <CircularProgress/> </center>}
       
-        {(iframeCurrent === null && showErrorPdf) && <center>SOMETHING WENT WRONG,PLEASE TRY AGAIN.</center>}
+        { ((iframeCurrent ===null || iframeCurrent2===null) && showErrorPdf) && <center style={{position:"absolute",top:"50%",left:"30%"}}>SOMETHING WENT WRONG,PLEASE CHECK YOUR CONNECTION AND TRY AGAIN.</center>}
 
 
-       { <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
+       { <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
 
-      {frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
+      {frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
 
      
           
