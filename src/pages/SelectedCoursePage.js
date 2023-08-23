@@ -1,5 +1,6 @@
 import React,{useState,useEffect,useRef} from 'react'
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/system';
 import { findDOMNode } from 'react-dom'
 import { useNavigate } from 'react-router-dom';
@@ -394,11 +395,11 @@ console.log("subjectList is:",subjectList)
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}> 
+        <Box sx={style} style={{position:"relative"}}> 
      
       
        
-      
+        {<center style={{position:"absolute",top:"50%"}}> <CircularProgress/> </center>}
       
         {(iframeCurrent === null && showErrorPdf) && <center>SOMETHING WENT WRONG,PLEASE TRY AGAIN.</center>}
 

@@ -89,9 +89,7 @@ useEffect(()=>{
     navigate('/login')
    }
 
-   if(user && !user.fullName){
-    navigate('/dashboard/login')
-   }
+
 },[])
 
 

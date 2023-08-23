@@ -42,9 +42,7 @@ useEffect(()=>{
     navigate('/login')
    }
 
-   if(user && !user.fullName){
-    navigate('/dashboard/profile')
-   }
+  
 
    dispatch(fetchAllCategories())
 
