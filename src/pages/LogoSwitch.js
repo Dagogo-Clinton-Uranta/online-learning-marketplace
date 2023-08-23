@@ -47,6 +47,7 @@ const LogoSwitch = ({uid,audioFile}) => {
   
      //return urlSound;
    }
+   
    useEffect(()=>{
     
     if(uid !== selectedAudioId ){
@@ -72,18 +73,6 @@ const LogoSwitch = ({uid,audioFile}) => {
     }
  
 
-    setPlay(!play)
-
-    if (play){
-    //audioRef.current.pause()
-    }else if(!play){
-      //console.log("current.play looks like!:",audioRef.current)
-      //audioRef.current.play(audio)
-    }
-
-
-    /*const audioToPlay = new Audio(audio);
-    audioToPlay.play();*/
 };
 
 
