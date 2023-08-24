@@ -7,12 +7,14 @@ const initialState = {
        allSectionVideos:[],
        categoryVideos:[],
        categorySubjects:[],
+       chosenQuiz:{},
        subjectChapters:[],
        presentSubject:{},
        selectedAudioId:null,
        selectedAudio:null,
        selectedAudioState:false,
        presentOpenMenu:null,
+       presentQuizQuestion:null,
        allQuizzesForSubject:[],
        requestedSection:null,
        allChapterLessons:[],
@@ -63,6 +65,12 @@ saveAllQuizzesForSubject: (state, action) => {
 },
 savePresentOpenMenu: (state, action) => {
   state.presentOpenMenu = action.payload;
+},
+savePresentQuizQuestion: (state, action) => {
+  state.presentQuizQuestion = action.payload;
+},
+saveChosenQuiz: (state, action) => {
+  state.chosenQuiz = action.payload;
 },
   saveCategories: (state, action) => {
     state.allCategories = action.payload;
@@ -121,9 +129,11 @@ export const {
  saveAllQuizzesForSubject,
  saveNextUpVideo,
  savePresentOpenMenu,
+ savePresentQuizQuestion,
  savePresentSubject,
  savePublicGroup,
  saveCategories,
+ saveChosenQuiz,
  saveSelectedAudioId,
  saveSelectedAudio,
  saveSelectedAudioState,

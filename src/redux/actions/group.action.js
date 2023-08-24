@@ -8,10 +8,14 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos,
    saveCategorySubjects,savePresentSubject,saveSubjectChapters
    ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,
-   saveSelectedAudioState,saveAllQuizzesForSubject,
+   saveSelectedAudioState,saveAllQuizzesForSubject
+   ,savePresentQuizQuestion,saveChosenQuiz
     } from '../reducers/group.slice';
 
  import {markRegisteredWithSocials}   from '../reducers/auth.slice';
+ import {presentOpenQuiz}   from '../reducers/group.slice';
+
+
 
 import firebase from "firebase/app";
 
@@ -847,6 +851,14 @@ export const addNewBadge = (userId,currentLevel) => async (dispatch)=>{
 
 }
 
+ /*============== OPEN AND CLOSE THE QUIZ IN QUESTION ================ */
+export const setPresentQuizQuestion = (uid) => async (dispatch) => {
+
+  dispatch(savePresentQuizQuestion(uid))
+
+}
+
+
  /*============== UPDATE A USER'S PROFILE ================ */
 export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => {
   console.log("I have reached the users profile again")
@@ -1012,6 +1024,27 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
    console.log("Error getting quizzes for the chapter:", error);
  });
  };
+
+
+
+ /*========== FETCHING ONE QUIZ THAT WAS CHOSEN===========*/
+ 
+ export const fetchChosenQuiz = (uid)=> async(dispatch)=>{
+
+
+  var docRef = db.collection("quizzes").doc(uid.trim());
+  docRef.get().then((doc) => {
+  const data = doc.data(); 
+  dispatch(saveChosenQuiz(data))
+
+
+}).catch((error) => {
+  console.log("Error getting single quiz:", error);
+ 
+});
+
+
+ }
 
 
  /*========== SAVING THE SELECTED AUDIO SO THAT ONLY ONE AUDIO CAN PLAY AT A TIME===========*/

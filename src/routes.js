@@ -45,6 +45,7 @@ import SavedCoursesPage from './pages/SavedCoursesPage';
 import ExternalLoginPage from './pages/ExternalLoginPage';
 import ExternalRegisterPage from './pages/ExternalRegisterPage';
 import ProfilePage from './pages/ProfilePage';
+import SelectedQuizPage from './pages/SelectedQuizPage';
 
 export default function Router() {
   const routes = useRoutes([
@@ -70,6 +71,7 @@ export default function Router() {
         { path: 'popular-courses', element: <PopularCoursesPage /> },
         { path: 'other-courses', element: <OtherCoursesPage /> },
         { path: 'selected-course', element: <SelectedCoursePage /> },
+        { path: 'selected-quiz', element: <SelectedQuizPage /> },
         { path: 'saved-courses', element: <SavedCoursesPage /> },
         { path: '10e', element: <TenePage /> },
         { path: '6e', element: <SixePage /> },

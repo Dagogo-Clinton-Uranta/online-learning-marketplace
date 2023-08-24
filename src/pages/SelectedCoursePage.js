@@ -32,7 +32,7 @@ import LogoSwitch from './LogoSwitch';
 
 import {AiOutlineDownload} from "react-icons/ai";
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn, notifyInfoFxn,notifySuccessFxn } from 'src/utils/toast-fxn';
@@ -41,7 +41,7 @@ import Modal from '@mui/material/Modal';
 import soundBytes from 'src/assets/images/soundBytes.mp3'
 import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
-import { fetchVideosOneChapter} from 'src/redux/actions/group.action';
+import { fetchVideosOneChapter,fetchChosenQuiz} from 'src/redux/actions/group.action';
 
 import db from '../browserDb/db'
 
@@ -368,6 +368,20 @@ const thirdSplit =  secondSplit? secondSplit.split(/[0-9]/):""
 
 const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.body && firstSplit && secondSplit && thirdSplit ?thirdSplit:[])
 console.log("subjectList is:",subjectList)
+
+const [loadingQuiz,setLoadingQuiz] = useState(false)
+
+/*SUBJECT INFO LOADING */
+const fetchQuizAndNavigate =(uid)=>{
+
+  setLoadingQuiz(true)
+  dispatch(fetchChosenQuiz(uid))
+
+ setTimeout(()=>{ navigate('/dashboard/selected-quiz')},2500)
+}
+
+
+
   return (
     <>
     <Container maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray",fontSize:"0.85rem"}}> 
@@ -566,8 +580,8 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
 <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-<span onClick={()=>{handleOpenPdf()}}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
-  {quiz.title}
+<span onClick={()=>{fetchQuizAndNavigate(quiz.uid)}}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
+  {loadingQuiz?"LOADING QUIZ, PLEASE WAIT...":quiz.title}
  </p>
  <Divider/>
 
