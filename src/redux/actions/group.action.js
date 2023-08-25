@@ -9,7 +9,8 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    saveCategorySubjects,savePresentSubject,saveSubjectChapters
    ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,
    saveSelectedAudioState,saveAllQuizzesForSubject
-   ,savePresentQuizQuestion,saveChosenQuiz
+   ,savePresentQuizQuestion,saveChosenQuiz,
+   saveCurrentQuizDetailsAndAnswers, saveSubmittingSingleAnswer
     } from '../reducers/group.slice';
 
  import {markRegisteredWithSocials}   from '../reducers/auth.slice';
@@ -851,12 +852,21 @@ export const addNewBadge = (userId,currentLevel) => async (dispatch)=>{
 
 }
 
- /*============== OPEN AND CLOSE THE QUIZ IN QUESTION ================ */
+ /*============== OPEN AND CLOSE THE QUIZ QUESTION IN FOCUS ================ */
 export const setPresentQuizQuestion = (uid) => async (dispatch) => {
 
   dispatch(savePresentQuizQuestion(uid))
 
 }
+
+
+ /*============== SAVE THE QUIZ AND QUESTIONS ANSWERED SO FAR, FOR PERSISTENCE ================ */
+ export const setCurrentQuizDetailsAndAnswers = (quizObject) => async (dispatch) => {
+ dispatch(saveSubmittingSingleAnswer(true))
+  dispatch(saveCurrentQuizDetailsAndAnswers(quizObject))
+setTimeout(()=>{dispatch(saveSubmittingSingleAnswer(false))},500)
+}
+
 
 
  /*============== UPDATE A USER'S PROFILE ================ */
@@ -1045,6 +1055,39 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
 
 
  }
+
+
+ export const updateStudentQuizzesTaken = (id, newQuiz, navigate) => async (dispatch) => {
+  var user = db.collection("users").doc(id);
+
+  
+
+  user.get().then((doc) => {
+  if (doc.exists) {
+  
+    const currentQuizzes =  doc.data().quizzesTaken?doc.data().quizzesTaken:[]
+    
+    user.update({
+      quizzesTaken:[...currentQuizzes,newQuiz]
+    })
+  
+     
+      notifySuccessFxn("Quiz Submitted Successfully!");
+      navigate('/dashboard/6e', { replace: true });
+   
+  
+  } else {
+     
+      notifyErrorFxn("Problem Submitting quiz,please check your connection and try again❌")
+      console.log("could not find the user to update their quizzes");
+  }
+}).catch((error) => {
+  notifyErrorFxn("Problem Submitting quiz,please check your connection and try again❌")
+  console.log("Error getting document:", error);
+});
+
+};
+
 
 
  /*========== SAVING THE SELECTED AUDIO SO THAT ONLY ONE AUDIO CAN PLAY AT A TIME===========*/

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn, notifyInfoFxn,notifySuccessFxn } from 'src/utils/toast-fxn';
 
 
-import { fetchVideosOneChapter} from 'src/redux/actions/group.action';
+import { fetchVideosOneChapter,setCurrentQuizDetailsAndAnswers,updateStudentQuizzesTaken} from 'src/redux/actions/group.action';
 
 import db from '../browserDb/db'
 
@@ -48,37 +48,13 @@ function SelectedQuizPage() {
 
 
 
-  const [dropDown, setDropDown] = useState(false);
-  const [chosenId,setChosenId] = useState(null);
-
-
-  const dropDownChecker = (focusedId) => {
-    console.log("THE ID I AM PICKING IS",focusedId)
-
-    if(focusedId === chosenId){
-     setChosenId(null)
-    }else{
-      setChosenId(focusedId)
-    }
-
-   /*  if (uid === presentQuizQuestion){
-      dispatch(setPresentQuizQuestion(null))
-     }else{
-
-      dispatch(setPresentQuizQuestion(uid))
-     }*/
-   
-
-  }
-
-
-
-  const { presentSubject,chosenQuiz } = useSelector((state) => state.group);
+  const { presentSubject,chosenQuiz,currentQuizDetailsAndAnswers,submittingSingleAnswer } = useSelector((state) => state.group);
  
+
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
-  console.log("error is",error)
+ 
   
   useEffect(()=>{
      if(!user){
@@ -90,11 +66,123 @@ function SelectedQuizPage() {
 /*login check end */
 
 
+const [dropDown, setDropDown] = useState(false);
+const [chosenId,setChosenId] = useState(null);
+const [loadingSubmit,setLoadingSubmit] = useState(false);
+const [chosenOption,setChosenOption] = useState(null);
+
+
+let quizDetailsAndAnswersObject = {
+  quizId:chosenQuiz && chosenQuiz.uid,
+  chapterId:chosenQuiz && chosenQuiz.chapterId,
+  studentAnswers:[
+   
+  ]
+}
+
+
+const [quizDetailsAndAnswers,setQuizDetailsAndAnswers] = useState(currentQuizDetailsAndAnswers===null?quizDetailsAndAnswersObject:currentQuizDetailsAndAnswers)
+
+const dropDownChecker = (focusedId) => {
+  console.log("THE INDEX I PICKED IS",focusedId)
+
+  if(focusedId === chosenId){
+   setChosenId(null)
+  }else{
+    setChosenId(focusedId)
+  }
+
+ 
+
+ /*  if (uid === presentQuizQuestion){
+    dispatch(setPresentQuizQuestion(null))
+   }else{
+
+    dispatch(setPresentQuizQuestion(uid))
+   }*/
+ 
+
+}
+
+const addToStudentAnswers = (questionNumber,chosenAnswer) =>{
+  console.log("QUESTION NUMBER INPUT IS:", questionNumber)
+  let newAnswer = {
+    questionNumber:questionNumber,
+    chosenAnswer:chosenAnswer,
+  }
+
+  let quizDetailsAndAnswersDecoy = {...quizDetailsAndAnswers}
+
+ let indexOfAnswer = quizDetailsAndAnswersDecoy.studentAnswers.findIndex((item)=>(
+    item.questionNumber === questionNumber
+ ))
+
+
+
+
+  if(indexOfAnswer === -1){
+  quizDetailsAndAnswersDecoy ={ chapterId:quizDetailsAndAnswersDecoy.chapterId,
+                                 quizId:quizDetailsAndAnswersDecoy.quizId,
+                            studentAnswers: [...quizDetailsAndAnswersDecoy.studentAnswers,newAnswer]}
+  }
+  else{
+ 
+     let decoyArray = [...quizDetailsAndAnswersDecoy.studentAnswers]
+
+    decoyArray.splice(indexOfAnswer,1,newAnswer)
+     
+    quizDetailsAndAnswersDecoy ={ chapterId:quizDetailsAndAnswersDecoy.chapterId,
+      quizId:quizDetailsAndAnswersDecoy.quizId,
+    studentAnswers: [...decoyArray]}
+     
+
+  }
+  
+  console.log("our QUIZ DETAILS AND ANSWER REDUX STATE IS:",currentQuizDetailsAndAnswers)
+  
+setQuizDetailsAndAnswers(quizDetailsAndAnswersDecoy)
+dispatch(setCurrentQuizDetailsAndAnswers(quizDetailsAndAnswersDecoy))
+
+
+
+}
+
+const submitQuizAnswers = (userId,quizAnswersObject,navigate) =>{
+ setLoadingSubmit(true)
+
+dispatch(updateStudentQuizzesTaken(userId,quizAnswersObject,navigate))
+ 
+}
+
+
+
+
+  /*{ 
+    quizId: mkmdofmomfdso,
+   chapterId: woqmokdmoma,
+    studentAnswers: [
+      {
+        questionNumber:1,
+       chosenAnswer:A,
+  }
+  ,
+    {
+        questionNumber:2,
+       chosenAnswer:B,
+  }
+  ,
+  {
+        questionNumber:3,
+       chosenAnswer:D,
+  }
+    
+  ]
+ }*/
 
 
  
 
-/*SAVING TO BROWSER DATABASE */
+
 
 const [name,setName] = useState("Sample name")
 
@@ -149,7 +237,7 @@ const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.b
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.question}
- { chosenId === index ? <KeyboardArrowUpIcon onClick={(index)=>{dropDownChecker(index);console.log("CARET CLICKED,INDEX IS:",index)}}/>: <KeyboardArrowDownIcon onClick={()=>{dropDownChecker(index)}}/>}
+ { chosenId === index ? <KeyboardArrowUpIcon onClick={(index)=>{dropDownChecker(index);console.log("CARET WAS CLICKED,INDEX IS:",index)}}/>: <KeyboardArrowDownIcon onClick={()=>{dropDownChecker(index);if(chosenId !== index){setChosenOption('')}}}/>}
  </p>
 
 </Grid>
@@ -159,7 +247,7 @@ const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.b
 
 
 { 
-  chosenQuiz.questionsArray && chosenQuiz.questionsArray.length >0?
+  chosenQuiz.questionsArray && chosenQuiz.questionsArray.length > 0?
 /* THIS IS COMMENTED OUT IN CASE OQUESTIONS ARRAY (IN QUIZ) IS CHANGED TO HAVE AN ARRAY OF OPTIONS OBJECTS, INSTEAD OF THE 4 STATIC OPTION OBJECTS WE HAVE
    WE DELETE THE 4 GRIDS BELOW AND REPLACE THEM BY UNCOMMENTING THIS
 
@@ -200,19 +288,19 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
  >
  
   <Grid item xs={12} style={{ position:"relative",display: 'flex',width:"25rem",flexDirection:"column",flex:"1", justifyContent: 'flex-start',alignItems:"flex-start", gap:"1rem",paddingTop:"0.8rem",paddingBottom:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <FormControlLabel value={chapter.optionA && chapter.optionA} control={<Radio />} label={chapter.optionA && chapter.optionA} />
+  <FormControlLabel value={chapter.optionA && chapter.optionA.optionDesc} onClick={()=>{setChosenOption(chapter.optionA && chapter.optionA)}} control={<Radio />} label={chapter.optionA && chapter.optionA.optionDesc} />
  </Grid>
 
  <Grid item xs={12} style={{ position:"relative",display: 'flex',width:"25rem",flexDirection:"column",flex:"1", justifyContent: 'flex-start',alignItems:"flex-start", gap:"1rem",paddingTop:"0.8rem",paddingBottom:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <FormControlLabel value={chapter.optionB && chapter.optionB}  control={<Radio />} label={chapter.optionB && chapter.optionB} />
+  <FormControlLabel value={chapter.optionB && chapter.optionB.optionDesc} onClick={()=>{setChosenOption(chapter.optionB && chapter.optionB)}}  control={<Radio />} label={chapter.optionB && chapter.optionB.optionDesc} />
  </Grid>
 
  <Grid item xs={12} style={{ position:"relative",display: 'flex',width:"25rem",flexDirection:"column",flex:"1", justifyContent: 'flex-start',alignItems:"flex-start", gap:"1rem",paddingTop:"0.8rem",paddingBottom:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <FormControlLabel value={chapter.optionC && chapter.optionC}  control={<Radio />} label={chapter.optionC && chapter.optionC} />
+  <FormControlLabel value={chapter.optionC && chapter.optionC.optionDesc} onClick={()=>{setChosenOption(chapter.optionC && chapter.optionC)}}  control={<Radio />} label={chapter.optionC && chapter.optionC.optionDesc} />
  </Grid>
 
  <Grid item xs={12} style={{ position:"relative",display: 'flex',width:"25rem",flexDirection:"column",flex:"1", justifyContent: 'flex-start',alignItems:"flex-start", gap:"1rem",paddingTop:"0.8rem",paddingBottom:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <FormControlLabel value={chapter.optionD && chapter.optionD}  control={<Radio />} label={chapter.optionD && chapter.optionD} />
+  <FormControlLabel value={chapter.optionD && chapter.optionD.optionDesc} onClick={()=>{setChosenOption(chapter.optionD && chapter.optionD)}}  control={<Radio />} label={chapter.optionD && chapter.optionD.optionDesc} />
  </Grid>
  
 </RadioGroup>
@@ -246,13 +334,15 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
             variant="outlined"
             multiline
             maxRows={1}
-            value= {''}
-            //onChange = {(e)=>{setCompanySize(e.target.value)}}
+            value= {chosenOption && chosenOption.optionDesc.length > 0 ? chosenOption.optionDesc:""}
+           
             />
 
-    <Button style={{ backgroundColor: "#000000",color:"#FFFFFF", paddingTop: '10px', paddingBottom: '10px', 
+    <Button onClick={()=>{addToStudentAnswers(chapter.questionNumber,chosenOption.optionLetter)}}
+    
+    style={{ backgroundColor: "#000000",color:"#FFFFFF", paddingTop: '10px', paddingBottom: '10px', 
                      paddingRight: '30px', paddingLeft: '30px'}}>
-      SUBMIT
+      {submittingSingleAnswer?"submitting...":"SUBMIT ANSWER"}
       </Button>
  
  <Divider/>
@@ -289,9 +379,9 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   <Button   variant="contained" 
   style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
   padding: '8px'}}
-  onClick={()=>{navigate(-1)}}
+  onClick={()=>{submitQuizAnswers(user.uid,currentQuizDetailsAndAnswers,navigate)}}
   >
-  Back
+ { loadingSubmit?"submitting...":"Submit Quiz"}
   </Button>
 
 

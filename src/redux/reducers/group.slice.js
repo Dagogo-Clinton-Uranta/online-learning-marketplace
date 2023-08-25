@@ -14,6 +14,8 @@ const initialState = {
        selectedAudio:null,
        selectedAudioState:false,
        presentOpenMenu:null,
+       currentQuizDetailsAndAnswers:null,
+       submittingSingleAnswer:false,
        presentQuizQuestion:null,
        allQuizzesForSubject:[],
        requestedSection:null,
@@ -69,6 +71,13 @@ savePresentOpenMenu: (state, action) => {
 savePresentQuizQuestion: (state, action) => {
   state.presentQuizQuestion = action.payload;
 },
+saveCurrentQuizDetailsAndAnswers: (state, action)=>{
+  state.currentQuizDetailsAndAnswers = action.payload;
+},
+saveSubmittingSingleAnswer: (state, action)=>{
+  state.submittingSingleAnswer = action.payload;
+},
+
 saveChosenQuiz: (state, action) => {
   state.chosenQuiz = action.payload;
 },
@@ -127,6 +136,8 @@ export const {
  saveSubjectChapters,
  saveAllChapterLessons,
  saveAllQuizzesForSubject,
+ saveCurrentQuizDetailsAndAnswers,
+ saveSubmittingSingleAnswer,
  saveNextUpVideo,
  savePresentOpenMenu,
  savePresentQuizQuestion,
