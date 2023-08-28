@@ -41,7 +41,7 @@ import Modal from '@mui/material/Modal';
 import soundBytes from 'src/assets/images/soundBytes.mp3'
 import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
-import { fetchVideosOneChapter,fetchChosenQuiz} from 'src/redux/actions/group.action';
+import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelectedAudio, setSelectedAudioId} from 'src/redux/actions/group.action';
 
 import db from '../browserDb/db'
 
@@ -89,7 +89,13 @@ function SelectedCoursePage() {
       navigate('/login')
      }
 
-
+     return () => {
+      dispatch(setSelectedAudioId(null))
+      dispatch(setSelectedAudio(null))
+      dispatch(setSelectedAudioState(false))
+  
+      };
+  
    
   },[])
 /*login check end */
@@ -113,6 +119,7 @@ if(selectedAudioState === false)  {
     playAudio(selectedAudio)
   }
 
+ 
 
 },[selectedAudio,selectedAudioId,selectedAudioState])
 
