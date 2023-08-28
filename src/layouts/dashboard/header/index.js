@@ -14,7 +14,7 @@ import AccountPopover from './AccountPopover';
 import NotificationsPopover from './NotificationsPopover';
 import Searchbar2 from './Searchbar2';
 import CustomSearchBar from 'src/components/global/CustomSearchBar';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -49,13 +49,19 @@ Header.propTypes = {
 
 export default function Header({ onOpenNav }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPathname = location.pathname;
+
+  const clickOnly = (e) =>{
+    e.stopPropagation()
+    navigate('/dashboard/home')
+  }
 
   return (
     <StyledRoot>
       <StyledToolbar>
-        <IconButton
-          onClick={onOpenNav}
+        <IconButton onClick={(e)=>{clickOnly(e)}}
+          //onClick={onOpenNav}
           sx={{
             mr: 1,
             color: 'text.primary',

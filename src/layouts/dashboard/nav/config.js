@@ -6,6 +6,7 @@ import {AiOutlineHome} from 'react-icons/ai'
  import {FiSettings} from 'react-icons/fi' 
  import {AiOutlineLock} from 'react-icons/ai'
  import {BsFillChatFill} from 'react-icons/bs'
+ import {BiLogOut} from 'react-icons/bi'
 
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
@@ -23,29 +24,18 @@ const navConfig = [
     // icon: icon('ic_analytics'),
   },
   {
-    title: 'My Profle',
+    title: 'Profile',
     path: '/dashboard/profile',
     icon:<CgToolbox/>
     // icon: icon('ic_analytics'),
   },
+  {
+    title: 'Logout',
+    path: '/dashboard/logout',
+    icon:<BiLogOut/>
+    // icon: icon('ic_analytics'),
+  },
  
-  
-  {
-    title: `Chat`,
-     //path: '/dashboard/popular-courses',
-    // icon: icon('ic_msg'),
-    //iconLabel: 'msg',
-    icon:<BsFillChatFill/>
-  },
-
-  {
-    title: `Settings`,
-    // path: '/dashboard/popular-courses',
-    // icon: icon('ic_msg'),
-    //iconLabel: 'msg',
-    icon:<FiSettings/>
-  },
-  
   
 ];
 

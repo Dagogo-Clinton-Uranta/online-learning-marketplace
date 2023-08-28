@@ -45,6 +45,7 @@ import SavedCoursesPage from './pages/SavedCoursesPage';
 import ExternalLoginPage from './pages/ExternalLoginPage';
 import ExternalRegisterPage from './pages/ExternalRegisterPage';
 import ProfilePage from './pages/ProfilePage';
+import LogoutPage from './pages/LogoutPage';
 import SelectedQuizPage from './pages/SelectedQuizPage';
 
 export default function Router() {
@@ -61,6 +62,7 @@ export default function Router() {
         { path: 'home', element: <MobileWelcomePage /> },
         { path: 'feed', element: <FeedPage /> },
         { path: 'profile', element: <ProfilePage /> },
+        { path: 'logout', element: <LogoutPage /> },
         { path: 'video', element: <VideoPage /> },
         { path: 'video-details', element: <VideoDetailsPage /> },
         { path: 'docs', element: <DocsPage /> },
