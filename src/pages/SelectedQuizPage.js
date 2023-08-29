@@ -123,6 +123,7 @@ const addToStudentAnswers = (questionNumber,chosenAnswer) =>{
   if(indexOfAnswer === -1){
   quizDetailsAndAnswersDecoy ={ chapterId:quizDetailsAndAnswersDecoy.chapterId,
                                  quizId:quizDetailsAndAnswersDecoy.quizId,
+                                 takenOn:new Date(),
                             studentAnswers: [...quizDetailsAndAnswersDecoy.studentAnswers,newAnswer]}
   }
   else{

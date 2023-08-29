@@ -72,7 +72,7 @@ export default function App() {
       window.removeEventListener('online', handleStatusChange);
       window.removeEventListener('offline', handleStatusChange);
     };
-}, [isOnline]);
+}, [isOnline,navigator.onLine]);
 
 
 

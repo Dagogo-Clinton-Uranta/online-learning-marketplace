@@ -211,6 +211,35 @@ return user;
 };
 
 
+export const addToLessonsWatched = (id,lessonId,) => async (dispatch) => {
+  var user = db.collection("users").doc(id);
+  user.get().then((doc) => {
+  if (doc.exists) {
+   
+ user.update({
+   lessonsWatched:[...doc.data().lessonsWatched,{takenOn:new Date(),lessonId:lessonId} ]
+ }).then((doc) => {
+  var updatedUser = db.collection("users").doc(id);
+
+  updatedUser.get().then((doc) => {
+    if (doc.exists) {
+    dispatch(storeUserData(doc.data()));
+    }
+  })
+
+ })  
+ 
+  } else {
+     
+      console.log("the user doesnt exist or we can't fetch it for some reason!");
+  }
+}).catch((error) => {
+  console.log("Error updating user's lessons watched:", error);
+});
+return user;
+};
+
+
 export const getUserProfilePic = (idArray) => async (dispatch) => {
   //var user = db.collection("users").doc(id);
    console.log("idArray at this given moment is:",idArray)

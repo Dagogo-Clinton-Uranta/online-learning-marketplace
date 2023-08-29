@@ -47,6 +47,7 @@ import ExternalRegisterPage from './pages/ExternalRegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import LogoutPage from './pages/LogoutPage';
 import SelectedQuizPage from './pages/SelectedQuizPage';
+import TermsPage from './pages/TermsPage';
 
 export default function Router() {
   const routes = useRoutes([
@@ -64,6 +65,7 @@ export default function Router() {
         { path: 'profile', element: <ProfilePage /> },
         { path: 'logout', element: <LogoutPage /> },
         { path: 'video', element: <VideoPage /> },
+        { path: 'terms', element: <TermsPage /> },
         { path: 'video-details', element: <VideoDetailsPage /> },
         { path: 'docs', element: <DocsPage /> },
         { path: 'categories-videos', element: <CategoriesVideoPage /> },

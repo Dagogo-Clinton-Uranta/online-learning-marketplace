@@ -36,10 +36,10 @@ const Main = styled('div')(({ theme }) => ({
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
   const navigate= useNavigate()
-  
+
   return (
     <StyledRoot>
-      <Header onClick={()=>{navigate('/dashboard/home')}} onOpenNav={() => setOpen(true)} />
+      <Header  onOpenNav={() => setOpen(true)} />
 
       <Nav openNav={open} onCloseNav={() => setOpen(false)} />
 

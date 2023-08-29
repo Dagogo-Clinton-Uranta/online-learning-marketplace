@@ -7,7 +7,7 @@ import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/redux/actions/group.action';
-
+import { addToLessonsWatched } from 'src/redux/actions/auth.action';
 import { blobToDataURL } from 'blob-util'
 
 const LogoSwitch = ({uid,audioFile}) => {
@@ -22,6 +22,14 @@ const LogoSwitch = ({uid,audioFile}) => {
  const dispatch = useDispatch()
 
  const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+ const {user} = useSelector((state) => state.auth);
+ const [trackUser,setTrackUser] = useState(user.lessonsWatched.map((item)=>(item.lessonId)))
+
+ useEffect(()=>{
+
+  setTrackUser(user.lessonsWatched.map((item)=>(item.lessonId)))
+
+ },[user])
 
   const linkMaker = (blob) => {
     let link;
@@ -65,14 +73,20 @@ const LogoSwitch = ({uid,audioFile}) => {
 
    
 
-  const playAudio = audio => {
+  const playAudio = (audio) => {
    
     setPlay(!play)
+ //do lesson watched logic here !!
+
+    if(!trackUser.includes(uid)){
+      dispatch(addToLessonsWatched(user.uid,uid))
+      console.log("WE HAVE ADDED A NEW WATCHED VIDEO")
+    }
 
 
     if(uid === selectedAudioId ){dispatch(setSelectedAudioState(!selectedAudioState))}
   
-    if(uid !== selectedAudioId ){
+    if(uid !== selectedAudioId ){  
     dispatch(setSelectedAudioId(uid))
    dispatch(setSelectedAudio(audioFile))
    dispatch(setSelectedAudioState(true))
