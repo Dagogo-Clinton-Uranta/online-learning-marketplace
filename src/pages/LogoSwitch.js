@@ -23,11 +23,11 @@ const LogoSwitch = ({uid,audioFile}) => {
 
  const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
  const {user} = useSelector((state) => state.auth);
- const [trackUser,setTrackUser] = useState(user.lessonsWatched.map((item)=>(item.lessonId)))
+ const [trackUser,setTrackUser] = useState(user && user.lessonsWatched ? user.lessonsWatched.map((item)=>(item.lessonId)):[])
 
  useEffect(()=>{
 
-  setTrackUser(user.lessonsWatched.map((item)=>(item.lessonId)))
+  setTrackUser(user && user.lessonsWatched ? user.lessonsWatched.map((item)=>(item.lessonId)):[])
 
  },[user])
 
