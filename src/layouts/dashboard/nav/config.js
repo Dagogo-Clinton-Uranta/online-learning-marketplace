@@ -7,6 +7,7 @@ import {AiOutlineHome} from 'react-icons/ai'
  import {AiOutlineLock} from 'react-icons/ai'
  import {BsFillChatFill} from 'react-icons/bs'
  import {BiLogOut} from 'react-icons/bi'
+ import {SlDocs} from 'react-icons/sl'
 
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
@@ -27,6 +28,12 @@ const navConfig = [
     title: 'Profile',
     path: '/dashboard/profile',
     icon:<CgToolbox/>
+    // icon: icon('ic_analytics'),
+  },
+  {
+    title: 'Terms',
+    path: '/dashboard/terms',
+    icon:<SlDocs/>
     // icon: icon('ic_analytics'),
   },
   {
