@@ -9,13 +9,14 @@ import 'react-slidedown/lib/slidedown.css'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import { setPresentQuizQuestion} from 'src/redux/actions/group.action';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn, notifyInfoFxn,notifySuccessFxn } from 'src/utils/toast-fxn';
 
 
-import { fetchVideosOneChapter,setCurrentQuizDetailsAndAnswers,updateStudentQuizzesTaken} from 'src/redux/actions/group.action';
+import { setCurrentQuizDetailsAndAnswers,
+         updateStudentQuizzesTaken,
+         setPresentQuizQuestion,
+         setCurrentQuestionIndex} from 'src/redux/actions/group.action';
 
 import db from '../browserDb/db'
 
@@ -48,9 +49,12 @@ function SelectedQuizPage() {
 
 
 
-  const { presentSubject,chosenQuiz,currentQuizDetailsAndAnswers,submittingSingleAnswer } = useSelector((state) => state.group);
- 
+  const { presentSubject,chosenQuiz,
+          currentQuizDetailsAndAnswers,submittingSingleAnswer,
+          openQuestionIndex,currentQuestionIndex } = useSelector((state) => state.group);
 
+ console.log("open question index is",openQuestionIndex)
+ console.log("CURRENT question index ",currentQuestionIndex)
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
@@ -65,11 +69,48 @@ function SelectedQuizPage() {
   },[])
 /*login check end */
 
+/* SET PRESENT QUIZ QUESTION */
 
 const [dropDown, setDropDown] = useState(false);
 const [chosenId,setChosenId] = useState(null);
 const [loadingSubmit,setLoadingSubmit] = useState(false);
 const [chosenOption,setChosenOption] = useState(null);
+
+const [finalQuestion,setFinalQuestion] = useState(false); 
+const sortedQuiz = chosenQuiz.questionsArray.filter((item)=>(item)).sort((a,b)=>((a.questionNumber && b.questionNumber)?(a.questionNumber - b.questionNumber):1))
+useEffect(()=>{
+ 
+  setChosenId(openQuestionIndex)
+  setChosenOption('')
+
+  console.log("our questions array is this long",chosenQuiz.questionsArray.length)
+
+console.log("our QUIZ DETAILS AND ANSWER REDUX STATE IS:",currentQuizDetailsAndAnswers)
+
+  if(openQuestionIndex === chosenQuiz.questionsArray.length-1 && currentQuestionIndex === chosenQuiz.questionsArray.length-1){
+    setFinalQuestion(true)
+  }
+
+
+},[openQuestionIndex])
+/* SET PRESENT QUIZ QUESTION END */
+
+
+
+
+useEffect(()=>{
+
+ /* if(openQuestionIndex === chosenQuiz.questionsArray.length-1 && currentQuestionIndex === chosenQuiz.questionsArray.length-1){
+    setFinalQuestion(true)
+  }*/
+
+
+
+if(openQuestionIndex >= chosenQuiz.questionsArray.length && currentQuestionIndex >= chosenQuiz.questionsArray.length){
+     submitQuizAnswers(user.uid,currentQuizDetailsAndAnswers,navigate)
+ } 
+
+},[openQuestionIndex])
 
 
 let quizDetailsAndAnswersObject = {
@@ -84,13 +125,20 @@ let quizDetailsAndAnswersObject = {
 const [quizDetailsAndAnswers,setQuizDetailsAndAnswers] = useState(currentQuizDetailsAndAnswers===null?quizDetailsAndAnswersObject:currentQuizDetailsAndAnswers)
 
 const dropDownChecker = (focusedId) => {
-  console.log("THE INDEX I PICKED IS",focusedId)
+  console.log("THE focused Id is",focusedId)
+
+if( focusedId <= openQuestionIndex){
 
   if(focusedId === chosenId){
    setChosenId(null)
+   dispatch(setCurrentQuestionIndex(focusedId))
   }else{
     setChosenId(focusedId)
+    dispatch(setCurrentQuestionIndex(focusedId))
   }
+}else{
+  notifyErrorFxn("Please answer the current question to proceed.")
+}
 
  
 
@@ -104,8 +152,18 @@ const dropDownChecker = (focusedId) => {
 
 }
 
-const addToStudentAnswers = (questionNumber,chosenAnswer) =>{
+const submitQuizAnswers = (userId,quizAnswersObject,navigate) =>{
+  setLoadingSubmit(true)
+ 
+ dispatch(updateStudentQuizzesTaken(userId,quizAnswersObject,navigate))
+  
+ }
+
+const addToStudentAnswers = (questionNumber,chosenAnswer,questionIndex) =>{
   console.log("QUESTION NUMBER INPUT IS:", questionNumber)
+  
+ if(!chosenAnswer){notifyErrorFxn("please pick an answer to continue!")}
+ else{
   let newAnswer = {
     questionNumber:questionNumber,
     chosenAnswer:chosenAnswer,
@@ -139,21 +197,18 @@ const addToStudentAnswers = (questionNumber,chosenAnswer) =>{
 
   }
   
-  console.log("our QUIZ DETAILS AND ANSWER REDUX STATE IS:",currentQuizDetailsAndAnswers)
+ 
   
 setQuizDetailsAndAnswers(quizDetailsAndAnswersDecoy)
 dispatch(setCurrentQuizDetailsAndAnswers(quizDetailsAndAnswersDecoy))
-
-
+dispatch(setPresentQuizQuestion(questionIndex))
+}
 
 }
 
-const submitQuizAnswers = (userId,quizAnswersObject,navigate) =>{
- setLoadingSubmit(true)
 
-dispatch(updateStudentQuizzesTaken(userId,quizAnswersObject,navigate))
- 
-}
+
+
 
 
 
@@ -230,6 +285,7 @@ const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.b
 
  {chosenQuiz && chosenQuiz.questionsArray && chosenQuiz.questionsArray.length >0?
 
+ 
  chosenQuiz.questionsArray.filter((item)=>(item)).sort((a,b)=>((a.questionNumber && b.questionNumber)?(a.questionNumber - b.questionNumber):1)).map((chapter,index)=>(
  
   <>
@@ -238,7 +294,7 @@ const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.b
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.question}
- { chosenId === index ? <KeyboardArrowUpIcon onClick={(index)=>{dropDownChecker(index);console.log("CARET WAS CLICKED,INDEX IS:",index)}}/>: <KeyboardArrowDownIcon onClick={()=>{dropDownChecker(index);if(chosenId !== index){setChosenOption('')}}}/>}
+ { chosenId === sortedQuiz.indexOf(chapter) ? <KeyboardArrowUpIcon onClick={(index)=>{dropDownChecker(sortedQuiz.indexOf(chapter));console.log("CARET WAS CLICKED,INDEX IS:",sortedQuiz.indexOf(chapter))}}/>: <KeyboardArrowDownIcon onClick={()=>{dropDownChecker(sortedQuiz.indexOf(chapter))}}/>}
  </p>
 
 </Grid>
@@ -339,11 +395,11 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
            
             />
 
-    <Button onClick={()=>{addToStudentAnswers(chapter.questionNumber,chosenOption.optionLetter)}}
+    <Button onClick={()=>{addToStudentAnswers(chapter.questionNumber,chosenOption.optionLetter,index)}}
     
     style={{ backgroundColor: "#000000",color:"#FFFFFF", paddingTop: '10px', paddingBottom: '10px', 
                      paddingRight: '30px', paddingLeft: '30px'}}>
-      {submittingSingleAnswer?"submitting...":"SUBMIT ANSWER"}
+      {finalQuestion && (currentQuestionIndex === chosenQuiz.questionsArray.length-1) ?(submittingSingleAnswer?"submitting Quiz...":"SUBMIT QUIZ"):(submittingSingleAnswer?"saving answer...":"NEXT")}
       </Button>
  
  <Divider/>
@@ -371,12 +427,14 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
  
  
  } 
+
+ 
   </Grid>  
 
-    
+  
    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"20px",gap:"10px" }}>
   
-
+ {/* 
   <Button   variant="contained" 
   style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
   padding: '8px'}}
@@ -384,7 +442,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   >
  { loadingSubmit?"submitting...":"Submit Quiz"}
   </Button>
-
+*/}
 
 </center>
 

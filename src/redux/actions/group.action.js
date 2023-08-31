@@ -10,7 +10,8 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,
    saveSelectedAudioState,saveAllQuizzesForSubject
    ,savePresentQuizQuestion,saveChosenQuiz,
-   saveCurrentQuizDetailsAndAnswers, saveSubmittingSingleAnswer
+   saveCurrentQuizDetailsAndAnswers, saveSubmittingSingleAnswer,
+   saveOpenQuestionIndex,saveCurrentQuestionIndex
     } from '../reducers/group.slice';
 
  import {markRegisteredWithSocials}   from '../reducers/auth.slice';
@@ -852,10 +853,19 @@ export const addNewBadge = (userId,currentLevel) => async (dispatch)=>{
 
 }
 
- /*============== OPEN AND CLOSE THE QUIZ QUESTION IN FOCUS ================ */
-export const setPresentQuizQuestion = (uid) => async (dispatch) => {
+ /*============== NOTE THE FURTHEST QUESTION ANSWERED ================ */
+export const setPresentQuizQuestion = (questionIndex) => async (dispatch) => {
+  dispatch(saveOpenQuestionIndex(questionIndex+1))
+  dispatch(saveCurrentQuestionIndex(questionIndex+1))
+  //dispatch(savePresentQuizQuestion(uid))
 
-  dispatch(savePresentQuizQuestion(uid))
+}
+
+
+ /*============== KEEP TRACK OF WHICH QUESTION IS IN FOCUS ================ */
+ export const setCurrentQuestionIndex = (questionIndex) => async (dispatch) => {
+  dispatch(saveCurrentQuestionIndex(questionIndex))
+  //dispatch(savePresentQuizQuestion(uid))
 
 }
 

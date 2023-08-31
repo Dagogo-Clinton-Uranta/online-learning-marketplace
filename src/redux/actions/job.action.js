@@ -50,6 +50,8 @@ export const addJob = (job, setLoading, clearState) => async (dispatch) => {
     });
 
 };
+
+
 export const updateJob = (job, setLoading, clearState, history) => async (dispatch) => {
 
     var jobRef = db.collection("Jobs").doc(job.id);

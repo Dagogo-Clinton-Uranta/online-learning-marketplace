@@ -22,6 +22,8 @@ const initialState = {
        allChapterLessons:[],
        nextUpVideo:null,
        lastWatchedVideo:null,
+       openQuestionIndex:0,
+       currentQuestionIndex:0,
        publicGroups: [], 
        privateGroups: [],
        groupMembers: [], 
@@ -67,6 +69,12 @@ saveAllQuizzesForSubject: (state, action) => {
 },
 savePresentOpenMenu: (state, action) => {
   state.presentOpenMenu = action.payload;
+},
+saveOpenQuestionIndex: (state, action) => {
+  state.openQuestionIndex = action.payload;
+},
+saveCurrentQuestionIndex: (state, action) => {
+  state.currentQuestionIndex = action.payload;
 },
 savePresentQuizQuestion: (state, action) => {
   state.presentQuizQuestion = action.payload;
@@ -139,6 +147,8 @@ export const {
  saveCurrentQuizDetailsAndAnswers,
  saveSubmittingSingleAnswer,
  saveNextUpVideo,
+ saveOpenQuestionIndex,
+ saveCurrentQuestionIndex,
  savePresentOpenMenu,
  savePresentQuizQuestion,
  savePresentSubject,
