@@ -216,8 +216,13 @@ export const addToLessonsWatched = (id,lessonId,) => async (dispatch) => {
   user.get().then((doc) => {
   if (doc.exists) {
    
+    
+const checkIfLessonsWatched =  doc.data().lessonsWatched?doc.data().lessonsWatched:[]
+
  user.update({
-   lessonsWatched:[...doc.data().lessonsWatched,{takenOn:new Date(),lessonId:lessonId} ]
+
+   lessonsWatched:[...checkIfLessonsWatched,{takenOn:new Date(),lessonId:lessonId} ]
+   
  }).then((doc) => {
   var updatedUser = db.collection("users").doc(id);
 

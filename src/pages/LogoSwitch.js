@@ -29,7 +29,7 @@ const LogoSwitch = ({uid,audioFile}) => {
 
   setTrackUser(user && user.lessonsWatched ? user.lessonsWatched.map((item)=>(item.lessonId)):[])
 
- },[user])
+ },[user.lessonsWatched])
 
   const linkMaker = (blob) => {
     let link;
@@ -80,7 +80,7 @@ const LogoSwitch = ({uid,audioFile}) => {
 
     if(!trackUser.includes(uid)){
       dispatch(addToLessonsWatched(user.uid,uid))
-      console.log("WE HAVE ADDED A NEW WATCHED VIDEO")
+      console.log("I HAVE ADDED A NEW WATCHED VIDEO")
     }
 
 
