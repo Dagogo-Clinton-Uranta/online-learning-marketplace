@@ -282,14 +282,14 @@ const URLSound = window.URL || window.webkitURL
 
 
 
-async function saveCourse(url) {
+async function saveCourse(url,courseName,uid,duration) {
   try {
     
     notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
 
    //const res = await fetch(`https://thingproxy.freeboard.io/fetch/${url}`) UNCOMMENT THIS LATER, AND COMMENT OUT TH ONE BELOW
-   //const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
-   const res = await fetch(`https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4`)
+   const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
+   //const res = await fetch(`https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4`)
 
 
   let returnImage= res.blob()
@@ -311,7 +311,9 @@ async function saveCourse(url) {
  
     console.log("RETURN IMAGE FUNCTIONALITY",item)
       const id =db.savedCourses.add({
-        courseName:"Audio 1",
+        courseName:courseName,
+        lessonId:uid,
+        duration:duration,
         fileObject:item
      
       });
@@ -550,7 +552,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
   <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >{index % 2 === 0?<VideoSwitch uid={lesson.uid} audioFile={"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4"}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> }     &nbsp; {index + 1}.</p>
   <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
-  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(lesson.lessonUrl)}} style={{fontSize:"1.5rem"}}/></p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(lesson.lessonUrl,lesson.title,lesson.uid,lesson.duration)}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>
  )
 :

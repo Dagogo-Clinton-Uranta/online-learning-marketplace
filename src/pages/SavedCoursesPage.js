@@ -26,7 +26,7 @@ import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
 import AudioSwitch from './AudioSwitch';
 import VideoSwitch from './VideoSwitch';
-
+import NotPlayableSwitch from './NotPlayableSwitch';
 
 import {AiOutlineDownload} from "react-icons/ai";
 
@@ -244,13 +244,15 @@ setSavedMedia(Files)
  { savedMedia && savedMedia.filter((item)=>(item.fileObject.size > 0)).map((item,index)=>{ console.log("the created courses URL",item.fileObject)
    return (
     <div key={index}>
-    <Grid item xs={12}   style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.3rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {item.fileObject && item.fileObject.type !==null && item.fileObject.type === 'video/mp4'  ?<VideoSwitch audioFile={URL.createObjectURL(item.fileObject)} />:<AudioSwitch audioFile={URL.createObjectURL(item.fileObject)}/> }&nbsp; {index+1})</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}} >8:00</p>
+    <Grid item xs={12}   style={{position:"relative",display: 'flex',width:"23rem" ,justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {item.fileObject && item.fileObject.type !==null && item.fileObject.type === 'video/mp4'  ?<NotPlayableSwitch audioFile={URL.createObjectURL(item.fileObject)} />:<NotPlayableSwitch audioFile={URL.createObjectURL(item.fileObject)}/> }&nbsp; {index+1})</p>
+     <p style={{display:"inline"}}>  {item.courseName.substring(0,25) +  `${item.courseName.length > 25 ?"...":''}`}</p>
+     <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{item.duration}</p>
     </Grid>
     </div>
    )
+
+
  }
 )}
 { savedMedia && savedMedia.length === 0 &&
