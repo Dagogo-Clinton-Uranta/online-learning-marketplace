@@ -29,6 +29,7 @@ import MyPDFViewer from './myPdfViewer'
 import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
 import LogoSwitch from './LogoSwitch';
+import VideoSwitch from './VideoSwitch';
 
 import {AiOutlineDownload} from "react-icons/ai";
 
@@ -544,7 +545,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 {lesson.duration !== "quiz"?
  (
   <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} ><LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> &nbsp; {index + 1}.</p>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >{index % 2 === 0?<VideoSwitch uid={lesson.uid} audioFile={"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4"}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> }     &nbsp; {index + 1}.</p>
   <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
   <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(lesson.lessonUrl)}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>

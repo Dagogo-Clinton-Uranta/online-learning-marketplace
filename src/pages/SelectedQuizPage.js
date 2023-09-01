@@ -107,7 +107,9 @@ useEffect(()=>{
 
 
 if(openQuestionIndex >= chosenQuiz.questionsArray.length && currentQuestionIndex >= chosenQuiz.questionsArray.length){
+  
      submitQuizAnswers(user.uid,currentQuizDetailsAndAnswers,navigate)
+ 
  } 
 
 },[openQuestionIndex])
@@ -161,7 +163,7 @@ const submitQuizAnswers = (userId,quizAnswersObject,navigate) =>{
 
 const addToStudentAnswers = (questionNumber,chosenAnswer,questionIndex) =>{
   console.log("QUESTION NUMBER INPUT IS:", questionNumber)
-  
+
  if(!chosenAnswer){notifyErrorFxn("please pick an answer to continue!")}
  else{
   let newAnswer = {
@@ -399,7 +401,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
     
     style={{ backgroundColor: "#000000",color:"#FFFFFF", paddingTop: '10px', paddingBottom: '10px', 
                      paddingRight: '30px', paddingLeft: '30px'}}>
-      {finalQuestion && (currentQuestionIndex === chosenQuiz.questionsArray.length-1) ?(submittingSingleAnswer?"submitting Quiz...":"SUBMIT QUIZ"):(submittingSingleAnswer?"saving answer...":"NEXT")}
+      {finalQuestion && (currentQuestionIndex === chosenQuiz.questionsArray.length-1) ?(submittingSingleAnswer?"submitting Quiz...":"SUBMIT QUIZ"):(submittingSingleAnswer?"saving answer...":(currentQuestionIndex<openQuestionIndex?"SAVE":"NEXT"))}
       </Button>
  
  <Divider/>
