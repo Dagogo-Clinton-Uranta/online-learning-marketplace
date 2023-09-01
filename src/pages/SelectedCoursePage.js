@@ -288,7 +288,9 @@ async function saveCourse(url) {
     notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
 
    //const res = await fetch(`https://thingproxy.freeboard.io/fetch/${url}`) UNCOMMENT THIS LATER, AND COMMENT OUT TH ONE BELOW
-   const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
+   //const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
+   const res = await fetch(`https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4`)
+
 
   let returnImage= res.blob()
 
@@ -363,6 +365,7 @@ async function saveCourse(url) {
     setStatus(`Failed to add ${name}: ${error}`);
     notifyErrorFxn(`Failed to add media: please check your connection and try again.`)
     console.log("status is now:",status)
+    console.log("error for downloading bonecole is:",error)
 
   }
 }
