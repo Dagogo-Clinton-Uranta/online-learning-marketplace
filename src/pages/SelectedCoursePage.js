@@ -74,7 +74,7 @@ function SelectedCoursePage() {
   
 
   const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
-  console.log("the present SAVED  subject is autotune:",presentSubject)
+  console.log("the present SAVED  subject is:",presentSubject)
   console.log("the chapters for this subject are:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
@@ -468,7 +468,7 @@ const fetchQuizAndNavigate =(uid)=>{
        </p>
 
        <p style={{marginTop:"2rem"}}>
-         <p style={{marginBottom:"1rem"}}>{presentSubject && (presentSubject.body.split('.')[1]).split(':')[0]}</p>
+         <p style={{marginBottom:"1rem"}}>{presentSubject && presentSubject.body.split('.')[1] && (presentSubject.body.split('.')[1]).split(':')[0]}</p>
         <ol>
       {subjectList.length > 1  &&  subjectList.slice(1,subjectList.length).map((item,index)=>(
 
