@@ -183,6 +183,7 @@ const addToStudentAnswers = (questionNumber,chosenAnswer,questionIndex) =>{
   if(indexOfAnswer === -1){
   quizDetailsAndAnswersDecoy ={ chapterId:quizDetailsAndAnswersDecoy.chapterId,
                                  quizId:quizDetailsAndAnswersDecoy.quizId,
+                                 resultPercentage:0,
                                  takenOn:new Date(),
                             studentAnswers: [...quizDetailsAndAnswersDecoy.studentAnswers,newAnswer]}
   }

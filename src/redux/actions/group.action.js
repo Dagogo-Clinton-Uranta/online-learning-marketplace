@@ -1069,22 +1069,64 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
 
  export const updateStudentQuizzesTaken = (id, newQuiz, navigate) => async (dispatch) => {
   var user = db.collection("users").doc(id);
-
+  let resultPercentage =0 
+  let numberOfQuestions;
+  let gradedQuiz ={...newQuiz,resultPercentage} ;
+  const studentAnswers = newQuiz.studentAnswers
   
+ 
 
   user.get().then((doc) => {
   if (doc.exists) {
   
     const currentQuizzes =  doc.data().quizzesTaken?doc.data().quizzesTaken:[]
+ 
+
+   /*DO QUIZ GRADING HERE */
+  
+
+  db.collection("quizzes").doc(newQuiz.quizId)
+
+.get().then((dac) => {
     
+   numberOfQuestions = dac.data().questionsArray.length
+
+     const questionsArray = dac.data().questionsArray
+     
+
+    
+     
+   
+     questionsArray.forEach((item,i)=>{
+     
+      if(studentAnswers[i].chosenAnswer && item.correctAnswer === studentAnswers[i].chosenAnswer){
+       resultPercentage = resultPercentage + ((Number(1/numberOfQuestions).toFixed(2))*100)
+      }
+
+    })
+
+    gradedQuiz = {...newQuiz,resultPercentage}
+   
+    console.log("AFTER GRADING THE QUIZ IS NOW",gradedQuiz)
+    console.log(" THE student's selected Answers are!!",questionsArray)
+   })
+
+
+
+  /*DO QUIZ GRADING END */
+
+   setTimeout( ()=>{
+
     user.update({
-      quizzesTaken:[...currentQuizzes,newQuiz]
+      quizzesTaken:[...currentQuizzes,gradedQuiz]
     })
   
      
       notifySuccessFxn("Quiz Submitted Successfully!");
       navigate('/dashboard/6e', { replace: true });
-   
+ 
+  }
+      ,1000)
   
   } else {
      
