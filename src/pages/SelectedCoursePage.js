@@ -288,8 +288,8 @@ async function saveCourse(url,courseName,uid,duration) {
     notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
 
    //const res = await fetch(`https://thingproxy.freeboard.io/fetch/${url}`) UNCOMMENT THIS LATER, AND COMMENT OUT TH ONE BELOW
-   const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
-   //const res = await fetch(`https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4`)
+   //const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
+   const res = await fetch(`https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4`)
 
 
   let returnImage= res.blob()
@@ -420,12 +420,14 @@ const fetchQuizAndNavigate =(uid)=>{
         { ((iframeCurrent ===null || iframeCurrent2===null) && showErrorPdf) && <center style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}}><p>SOMETHING WENT WRONG,PLEASE CHECK YOUR CONNECTION AND TRY AGAIN.</p></center>}
 
 
-       { <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
+       {/* <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>*/}
 
-      {frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>}
+      {/*frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>*/}
 
      
-          
+      { <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>}
+
+{frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>}    
 
 
     
