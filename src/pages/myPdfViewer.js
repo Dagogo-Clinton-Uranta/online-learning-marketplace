@@ -8,7 +8,8 @@ const MyPdfViewer = ({pdfUrl}) => {
  // const pdfUrl = 'https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf';
   const handleViewPdf = () => {
     window.open(
-      `https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`,
+      //`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`,
+      `${pdfUrl}`,
       'PDF Viewer',
       'width=800,height=600'
     );
