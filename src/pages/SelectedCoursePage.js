@@ -415,9 +415,9 @@ const fetchQuizAndNavigate =(uid)=>{
      
       
        
-        {loader && <center style={{position:"absolute",top:"50%",left:"50%"}}> <CircularProgress/> </center>}
+        {/*loader && <center style={{position:"absolute",top:"50%",left:"50%"}}> <CircularProgress/> </center>*/}
       
-        { ((iframeCurrent ===null || iframeCurrent2===null) && showErrorPdf) && <center style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}}><p>SOMETHING WENT WRONG,PLEASE CHECK YOUR CONNECTION AND TRY AGAIN.</p></center>}
+        {/* ((iframeCurrent ===null || iframeCurrent2===null) && showErrorPdf) && <center style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}}><p>SOMETHING WENT WRONG,PLEASE CHECK YOUR CONNECTION AND TRY AGAIN.</p></center>*/}
 
 
        {/* <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>*/}
@@ -425,11 +425,11 @@ const fetchQuizAndNavigate =(uid)=>{
       {/*frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>*/}
 
      
-      { <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>}
+      {/* <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>*/}
 
-{frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>}    
+{/*frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>*/}    
 
-
+   {<center><MyPDFViewer pdfUrl ={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} /></center>}
     
 
         </Box>
