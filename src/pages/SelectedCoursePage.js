@@ -205,6 +205,17 @@ const pauseAudio = audio => {
  }, [iframeCurrent]);
 
 
+
+ const handleViewPdf = (pdfUrl) => {
+  window.open(
+    //`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`,
+    `${pdfUrl}`,
+    'PDF Viewer',
+    'width=800,height=600'
+  );
+};
+
+
 /*PDF MANIPULATION LOGIC END */
 
 /*MODAL MANIPULATION LOGIC */
@@ -282,7 +293,7 @@ const URLSound = window.URL || window.webkitURL
 
 
 
-async function saveCourse(url,courseName,uid,duration) {
+async function saveCourse(subjectTitle,url,courseName,uid,duration) {
   try {
     
     notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
@@ -312,6 +323,7 @@ async function saveCourse(url,courseName,uid,duration) {
     console.log("RETURN IMAGE FUNCTIONALITY",item)
       const id =db.savedCourses.add({
         courseName:courseName,
+        subjectTitle:subjectTitle,
         lessonId:uid,
         duration:duration,
         fileObject:item
@@ -429,14 +441,9 @@ const fetchQuizAndNavigate =(uid)=>{
 
 {/*frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>*/}    
 
-   {/*<center><MyPDFViewer pdfUrl ={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} /></center>*/}
+   {<center><MyPDFViewer pdfUrl ={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} /></center>}
     
-       {
-       
-       <Document file="https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf" >
-       <Page pageNumber={1} />
-       </Document>
-       }
+      
         </Box>
     </Modal>
 
@@ -542,7 +549,7 @@ const fetchQuizAndNavigate =(uid)=>{
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.title}
- <PictureAsPdfIcon onClick={()=>{handleOpenPdf()}}  style={{fontSize:"2.2rem"}} />
+ <PictureAsPdfIcon onClick={()=>{handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}}  style={{fontSize:"2.2rem"}} />
  </p>
 
 </Grid>
@@ -559,7 +566,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
   <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >{index % 2 === 0?<VideoSwitch uid={lesson.uid} audioFile={"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4"}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> }     &nbsp; {index + 1}.</p>
   <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
-  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(lesson.lessonUrl,lesson.title,lesson.uid,lesson.duration)}} style={{fontSize:"1.5rem"}}/></p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(presentSubject.title,lesson.lessonUrl,lesson.title,lesson.uid,lesson.duration)}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>
  )
 :

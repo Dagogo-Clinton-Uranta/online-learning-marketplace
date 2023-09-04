@@ -75,6 +75,7 @@ function SavedCoursesPage() {
 /*DEXIE MANIPULATION LOGIC */
 const URLSound = window.URL || window.webkitURL;
 const [savedMedia,setSavedMedia] = useState([])
+const [downloadCategories,setDownloadCategories] = useState([])
 const [videoLink,setVideoLink] = useState(null)
 let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
 const linkMaker = (blob) => {
@@ -82,7 +83,7 @@ const linkMaker = (blob) => {
 
   blobToDataURL(blob).then((url)=>{
    link =url
-   console.log("final url is",url)
+   console.log("final url",url)
     
     setVideoLink(url)
     
@@ -96,6 +97,14 @@ useEffect(()=>{
 
 
 setSavedMedia(Files)
+
+Files.forEach((item)=>{
+  if(!downloadCategories.includes(item.subjectTitle) ){
+    setDownloadCategories([...downloadCategories,item.subjectTitle])
+  }
+
+
+})
 
 //linkMaker(savedMedia[0].fileObject)
 },[Files])
@@ -124,6 +133,44 @@ setSavedMedia(Files)
   ).toString();
 
 /*PDF MANIPULATION LOGIC END */
+
+/* AUDIO MANIPULATION LOGIC*/
+const audioRef = useRef(null)
+const [play,setPlay] = useState(false)
+const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+const  [showPlayer,setShowPlayer] = useState(true)
+
+
+useEffect(()=>{
+
+
+
+if(selectedAudioState === false)  {
+  pauseAudio()
+  }else if(selectedAudioState === true){
+    setShowPlayer(true)
+    playAudio(selectedAudio)
+  }
+
+ 
+
+},[selectedAudio,selectedAudioId,selectedAudioState])
+
+  const playAudio = (audio) => {
+   
+    audioRef.current.play(audio)
+ 
+};
+
+
+const pauseAudio = audio => {
+   
+   audioRef.current.pause()
+
+};
+
+/* AUDIO MANIPULATION LOGIC END*/
+
 
 /*MODAL MANIPULATION LOGIC */
 
@@ -241,11 +288,11 @@ setSavedMedia(Files)
     </Grid>
     
 
- { savedMedia && savedMedia.filter((item)=>(item.fileObject.size > 0)).map((item,index)=>{ console.log("the created courses URL",item.fileObject)
+ {/* savedMedia && savedMedia.filter((item)=>(item.fileObject.size > 0)).map((item,index)=>{ 
    return (
     <div key={index}>
     <Grid item xs={12}   style={{position:"relative",display: 'flex',width:"23rem" ,justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {item.fileObject && item.fileObject.type !==null && item.fileObject.type === 'video/mp4'  ?<VideoSwitch audioFile={URL.createObjectURL(item.fileObject)} />:<AudioSwitch audioFile={URL.createObjectURL(item.fileObject)}/> }&nbsp; {index+1})</p>
+     <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {item.fileObject && item.fileObject.type !==null && item.fileObject.type === 'video/mp4'  ?<VideoSwitch audioFile={URL.createObjectURL(item.fileObject)} />:<AudioSwitch uid={item.lessonId} audioFile={URL.createObjectURL(item.fileObject)}/> }&nbsp; {index+1})</p>
      <p style={{display:"inline"}}>  {item.courseName.substring(0,25) +  `${item.courseName.length > 25 ?"...":''}`}</p>
      <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{item.duration}</p>
     </Grid>
@@ -254,49 +301,77 @@ setSavedMedia(Files)
 
 
  }
-)}
+)*/}
+
+
 { savedMedia && savedMedia.length === 0 &&
   <center style={{ display: 'flex',gap:"0.5rem",alignItems:"center",justifyContent:"center", padding:"1rem"}}>No downloads for now.</center>
 }
 
+
+{
+
+downloadCategories && downloadCategories.length > 0 &&
+
+
+downloadCategories.forEach((category)=>{
+
+  <>
+  <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
+   {category}
+
+ </p>
+
+{savedMedia.filter((item)=>(item.subjectTitle === category)).map((wax,index)=>{ 
+  return (
+   <div key={index}>
+   <Grid item xs={12}   style={{position:"relative",display: 'flex',width:"23rem" ,justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+    <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}}> {wax.fileObject && wax.fileObject.type !==null && wax.fileObject.type === 'video/mp4'  ?<VideoSwitch audioFile={URL.createObjectURL(wax.fileObject)} />:<AudioSwitch uid={wax.lessonId} audioFile={URL.createObjectURL(wax.fileObject)}/> }&nbsp; {index+1})</p>
+    <p style={{display:"inline"}}>  {wax.courseName.substring(0,25) +  `${wax.courseName.length > 25 ?"...":''}`}</p>
+    <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{wax.duration}</p>
+   </Grid>
+   </div>
+  )
+
+
+   }
+ )
+}
+</>
+ })
+}
   
 
    
 
 
-   </Grid>
+ </Grid>
 
 
-   <p style={{paddingTop:"1.5rem",paddingBottom:"1.5rem"}}>
-   
-    {/*  <Grid item xs={12} style={{paddingTop:"0.5rem"}}>
-    
-  <p style={{position:"relative",display: 'flex',marginLeft:"0.4rem", justifyContent: 'space-between',fontWeight:"bold",fontSize:"1rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
-      Histoire Terminaless
-    
-     </p>
-    
-    </Grid>
-    
+ 
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"1.6rem"}}/> &nbsp; 1.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
-    </Grid>
+   <Container maxWidth="xs">
 
-   
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"1rem",paddingBottom:"1rem",borderBottom:"1px solid lightgrey"}}>
-     <p ><PlayCircleFilledWhiteIcon  onClick={handleOpen} style={{color:"red",fontSize:"1.6rem"}}/> &nbsp; 2.)</p>
-     <p style={{display:"inline"}}>  Dissociation et produit ionique</p>
-     <p style={{position:"relative",left:"1%",display:"flex",gap:"15px",alignItems:"center"}}>8:00</p>
-    </Grid>
-
-  */}
+<Grid item xs={12}>
+  <center style={{position:"relative"}}>
 
 
-   
-   </p>
+<div  style={{position:"fixed",bottom:"2%",marginLeft:"1rem"}}>
+
+{ showPlayer &&
+  <div onClick={()=>{setShowPlayer(false)}} style={{position:"absolute",right:"0.5rem",bottom:"1rem", zIndex:"1",color:"red"}} >
+  x
+ </div> 
+ }
+
+<audio controls={showPlayer}  ref={audioRef} src={selectedAudio} type="audio/mp3"/>
+
+</div>
+
+  </center>
+</Grid>
+
+</Container>
        
 
 </Container>

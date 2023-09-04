@@ -10,12 +10,16 @@ import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,
 import { styled } from '@mui/system';
 import Modal from '@mui/material/Modal';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/redux/actions/group.action';
+
 import { findDOMNode } from 'react-dom'
 
 import { blobToDataURL } from 'blob-util'
 
-const AudioSwitch = ({audioFile}) => {
+const AudioSwitch = ({uid,audioFile}) => {
 
+const dispatch =useDispatch()
 
   const style = {
     position: 'absolute',
@@ -34,21 +38,39 @@ const AudioSwitch = ({audioFile}) => {
   const audioRef = useRef(true)
   const [play,setPlay] = useState(false)
   const [urlLink,setUrlLink] = useState(audioFile?audioFile:" ")
-  /*const URLSound = window.URL || window.webkitURL;*/
+  const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
 
- 
-  const playAudio = audio => {
-   
-    setPlay(!play)
-
-    if (play){
-    audioRef.current.pause()
-    }else if(!play){
-      console.log("current.play looks like!:",audioRef.current)
-      audioRef.current.play(urlLink)
+  useEffect(()=>{
+    
+    if(uid !== selectedAudioId ){
+      setPlay(false)
+      //audioRef.current.pause()
     }
 
+    if(uid === selectedAudioId ){
+      dispatch(setSelectedAudio(audioFile))
+      dispatch(setSelectedAudioState(true))
+    }
+
+   },[selectedAudioId])
+
+   const playAudio = (audio) => {
+   
+    setPlay(!play)
+ //do lesson watched logic here !!
+
+    
+
+    if(uid === selectedAudioId ){dispatch(setSelectedAudioState(!selectedAudioState))}
   
+    if(uid !== selectedAudioId ){  
+    dispatch(setSelectedAudioId(uid))
+   dispatch(setSelectedAudio(audioFile))
+   dispatch(setSelectedAudioState(true))
+    }
+
+    
+ 
 };
 
 /*MODAL MANIPULATION LOGIC */
@@ -79,7 +101,7 @@ const handleClosePdf = () => {setOpenPdf(false)};
 
  {/*AUDIO PLAYER */}
    
-{<audio  ref ={audioRef} src={urlLink} type="audio/mp3"/>}
+{<audio  src={urlLink} type="audio/mp3"/>}
 
 
 <span onClick={()=>{playAudio(urlLink)}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
