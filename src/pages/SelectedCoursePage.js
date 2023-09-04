@@ -429,9 +429,14 @@ const fetchQuizAndNavigate =(uid)=>{
 
 {/*frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>*/}    
 
-   {<center><MyPDFViewer pdfUrl ={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} /></center>}
+   {/*<center><MyPDFViewer pdfUrl ={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} /></center>*/}
     
-
+       {
+       
+       <Document file="https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf" >
+       <Page pageNumber={1} />
+       </Document>
+       }
         </Box>
     </Modal>
 
