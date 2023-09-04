@@ -75,6 +75,7 @@ function SavedCoursesPage() {
 /*DEXIE MANIPULATION LOGIC */
 const URLSound = window.URL || window.webkitURL;
 const [savedMedia,setSavedMedia] = useState([])
+
 const [downloadCategories,setDownloadCategories] = useState([])
 const [videoLink,setVideoLink] = useState(null)
 let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
@@ -98,19 +99,24 @@ useEffect(()=>{
 
 setSavedMedia(Files)
 
-Files.forEach((item)=>{
-  if(!downloadCategories.includes(item.subjectTitle) ){
-    setDownloadCategories([...downloadCategories,item.subjectTitle])
-  }
 
-
-})
-
-//linkMaker(savedMedia[0].fileObject)
 },[Files])
 
 
+useEffect(()=>{
 
+  console.log("saved media is",savedMedia)
+ 
+ if(savedMedia){
+  savedMedia.forEach((item)=>{
+    if(!downloadCategories.includes(item.subjectTitle) ){
+      setDownloadCategories([...downloadCategories,item.subjectTitle])
+    }
+  
+  })
+}
+ 
+  },[savedMedia])
 
 
 
