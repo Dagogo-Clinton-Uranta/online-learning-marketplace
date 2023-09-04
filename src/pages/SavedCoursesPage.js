@@ -115,6 +115,8 @@ useEffect(()=>{
   
   })
 }
+
+console.log("all download categories are",downloadCategories)
  
   },[savedMedia])
 
@@ -320,7 +322,7 @@ const pauseAudio = audio => {
 downloadCategories && downloadCategories.length > 0 &&
 
 
-downloadCategories.forEach((category)=>{
+downloadCategories.forEach((category)=>(
 
   <>
   <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
@@ -344,7 +346,7 @@ downloadCategories.forEach((category)=>{
  )
 }
 </>
- })
+))
 }
   
 
@@ -364,7 +366,7 @@ downloadCategories.forEach((category)=>{
 
 <div  style={{position:"fixed",bottom:"2%",marginLeft:"1rem"}}>
 
-{ showPlayer &&
+{savedMedia && savedMedia.length > 0 && showPlayer &&
   <div onClick={()=>{setShowPlayer(false)}} style={{position:"absolute",right:"0.5rem",bottom:"1rem", zIndex:"1",color:"red"}} >
   x
  </div> 
