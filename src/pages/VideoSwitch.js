@@ -159,6 +159,7 @@ aria-describedby="modal-modal-description"
 >
 <Box sx={style}>
  <ReactPlayer   
+      config={{ file: { attributes: { controlsList: 'nodownload',disablepictureinpicture: 'true' } } }}
         width="100%"
         height="100%"
         id="full-screenVideo"                                              
@@ -168,6 +169,7 @@ aria-describedby="modal-modal-description"
         playing={true}
         playIcon={' '}
         controls
+        
         ref={videoRef}
       //onClickPreview = {()=>{setTouch(false);}}
        
