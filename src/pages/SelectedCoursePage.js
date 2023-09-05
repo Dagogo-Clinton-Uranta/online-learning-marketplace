@@ -340,7 +340,7 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
 
     return second
     }).catch((error)=>{
-      notifyErrorFxn("error with downloading audio")
+      notifyErrorFxn("error with downloading file, please try again")
       console.log("error with downloading audio",error)
     })
   
