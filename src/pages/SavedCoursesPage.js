@@ -35,7 +35,7 @@ import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import Modal from '@mui/material/Modal';
-
+import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelectedAudio, setSelectedAudioId} from 'src/redux/actions/group.action';
 
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '../browserDb/db'
@@ -60,7 +60,7 @@ function SavedCoursesPage() {
  
 
 
-
+const dispatch  = useDispatch()
 
   const topics = [
     {title:"Chemie ",author:"Sidiki...",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem2},
@@ -163,6 +163,18 @@ if(selectedAudioState === false)  {
  
 
 },[selectedAudio,selectedAudioId,selectedAudioState])
+
+useEffect(()=>{
+
+return () => {
+  dispatch(setSelectedAudioId(null))
+  dispatch(setSelectedAudio(null))
+  dispatch(setSelectedAudioState(false))
+
+  };
+
+},[])
+
 
   const playAudio = (audio) => {
    
