@@ -244,7 +244,7 @@ const pauseAudio = audio => {
  
 
   const handleEsc = (event) => {
-   
+    videoRef.current.pause()
     window.removeEventListener('fullscreenchange', handleEsc)
     setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
     
