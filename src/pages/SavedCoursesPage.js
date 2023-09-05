@@ -105,7 +105,7 @@ setSavedMedia(Files)
 
 useEffect(()=>{
 
-  console.log("saved media is",savedMedia)
+  console.log("saved media is now!",savedMedia)
  
  if(savedMedia){
   savedMedia.forEach((item)=>{
@@ -118,7 +118,7 @@ useEffect(()=>{
 
 console.log("all download categories are",downloadCategories)
  
-  },[savedMedia])
+  },[savedMedia,Files])
 
 
 
@@ -322,10 +322,10 @@ const pauseAudio = audio => {
 downloadCategories && downloadCategories.length > 0 &&
 
 
-downloadCategories.forEach((category)=>(
+downloadCategories.map((category)=>(
 
   <>
-  <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
+  <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",width:"24rem",paddingTop:"3rem",paddingBottom:"1rem",borderBottom:"1px solid black"}}>
    {category}
 
  </p>

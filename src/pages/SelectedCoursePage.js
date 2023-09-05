@@ -299,8 +299,8 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
     notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
 
    //const res = await fetch(`https://thingproxy.freeboard.io/fetch/${url}`) UNCOMMENT THIS LATER, AND COMMENT OUT TH ONE BELOW
-   //const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
-   const res = await fetch(url)
+   const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
+   //const res = await fetch(url)
 
 
   let returnImage= res.blob()
