@@ -207,6 +207,7 @@ const pauseAudio = audio => {
 
 
  const handleViewPdf = (pdfUrl) => {
+
   window.open(
     //`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`,
     `${pdfUrl}`,
@@ -226,7 +227,7 @@ const pauseAudio = audio => {
 
 
   const [openPdf, setOpenPdf] = React.useState(false);
-  const handleOpenPdf = () => {setOpenPdf(true);setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true);setLoader(false)},6000)}
+  const handleOpenPdf = () => {setOpenPdf(true);console.log("ask me for issue");setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true);setLoader(false)},6000)}
   const handleClosePdf = () => {setOpenPdf(false);setFrame1(true);setFrame2(true);setShowErrorPdf(false);setLoader(true);iframeCurrent=null;iframeCurrent2=null};
 
 /*MODAL MANIPULATION LOGIC */
@@ -442,7 +443,16 @@ const fetchQuizAndNavigate =(uid)=>{
 {/*frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>*/}    
 
    {<center><MyPDFViewer pdfUrl ={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} /></center>}
+   
+    {/*
+      
+      <PDFViewer
+            document={{
+                url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
+            }}
+        />
     
+          */}
       
         </Box>
     </Modal>
@@ -550,7 +560,7 @@ const fetchQuizAndNavigate =(uid)=>{
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.title}
- <PictureAsPdfIcon onClick={()=>{handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}}  style={{fontSize:"2.2rem"}} />
+ <PictureAsPdfIcon onClick={()=>{handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")/*handleOpenPdf()*/}}  style={{fontSize:"2.2rem"}} />
  </p>
 
 </Grid>
@@ -565,9 +575,9 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 {lesson.duration !== "quiz"?
  (
   <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >{index % 2 === 0?<VideoSwitch uid={lesson.uid} audioFile={"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4"}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> }     &nbsp; {index + 1}.</p>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >{lesson.lessonUrl.slice(lesson.lessonUrl.length-3,lesson.lessonUrl.length) ==="mp4"?<VideoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> }     &nbsp; {index + 1}.</p>
   <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
-  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(presentSubject.title,(index % 2 === 0?"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4":lesson.lessonUrl),lesson.title,lesson.uid,lesson.duration)}} style={{fontSize:"1.5rem"}}/></p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(presentSubject.title,/*(index % 2 === 0?"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4":)*/lesson.lessonUrl,lesson.title,lesson.uid,lesson.duration)}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>
  )
 :
