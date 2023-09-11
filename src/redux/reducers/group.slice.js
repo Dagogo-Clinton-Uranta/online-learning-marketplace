@@ -11,6 +11,7 @@ const initialState = {
        subjectChapters:[],
        presentSubject:{},
        selectedAudioId:null,
+       teachers: [],
        selectedAudio:null,
        selectedAudioState:false,
        presentOpenMenu:null,
@@ -57,6 +58,11 @@ saveCategorySubjects: (state, action) => {
 },
 savePresentSubject: (state, action) => {
   state.presentSubject = action.payload;
+},
+fetchTeachers: (state, action) => {
+  state.teachers = action.payload;
+  state.error = '';
+  state.message = '';
 },
 saveSubjectChapters: (state, action) => {
   state.subjectChapters = action.payload;
@@ -137,6 +143,7 @@ const { actions, reducer } = groupSlice;
 
 export const {
  saveMyGroup,
+ fetchTeachers,
  saveAllGroup,
  saveSectionVideos,
  saveCategoryVideos,

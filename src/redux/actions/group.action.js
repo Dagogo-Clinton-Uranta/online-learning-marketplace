@@ -11,7 +11,8 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    saveSelectedAudioState,saveAllQuizzesForSubject
    ,savePresentQuizQuestion,saveChosenQuiz,
    saveCurrentQuizDetailsAndAnswers, saveSubmittingSingleAnswer,
-   saveOpenQuestionIndex,saveCurrentQuestionIndex
+   saveOpenQuestionIndex,saveCurrentQuestionIndex,
+   fetchTeachers
     } from '../reducers/group.slice';
 
  import {markRegisteredWithSocials}   from '../reducers/auth.slice';
@@ -245,6 +246,8 @@ export const fetchMyGroups = (coolers) => async (dispatch) => {
     dispatch(isItLoading(false));
   }
 };
+
+
 
 
 
@@ -498,6 +501,20 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
  };
 
  
+
+/*========== do group fetching of teachers  FOR BONECOLE ======================= */
+
+ export const getTeachers = ( ) => async (dispatch) => {
+  db.collection('teachers').get().then((snapshot) => {
+      const allTeachers = snapshot.docs.map((doc) => ({id: doc.id, ...doc.data() }));
+      // console.log('Jobs: ', jobs);
+      dispatch(fetchTeachers(allTeachers));
+}).catch((error) => {
+      var errorMessage = error.message;
+      console.log('Error fetching teachers', errorMessage);
+});
+
+};
 
 
 /*========== do group fetching of categories  FOR BONECOLEHERE ======================= */

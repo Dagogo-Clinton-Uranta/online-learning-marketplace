@@ -26,6 +26,7 @@ import a9 from 'src/assets/images/9.jpeg'
 import a10 from 'src/assets/images/10.jpeg'
 
 import SampleCardPage from './SampleCardPage';
+import TeacherCardPage from './TeacherCardPage';
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
 import startQuote from 'src/assets/images/startQuote.png'
@@ -33,7 +34,7 @@ import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import {fetchCategorySubjects,fetchAllCategories,fetchCurrentSubject} from 'src/redux/actions/group.action';
+import {fetchCategorySubjects,fetchAllCategories,fetchCurrentSubject,getTeachers} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -56,7 +57,10 @@ function MobileWelcomePage() {
 const { user,error } = useSelector((state) => state.auth);
 const { allCategories,categorySubjects } = useSelector((state) => state.group);
 const [topics,setTopics] = useState([])
+const { teachers } = useSelector((state) => state.group);
+const [teacherArr, setTeacherArr] = useState([]/*teachers*/);
 
+console.log("teahcers from DATABASE",teachers)
 
 console.log("categories/COURSES",allCategories)
 
@@ -93,7 +97,7 @@ useEffect(()=>{
     navigate('/login')
    }
 
-  
+   dispatch(getTeachers())
    dispatch(fetchCategorySubjects("Terminales"))
    dispatch(fetchAllCategories())
 
@@ -319,6 +323,27 @@ useEffect(()=>{
  
  
       </Grid>
+
+         <center style={{marginTop:"2.5rem"}}>
+          <h2 style={{fontSize:"2rem"}}>  Rencontrez nos Professeurs</h2>
+
+          <p style={{marginTop:"2rem",padding:"0.5rem",fontSize:"1.3rem",color:"grey"}}>Commencez votre apprentissage avec les meilleurs enseignants.</p>
+         </center>
+
+      <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
+      
+      {teachers.length >0 && teachers.slice(0,5).map((topic,i)=>(   
+          <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
+          style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
+           <TeacherCardPage 
+           uid={topic.uid} firstName={topic.firstName} lastName={topic.lastName} imageUrl = {topic && topic.imageUrl && topic.imageUrl.length > 1?topic.imageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} subject ={topic.subject} bio={topic.bio}  level={topic.level} /> 
+          {/*gotta pass the id into the card so we can use it when clicked */}
+          </Grid>
+       ))}
+ 
+ 
+      </Grid>
+
 
 </Container>
     </>
