@@ -55,9 +55,7 @@ function PopularCoursesPage() {
       navigate('/login')
      }
 
-     if(user && !user.fullName){
-      navigate('/dashboard/profile')
-     }
+   
   },[])
 
   const FetchSixEsubjects =(category) =>{
