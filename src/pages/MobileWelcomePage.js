@@ -41,6 +41,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import users from 'src/_mock/user';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedinIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
 import ReactPlayer from 'react-player';
 
 function MobileWelcomePage() {
@@ -130,8 +132,8 @@ useEffect(()=>{
 
 
   return (
-    <>
-    <Container  maxWidth="xs" sx={{backgroundColor:"white", border:"1px solid lightgray"}}> 
+    <div>
+    <Container  maxWidth="xs" sx={{backgroundColor:"white",position:"relative" ,border:"1px solid lightgray"}}> 
 
     {/* I am using the navbar in Dashboard layout now, 
     
@@ -227,7 +229,7 @@ useEffect(()=>{
          <p>Etudiez sans limites!</p>
 
          <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",}}>
-         <FacebookIcon style={{height:"16px"}}/>  <InstagramIcon style={{height:"16px"}}/> <span style={{fontSize:"11px"}}>/@bonecole</span>
+         <FacebookIcon style={{height:"16px"}}/>  <InstagramIcon style={{height:"16px"}}/>  <span style={{fontSize:"11px"}}>/@bonecole</span>
          </div>
 
        </div>
@@ -262,7 +264,7 @@ useEffect(()=>{
 
 <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"15px" }}>
    
-    {allCategories.length > 0 ?
+    {allCategories && allCategories.length > 0 ?
      
       allCategories.map((item)=>(
 
@@ -334,8 +336,10 @@ useEffect(()=>{
       <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
       {teachers && teachers.length >0 && teachers.slice(0,5).map((topic,i)=>(   
+      
           <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
           style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
+           
            <TeacherCardPage 
            uid={topic.uid} firstName={topic.firstName} lastName={topic.lastName} imageUrl = {topic && topic.imageUrl && topic.imageUrl.length > 1?topic.imageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} subject ={topic.subject} bio={topic.bio}  level={topic.level} /> 
           {/*gotta pass the id into the card so we can use it when clicked */}
@@ -361,7 +365,7 @@ useEffect(()=>{
           className="videoFrame"
           url={"https://www.youtube.com/watch?v=wdNzKvLUO-E&t=23s"}
           //light={thumbnail}
-          playing={true}
+          
           playIcon={' '}
           controls
           
@@ -374,8 +378,82 @@ useEffect(()=>{
          </center>
 
 
+         <div container xs={12} md={12}  lg={12} spacing={0} style={{width:"100%",backgroundColor:"#485FEB",marginTop:"30px",marginBottom:"30px",fontSize:"0.8rem" ,display: 'flex', justifyContent: 'center',position:"relative",paddingLeft:"0.5rem",paddingTop:"0.5rem",paddingBottom:"0.5rem",borderRadius:"1rem" }}>
+      <div item xs={12} spacing={0}  md={12}  lg={12} style={{color:"white" , display: 'flex',flexDirection:"column", justifyContent: 'center',gap:"30px",paddingTop:"1rem",paddingLeft:"20px",paddingRight:"20px"}}>
+       
+     
+       <div   style={{position:"relative",fontSize:"1.5rem"}}>
+      
+       Ne ratez pas nos nouveatués et offres specialés
+        
+       </div>
+       
+
+     
+
+       <div style={{display: 'flex',gap:"1rem", flexDirection:"column", justifyContent: 'center',alignItems:"center"}}>
+         <p style={{fontSize:"1rem"}}>Suivez nous sur...</p>
+
+         <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",gap:"0.5rem"}}>
+         <FacebookIcon style={{height:"36px"}}/>  <LinkedinIcon style={{height:"36px"}}/> <TwitterIcon style={{height:"36px"}}/>  <span style={{fontSize:"21px"}}>/@bonecole</span>
+         </div>
+
+       </div>
+
+
+
+      </div>
+
+        
+    </div>
+
+
+
+   
+  
 </Container>
-    </>
+
+<center>
+<div style={{maxWidth:"27.7rem",position:"relative", display:"flex",justifyContent:"center"}}>
+<Grid container xs={12} md={12}   style={{width:"100%",marginLeft:"0%",backgroundColor:"#5A5A5A",fontSize:"0.8rem" ,display: 'flex', justifyContent: 'center',position:"absolute",paddingLeft:"0.5rem",paddingTop:"0.5rem",paddingBottom:"0.5rem",marginBottom:"0%"}}>
+      <Grid item xs={12} spacing={0}   style={{color:"white" , display: 'flex',flexDirection:"column", justifyContent: 'flex-start',alignItems:"flex-start",gap:"30px",paddingTop:"1rem",paddingLeft:"20px",paddingRight:"20px"}}>
+       
+     
+       <div   style={{position:"relative",fontSize:"1.5rem"}}>
+      
+       Bonecole
+        
+       </div>
+
+       <div style={{display: 'flex',gap:"0.5rem", flexDirection:"column", justifyContent: 'flex-start',alignItems:"flex-start"}}>
+       <p style={{fontSize:"1rem"}}>Tel: +224 611 23 88 88</p>
+       <p style={{fontSize:"1rem"}}>Contact Email : contact@bonecole.com</p>
+       </div>
+
+     
+
+       <div style={{display: 'flex',gap:"0.5rem", flexDirection:"column", justifyContent: 'flex-start',alignItems:"flex-start"}}>
+         <p style={{fontSize:"1rem"}}>Accueli</p>
+         <p style={{fontSize:"1rem"}}>Cours</p>
+         <p style={{fontSize:"1rem"}}>A Propos</p>
+         <p style={{fontSize:"1rem"}}>Conditions d'utilisation</p>
+
+         <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"3rem",fontSize:"1.2rem",gap:"0.5rem"}}>
+         ©℗ 2023 BONECOLE.INC. ALL RIGHTS RESERVED
+         </div>
+
+       </div>
+
+
+
+      </Grid>
+
+        
+  </Grid>
+  </div>
+  </center>
+
+    </div>
   );
 }
 
