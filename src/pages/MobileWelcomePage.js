@@ -41,6 +41,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import users from 'src/_mock/user';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import ReactPlayer from 'react-player';
 
 function MobileWelcomePage() {
   const navigate = useNavigate();
@@ -332,7 +333,7 @@ useEffect(()=>{
 
       <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
-      {teachers.length >0 && teachers.slice(0,5).map((topic,i)=>(   
+      {teachers && teachers.length >0 && teachers.slice(0,5).map((topic,i)=>(   
           <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
           style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
            <TeacherCardPage 
@@ -343,6 +344,34 @@ useEffect(()=>{
  
  
       </Grid>
+
+
+      <center style={{marginTop:"2.5rem"}}>
+          <h2 style={{fontSize:"2rem"}}> VOIR +</h2>
+
+          <p style={{marginTop:"1rem",padding:"0.5rem",fontSize:"1.3rem",color:"grey"}}>Regardez nos guides tutoriels pour mieux navigeur.</p>
+         
+        { 
+        
+        <ReactPlayer   
+        config={{ file: { attributes: { controlsList: 'nodownload',disablepictureinpicture: 'true' } } }}
+          width="100%"
+          height="20rem"
+          id="full-screenVideo"                                              
+          className="videoFrame"
+          url={"https://www.youtube.com/watch?v=wdNzKvLUO-E&t=23s"}
+          //light={thumbnail}
+          playing={true}
+          playIcon={' '}
+          controls
+          
+        //onClickPreview = {()=>{setTouch(false);}}
+         
+       />
+        
+        }
+         
+         </center>
 
 
 </Container>
