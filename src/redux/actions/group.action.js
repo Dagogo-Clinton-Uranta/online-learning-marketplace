@@ -12,7 +12,8 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    ,savePresentQuizQuestion,saveChosenQuiz,
    saveCurrentQuizDetailsAndAnswers, saveSubmittingSingleAnswer,
    saveOpenQuestionIndex,saveCurrentQuestionIndex,
-   fetchTeachers
+   fetchTeachers,
+   saveDownloadReload
     } from '../reducers/group.slice';
 
  import {markRegisteredWithSocials}   from '../reducers/auth.slice';
@@ -1180,3 +1181,11 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
   dispatch(saveSelectedAudioState(state))
 
  }
+
+
+  /*========== TRIGGERING THE DOWNLOADS SCREEN TO RELOAD===========*/
+  export const setDownloadReload = (downrel) => async (dispatch) => {
+
+    dispatch(saveDownloadReload(downrel))
+  
+   }

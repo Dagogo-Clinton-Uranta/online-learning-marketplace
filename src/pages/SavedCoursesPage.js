@@ -35,7 +35,7 @@ import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import Modal from '@mui/material/Modal';
-import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelectedAudio, setSelectedAudioId} from 'src/redux/actions/group.action';
+import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelectedAudio, setSelectedAudioId,setDownloadReload} from 'src/redux/actions/group.action';
 
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '../browserDb/db'
@@ -74,30 +74,27 @@ const dispatch  = useDispatch()
 
 /*DEXIE MANIPULATION LOGIC */
 const URLSound = window.URL || window.webkitURL;
+
+
+
+let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
+console.log("files is",Files)
+
+
+
+
 const [savedMedia,setSavedMedia] = useState([])
 
 const [downloadCategories,setDownloadCategories] = useState([])
-const [videoLink,setVideoLink] = useState(null)
-let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
-const linkMaker = (blob) => {
- let link;
+const {downloadReload } = useSelector((state) => state.group);
 
-  blobToDataURL(blob).then((url)=>{
-   link =url
-   console.log("final url",url)
-    
-    setVideoLink(url)
-    
-  })
 
-  
-
-}
 
 useEffect(()=>{
 
 
 setSavedMedia(Files)
+console.log("download categories are!",downloadCategories)
 
 
 },[Files])
@@ -107,18 +104,20 @@ useEffect(()=>{
 
   console.log("saved media is now!",savedMedia)
  
- if(savedMedia){
+ if(savedMedia && savedMedia.length >0 ){
   savedMedia.forEach((item)=>{
-    if(!downloadCategories.includes(item.subjectTitle) ){
-      setDownloadCategories([...downloadCategories,item.subjectTitle])
+    if(downloadReload.indexOf(item.subjectTitle) === -1 ){
+      
+      dispatch(setDownloadReload([...downloadReload,item.subjectTitle]))
+
     }
   
   })
 }
 
-console.log("all download categories are",downloadCategories)
+console.log("all download categories via courses are",downloadReload)
  
-  },[savedMedia,Files])
+  },[savedMedia,downloadReload])
 
 
 
@@ -145,7 +144,7 @@ console.log("all download categories are",downloadCategories)
 /* AUDIO MANIPULATION LOGIC*/
 const audioRef = useRef(null)
 const [play,setPlay] = useState(false)
-const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+const { selectedAudioId,selectedAudio,selectedAudioState} = useSelector((state) => state.group);
 const  [showPlayer,setShowPlayer] = useState(true)
 
 
@@ -308,7 +307,7 @@ const pauseAudio = audio => {
     </Grid>
     
 
- {/* savedMedia && savedMedia.filter((item)=>(item.fileObject.size > 0)).map((item,index)=>{ 
+ {/*savedMedia && savedMedia.filter((item)=>(item.fileObject.size > 0)).map((item,index)=>{ 
    return (
     <div key={index}>
     <Grid item xs={12}   style={{position:"relative",display: 'flex',width:"23rem" ,justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
@@ -331,10 +330,10 @@ const pauseAudio = audio => {
 
 {
 
-downloadCategories && downloadCategories.length > 0 &&
+downloadReload && downloadReload.length > 0 &&
 
 
-downloadCategories.map((category)=>(
+downloadReload.map((category)=>(
 
   <>
   <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",width:"24rem",paddingTop:"3rem",paddingBottom:"1rem",borderBottom:"1px solid black"}}>
@@ -342,7 +341,7 @@ downloadCategories.map((category)=>(
 
  </p>
 
-{savedMedia.filter((item)=>(item.subjectTitle === category)).map((wax,index)=>{ 
+{savedMedia && savedMedia.length > 0 && savedMedia.filter((item)=>(item.subjectTitle === category)).map((wax,index)=>{ 
   return (
    <div key={index}>
    <Grid item xs={12}   style={{position:"relative",display: 'flex',width:"23rem" ,justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>

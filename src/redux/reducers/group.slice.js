@@ -14,6 +14,7 @@ const initialState = {
        teachers: [],
        selectedAudio:null,
        selectedAudioState:false,
+       downloadReload:[],
        presentOpenMenu:null,
        currentQuizDetailsAndAnswers:null,
        submittingSingleAnswer:false,
@@ -120,6 +121,10 @@ saveSelectedAudio: (state, action) => {
   state.selectedAudio = action.payload;
   state.selectedAudioState = true 
 },
+saveDownloadReload: (state, action) => {
+  state.downloadReload = action.payload;
+  
+},
 
 saveSelectedAudioState: (state, action) => {
   state.selectedAudioState = action.payload;
@@ -164,6 +169,7 @@ export const {
  saveChosenQuiz,
  saveSelectedAudioId,
  saveSelectedAudio,
+ saveDownloadReload,
  saveSelectedAudioState,
  savelastWatchedVideo,
  savePrivateGroup,

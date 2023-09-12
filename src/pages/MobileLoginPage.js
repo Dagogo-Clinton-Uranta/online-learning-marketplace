@@ -53,7 +53,7 @@ function MobileLoginPage() {
      if(user){
       navigate('/dashboard/home')
      }
-  },[])
+  },[user])
 
 
   const LoginFxn = (user,navigate) =>{
