@@ -395,11 +395,15 @@ useEffect(()=>{
          <p style={{fontSize:"1rem"}}>Suivez nous sur...</p>
 
          <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",gap:"0.5rem"}}>
-         <FacebookIcon style={{height:"36px"}}/>  <LinkedinIcon style={{height:"36px"}}/> <TwitterIcon style={{height:"36px"}}/>  <span style={{fontSize:"21px"}}>/@bonecole</span>
+         <a href={"https://www.facebook.com/biropunchline?ref=pages_you_manage"} target="_blank"> <FacebookIcon style={{height:"36px"}}/> </a>
+         <a href={"https://www.linkedin.com/company/bonecole-inc/?viewAsMember=true"} target="_blank"> <LinkedinIcon style={{height:"36px"}}/> </a>
+         <a href={"https://twitter.com/BonecoleInc"} target="_blank">   <TwitterIcon style={{height:"36px"}}/> </a>
+           <span style={{fontSize:"21px"}}>/@bonecole</span>
          </div>
 
        </div>
 
+       https://www.facebook.com/biropunchline?ref=pages_you_manage
 
 
       </div>
