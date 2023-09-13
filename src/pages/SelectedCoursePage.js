@@ -560,7 +560,7 @@ const fetchQuizAndNavigate =(uid)=>{
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.title}
- <PictureAsPdfIcon onClick={()=>{handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")/*handleOpenPdf()*/}}  style={{fontSize:"2.2rem"}} />
+ <PictureAsPdfIcon onClick={()=>{handleViewPdf(chapter.chapterPdfUrl?chapter.chapterPdfUrl:"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")/*handleOpenPdf()*/}}  style={{fontSize:"2.2rem"}} />
  </p>
 
 </Grid>
