@@ -132,10 +132,10 @@ useEffect(()=>{
 
 
   return (
-    <div>
+    <div >
     <Container  maxWidth="xs" sx={{backgroundColor:"white",position:"relative" ,border:"1px solid lightgray"}}> 
 
-    {/* I am using the navbar in Dashboard layout now, 
+    {/* I am using the navbar in Dashboard layout now,
     
     <Grid item xs={12} style={{display: 'flex', gap:"7rem",justifyContent: 'space-between', padding:"5px"}}>
      
@@ -403,9 +403,6 @@ useEffect(()=>{
 
        </div>
 
-       https://www.facebook.com/biropunchline?ref=pages_you_manage
-
-
       </div>
 
         
@@ -417,9 +414,9 @@ useEffect(()=>{
   
 </Container>
 
-<center>
+<center  >
 <div style={{maxWidth:"27.7rem",position:"relative", display:"flex",justifyContent:"center"}}>
-<Grid container xs={12} md={12}   style={{width:"100%",marginLeft:"0%",backgroundColor:"#5A5A5A",fontSize:"0.8rem" ,display: 'flex', justifyContent: 'center',position:"absolute",paddingLeft:"0.5rem",paddingTop:"0.5rem",paddingBottom:"0.5rem",marginBottom:"0%"}}>
+<Grid container xs={12} md={12}   style={{width:"100%",marginLeft:"0%",backgroundColor:"#5A5A5A",fontSize:"0.8rem" ,display: 'flex', justifyContent: 'center',position:"relative",paddingLeft:"0.5rem",paddingTop:"0.5rem",paddingBottom:"0.5rem"}}>
       <Grid item xs={12} spacing={0}   style={{color:"white" , display: 'flex',flexDirection:"column", justifyContent: 'flex-start',alignItems:"flex-start",gap:"30px",paddingTop:"1rem",paddingLeft:"20px",paddingRight:"20px"}}>
        
      
