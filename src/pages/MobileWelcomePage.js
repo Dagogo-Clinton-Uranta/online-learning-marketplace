@@ -1,7 +1,8 @@
-import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
+import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box,Modal} from '@mui/material';
 import { useContext,useEffect,useRef, useState,useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UNSAFE_NavigationContext as NavigationContext } from 'react-router-dom';
+import { UNSAFE_NavigationContext as NavigationContext,Link } from 'react-router-dom';
+import { findDOMNode } from 'react-dom'
 
 import math from 'src/assets/images/math.jpeg'
 import MathCover from 'src/assets/images/mathcover.jpeg'
@@ -93,6 +94,73 @@ const oldTopics = [
   
   
 ]
+/* MODAL FOR VIDEO LOGIC*/
+const [open, setOpen] = useState(false);
+const handleOpen = () => {doVideoActions()}
+const handleClose = () => {setOpen(false);setVideoTime(false)};
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: "95%",
+  height:"90%",
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+/* MODAL FOR VIDEO LOGIC END*/
+
+
+/*video manipulation logic */
+
+ 
+const [videoTime,setVideoTime] = useState(false)
+const [fullScreen, setFullScreen] = useState(false);
+
+
+
+const videoRef = useRef(true)
+
+
+const handleEsc = (event) => {
+  /*findDOMNode(videoRef.current).pause()*/
+  window.removeEventListener('fullscreenchange', handleEsc)
+  setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
+
+};
+
+
+const doVideoActions = () => {
+  setOpen(true)
+  
+  setTimeout(
+   ()=> {
+  
+  setVideoTime(!videoTime)
+  
+   if(!videoTime){
+    findDOMNode(videoRef.current).requestFullscreen()
+    }
+  },10) 
+
+  setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
+}
+
+
+
+
+useEffect(()=>{
+
+  if(open === false){
+    setTimeout(()=>(window.removeEventListener('fullscreenchange', handleEsc)),10)
+  }
+
+},[open])
+
+/*video manipulation logic end */
 
 
 useEffect(()=>{
@@ -131,8 +199,43 @@ useEffect(()=>{
   }
 
 
+
+  
+
+
   return (
     <div >
+
+
+<Modal
+open={open}
+onClose={handleClose}
+aria-labelledby="modal-modal-title"
+aria-describedby="modal-modal-description"
+
+>
+<Box sx={style}>
+ <ReactPlayer   
+      config={{ file: { attributes: { controlsList: 'nodownload',disablepictureinpicture: 'true' } } }}
+        width="100%"
+        height="100%"
+        id="full-screenVideo"                                              
+        className="videoFrame"
+        url={'https://www.youtube.com/watch?v=wdNzKvLUO-E&t=23s'}
+        //light={thumbnail}
+        playing={true}
+        playIcon={' '}
+        controls
+        
+        ref={videoRef}
+      //onClickPreview = {()=>{setTouch(false);}}
+       
+     />
+</Box>
+</Modal>
+
+
+
     <Container  maxWidth="xs" sx={{backgroundColor:"white",position:"relative" ,border:"1px solid lightgray"}}> 
 
     {/* I am using the navbar in Dashboard layout now,
@@ -216,10 +319,9 @@ useEffect(()=>{
      
        <div  className="cursive" style={{position:"relative"}}>
        <img style={{height:"20px",position:"absolute",top:"-10%",left:"-7.5%"}} src={startQuote}/>
-        Le monde dans lequel vivrent les futures generations est different
-        de celui auquel nous sommes habituer, Il est primordial que nous preparius nos 
-        enfants ainsi que nous-memes pour ce monde. 
-        <img style={{height:"20px",position:"absolute",right:"55%", bottom:"-8%"}} src={endQuote}/>
+       Le monde dans lequel vivront les futures générations est différent de celui auquel nous sommes habitués.
+        Il est primordial que nous préparions nos enfants ainsi que nous-mêmes pour ce monde 
+        <img style={{height:"20px",position:"absolute",right:"46%", bottom:"-8%"}} src={endQuote}/>
        </div>
        
 
@@ -356,22 +458,30 @@ useEffect(()=>{
           <p style={{marginTop:"1rem",padding:"0.5rem",fontSize:"1.3rem",color:"grey"}}>Regardez nos guides tutoriels pour mieux navigeur.</p>
          
         { 
+        <div onClick={()=>{handleOpen()}}>
         
         <ReactPlayer   
-        config={{ file: { attributes: { controlsList: 'nodownload',disablepictureinpicture: 'true' } } }}
+        //config={{ file: { attributes: { controlsList: 'nodownload',disablepictureinpicture: 'true' } } }}
           width="100%"
           height="20rem"
           id="full-screenVideo"                                              
           className="videoFrame"
           url={"https://www.youtube.com/watch?v=wdNzKvLUO-E&t=23s"}
-          //light={thumbnail}
-          
+          playing={false}
+          ref={videoRef}
           playIcon={' '}
           controls
           
-        //onClickPreview = {()=>{setTouch(false);}}
+          onPlay={()=>{
+             
+             if(findDOMNode(videoRef.current).fullScreenElement !== null  )
+            {findDOMNode(videoRef.current).requestFullscreen()}
+        
+          }}
+           
          
        />
+       </div>
         
         }
          
@@ -384,7 +494,7 @@ useEffect(()=>{
      
        <div   style={{position:"relative",fontSize:"1.5rem"}}>
       
-       Ne ratez pas nos nouveatués et offres specialés
+       Ne ratez pas nos nouveautés et offres spéciales
         
        </div>
        
@@ -434,10 +544,10 @@ useEffect(()=>{
      
 
        <div style={{display: 'flex',gap:"0.5rem", flexDirection:"column", justifyContent: 'flex-start',alignItems:"flex-start"}}>
-         <p style={{fontSize:"1rem"}}>Accueli</p>
-         <p style={{fontSize:"1rem"}}>Cours</p>
-         <p style={{fontSize:"1rem"}}>A Propos</p>
-         <p style={{fontSize:"1rem"}}>Conditions d'utilisation</p>
+         <p style={{fontSize:"1rem"}} onClick={()=>{ window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}}>Accueil</p>
+         <p style={{fontSize:"1rem"}}><Link to={'/dashboard/6e'}>Cours</Link></p>
+         {/*<p style={{fontSize:"1rem"}}>A Propos</p>*/}
+         <p style={{fontSize:"1rem"}}> <Link to={'/dashboard/terms'}>Conditions d'utilisation</Link></p>
 
          <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"3rem",fontSize:"1.2rem",gap:"0.5rem"}}>
          ©℗ 2023 BONECOLE.INC. ALL RIGHTS RESERVED
