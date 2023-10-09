@@ -26,7 +26,7 @@ import a8 from 'src/assets/images/8.png'
 import a9 from 'src/assets/images/9.jpeg'
 import a10 from 'src/assets/images/10.jpeg'
 
-import SampleCardPage from './SampleCardPage';
+import HomeCardPage from './HomeCardPage';
 import TeacherCardPage from './TeacherCardPage';
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
@@ -64,7 +64,7 @@ const [topics,setTopics] = useState([])
 const { teachers } = useSelector((state) => state.group);
 const [teacherArr, setTeacherArr] = useState([]/*teachers*/);
 
-console.log("teahcers from DATABASE",teachers)
+console.log("teachers from DATABASE",teachers)
 
 console.log("categories/COURSES",allCategories)
 
@@ -417,10 +417,10 @@ aria-describedby="modal-modal-description"
       
 <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
-      {categorySubjects.length >0 && topics.slice(0,4).map((topic,i)=>(   
+      {categorySubjects && categorySubjects.length >0 && topics.slice(0,4).map((topic,i)=>(   
           <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
           style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
-           <SampleCardPage 
+           <HomeCardPage 
            uid={topic.uid} title={topic.title} image = {topic && topic.subjectImageUrl && topic.subjectImageUrl.length > 1?topic.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={topic.instructor} price={topic.price} lessons={15} time={"2H 26 MINS"} /> 
           {/*gotta pass the id into the card so we can use it when clicked */}
           </Grid>
@@ -547,7 +547,7 @@ aria-describedby="modal-modal-description"
          <p style={{fontSize:"1rem"}} onClick={()=>{ window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}}>Accueil</p>
          <p style={{fontSize:"1rem"}}><Link to={'/dashboard/6e'}>Cours</Link></p>
          {/*<p style={{fontSize:"1rem"}}>A Propos</p>*/}
-         <p style={{fontSize:"1rem"}}> <Link to={'/dashboard/terms'}>Conditions d'utilisation</Link></p>
+         <p style={{fontSize:"1rem"}}> <Link to={'/dashboard/privacy'}>Conditions d'utilisation</Link></p>
 
          <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"3rem",fontSize:"1.2rem",gap:"0.5rem"}}>
          ©℗ 2023 BONECOLE.INC. ALL RIGHTS RESERVED
