@@ -20,6 +20,7 @@ import BoxOne from 'src/components/home/box-one';
 import FeedBox from 'src/components/home/feed-box';
 import SeessionBox from 'src/components/home/session-box';
 import BadgeBox from 'src/components/home/badge-box';
+import { fetchPurchasedCourse } from 'src/redux/actions/cart.action';
 
 
 const CHART_HEIGHT = 392;
@@ -54,6 +55,7 @@ export default function HomePage() {
 
   useEffect(() => {
     dispatch(fetchUserData(user?.id));
+    dispatch(fetchPurchasedCourse(user?.uid));
   }, [])
 
 

@@ -49,6 +49,8 @@ import LogoutPage from './pages/LogoutPage';
 import SelectedQuizPage from './pages/SelectedQuizPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
+import MyCartPage from './pages/MyCartPage';
+import PurchasedCourse from './pages/PurchasedCourse';
 
 export default function Router() {
   const routes = useRoutes([
@@ -79,6 +81,8 @@ export default function Router() {
         { path: 'selected-course', element: <SelectedCoursePage /> },
         { path: 'selected-quiz', element: <SelectedQuizPage /> },
         { path: 'saved-courses', element: <SavedCoursesPage /> },
+        { path: 'my-cart', element: <MyCartPage /> },
+        { path: 'purchased-courses', element: <PurchasedCourse /> },
         { path: '10e', element: <TenePage /> },
         { path: '6e', element: <SixePage /> },
 

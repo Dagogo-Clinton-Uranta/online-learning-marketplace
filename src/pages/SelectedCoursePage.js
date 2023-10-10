@@ -47,6 +47,7 @@ import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelect
 import db from '../browserDb/db'
 
 import { blobToDataURL,dataURLToBlob,imgSrcToBlob,arrayBufferToBlob } from 'blob-util'
+import { addToCart } from 'src/redux/reducers/cart.slice';
 
 
 function SelectedCoursePage() {
@@ -106,6 +107,7 @@ function SelectedCoursePage() {
 const audioRef = useRef(null)
 const [play,setPlay] = useState(false)
 const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+const { cart } = useSelector((state) => state.cart);
 const  [showPlayer,setShowPlayer] = useState(true)
 
 
@@ -333,9 +335,9 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
   
       setStatus(`Media file ${name} successfully added. Got id ${id}`);
       setLoading(false)
-      notifySuccessFxn("Successfully Downloaded !")
-      console.log("status is now:",status)
-      console.log("loading is now:",loading)
+      notifySuccessFxn("Successfully Downloaded!");
+      console.log("status is now:", status)
+      console.log("loading is now:", loading)
 
 
     return second
@@ -407,6 +409,21 @@ const fetchQuizAndNavigate =(uid)=>{
 }
 
 
+const addToCartFxn = () => {
+  const cartItem = { id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price };
+
+  const isItemInCart = cart.some((item) => item.id === cartItem.id);
+
+  if (isItemInCart) {
+    notifyErrorFxn('Item is already in the cart');
+  } else {
+    dispatch(addToCart(cartItem));
+    notifySuccessFxn('Added to cart');
+    navigate('/dashboard/my-cart');
+  }
+};
+
+// presentSubject.title
 
   return (
     <>
@@ -536,7 +553,7 @@ const fetchQuizAndNavigate =(uid)=>{
             style={{ backgroundColor: "red",color:"#FFFFFF", fontSize:"0.9rem",width:"100%",
             padding: '8px'}}
             
-            >
+            onClick={addToCartFxn}>
             Acheter maintenant
             </Button>
    

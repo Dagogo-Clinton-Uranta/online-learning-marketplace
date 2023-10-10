@@ -8,6 +8,7 @@ import groupReducer from './reducers/group.slice';
 import inboxReducer from './reducers/chat.slice';
 import candidateReducer from './reducers/candidate.slice';
 import transactionReducer from './reducers/transactions.slice';
+import cartReducer from './reducers/cart.slice';
 // import chatReducer from '../chat-src/redux/slices/chat';
 
 
@@ -15,7 +16,7 @@ import transactionReducer from './reducers/transactions.slice';
 const reducers = combineReducers({
   auth: authReducer,
   group: groupReducer,
-  // chat: chatReducer,
+  cart: cartReducer,
   inbox: inboxReducer,
   transaction: transactionReducer,
   candidates:candidateReducer,
