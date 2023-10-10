@@ -13,7 +13,7 @@ const MyCartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setisLoading] = useState(false);
-  const publicKey = '';
+  const publicKey = 'pk_test_41be8d2866325ed0e9bcf8734f6d31706640d968';
   const totalPrice = cart.reduce((acc, item) => {
     const itemPrice = parseFloat(item.price.replace(',', ''));
     return acc + itemPrice;
