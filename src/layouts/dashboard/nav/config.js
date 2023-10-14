@@ -21,7 +21,7 @@ const navConfig = [
   },
   {
     title: 'My Courses',
-    path: '/dashboard/saved-courses',
+    path: '/dashboard/test-payment',
     icon:<AiOutlineInbox/>
     // icon: icon('ic_analytics'),
   },
