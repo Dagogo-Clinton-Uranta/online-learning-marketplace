@@ -51,13 +51,12 @@ import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import MyCartPage from './pages/MyCartPage';
 import PurchasedCourse from './pages/PurchasedCourse';
+import PackCoursesPage from './pages/PackCoursesPage';
+import PacksPage from './pages/PacksPage';
+import TestPayment from './pages/TestPayment';
 
 export default function Router() {
   const routes = useRoutes([
-   
-     
-   
-   
     {
       path: '/dashboard',
       element: <DashboardLayout />,
@@ -85,6 +84,9 @@ export default function Router() {
         { path: 'purchased-courses', element: <PurchasedCourse /> },
         { path: '10e', element: <TenePage /> },
         { path: '6e', element: <SixePage /> },
+        { path: 'pack-courses', element: <PackCoursesPage /> },
+        { path: 'packs', element: <PacksPage /> },
+        { path: 'test-payment', element: <TestPayment /> },
 
         
         { path: 'chat', element: <MobileChatPage /> },
