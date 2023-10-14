@@ -7,31 +7,6 @@ import { blobToDataURL } from 'blob-util'
 
 
 
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-
-import Avatar from '@mui/material/Avatar';
-
-import samplePdf from 'src/assets/images/sample.pdf'
-import profile from 'src/assets/images/profile.jpeg'
-import math from 'src/assets/images/math.jpeg'
-import chem from 'src/assets/images/chembeak.jpeg'
-import chem2 from 'src/assets/images/chem2.jpeg'
-import biology from 'src/assets/images/biology.jpeg'
-import english from 'src/assets/images/english.jpeg'
-import philosophy from 'src/assets/images/philoslib.jpeg'
-import ReactPlayer from 'react-player'
-import { Document, Page ,pdfjs} from 'react-pdf';
-import { MobilePDFReader,PDFReader } from 'react-read-pdf';
-
-import AudioSwitch from './AudioSwitch';
-import VideoSwitch from './VideoSwitch';
-
-
-import {AiOutlineDownload} from "react-icons/ai";
-
-
-
 
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '../browserDb/db'

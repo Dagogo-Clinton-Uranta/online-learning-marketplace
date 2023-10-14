@@ -22,7 +22,7 @@ import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ReactPlayer from 'react-player'
 import { Document, Page ,pdfjs} from 'react-pdf';
-import { MobilePDFReader,PDFReader } from 'react-read-pdf';
+//import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
 import AudioSwitch from './AudioSwitch';
 import VideoSwitch from './VideoSwitch';
@@ -277,7 +277,7 @@ const pauseAudio = audio => {
       >
         <Box sx={style}>
            
-       <MobilePDFReader isShowHeader={false} isShowFooter={false} url={samplePdf}/>
+       {/*<MobilePDFReader isShowHeader={false} isShowFooter={false} url={samplePdf}/>}*/}
      
       
         </Box>

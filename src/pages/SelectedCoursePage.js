@@ -22,11 +22,11 @@ import philosophy from 'src/assets/images/philoslib.jpeg'
 import ReactPlayer from 'react-player'
 
 import { Document, Page ,pdfjs} from 'react-pdf';
-import PDFViewer from 'pdf-viewer-reactjs'
+//import PDFViewer from 'pdf-viewer-reactjs'
 import MyPDFViewer from './myPdfViewer'
 
 
-import { MobilePDFReader,PDFReader } from 'react-read-pdf';
+//import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
 import LogoSwitch from './LogoSwitch';
 import VideoSwitch from './VideoSwitch';
