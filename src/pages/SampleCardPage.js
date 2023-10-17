@@ -36,7 +36,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function SampleCardPage({uid,title,author,price,lessons,time,image}) {
+export default function SampleCardPage({uid,title,author,price,lessons,time,image, courses}) {
   const [expanded, setExpanded] = React.useState(false);
   const [loading,setLoading] = React.useState(false)
   const navigate = useNavigate();
@@ -63,7 +63,15 @@ export default function SampleCardPage({uid,title,author,price,lessons,time,imag
         component="img"
         height="200"
         image={image}
-        onClick={()=>{fetchChapters(uid)}}
+        onClick={()=>{
+          if(courses.length > 0){
+            const packData = {uid, title, author, price, image};
+            const data = {packData, courses};
+            navigate('/dashboard/pack-courses', { state: data });
+      }else{
+        fetchChapters(uid);
+      }
+    }}
         alt="Paella dish"
       />
 

@@ -84,11 +84,11 @@ export default function Router() {
         { path: 'purchased-courses', element: <PurchasedCourse /> },
         { path: '10e', element: <TenePage /> },
         { path: '6e', element: <SixePage /> },
-        { path: 'pack-courses', element: <PackCoursesPage /> },
         { path: 'packs', element: <PacksPage /> },
+        { path: 'pack-courses', element: <PackCoursesPage /> },
         { path: 'test-payment', element: <TestPayment /> },
 
-        
+         
         { path: 'chat', element: <MobileChatPage /> },
         { path: 'settings', element: <SettingsPage /> },
         // { path: 'my-cooler', element: <MyCoolersPage /> },

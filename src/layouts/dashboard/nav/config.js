@@ -33,6 +33,12 @@ const navConfig = [
     // icon: icon('ic_analytics'),
   },
   {
+    title: 'Packs',
+    path: '/dashboard/packs',
+    icon:<SlDocs/>
+    // icon: icon('ic_analytics'),
+  },
+  {
     title: 'My Cart',
     path: '/dashboard/my-cart',
     icon:<BiBasket/>
@@ -50,6 +56,7 @@ const navConfig = [
     icon:<SlDocs/>
     // icon: icon('ic_analytics'),
   },
+
   {
     title: 'Logout',
     path: '/dashboard/logout',
