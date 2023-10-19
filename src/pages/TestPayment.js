@@ -9,7 +9,7 @@ const TestPayment = () => {
     <input type="hidden" name="c" value="MjcyMDQxNzM" />
     <input type="hidden" name="paycard-amount" value="10000" /> 
     <input type="hidden" name="paycard-description" value="Product sale" />
-    <input type="hidden" name="paycard-callback-url" value="https://bonecole-student2.netlify.app/dashboard/purchased-courses" />
+    <input type="hidden" name="paycard-callback-url" value="https://bonecole-student.netlify.app/dashboard/purchased-courses" />
     {/* <input type="hidden" name="paycard-callback-url" value="https://www.monsite.com/check_payment" /> */}
     <input type="hidden" name="paycard-redirect-with-get" value="on" />
     <input type="hidden" name="paycard-auto-redirect" value="off" /> 
