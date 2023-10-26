@@ -88,7 +88,7 @@ export default function Router() {
         { path: '6e', element: <SixePage /> },
         { path: 'packs', element: <PacksPage /> },
         { path: 'pack-courses', element: <PackCoursesPage /> },
-        { path: 'test-payment', element: <TestPayment /> },
+        // { path: 'test-payment', element: <TestPayment /> },
 
          
         { path: 'chat', element: <MobileChatPage /> },
