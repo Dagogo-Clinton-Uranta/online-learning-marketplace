@@ -170,21 +170,12 @@ const MyCartPage = () => {
               paddingTop: '0.8rem',
             }}
           >
-            <form action="https://mapaycard.com/epay/" method="POST">
-              <input type="hidden" name="c" value="MjcyMDQxNzM" />
-              <input type="hidden" name="paycard-amount" value={totalPrice * 100} />
-              <input type="hidden" name="paycard-description" value="Course sale" />
-              <input
-                type="hidden"
-                name="paycard-callback-url"
-                value="https://bonecole-student.netlify.app/dashboard/payment-callback"
-              />
-              {/* <input type="hidden" name="paycard-callback-url" value="https://www.monsite.com/check_payment" /> */}
-              <input type="hidden" name="paycard-redirect-with-get" value="on" />
-              <input type="hidden" name="paycard-auto-redirect" value="off" />
-              <input type="hidden" name="cart_data" value={cart} />
-              <Button
-                  type="submit"
+            <PaystackConsumer {...componentProps}>
+              {({ initializePayment }) => (
+                <Button
+                  onClick={() => {
+                    validatePayment(initializePayment);
+                  }}
                   disabled={isLoading}
                   variant="contained"
                   style={{
@@ -197,14 +188,8 @@ const MyCartPage = () => {
                 >
                   Make Payment
                 </Button>
-              {/* <input
-                style={{ backgroundColor: '#CC4436',}}
-                type="image"
-                src="https://mapaycard.com/static/images/paywithpaycard2.png"
-                border="0"
-                alt="Make Payment"
-              ></input> */}
-            </form>
+              )}
+            </PaystackConsumer>
           </Grid>
         ) : null}
       </div>
