@@ -172,7 +172,7 @@ const MyCartPage = () => {
           >
             <form action="https://mapaycard.com/epay/" method="POST">
               <input type="hidden" name="c" value="MjcyMDQxNzM" />
-              <input type="hidden" name="paycard-amount" value={totalPrice * 100} />
+              <input type="hidden" name="paycard-amount" value={totalPrice} />
               <input type="hidden" name="paycard-description" value="Course sale" />
               <input
                 type="hidden"

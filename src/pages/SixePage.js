@@ -40,6 +40,30 @@ import SmallerCardPage from './SmallerCardPage';
 import SampleCardPage from './SampleCardPage';
 import {fetchCategorySubjects} from 'src/redux/actions/group.action';
 
+ 
+export const oldTopics = [
+  {title:"Chemie 10e Annee ",author:"Sidiki Keita",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem},
+  {title:"Anglais 10e Annee ",author:"Kabinet Keita",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
+  {title:"Biologie 10e Annee ",author:"Elhadj Keita",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
+  {title:"Philosophie 10e Annee",author:"Sidiki Keita",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
+  {title:"Mathematiques 10e Annee",author:"Fode Keita",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
+  {title:"Chemie 10e Annee",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
+  {image:chem2},
+  {image:DNA},
+  {image:MathCover},
+  {image:library},
+  {image:a1},
+  {image:a2},
+  {image:a3},
+  {image:a4},
+  {image:a5},
+  {image:a6},
+  {image:a7},
+  {image:a8},
+  {image:a9},
+  {image:a10},
+]
+
 function SixePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -66,31 +90,7 @@ useEffect(()=>{
    setChosen(categorySubjects && categorySubjects[0] && categorySubjects[0].category?categorySubjects[0].category:" ")
 },[categorySubjects])
 
- 
-  const oldTopics = [
-    {title:"Chemie 10e Annee ",author:"Sidiki Keita",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem},
-    {title:"Anglais 10e Annee ",author:"Kabinet Keita",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
-    {title:"Biologie 10e Annee ",author:"Elhadj Keita",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
-    {title:"Philosophie 10e Annee",author:"Sidiki Keita",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
-    {title:"Mathematiques 10e Annee",author:"Fode Keita",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
-    {title:"Chemie 10e Annee",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
-    {image:chem2},
-    {image:DNA},
-    {image:MathCover},
-    {image:library},
-    {image:a1},
-    {image:a2},
-    {image:a3},
-    {image:a4},
-    {image:a5},
-    {image:a6},
-    {image:a7},
-    {image:a8},
-    {image:a9},
-    {image:a10},
-    
-    
-  ]
+
 
   const populateCategory = (category) => {
    
@@ -234,7 +234,7 @@ useEffect(()=>{
      </Grid>
          
        <Grid container item xs={12} spacing={3} style={{ display: 'flex', justifyContent: 'center',marginBottom:"20px" }}>
-         
+         {console.log("TOPICS____", topics)}
      {topics.slice(1,topics.length).map((topic,i)=>(   
          <Grid item xs={6} onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
          style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>

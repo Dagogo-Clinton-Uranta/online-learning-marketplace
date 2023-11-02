@@ -75,10 +75,6 @@ function ExternalLoginPage() {
           >
           Se connecter avec Facebook
           </Button>
-       
-        
-       
-
         </Grid>
 
 

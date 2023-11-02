@@ -55,6 +55,8 @@ import PackCoursesPage from './pages/PackCoursesPage';
 import PacksPage from './pages/PacksPage';
 import TestPayment from './pages/TestPayment';
 import PaymentCallBackPage from './pages/PaymentCallBackPage';
+import LoginDesktopViewPage from './pages/LoginDesktopViewPage';
+import MainPage from './pages/MainPage';
 
 export default function Router() {
   const routes = useRoutes([
@@ -93,6 +95,8 @@ export default function Router() {
          
         { path: 'chat', element: <MobileChatPage /> },
         { path: 'settings', element: <SettingsPage /> },
+        { path: 'login-desktop', element: <LoginDesktopViewPage /> },
+        { path: 'main-page', element: <MainPage /> },
         // { path: 'my-cooler', element: <MyCoolersPage /> },
        
        
@@ -104,8 +108,14 @@ export default function Router() {
       children:[
         {path:'', element:<MobileLoginPage/>}
       ]
-     
     },
+    // {
+    //   path: 'login-test',
+    //   element: <LoginDesktopViewPage />,
+    //   // children:[
+    //   //   {path:'', element:<LoginDesktopViewPage />}
+    //   // ]
+    // },
     {
       path: 'register',
       element: <DashboardLayout />,
