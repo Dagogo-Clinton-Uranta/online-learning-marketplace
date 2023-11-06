@@ -57,6 +57,7 @@ import TestPayment from './pages/TestPayment';
 import PaymentCallBackPage from './pages/PaymentCallBackPage';
 import LoginDesktopViewPage from './pages/LoginDesktopViewPage';
 import MainPage from './pages/MainPage';
+import CoursePage from './pages/CoursePage';
 
 export default function Router() {
   const routes = useRoutes([
@@ -97,7 +98,7 @@ export default function Router() {
         { path: 'settings', element: <SettingsPage /> },
         { path: 'login-desktop', element: <LoginDesktopViewPage /> },
         { path: 'main-page', element: <MainPage /> },
-        // { path: 'my-cooler', element: <MyCoolersPage /> },
+        { path: 'course-page', element: <CoursePage /> },
        
        
       ],
@@ -109,22 +110,6 @@ export default function Router() {
         {path:'', element:<MobileLoginPage/>}
       ]
     },
-    // {
-    //   path: 'login-test',
-    //   element: <LoginDesktopViewPage />,
-    //   // children:[
-    //   //   {path:'', element:<LoginDesktopViewPage />}
-    //   // ]
-    // },
-    {
-      path: 'register',
-      element: <DashboardLayout />,
-      children:[
-        {path:'', element:<MobileRegisterPage/>}
-      ]
-     
-    },
-
     {
       path: 'external-login',
       element: <DashboardLayout />,

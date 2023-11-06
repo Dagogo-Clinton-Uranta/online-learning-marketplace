@@ -14,9 +14,10 @@ import { COURSEDATA } from 'src/utils/data';
 import { oldTopics } from './SixePage';
 import DesktopSmallerCardPage from './DesktopSmallerCardPage';
 import a10 from 'src/assets/images/10.jpeg'
+import CourseComponent from 'src/components/course/CourseComponent';
 
 
-const MainPage = () => {
+const CoursePage = () => {
   return (
     <Wrapper>
       <Grid container spacing={2}>
@@ -30,6 +31,10 @@ const MainPage = () => {
         {/* <Grid xs={1}></Grid> */}
         {/* Second Grid Item for Card Component */}
         <Grid container rowSpacing={2} item xs={4.4} style={{border: '0px solid red', }}>
+       <CourseComponent />
+        </Grid>
+
+       {/* <Grid container rowSpacing={2} item xs={4.4} style={{border: '0px solid red', }}>
             <Grid xs={12} style={{border: '1px solid black', padding: '20px', margin: '0px 20px 0x 20px', justifyContent: 'center', justifyItems: 'center'}}>
                <center> <h1>My Courses</h1></center>
             </Grid>
@@ -47,7 +52,7 @@ const MainPage = () => {
             /> 
          </Grid>
       ))}
-        </Grid>
+        </Grid> */}
       </Grid>
       <br/><br/><br/>
       <span style={{ marginTop: '0px'}}></span>
@@ -240,4 +245,4 @@ const CardComponent2 = () => {
   );
 };
 
-export default MainPage;
+export default CoursePage;
