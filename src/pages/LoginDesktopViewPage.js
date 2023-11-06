@@ -9,8 +9,8 @@ import LinkedInIMG from '../assets/images/linkedin.png';
 
 const LoginDesktopViewPage = () => {
   return (
-    <Wrapper>
-      <Grid container spacing={2}>
+    <Wrapper2>
+      <Grid container spacing={2} sx={{pl:5, pr: 5}}>
         {/* First Grid Item for YouTube Video */}
         <Grid item xs={6}>
           <YouTubeVideoComponent />
@@ -56,7 +56,7 @@ const LoginDesktopViewPage = () => {
   </div>
 </div>
 
-    </Wrapper>
+    </Wrapper2>
   );
 };
 
@@ -67,6 +67,15 @@ const Wrapper = styled(Box)(({ theme }) => ({
   width: '90%',
   padding: '16px 16px 0px 16px',
 }));
+
+const Wrapper2 = styled(Box)(({ theme }) => ({
+  border: '0px solid red',
+  position: 'absolute',
+  left: '0%',
+  width: '100%',
+  padding: '16px 0px 0px 0px',
+}));
+
 
 const YouTubeVideoComponent = () => {
   return <ReactPlayer width={500} height={300} url="https://www.youtube.com/watch?v=LXb3EKWsInQ" />;

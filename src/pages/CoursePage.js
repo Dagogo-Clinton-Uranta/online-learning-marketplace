@@ -20,7 +20,7 @@ import CourseComponent from 'src/components/course/CourseComponent';
 const CoursePage = () => {
   return (
     <Wrapper>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{pl:5, pr: 5}}>
         {/* First Grid Item for YouTube Video */}
         <Grid item xs={7}>
           <CardComponent2 />
@@ -95,9 +95,9 @@ const CoursePage = () => {
 const Wrapper = styled(Box)(({ theme }) => ({
   border: '0px solid red',
   position: 'absolute',
-  left: '5%',
-  width: '90%',
-  padding: '16px 16px 0px 16px',
+  left: '0%',
+  width: '100%',
+  padding: '16px 0px 0px 0px',
 }));
 
 const YouTubeVideoComponent = () => {
