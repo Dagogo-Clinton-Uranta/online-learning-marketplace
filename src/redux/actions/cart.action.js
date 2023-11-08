@@ -30,7 +30,7 @@ export const buyCourse = (courses, uid, today, navigate) => async (dispatch) => 
   .then(() => {
     notifySuccessFxn("Course purchased successfully");
     dispatch(clearCart());
-    navigate('/dashboard/home');
+    navigate('/dashboard/purchased-courses');
   })
   .catch((error) => {
     var errorMessage = error.message;
