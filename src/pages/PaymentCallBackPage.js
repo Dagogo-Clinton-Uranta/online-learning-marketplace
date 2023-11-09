@@ -12,14 +12,16 @@ const PaymentCallBackPage = () => {
  const dispatch = useDispatch();
 
  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const cart_data = urlParams.get("cart_data"); 
-    if (cart_data) {
-        let today = new Date().toLocaleDateString();
-        dispatch(buyCourse(cart_data, user.uid, today, navigate));
-    }
-    setLoading(false);
-  }, []);
+  const urlParams = new URLSearchParams(window.location.search);
+  const cart_data = urlParams.get("cart_data"); 
+  if (cart_data) {
+      const cartObject = JSON.parse(cart_data); 
+      let today = new Date().toLocaleDateString();
+      dispatch(buyCourse(cartObject, user.uid, today, navigate));
+  }
+  setLoading(false);
+}, []);
+
 
   return (
     <div> <CircularProgress

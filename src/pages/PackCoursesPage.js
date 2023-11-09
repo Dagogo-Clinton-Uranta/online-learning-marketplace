@@ -166,7 +166,7 @@ function PackCoursesPage() {
                   image={packData?.image}
                   author={packData?.author}
                   price={packData.price}
-                  lessons={15}
+                  lessons={7}
                   time={'2H 26 MINS'}
                 />
               </Grid>
@@ -201,7 +201,7 @@ function PackCoursesPage() {
                   }
                   author={topic.instructor}
                   price={'22,000'}
-                  lessons={15}
+                  lessons={5}
                   time={'2H 26 MINS'}
                 />
               </Grid>

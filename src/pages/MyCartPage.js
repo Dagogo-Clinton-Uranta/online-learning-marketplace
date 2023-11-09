@@ -182,7 +182,8 @@ const MyCartPage = () => {
               {/* <input type="hidden" name="paycard-callback-url" value="https://www.monsite.com/check_payment" /> */}
               <input type="hidden" name="paycard-redirect-with-get" value="on" />
               <input type="hidden" name="paycard-auto-redirect" value="off" />
-              <input type="hidden" name="cart_data" value={cart} />
+              <input type="hidden" name="cart_data" value={JSON.stringify(cart)} />
+
               <Button
                   type="submit"
                   disabled={isLoading}
