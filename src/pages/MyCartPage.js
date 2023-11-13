@@ -170,7 +170,23 @@ const MyCartPage = () => {
               paddingTop: '0.8rem',
             }}
           >
-            <form action="https://mapaycard.com/epay/" method="POST">
+
+              <Button
+                  type="button"
+                  onClick={()=>{navigate('/dashboard/payment-method')}}
+                  disabled={isLoading}
+                  variant="contained"
+                  style={{
+                    backgroundColor: '#CC4436',
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    paddingRight: '30px',
+                    paddingLeft: '30px',
+                  }}
+                >
+                  Make Payment
+                </Button>
+          {/* <form action="https://mapaycard.com/epay/" method="POST">
               <input type="hidden" name="c" value="MjcyMDQxNzM" />
               <input type="hidden" name="paycard-amount" value={totalPrice} />
               <input type="hidden" name="paycard-description" value="Course sale" />
@@ -179,7 +195,7 @@ const MyCartPage = () => {
                 name="paycard-callback-url"
                 value="https://bonecole-student.netlify.app/dashboard/payment-callback"
               />
-              {/* <input type="hidden" name="paycard-callback-url" value="https://www.monsite.com/check_payment" /> */}
+              
               <input type="hidden" name="paycard-redirect-with-get" value="on" />
               <input type="hidden" name="paycard-auto-redirect" value="off" />
               <input type="hidden" name="cart_data" value={JSON.stringify(cart)} />
@@ -198,14 +214,18 @@ const MyCartPage = () => {
                 >
                   Make Payment
                 </Button>
-              {/* <input
+             
+            </form>*/}
+              {/* <input type="hidden" name="paycard-callback-url" value="https://www.monsite.com/check_payment" /> */}
+             {/* <input
                 style={{ backgroundColor: '#CC4436',}}
                 type="image"
                 src="https://mapaycard.com/static/images/paywithpaycard2.png"
                 border="0"
                 alt="Make Payment"
               ></input> */}
-            </form>
+
+
           </Grid>
         ) : null}
       </div>

@@ -55,6 +55,7 @@ import PackCoursesPage from './pages/PackCoursesPage';
 import PacksPage from './pages/PacksPage';
 import TestPayment from './pages/TestPayment';
 import PaymentCallBackPage from './pages/PaymentCallBackPage';
+import PaymentTypePage from './pages/PaymentTypePage';
 import LoginDesktopViewPage from './pages/LoginDesktopViewPage';
 import MainPage from './pages/MainPage';
 import CoursePage from './pages/CoursePage';
@@ -86,6 +87,7 @@ export default function Router() {
         { path: 'saved-courses', element: <SavedCoursesPage /> },
         { path: 'my-cart', element: <MyCartPage /> },
         { path: 'payment-callback', element: <PaymentCallBackPage /> },
+        { path: 'payment-method', element: <PaymentTypePage /> },
         { path: 'purchased-courses', element: <PurchasedCourse /> },
         { path: '10e', element: <TenePage /> },
         { path: '6e', element: <SixePage /> },

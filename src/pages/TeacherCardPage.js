@@ -65,7 +65,7 @@ export default function TeacherCardPage({uid,firstName,lastName,imageUrl,subject
         height="200"
         image={imageUrl}
        
-        alt="Paella dish"
+        alt="teacher's picture"
       />
      </center>
      
@@ -75,7 +75,7 @@ export default function TeacherCardPage({uid,firstName,lastName,imageUrl,subject
       <Typography sx={{fontSize:"16px",display:"flex",flexDirection:"column" ,gap:"5px"}} >
          <p style={{color:"black"}}>{firstName + " " + lastName}</p>
         
-         <p style={{color:"black"}}>{subject + " "+ "/" + " " + level } </p>
+         <p style={{color:"black"}}>{subject  && subject + " "+ "/" + " " + (level && level) } </p>
         </Typography>
 
 

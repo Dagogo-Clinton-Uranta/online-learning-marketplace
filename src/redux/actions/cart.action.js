@@ -1,4 +1,4 @@
-import { notifySuccessFxn } from 'src/utils/toast-fxn';
+import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { db, fb, auth, storage } from '../../config/firebase';
 import { fetchTransactions, isItLoading } from '../reducers/transactions.slice';
 import { clearCart, savePurchasedCourses } from '../reducers/cart.slice';
@@ -34,7 +34,8 @@ export const buyCourse = (courses, uid, today, navigate) => async (dispatch) => 
   })
   .catch((error) => {
     var errorMessage = error.message;
-    console.log('Error creating bootcamp', errorMessage);
+    notifyErrorFxn("Error with Purchasing Course");
+    console.log('Error with buying course', errorMessage);
   });
 }
 
