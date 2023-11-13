@@ -58,6 +58,7 @@ import PaymentCallBackPage from './pages/PaymentCallBackPage';
 import LoginDesktopViewPage from './pages/LoginDesktopViewPage';
 import MainPage from './pages/MainPage';
 import CoursePage from './pages/CoursePage';
+import PaymentOptions from './pages/PaymentOptions';
 
 export default function Router() {
   const routes = useRoutes([
@@ -87,6 +88,7 @@ export default function Router() {
         { path: 'my-cart', element: <MyCartPage /> },
         { path: 'payment-callback', element: <PaymentCallBackPage /> },
         { path: 'purchased-courses', element: <PurchasedCourse /> },
+        { path: 'payment-options', element: <PaymentOptions /> },
         { path: '10e', element: <TenePage /> },
         { path: '6e', element: <SixePage /> },
         { path: 'packs', element: <PacksPage /> },
