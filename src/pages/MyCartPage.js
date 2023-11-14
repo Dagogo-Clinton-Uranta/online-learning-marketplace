@@ -173,7 +173,7 @@ const MyCartPage = () => {
 
               <Button
                   type="button"
-                  onClick={()=>{navigate('/dashboard/payment-method')}}
+                  onClick={()=>{navigate('/dashboard/payment-options')}}
                   disabled={isLoading}
                   variant="contained"
                   style={{

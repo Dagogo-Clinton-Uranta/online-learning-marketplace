@@ -56,7 +56,7 @@
     "auth0-lock": "11.30.4",
     "autoprefixer": "9.8.6",
     "autosuggest-highlight": "3.2.1",
-    "axios": "^1.4.0",
+    "axios": "^1.6.1",
     "babel-loader": "^9.1.2",
     "blob-util": "^2.0.2",
     "change-case": "^4.1.2",
@@ -65,6 +65,7 @@
     "date-fns": "^2.29.3",
     "dexie": "^3.2.4",
     "dexie-react-hooks": "^1.1.6",
+    "dotenv": "^16.3.1",
     "emoji-mart": "3.0.0",
     "firebase": "8.10.1",
     "formik": "^2.2.9",
@@ -76,11 +77,9 @@
     "mapbox-gl": "^2.12.1",
     "material-ui": "^0.20.2",
     "material-ui-search-bar": "^1.0.0",
-    
     "mobile-detect": "^1.4.5",
     "notistack": "^2.0.8",
     "numeral": "^2.0.6",
-   
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -102,7 +101,6 @@
     "react-paystack": "^4.0.1",
     "react-pdf": "^7.1.2",
     "react-player": "^2.12.0",
-    
     "react-redux": "^8.0.5",
     "react-redux-firebase": "^3.0.0",
     "react-router-dom": "^6.4.2",

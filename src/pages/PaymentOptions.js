@@ -5,23 +5,94 @@ import { fetchPurchasedCourse } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
 import MTNLOGO from '../assets/images/MTN-logo.png';
 import PAYCARDLOGO from '../assets/images/paycard-logo.png';
+import LockIcon from '@mui/icons-material/Lock';
+import { notifyErrorFxn } from 'src/utils/toast-fxn';
+import axios from 'axios';
+import * as uuid from 'uuid'
 
 const PaymentOptions = () => {
-  const [checked, setChecked] = useState(false);
+  const [pcChecked, setPcChecked] = useState(false);
+  const [mtnChecked, setMtnChecked] = useState(false);
+  const [momoToken,setMomoToken] = useState(null)
   const { user } = useSelector((state) => state.auth);
   const { purchasedCourses } = useSelector((state) => state.cart);
+  const { cart } = useSelector((state) => state.cart);
+  const [isLoading, setisLoading] = useState(false);
+  const publicKey = '';
+  const totalPrice = cart.reduce((acc, item) => {
+    const itemPrice = parseFloat(item.price.replace(',', ''));
+    return acc + itemPrice;
+  }, 0);
 
   const dispatch = useDispatch();
 
   const modifiedPurchasedCourses = purchasedCourses.reduce((acc, cur) => acc.concat(cur.courses), []);
 
+
+ const getMomoToken = async () => {
+    const token = await axios({
+      method:'post',
+      url:`https://proxy.momoapi.mtn.com/collection/token`, //<-- this may not be the correct url
+      headers:{
+        'Content-Type':'application/json',
+        'Ocp-Apim-Subscription-key':'process.env.REACT_APP_SUBSCRIPTION_KEY'
+      }
+    })
+
+    console.log("OUR FETCHED TOKEN IS:",token)
+    setMomoToken(token.data.access_token);
+
+    //possible errors, if you do CORS, you may need to set up a server and get the token from there
+    // only EUR currency works in sandbox, but we have specified production so..lets see how it goes
+  }
+
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
+    getMomoToken()
   }, []);
 
-  const handleCheckboxChange = () => {
-    setChecked(!checked);
+  const handlePcCheckboxChange = () => {
+   
+    setPcChecked(true);
+    setMtnChecked(false);
   };
+
+
+  const handleMtnCheckboxChange = () => {
+   
+    setMtnChecked(true);
+    setPcChecked(false);
+    
+  };
+
+  const handleMtnPay = () => {
+
+    const data = {
+"amount": `${totalPrice}`,
+"currency": "GNF",
+"externalId": `${uuid.v4()}`,
+"payer": {
+"partyIdType": "MSISDN",
+"partyId": `${uuid.v4()}` /*<-- phone number of the client */
+},
+"payerMessage": `Payment for courses bought. Total - ${totalPrice}`,
+"payeeNote": "No Notes"
+ }
+   
+    axios.post('https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay', data, {
+    headers: {
+      'Content-Type':'application/json',
+        'X-Reference-Id': `${uuid.v4()}`,
+        'X-Callback-Url': 'https://bonecole-student.netlify.app/dashboard/payment-callback', 
+        'X-Callback-Host': 'https://bonecole-student.netlify.app',
+        'Ocp-Apim-Subscription-Key':process.env.REACT_APP_SUBSCRIPTION_KEY,
+        'X-Target-Environment':'production', /*<-- in the tutorials they only ever used sandbox */
+        'Authorization':`Bearer ${momoToken}`
+
+    }
+})
+.then((res) => console.log("RESPONSE FROM MOMO AFTER PAYMENT",res.data))
+  }
 
   return (
     <Container
@@ -60,6 +131,9 @@ const PaymentOptions = () => {
             style={{ fontWeight: 400, fontSize: '18px', marginTop: '15px', marginBottom: '15px' }}
           >
             Connexion sécurisée
+            <IconButton style={{ marginLeft:"10px" }} >
+              <LockIcon />
+          </IconButton>
           </Typography>
           <Paper
             sx={{
@@ -76,7 +150,7 @@ const PaymentOptions = () => {
           >
             <Grid container justifyContent="flex-start" alignItems="center">
               <Grid item>
-                <Checkbox checked={checked} onChange={handleCheckboxChange} />
+                <Checkbox checked={mtnChecked} onChange={handleMtnCheckboxChange} />
               </Grid>
               <Grid item style={{ marginLeft: '25%' }}>
                 <img src={MTNLOGO} alt="MTN Logo" style={{ width: '100px', height: '100px' }} />
@@ -98,7 +172,7 @@ const PaymentOptions = () => {
           >
             <Grid container justifyContent="flex-start" alignItems="center">
               <Grid item>
-                <Checkbox checked={checked} onChange={handleCheckboxChange} />
+                <Checkbox checked={pcChecked} onChange={handlePcCheckboxChange} />
               </Grid>
               <Grid item style={{ marginLeft: '25%' }}>
                 <img src={PAYCARDLOGO} alt="PayCard Logo" style={{}} />
@@ -154,11 +228,82 @@ const PaymentOptions = () => {
             </div>
           </Grid>
         ))}
+
+
       </Grid>
 
-      <br />
-      <br />
-      <br />
+       { <form  id = "paycard" action="https://mapaycard.com/epay/" method="POST">
+              <input type="hidden" name="c" value="MjcyMDQxNzM" />
+              <input type="hidden" name="paycard-amount" value={totalPrice} />
+              <input type="hidden" name="paycard-description" value="Course sale" />
+              <input
+                type="hidden"
+                name="paycard-callback-url"
+                value="https://bonecole-student.netlify.app/dashboard/payment-callback"
+              />
+              
+              <input type="hidden" name="paycard-redirect-with-get" value="on" />
+              <input type="hidden" name="paycard-auto-redirect" value="off" />
+              <input type="hidden" name="cart_data" value={JSON.stringify(cart)} />
+
+             {/* <Button
+                  type="submit"
+                  disabled={isLoading}
+                  variant="contained"
+                  style={{
+                    backgroundColor: '#CC4436',
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    paddingRight: '30px',
+                    paddingLeft: '30px',
+                  }}
+                >
+                  Make Payment
+                </Button>*/}
+             
+            </form>}
+
+      <center  style={{marginTop:"3rem",marginBottom:"2rem",display:"flex",justifyContent:"center",alignItems:"center"}}>
+           {pcChecked === true?
+            <Button
+              form ="paycard"
+                  type="submit"
+                  disabled={pcChecked === false && mtnChecked === false ?true :false}
+                  variant="contained"
+                  style={{
+                    backgroundColor: '#CC4436',
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    paddingRight: '30px',
+                    paddingLeft: '30px',
+                  }}
+                >
+                  Pay
+            </Button>
+            :
+
+            <Button
+            type="button"
+            onClick={()=>{handleMtnPay()}}
+            disabled={pcChecked === false && mtnChecked === false ?true :false}
+            variant="contained"
+            style={{
+              backgroundColor: '#CC4436',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+              paddingRight: '30px',
+              paddingLeft: '30px',
+            }}
+          >
+            Pay
+      </Button>
+          }
+
+
+        </center>
+
+     
+      
     </Container>
   );
 };
