@@ -28,7 +28,7 @@ import a10 from 'src/assets/images/10.jpeg'
 
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchCurrentSubject} from 'src/redux/actions/group.action';
+import { fetchCategoryPacks, fetchCurrentSubject} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -70,7 +70,7 @@ function SixePage() {
   const [chosen,setChosen] = useState('');
   
 
-  const { categorySubjects, allCategories} = useSelector((state) => state.group);
+  const { categorySubjects, allCategories,packs} = useSelector((state) => state.group);
 
 
   const { user,error } = useSelector((state) => state.auth);
@@ -95,6 +95,7 @@ useEffect(()=>{
   const populateCategory = (category) => {
    
     dispatch(fetchCategorySubjects(category))
+    dispatch(fetchCategoryPacks(category))
     console.log(`NOW REDIRECTING to ${category}!!!`)
       
     setTimeout(()=>{ navigate('/dashboard/6e')},1000)
@@ -221,11 +222,11 @@ useEffect(()=>{
      
      <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
-     {topics.slice(0,1).map((topic,i)=>(   
-         <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
+     {packs && packs.map((pack,i)=>(    /*you may need to change the action to fetch subjects inside the pack */
+         <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(pack))}} 
          style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
           <SampleCardPage 
-          uid={topic.uid} title={topic.title} image = {topic && topic.subjectImageUrl && topic.subjectImageUrl.length > 1?topic.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={topic.instructor} price={topic.price} lessons={15} time={"2H 26 MINS"} /> 
+          uid={pack.uid} title={pack.title} image = {pack && pack.subjectImageUrl && pack.subjectImageUrl.length > 1?pack.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={pack.instructor} price={pack.price} lessons={15} time={"2H 26 MINS"} subjectsInPack={pack.subjectsInPack} /> 
          {/*gotta pass the id into the card so we can use it when clicked */}
          </Grid>
       ))}
@@ -235,7 +236,7 @@ useEffect(()=>{
          
        <Grid container item xs={12} spacing={3} style={{ display: 'flex', justifyContent: 'center',marginBottom:"20px" }}>
          {console.log("TOPICS____", topics)}
-     {topics.slice(1,topics.length).map((topic,i)=>(   
+     {topics.map((topic,i)=>(   
          <Grid item xs={6} onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
          style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
           <SmallerCardPage 

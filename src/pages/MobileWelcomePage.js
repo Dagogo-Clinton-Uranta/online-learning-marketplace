@@ -35,7 +35,7 @@ import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import {fetchCategorySubjects,fetchAllCategories,fetchCurrentSubject,getTeachers} from 'src/redux/actions/group.action';
+import {fetchCategorySubjects,fetchAllCategories,fetchCurrentSubject,getTeachers, fetchCategoryPacks} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -171,7 +171,7 @@ useEffect(()=>{
    dispatch(getTeachers())
    dispatch(fetchCategorySubjects("Terminales"))
    dispatch(fetchAllCategories())
-
+   dispatch(fetchCategoryPacks())
    
 },[])
 
