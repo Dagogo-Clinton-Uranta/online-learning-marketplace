@@ -13,7 +13,8 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    saveCurrentQuizDetailsAndAnswers, saveSubmittingSingleAnswer,
    saveOpenQuestionIndex,saveCurrentQuestionIndex,
    fetchTeachers,
-   saveDownloadReload
+   saveDownloadReload,
+   savePacks
     } from '../reducers/group.slice';
 
  import {markRegisteredWithSocials}   from '../reducers/auth.slice';
@@ -948,7 +949,7 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
      const subjectsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (subjectsArray.length) {
     
-     console.log(`subjecto for ${category} are:`, subjectsArray);
+     console.log(`subject for ${category} are:`, subjectsArray);
      dispatch(saveCategorySubjects(subjectsArray));
    } else {
      
@@ -960,6 +961,29 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
  });
  };
 
+ 
+/*FETCH ALL PACKS UNDER ONE CATEGORY -  */
+
+export const fetchCategoryPacks = (category) => async (dispatch) => {
+ 
+  db.collection("packs")
+   .where("category", "==", category )
+   .get()
+   .then((snapshot) => {
+     const packsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
+   if (packsArray.length) {
+    
+     console.log(`subject for ${category} are:`, packsArray);
+     dispatch(savePacks(packsArray));
+   } else {
+     
+       console.log(`No packs for the category; ${category}`);
+   }
+ }).catch((error) => {
+   console.log("Error getting packs:", error);
+   dispatch(isItLoading(false));
+ });
+ };
 
  /*============== FETCH THE CHAPTERS OF A PARTICULAR SUBJECT================ */
  /*============== AND ALSO FETCH THE LESSONS OF ALL CHAPTERS =============== */
