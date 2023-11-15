@@ -32,12 +32,12 @@ const navConfig = [
     icon:<AiOutlineInbox/>
     // icon: icon('ic_analytics'),
   },
-  {
+  /*{
     title: 'Packs',
     path: '/dashboard/packs',
-    icon:<SlDocs/>
-    // icon: icon('ic_analytics'),
-  },
+    icon:<SlDocs/>,
+     icon: icon('ic_analytics'),
+},*/
   {
     title: 'My Cart',
     path: '/dashboard/my-cart',
