@@ -1,98 +1,144 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Container, Grid, Paper, Checkbox, TextField, Typography, IconButton, Button } from '@mui/material';
-import { ArrowForward, Cancel } from '@material-ui/icons';
+import React, { useState, useEffect } from 'react';
+import { Container, Grid, Paper, Checkbox, Typography, IconButton, Button } from '@mui/material';
 import { fetchPurchasedCourse } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
+import { buyCourse } from 'src/redux/actions/cart.action';
 import MTNLOGO from '../assets/images/MTN-logo.png';
 import PAYCARDLOGO from '../assets/images/paycard-logo.png';
 import LockIcon from '@mui/icons-material/Lock';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import axios from 'axios';
-import * as uuid from 'uuid'
+import * as uuid from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 const PaymentOptions = () => {
   const [pcChecked, setPcChecked] = useState(false);
   const [mtnChecked, setMtnChecked] = useState(false);
-  const [momoToken,setMomoToken] = useState(null)
+  const [momoToken, setMomoToken] = useState(null);
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { purchasedCourses } = useSelector((state) => state.cart);
   const { cart } = useSelector((state) => state.cart);
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const publicKey = '';
   const totalPrice = cart.reduce((acc, item) => {
     const itemPrice = parseFloat(item.price.replace(',', ''));
     return acc + itemPrice;
   }, 0);
 
-  const dispatch = useDispatch();
-
-  const modifiedPurchasedCourses = purchasedCourses.reduce((acc, cur) => acc.concat(cur.courses), []);
 
 
- const getMomoToken = async () => {
+
+
+  // const momoHost = 'sandbox.momodeveloper.mtn.com';
+  // const momoTokenUrl = `https://${momoHost}/collection/token/`;
+  // const momoRequestToPayUrl = `https://${momoHost}/collection/v1_0/requesttopay`;
+
+  const momoTokenUrl = '/api/collection/token/';
+  const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
+  
+
+  const getMomoToken = async () => {
     const token = await axios({
-      method:'post',
-      url:`https://proxy.momoapi.mtn.com/collection/token`, //<-- this may not be the correct url
-      headers:{
-        'Content-Type':'application/json',
-        'Ocp-Apim-Subscription-key':'process.env.REACT_APP_SUBSCRIPTION_KEY'
-      }
-    })
+      method: 'post',
+      url: `https://proxy.momoapi.mtn.com/collection/token`, 
+      headers: {
+        'Content-Type': 'application/json',
+        'Ocp-Apim-Subscription-key': 'process.env.REACT_APP_SUBSCRIPTION_KEY',
+      },
+    });
 
-    console.log("OUR FETCHED TOKEN IS:",token)
+    console.log('OUR FETCHED TOKEN IS:', token);
     setMomoToken(token.data.access_token);
 
     //possible errors, if you do CORS, you may need to set up a server and get the token from there
     // only EUR currency works in sandbox, but we have specified production so..lets see how it goes
-  }
+  };
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
-    getMomoToken()
+    getMomoToken();
   }, []);
 
   const handlePcCheckboxChange = () => {
-   
     setPcChecked(true);
     setMtnChecked(false);
   };
 
-
   const handleMtnCheckboxChange = () => {
-   
     setMtnChecked(true);
     setPcChecked(false);
-    
   };
 
-  const handleMtnPay = () => {
+  const handleMtnPay = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Ocp-Apim-Subscription-Key': '5b158c87ce9b495fb64dcac1852d745b',
+      'Authorization': 'Basic Nzg1NTgxY2UtYWUxOC00YWRhLTk1MjgtNmRjYjZlMjc4OWU3OjY0MDdiZjU3MjNiMjQwM2U5MzVlNmRiNzhlNjQ4N2Q1',
+    };
+       setIsLoading(true);
+       axios.post(momoTokenUrl, {}, { withCredentials: true, headers })
+        .then(response => {
+            const access_token = response.data.access_token;
+            console.log("ACCESS-TOKEN", access_token);
+           axios.post(momoRequestToPayUrl, {
+            amount: totalPrice,
+            currency: 'EUR',
+            externalId: `${uuid.v4()}`,
+            payer: {
+              partyIdType: 'MSISDN',
+              partyId: `${uuid.v4()}`, //phone
+            },
+            payerMessage: 'Payment for order',
+            payeeNote: 'Payment for order',
+          }).then((res) => {
+            console.log("Payment request", res);
+            const paymentId = res.data.paymentId;
+            const paymentUrl = momoRequestToPayUrl+paymentId;
+            axios.get(paymentUrl).then((res) => {
+              console.log("Payment completed...", res);
+              let today = new Date().toLocaleDateString();
+              dispatch(buyCourse(cart, user.uid, today, navigate));
+            })
+          }).catch((error) => {
+            setIsLoading(false);
+            console.error('Payment Request Error:', error);
+            notifyErrorFxn('Payment Request Error...');
+          })
+        }).catch(error => {
+            // Handle errors
+            setIsLoading(false);
+            console.error('Error:', error);
+            notifyErrorFxn('Failed to get token');
+        });
 
-    const data = {
-"amount": `${totalPrice}`,
-"currency": "GNF",
-"externalId": `${uuid.v4()}`,
-"payer": {
-"partyIdType": "MSISDN",
-"partyId": `${uuid.v4()}` /*<-- phone number of the client */
-},
-"payerMessage": `Payment for courses bought. Total - ${totalPrice}`,
-"payeeNote": "No Notes"
- }
-   
-    axios.post('https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay', data, {
-    headers: {
-      'Content-Type':'application/json',
-        'X-Reference-Id': `${uuid.v4()}`,
-        'X-Callback-Url': 'https://bonecole-student.netlify.app/dashboard/payment-callback', 
-        'X-Callback-Host': 'https://bonecole-student.netlify.app',
-        'Ocp-Apim-Subscription-Key':process.env.REACT_APP_SUBSCRIPTION_KEY,
-        'X-Target-Environment':'production', /*<-- in the tutorials they only ever used sandbox */
-        'Authorization':`Bearer ${momoToken}`
+    // const data = {
+    //   amount: `${totalPrice}`,
+    //   currency: 'GNF',
+    //   externalId: `${uuid.v4()}`,
+    //   payer: {
+    //     partyIdType: 'MSISDN',
+    //     partyId: `${uuid.v4()}` /*<-- phone number of the client */,
+    //   },
+    //   payerMessage: `Payment for courses bought. Total - ${totalPrice}`,
+    //   payeeNote: 'No Notes',
+    // };
 
-    }
-})
-.then((res) => console.log("RESPONSE FROM MOMO AFTER PAYMENT",res.data))
-  }
+    // axios
+    //   .post('https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay', data, {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'X-Reference-Id': `${uuid.v4()}`,
+    //       'X-Callback-Url': 'https://bonecole-student.netlify.app/dashboard/payment-callback',
+    //       'X-Callback-Host': 'https://bonecole-student.netlify.app',
+    //       'Ocp-Apim-Subscription-Key': process.env.REACT_APP_SUBSCRIPTION_KEY,
+    //       'X-Target-Environment': 'production' /*<-- in the tutorials they only ever used sandbox */,
+    //       Authorization: `Bearer ${momoToken}`,
+    //     },
+    //   })
+    //   .then((res) => console.log('RESPONSE FROM MOMO AFTER PAYMENT', res.data));
+  };
 
   return (
     <Container
@@ -131,9 +177,9 @@ const PaymentOptions = () => {
             style={{ fontWeight: 400, fontSize: '18px', marginTop: '15px', marginBottom: '15px' }}
           >
             Connexion sécurisée
-            <IconButton style={{ marginLeft:"10px" }} >
+            <IconButton style={{ marginLeft: '10px' }}>
               <LockIcon />
-          </IconButton>
+            </IconButton>
           </Typography>
           <Paper
             sx={{
@@ -185,68 +231,48 @@ const PaymentOptions = () => {
             Commande
           </Typography>
           <br />
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderBottom: '0px solid #eee',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                Pack complet - 6ème
-              </Typography>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                70,000 FG
-              </Typography>
-            </div>
-          </div>
-        </div>
-        {modifiedPurchasedCourses?.map((item, index) => (
-          <Grid item xs={12} key={index} style={{ paddingTop: '0.5rem', marginBottom: '10px' }}>
+
+          {cart.map((item, index) => (
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                borderBottom: '3px solid black',
+                borderBottom: '0px solid #eee',
+                marginBottom: '10px',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                  {item.title}
+                  {item?.title}
                 </Typography>
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <IconButton>
-                  <ArrowForward />
-                </IconButton>
+                <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
+                  {item?.price} GNF
+                </Typography>
               </div>
             </div>
-          </Grid>
-        ))}
-
-
+          ))}
+        </div>
       </Grid>
 
-       { <form  id = "paycard" action="https://mapaycard.com/epay/" method="POST">
-              <input type="hidden" name="c" value="MjcyMDQxNzM" />
-              <input type="hidden" name="paycard-amount" value={totalPrice} />
-              <input type="hidden" name="paycard-description" value="Course sale" />
-              <input
-                type="hidden"
-                name="paycard-callback-url"
-                value="https://bonecole-student.netlify.app/dashboard/payment-callback"
-              />
-              
-              <input type="hidden" name="paycard-redirect-with-get" value="on" />
-              <input type="hidden" name="paycard-auto-redirect" value="off" />
-              <input type="hidden" name="cart_data" value={JSON.stringify(cart)} />
+      {
+        <form id="paycard" action="https://mapaycard.com/epay/" method="POST">
+          <input type="hidden" name="c" value="MjcyMDQxNzM" />
+          <input type="hidden" name="paycard-amount" value={totalPrice} />
+          <input type="hidden" name="paycard-description" value="Course sale" />
+          <input
+            type="hidden"
+            name="paycard-callback-url"
+            value="https://bonecole-student.netlify.app/dashboard/payment-callback"
+          />
 
-             {/* <Button
+          <input type="hidden" name="paycard-redirect-with-get" value="on" />
+          <input type="hidden" name="paycard-auto-redirect" value="off" />
+          <input type="hidden" name="cart_data" value={JSON.stringify(cart)} />
+
+          {/* <Button
                   type="submit"
                   disabled={isLoading}
                   variant="contained"
@@ -260,32 +286,42 @@ const PaymentOptions = () => {
                 >
                   Make Payment
                 </Button>*/}
-             
-            </form>}
+        </form>
+      }
 
-      <center  style={{marginTop:"3rem",marginBottom:"2rem",display:"flex",justifyContent:"center",alignItems:"center"}}>
-           {pcChecked === true?
-            <Button
-              form ="paycard"
-                  type="submit"
-                  disabled={pcChecked === false && mtnChecked === false ?true :false}
-                  variant="contained"
-                  style={{
-                    backgroundColor: '#CC4436',
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
-                    paddingRight: '30px',
-                    paddingLeft: '30px',
-                  }}
-                >
-                  Pay
-            </Button>
-            :
-
-            <Button
+      <center
+        style={{
+          marginTop: '3rem',
+          marginBottom: '2rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {pcChecked === true ? (
+          <Button
+            form="paycard"
+            type="submit"
+            disabled={isLoading === true ? true : pcChecked === false && mtnChecked === false ? true : false}
+            variant="contained"
+            style={{
+              color: 'white',
+              backgroundColor: '#CC4436',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+              paddingRight: '30px',
+              paddingLeft: '30px',
+            }}
+          >
+           {isLoading ? "Loading..." : "Pay"}
+          </Button>
+        ) : (
+          <Button
             type="button"
-            onClick={()=>{handleMtnPay()}}
-            disabled={pcChecked === false && mtnChecked === false ?true :false}
+            onClick={() => {
+              handleMtnPay();
+            }}
+            disabled={isLoading === true ? true : pcChecked === false && mtnChecked === false ? true : false}
             variant="contained"
             style={{
               backgroundColor: '#CC4436',
@@ -295,15 +331,10 @@ const PaymentOptions = () => {
               paddingLeft: '30px',
             }}
           >
-            Pay
-      </Button>
-          }
-
-
-        </center>
-
-     
-      
+           {isLoading ? "Loading..." : "Pay"}
+          </Button>
+        )}
+      </center>
     </Container>
   );
 };
