@@ -66,7 +66,7 @@ export default function SmallerCardPage({uid,title,author,price,lessons,time,ima
         height="100"
         image={image}
         onClick={()=>{fetchChapters(uid)}}
-        alt="Paella dish"
+        alt="Subject image"
       />
 
 

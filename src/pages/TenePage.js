@@ -1,6 +1,6 @@
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
 import { useRef, useState,useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
 import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
@@ -18,33 +18,96 @@ import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import { fetchCategoryPacks, fetchCategorySubjects,fetchPackSubjects ,fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { notifyErrorFxn } from 'src/utils/toast-fxn';
+import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
 import SmallerCardPage from './SmallerCardPage';
 import SampleCardPage from './SampleCardPage';
+import { addToCart } from 'src/redux/reducers/cart.slice';
+
+import a1 from 'src/assets/images/1.jpeg'
+import a2 from 'src/assets/images/2.jpeg'
+import a3 from 'src/assets/images/3.jpeg'
+import a4 from 'src/assets/images/4.jpeg'
+import a5 from 'src/assets/images/5.jpeg'
+import a6 from 'src/assets/images/6.jpeg'
+import a7 from 'src/assets/images/7.jpeg'
+import a8 from 'src/assets/images/8.png'
+import a9 from 'src/assets/images/9.jpeg'
+import a10 from 'src/assets/images/10.jpeg'
 
 function TenePage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
   const [chosen,setChosen] = useState(1);
 
- 
-  const topics = [
+  const {packSubjects} = useSelector((state) => state.group);
+  const { presentSubject } = useSelector((state) => state.group);
+  const { cart } = useSelector((state) => state.cart);
+
+  useEffect(()=>{
+  fetchPackSubjects(location.state.data)
+
+  },[])
+
+
+   const oldTopics = [
     {title:"Chemie 10e Annee ",author:"Sidiki Keita",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem},
     {title:"Anglais 10e Annee ",author:"Kabinet Keita",price:"29,000",lessons:15,time:"4H 26 MINS",image:english},
     {title:"Biologie 10e Annee ",author:"Elhadj Keita",price:"28,000",lessons:16,time:"5H 26 MINS",image:biology},
     {title:"Philosophie 10e Annee",author:"Sidiki Keita",price:"30,000",lessons:15,time:"5H 16 MINS",image:philosophy },
     {title:"Mathematiques 10e Annee",author:"Fode Keita",price:"28,000",lessons:14,time:"4H 11 MINS",image:math},
     {title:"Chemie 10e Annee",author:"Sidiki Keita",price:"29,000",lessons:13,time:"3H 26 MINS",image:chem},
-    
+    {image:chem2},
+    {image:DNA},
+    {image:MathCover},
+    {image:library},
+    {image:a1},
+    {image:a2},
+    {image:a3},
+    {image:a4},
+    {image:a5},
+    {image:a6},
+    {image:a7},
+    {image:a8},
+    {image:a9},
+    {image:a10},
   ]
 
 
+
+const addToCartFxn = () => {
+  const cartItem = { id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price };
+
+
+  const isItemInCart = cart.some((item) => item.id === cartItem.id);
+
+  if (isItemInCart) {
+    notifyErrorFxn('Item is already in the cart');
+  } else {
+    dispatch(addToCart(cartItem));
+    notifySuccessFxn('Added to cart');
+    navigate('/dashboard/my-cart');
+  }
+};
+ 
+  const [topics,setTopics] = useState(packSubjects);
+  
+  const populateCategory = (category) => {
+   
+    dispatch(fetchCategorySubjects(category))
+    dispatch(fetchCategoryPacks(category))
+    console.log(`NOW REDIRECTING to ${category}!!!`)
+      
+    setTimeout(()=>{ navigate('/dashboard/6e')},1000)
+
+  }
 
   return (
     <>
@@ -68,27 +131,7 @@ function TenePage() {
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
    
 
-    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
-    
-           <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
-            padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/other-courses')}}
-            >
-            Tous
-            </Button>
-
-            <Button   variant="contained" 
-            style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
-            padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/popular-courses')}}
-            >
-            Terminales
-            </Button>
-
    
-    </center>
-
 
 
     <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
@@ -96,36 +139,24 @@ function TenePage() {
            <Button   variant="contained" 
             style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/6e')}}
+            onClick={()=>{navigate(-1)}}
             >
-             6eme Année
+             Retour
             </Button>
 
             <Button   variant="contained" 
            
 
-           style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
+           style={{ backgroundColor: "red",color:"#FFFFFF",border:"1px solid black", fontSize:"12px",width:"40%",
             padding: '8px'}}
-            onClick={()=>{navigate('/dashboard/10e')}}
+            onClick={addToCartFxn}
             >
-            10eme Année
+             Acheter paquet
             </Button>
 
     </center>
 
-    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"10px" }}>
-  
-
-  <Button   variant="contained" 
-  style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
-  padding: '8px'}}
-  onClick={()=>{navigate('/dashboard/saved-courses')}}
-  >
-  My Courses
-  </Button>
-
-
-</center>
+ 
     </Grid>
 
     
@@ -133,23 +164,12 @@ function TenePage() {
 
      <Grid container spacing={2} >
 
-     
-     <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
-     {topics.slice(0,1).map((topic)=>(   
-         <Grid item xs={11} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
-          <SampleCardPage title={topic.title} image = {DNA} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
-         </Grid>
-      ))}
-
-
-     </Grid>
-         
        <Grid container item xs={12} spacing={3} style={{ display: 'flex', justifyContent: 'center',marginBottom:"20px" }}>
          
-     {topics.map((topic)=>(   
+     {packSubjects && topics.map((topic,i)=>(   
          <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
-          <SmallerCardPage title={topic.title} image = {topic.image} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
+          <SmallerCardPage title={topic.title} image = {topic && topic.subjectImageUrl && topic.subjectImageUrl.length > 1 ?topic.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={topic.author} price={topic.price} lessons={topic.lessons} time={topic.time} /> 
          </Grid>
       ))}
          

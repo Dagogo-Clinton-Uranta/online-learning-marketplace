@@ -6,7 +6,7 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
   saveCategories ,saveGroupMembers, saveMyGroup,
    savePrivateGroup, savePublicGroup, saveSectionVideos,
    saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos,
-   saveCategorySubjects,savePresentSubject,saveSubjectChapters
+   saveCategorySubjects,savePackSubjects,savePresentSubject,saveSubjectChapters
    ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,
    saveSelectedAudioState,saveAllQuizzesForSubject
    ,savePresentQuizQuestion,saveChosenQuiz,
@@ -981,6 +981,30 @@ export const fetchCategoryPacks = (category) => async (dispatch) => {
    }
  }).catch((error) => {
    console.log("Error getting packs:", error);
+   dispatch(isItLoading(false));
+ });
+ };
+
+
+ /*FETCH ALL SUBJECTS UNDER ONE PACK -  */
+
+export const fetchPackSubjects = (category) => async (dispatch) => {
+ 
+  db.collection("sections")
+   .where("uid", "in", category)
+   .get()
+   .then((snapshot) => {
+     const subjectsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
+   if (subjectsArray.length) {
+    
+     console.log(`subjects for ${category} are:`, subjectsArray);
+     dispatch(savePackSubjects(subjectsArray));
+   } else {
+     
+       console.log(`No subjects for the category; ${category}`);
+   }
+ }).catch((error) => {
+   console.log("Error getting subjects:", error);
    dispatch(isItLoading(false));
  });
  };

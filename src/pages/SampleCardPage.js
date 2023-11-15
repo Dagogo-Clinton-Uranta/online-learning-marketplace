@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 
-import { fetchSubjectChapters} from 'src/redux/actions/group.action';
+import { fetchPackSubjects, fetchSubjectChapters} from 'src/redux/actions/group.action';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,7 +36,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function SampleCardPage({uid,title,author,price,lessons,time,image, courses}) {
+export default function SampleCardPage({uid,title,author,price,lessons,time,image, courses,subjectsInPack}) {
   const [expanded, setExpanded] = React.useState(false);
   const [loading,setLoading] = React.useState(false)
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function SampleCardPage({uid,title,author,price,lessons,time,imag
     dispatch(fetchSubjectChapters(subjectId))
     setLoading(true)
 
-    setTimeout(()=>{( navigate('/dashboard/selected-course'))},2000)
+   /* setTimeout(()=>{ navigate('/dashboard/selected-course')},2000)*/
   }
 
   return (
@@ -64,12 +64,15 @@ export default function SampleCardPage({uid,title,author,price,lessons,time,imag
         height="200"
         image={image}
         onClick={()=>{
-          if(courses.length > 0){
-            const packData = {uid, title, author, price, image};
-            const data = {packData, courses};
-            navigate('/dashboard/pack-courses', { state: data });
+          if(subjectsInPack.length > 0){
+           // const packData = {uid, title, author, price, image};
+            const data = /**{packData, courses};*/ subjectsInPack
+            setLoading(true)
+            dispatch(fetchPackSubjects(subjectsInPack))
+
+            setTimeout(()=>{navigate('/dashboard/10e', { state: data })},2300)
       }else{
-        fetchChapters(uid);
+       /* fetchChapters(uid)*/;
       }
     }}
         alt="Course image"

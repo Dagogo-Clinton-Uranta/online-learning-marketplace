@@ -7,6 +7,7 @@ const initialState = {
        allSectionVideos:[],
        categoryVideos:[],
        categorySubjects:[],
+       packSubjects:[],
        packs:[],
        chosenQuiz:{},
        subjectChapters:[],
@@ -60,6 +61,9 @@ saveCategorySubjects: (state, action) => {
 },
 savePacks: (state, action) => {
   state.packs = action.payload;
+},
+savePackSubjects: (state, action) => {
+  state.packSubjects = action.payload;
 },
 savePresentSubject: (state, action) => {
   state.presentSubject = action.payload;
@@ -158,6 +162,7 @@ export const {
  saveCategoryVideos,
  saveCategorySubjects,
  savePacks,
+ savePackSubjects,
  saveSubjectChapters,
  saveAllChapterLessons,
  saveAllQuizzesForSubject,

@@ -226,7 +226,7 @@ useEffect(()=>{
          <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(pack))}} 
          style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
           <SampleCardPage 
-          uid={pack.uid} title={pack.title} image = {pack && pack.subjectImageUrl && pack.subjectImageUrl.length > 1?pack.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={pack.instructor} price={pack.price} lessons={15} time={"2H 26 MINS"} /> 
+          uid={pack.uid} title={pack.title} image = {pack && pack.subjectImageUrl && pack.subjectImageUrl.length > 1?pack.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={pack.instructor} price={pack.price} lessons={15} time={"2H 26 MINS"} subjectsInPack={pack.subjectsInPack} /> 
          {/*gotta pass the id into the card so we can use it when clicked */}
          </Grid>
       ))}
