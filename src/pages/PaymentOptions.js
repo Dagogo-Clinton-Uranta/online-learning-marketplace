@@ -38,6 +38,21 @@ const PaymentOptions = () => {
   const momoTokenUrl = '/api/collection/token/';
   const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
 
+/*MOCK API REQUEST FOR GENERATING A USER */
+
+headers: {
+  'X-Reference-Id ': '2079f714-3a79-4db1-bc3a-e0f608b19b15'
+  'Content-Type': 'application/json',
+  'Ocp-Apim-Subscription-key': `${process.env.REACT_APP_SUBSCRIPTION_KEY}`, //'5b7a54a04b134ed3a70418a59660cb25'
+ }
+
+ in the request body of the post request we will have 
+
+ {
+  "providerCallbackHost":"yusuf's url for vercel"
+ }
+
+  /*MOCK API REQUEST FOR GENERATING A USER  END*/
 
   const getMomoToken = async () => {
     const token = await axios({
