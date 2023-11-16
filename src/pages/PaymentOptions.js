@@ -22,10 +22,10 @@ const PaymentOptions = () => {
   const { cart } = useSelector((state) => state.cart);
   const [isLoading, setIsLoading] = useState(false);
   const publicKey = '';
-  const totalPrice = /*cart.reduce((acc, item) => {
+  const totalPrice = cart.reduce((acc, item) => {
     const itemPrice = parseFloat(item.price.replace(',', ''));
     return acc + itemPrice;
-  }, 0);*/ 0.1
+  }, 0);
 
 
 
