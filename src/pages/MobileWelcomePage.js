@@ -192,6 +192,7 @@ useEffect(()=>{
   const populateCategory = (category) => {
    
     dispatch(fetchCategorySubjects(category))
+    dispatch(fetchCategoryPacks(category))
     console.log(`NOW REDIRECTING to ${category}!!!`)
       
     setTimeout(()=>{ navigate('/dashboard/6e')},1000)
