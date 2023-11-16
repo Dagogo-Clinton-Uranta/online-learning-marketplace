@@ -45,7 +45,7 @@ const PaymentOptions = () => {
       url: `https://proxy.momoapi.mtn.com/collection/token`, 
       headers: {
         'Content-Type': 'application/json',
-        'Ocp-Apim-Subscription-key': 'process.env.REACT_APP_SUBSCRIPTION_KEY',
+        'Ocp-Apim-Subscription-key': `${process.env.REACT_APP_SUBSCRIPTION_KEY}`,
       },
     });
 
@@ -76,12 +76,13 @@ const PaymentOptions = () => {
       'Content-Type': 'application/json',
       'Ocp-Apim-Subscription-Key': '5b158c87ce9b495fb64dcac1852d745b',
       'Authorization': 'Basic Nzg1NTgxY2UtYWUxOC00YWRhLTk1MjgtNmRjYjZlMjc4OWU3OjY0MDdiZjU3MjNiMjQwM2U5MzVlNmRiNzhlNjQ4N2Q1',
+      // 'Authorization': `Bearer ${momoToken}`,
     };
        setIsLoading(true);
        axios.post(momoTokenUrl, {}, { withCredentials: true, headers })
         .then(response => {
             const access_token = response.data.access_token;
-            console.log("ACCESS-TOKEN", access_token);
+            console.log("ACCESS-TOKEN RIGHT HERE--->", access_token);
            axios.post(momoRequestToPayUrl, {
             amount: totalPrice,
             currency: 'EUR',
