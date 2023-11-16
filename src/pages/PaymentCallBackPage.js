@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { buyCourse } from 'src/redux/actions/cart.action';
+import { buyCourse, buyCourseUpdateUser } from 'src/redux/actions/cart.action';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -15,9 +15,10 @@ const PaymentCallBackPage = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const cart_data = urlParams.get("cart_data"); 
   if (cart_data) {
-      const cartObject = JSON.parse(cart_data); 
+      const cartObject = JSON.parse(cart_data);// <--- ASK YUSUF LATER... is this an array of ID's ?
       let today = new Date().toLocaleDateString();
       dispatch(buyCourse(cartObject, user.uid, today, navigate));
+      dispatch(buyCourseUpdateUser(cartObject, user.uid, today, navigate));
   }
   setLoading(false);
 }, []);
