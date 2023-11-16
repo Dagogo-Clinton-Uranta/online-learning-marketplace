@@ -16,7 +16,7 @@ const PaymentCallBackPage = () => {
   const cart_data = urlParams.get("cart_data"); 
   if (cart_data) {
       const cartObject = JSON.parse(cart_data);// <--- ASK YUSUF LATER... is this an array of ID's ?
-      const courseIdArray = cartObject.map((item)=>{item.id})
+      const courseIdArray = cartObject.map((item)=>(item.id))
       let today = new Date().toLocaleDateString();
       dispatch(buyCourse(cartObject, user.uid, today, navigate));
       dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
