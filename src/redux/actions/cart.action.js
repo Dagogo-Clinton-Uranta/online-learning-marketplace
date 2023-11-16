@@ -20,7 +20,7 @@ export const saveToCart = (uid) => async (dispatch) => {
  };
 
  
-export const buyCourse = (courses, uid, today, navigate) => async (dispatch) => {
+export const buyCourse = (courses, uid, today, navigate, setLoading) => async (dispatch) => {
   var purchasedCourseRef = db.collection("purchasedCourses");
   purchasedCourseRef.add({
       uid: uid,
@@ -36,6 +36,7 @@ export const buyCourse = (courses, uid, today, navigate) => async (dispatch) => 
     var errorMessage = error.message;
     notifyErrorFxn("Error with Purchasing Course");
     console.log('Error with buying course', errorMessage);
+    setLoading(false);
   });
 }
 
