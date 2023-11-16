@@ -40,6 +40,23 @@ export const buyCourse = (courses, uid, today, navigate, setLoading) => async (d
   });
 }
 
+export const buyCourseUpdateUser = (courses, uid, today, navigate) => async (dispatch) => {
+  var userRef = db.collection("purchasedCourses").doc(uid);
+ userRef.update({
+   purchasedCourses:db.FieldValue.arrayUnion(...courses) //<--- will this array of values spread into individual courses ids , confirm upon testing ?
+ })
+  .then(() => {
+    notifySuccessFxn("Course purchased successfully");
+    dispatch(clearCart());
+    navigate('/dashboard/purchased-courses');
+  })
+  .catch((error) => {
+    var errorMessage = error.message;
+    notifyErrorFxn("Error with Purchasing Course");
+    console.log('Error with buying course', errorMessage);
+  });
+}
+
 export const fetchPurchasedCourse = (uid) => async (dispatch) => {
   var purchasedCoursesRef = db.collection("purchasedCourses");
   purchasedCoursesRef = purchasedCoursesRef.where("uid", "==", uid);

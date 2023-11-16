@@ -51,10 +51,10 @@ function TenePage() {
   const { presentSubject } = useSelector((state) => state.group);
   const { cart } = useSelector((state) => state.cart);
 
-  useEffect(()=>{
+ /* useEffect(()=>{
   fetchPackSubjects(location.state.data)
 
-  },[])
+  },[])*/
 
 
    const oldTopics = [

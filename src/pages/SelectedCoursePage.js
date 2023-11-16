@@ -48,6 +48,7 @@ import db from '../browserDb/db'
 
 import { blobToDataURL,dataURLToBlob,imgSrcToBlob,arrayBufferToBlob } from 'blob-util'
 import { addToCart } from 'src/redux/reducers/cart.slice';
+import NotPlayableSwitch from './NotPlayableSwitch';
 
 
 function SelectedCoursePage() {
@@ -75,7 +76,7 @@ function SelectedCoursePage() {
   
 
   const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
-  console.log("the present SAVED  subject is:",presentSubject)
+  console.log("the present SAVED  subject is-->:",presentSubject)
   console.log("the chapters for this subject are:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
@@ -84,7 +85,7 @@ function SelectedCoursePage() {
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
-  console.log("error is",error)
+  console.log("USER'S PURCHASED COURSES--->",user.purchasedCourses)
   
   useEffect(()=>{
      if(!user){
@@ -210,12 +211,19 @@ const pauseAudio = audio => {
 
  const handleViewPdf = (pdfUrl) => {
 
+  if(/*presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))*/true ===false){
+    notifyInfoFxn('Please purchase course to view document.')
+  }else{
+
+  
   window.open(
     //`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`,
     `${pdfUrl}`,
     'PDF Viewer',
     'width=800,height=600'
   );
+
+  }
 };
 
 
@@ -297,6 +305,11 @@ const URLSound = window.URL || window.webkitURL
 
 
 async function saveCourse(subjectTitle,url,courseName,uid,duration) {
+ 
+  if(/*presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))*/true ==false){
+    notifyInfoFxn('Please purchase course to save media.')
+  }else{
+
   try {
     
     notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
@@ -385,6 +398,10 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
     console.log("error for downloading bonecole is:",error)
 
   }
+
+}
+
+
 }
 
 /*SAVING TO BROWSER DATABASE END */
@@ -538,11 +555,13 @@ const addToCartFxn = () => {
       </Grid>
     </Grid>
    
-    <center>
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center',alignItems:"center",marginBottom:"2rem",marginTop:"2rem",flexDirection:"column",gap:"1rem",border:"1px solid lightgrey",width:"85%",padding:"1rem",borderRadius:"0.5rem"}}>
+   { /* presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid)) &&*/
+   
+   <center>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"2rem",flexDirection:"column",gap:"1rem",border:"1px solid lightgrey",width:"85%",padding:"1rem",borderRadius:"0.5rem"}}>
    
     <center >
-    <b style={{fontSize:"1.2rem"}}> 30,000 GNF</b> <s>50,000 GNF</s>
+    <b style={{fontSize:"1.2rem"}}> {presentSubject && presentSubject.price} GNF</b> <s>50,000 GNF</s>
     </center>
     
     <p >
@@ -558,9 +577,9 @@ const addToCartFxn = () => {
             </Button>
    
     </Grid>
-    </center>
+    </center>}
 
-    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"1rem"}}>
+    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginTop:"2rem",marginBottom:"1rem"}}>
     <center>
     <p style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"0.9rem",borderBottom:"3px solid red",width:"max-content"}}>Curriculum</p>
     </center>
@@ -592,7 +611,16 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 {lesson.duration !== "quiz"?
  (
   <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >{lesson.lessonUrl && lesson.lessonUrl.slice(lesson.lessonUrl.length-3,lesson.lessonUrl.length) ==="mp4"?<VideoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> }     &nbsp; {index + 1}.</p>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >{
+      
+   /*  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))?
+       
+     <NotPlayableSwitch />
+  :*/
+  lesson.lessonUrl && lesson.lessonUrl.slice(lesson.lessonUrl.length-3,lesson.lessonUrl.length) ==="mp4"?<VideoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> 
+  
+  
+  }     &nbsp; {index + 1}.</p>
   <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
   <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(presentSubject.title,/*(index % 2 === 0?"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4":)*/lesson.lessonUrl,lesson.title,lesson.uid,lesson.duration)}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>

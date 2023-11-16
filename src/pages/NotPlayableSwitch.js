@@ -13,7 +13,7 @@ import Modal from '@mui/material/Modal';
 import { findDOMNode } from 'react-dom'
 
 import { blobToDataURL } from 'blob-util'
-import { notifyErrorFxn } from 'src/utils/toast-fxn';
+import { notifyErrorFxn, notifyInfoFxn } from 'src/utils/toast-fxn';
 
 const NotPlayableSwitch = ({audioFile}) => {
 
@@ -185,7 +185,7 @@ aria-describedby="modal-modal-description"
 {/*<audio  ref ={audioRef} src={urlLink} type="audio/mp3"/>*/}
 
 
-<span onClick={()=>{notifyErrorFxn("your downloads will be available in the next iteration")}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
+<span onClick={()=>{notifyInfoFxn("Please purchase this course to play")}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>
 
     </div>
   )
