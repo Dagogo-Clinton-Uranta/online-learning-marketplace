@@ -12,7 +12,7 @@ const PurchasedCourse = () => {
   const modifiedPurchasedCourses = purchasedCourses.reduce((acc, cur) => acc.concat(cur.courses), []);
 
   useEffect(() => {
-    dispatch(fetchPurchasedCourse(user?.uid));
+    dispatch(fetchPurchasedCourse(user?.uid ?? user?.id));
   }, []);
 
   return (

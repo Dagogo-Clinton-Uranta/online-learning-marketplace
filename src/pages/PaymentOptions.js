@@ -21,7 +21,6 @@ const PaymentOptions = () => {
   const { purchasedCourses } = useSelector((state) => state.cart);
   const { cart } = useSelector((state) => state.cart);
   const [isLoading, setIsLoading] = useState(false);
-  const publicKey = '';
   const totalPrice = cart.reduce((acc, item) => {
     const itemPrice = parseFloat(item.price.replace(',', ''));
     return acc + itemPrice;
@@ -38,21 +37,7 @@ const PaymentOptions = () => {
   const momoTokenUrl = '/api/collection/token/';
   const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
 
-/*MOCK API REQUEST FOR GENERATING A USER */
 
-headers: {
-  'X-Reference-Id ': '2079f714-3a79-4db1-bc3a-e0f608b19b15'
-  'Content-Type': 'application/json',
-  'Ocp-Apim-Subscription-key': `${process.env.REACT_APP_SUBSCRIPTION_KEY}`, //'5b7a54a04b134ed3a70418a59660cb25'
- }
-
- in the request body of the post request we will have 
-
- {
-  "providerCallbackHost":"yusuf's url for vercel"
- }
-
-  /*MOCK API REQUEST FOR GENERATING A USER  END*/
 
   const getMomoToken = async () => {
     const token = await axios({
@@ -87,36 +72,34 @@ headers: {
   };
 
   const handleMtnPay = async () => {
-    const headers = {
+    if(!user){
+      notifyErrorFxn("You must me logged in to proceed!");
+      return;
+    }
+     const headers = {
       'Content-Type': 'application/json',
-      'Ocp-Apim-Subscription-Key': '5b158c87ce9b495fb64dcac1852d745b',
-      'Authorization': 'Basic Nzg1NTgxY2UtYWUxOC00YWRhLTk1MjgtNmRjYjZlMjc4OWU3OjY0MDdiZjU3MjNiMjQwM2U5MzVlNmRiNzhlNjQ4N2Q1',
-      // 'Authorization': `Bearer ${momoToken}`,
-    };
+      'Access-Control-Allow-Origin': '*',  
+     };
        setIsLoading(true);
-       axios.post(momoTokenUrl, {}, { withCredentials: true, headers })
+       axios.post(momoTokenUrl, {}, { headers })
         .then(response => {
             const access_token = response.data.access_token;
-            console.log("ACCESS-TOKEN RIGHT HERE--->", access_token);
+            console.log("ACCESS-TOKEN", access_token);
            axios.post(momoRequestToPayUrl, {
             amount: totalPrice,
             currency: 'EUR',
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId: `${uuid.v4()}`, //phone
+              partyId: 46733123454, //phone
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',
+            momoToken: access_token
           }).then((res) => {
-            console.log("Payment request", res);
-            const paymentId = res.data.paymentId;
-            const paymentUrl = momoRequestToPayUrl+paymentId;
-            axios.get(paymentUrl).then((res) => {
               console.log("Payment completed...", res);
               let today = new Date().toLocaleDateString();
-              dispatch(buyCourse(cart, user.uid, today, navigate));
-            })
+              dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
           }).catch((error) => {
             setIsLoading(false);
             console.error('Payment Request Error:', error);
@@ -128,32 +111,6 @@ headers: {
             console.error('Error:', error);
             notifyErrorFxn('Failed to get token');
         });
-
-    // const data = {
-    //   amount: `${totalPrice}`,
-    //   currency: 'GNF',
-    //   externalId: `${uuid.v4()}`,
-    //   payer: {
-    //     partyIdType: 'MSISDN',
-    //     partyId: `${uuid.v4()}` /*<-- phone number of the client */,
-    //   },
-    //   payerMessage: `Payment for courses bought. Total - ${totalPrice}`,
-    //   payeeNote: 'No Notes',
-    // };
-
-    // axios
-    //   .post('https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay', data, {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'X-Reference-Id': `${uuid.v4()}`,
-    //       'X-Callback-Url': 'https://bonecole-student.netlify.app/dashboard/payment-callback',
-    //       'X-Callback-Host': 'https://bonecole-student.netlify.app',
-    //       'Ocp-Apim-Subscription-Key': process.env.REACT_APP_SUBSCRIPTION_KEY,
-    //       'X-Target-Environment': 'production' /*<-- in the tutorials they only ever used sandbox */,
-    //       Authorization: `Bearer ${momoToken}`,
-    //     },
-    //   })
-    //   .then((res) => console.log('RESPONSE FROM MOMO AFTER PAYMENT', res.data));
   };
 
   return (
