@@ -37,12 +37,12 @@ const PaymentOptions = () => {
   //const momoTokenUrl = '/api/collection/token/';
   //const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
 
-  // const momoTokenUrl = 'http://localhost:5001/api/get-token/';
-  //const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+   const momoTokenUrl = 'http://localhost:5001/api/get-token';
+  const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
   
 
-  const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
-  const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+  //const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
+  //const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
 
   const getMomoToken = async () => {
     const token = await axios({

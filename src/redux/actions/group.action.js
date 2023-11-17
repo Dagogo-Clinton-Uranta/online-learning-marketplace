@@ -1024,7 +1024,7 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
      const chaptersArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (chaptersArray.length) {
     
-     console.log(`chapters for  subject ${uid} are:`, chaptersArray);
+     console.log(`chapters for T subject ${uid} are:`, chaptersArray);
      dispatch(saveSubjectChapters(chaptersArray));
      return chaptersArray
    } else {
@@ -1054,6 +1054,25 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
   
  });
  };
+
+
+  /*========== SAVING THE SELECTED SUBJECT FOR WHEN A CARD IS CLICKED===========*/
+  export const fetchCurrentSubjectFromDB = (id) => async (dispatch) => {
+
+   
+      //dispatch(isItLoading(true));
+  db.collection("sections")
+  .doc(id)
+   .get().then((doc)=>{
+   
+    const subject = doc.data(); 
+    dispatch(savePresentSubject(subject))
+   })
+   
+   
+   
+  
+   }
 
 
  /*========== SAVING THE SELECTED SUBJECT FOR WHEN A CARD IS CLICKED===========*/
