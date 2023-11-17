@@ -33,11 +33,16 @@ const PaymentOptions = () => {
   // const momoHost = 'sandbox.momodeveloper.mtn.com';
   // const momoTokenUrl = `https://${momoHost}/collection/token/`;
   // const momoRequestToPayUrl = `https://${momoHost}/collection/v1_0/requesttopay`;
+//
+  //const momoTokenUrl = '/api/collection/token/';
+  //const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
 
-  const momoTokenUrl = '/api/collection/token/';
-  const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
+  // const momoTokenUrl = 'http://localhost:5001/api/get-token/';
+  //const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+  
 
-
+  const momoTokenUrl = 'https://boncole-server-p5adyprwo-nealluslabs-gmailcom.vercel.app/api/get-token'
+  const momoRequestToPayUrl = 'https://boncole-server-p5adyprwo-nealluslabs-gmailcom.vercel.app/api/requesttopay';
 
   const getMomoToken = async () => {
     const token = await axios({
@@ -58,7 +63,7 @@ const PaymentOptions = () => {
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
-    getMomoToken();
+   //getMomoToken();
   }, []);
 
   const handlePcCheckboxChange = () => {
@@ -73,7 +78,7 @@ const PaymentOptions = () => {
 
   const handleMtnPay = async () => {
     if(!user){
-      notifyErrorFxn("You must me logged in to proceed!");
+      notifyErrorFxn("You must be logged in to proceed!");
       return;
     }
      const headers = {
@@ -84,14 +89,14 @@ const PaymentOptions = () => {
        axios.post(momoTokenUrl, {}, { headers })
         .then(response => {
             const access_token = response.data.access_token;
-            console.log("ACCESS-TOKEN", access_token);
+            console.log("ACCESS-TOKEN IS-->", access_token);
            axios.post(momoRequestToPayUrl, {
             amount: totalPrice,
             currency: 'EUR',
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId: 46733123454, //phone
+              partyId: '46733123454', //phone
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',
