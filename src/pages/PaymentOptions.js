@@ -41,13 +41,13 @@ const PaymentOptions = () => {
   //const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
   
 
-  const momoTokenUrl = 'https://boncole-server-p5adyprwo-nealluslabs-gmailcom.vercel.app/api/get-token'
-  const momoRequestToPayUrl = 'https://boncole-server-p5adyprwo-nealluslabs-gmailcom.vercel.app/api/requesttopay';
+  const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
+  const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
 
   const getMomoToken = async () => {
     const token = await axios({
       method: 'post',
-      url: `https://proxy.momoapi.mtn.com/collection/token`, 
+      url: `https://proxy.momoapi.mtn.com/collection/token/`, 
       headers: {
         'Content-Type': 'application/json',
         'Ocp-Apim-Subscription-key': `${process.env.REACT_APP_SUBSCRIPTION_KEY}`,
@@ -113,7 +113,7 @@ const PaymentOptions = () => {
         }).catch(error => {
             // Handle errors
             setIsLoading(false);
-            console.error('Error:', error);
+            console.error('Error: is-->', error);
             notifyErrorFxn('Failed to get token');
         });
   };
