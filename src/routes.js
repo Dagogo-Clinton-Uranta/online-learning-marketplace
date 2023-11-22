@@ -59,7 +59,7 @@ import PaymentTypePage from './pages/PaymentTypePage';
 import LoginDesktopViewPage from './pages/LoginDesktopViewPage';
 import MainPage from './pages/MainPage';
 import CoursePage from './pages/CoursePage';
-import PaymentOptions from './pages/PaymentOptions';
+import PaymentOptions from './pages/PaymentOptionsDag';
 
 export default function Router() {
   const routes = useRoutes([

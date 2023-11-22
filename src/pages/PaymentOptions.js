@@ -113,7 +113,7 @@ const PaymentOptions = () => {
         }).catch(error => {
             // Handle errors
             setIsLoading(false);
-            console.error('Error: is-->', error);
+            console.error(' Overall Error is------->', error);
             notifyErrorFxn('Failed to get token');
         });
   };
