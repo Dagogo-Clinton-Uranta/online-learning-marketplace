@@ -37,33 +37,38 @@ const PaymentOptions = () => {
   //const momoTokenUrl = '/api/collection/token/';
   //const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
 
-  // const momoTokenUrl = 'http://localhost:5001/api/get-token';
-  //const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
   
 
-  const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
-  const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+  
 
-  const getMomoToken = async () => {
-    const token = await axios({
-      method: 'post',
-      url: `https://proxy.momoapi.mtn.com/collection/token/`, 
-      headers: {
-        'Content-Type': 'application/json',
-        'Ocp-Apim-Subscription-key': `${process.env.REACT_APP_SUBSCRIPTION_KEY}`,
-      },
-    });
+ // const getMomoToken = async () => {
+ //   const token = await axios({
+ //     method: 'post',
+ //     url: `https://proxy.momoapi.mtn.com/collection/token/`, 
+ //     headers: {
+ //       'Content-Type': 'application/json',
+ //       'Ocp-Apim-Subscription-key': `${process.env.REACT_APP_SUBSCRIPTION_KEY}`,
+ //     },
+ //   });
+//
+ //   console.log('OUR FETCHED TOKEN IS:', token);
+ //   setMomoToken(token.data.access_token);
+//
+ //   //possible errors, if you do CORS, you may need to set up a server and get the token from there
+ //   // only EUR currency works in sandbox, but we have specified production so..lets see how it goes
 
-    console.log('OUR FETCHED TOKEN IS:', token);
-    setMomoToken(token.data.access_token);
+ // };
 
-    //possible errors, if you do CORS, you may need to set up a server and get the token from there
-    // only EUR currency works in sandbox, but we have specified production so..lets see how it goes
-  };
+
+    const momoTokenUrl = 'http://localhost:5001/api/get-token';
+  const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+
+ // const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
+ // const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
-   //getMomoToken();
+ 
   }, []);
 
   const handlePcCheckboxChange = () => {
