@@ -36,8 +36,33 @@ export const signInWithGoogle = (navigate) => async (dispatch) => {
 
     
     var user = userCredential.user;
-    console.log('Signed In user is: ', user.email);
-    console.log('ALL THE DETAILS THAT COME BACK FROM THE GOOGLE SIGN IN ARE:',userCredential)
+  
+    var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
+    var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
+  
+   console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
+
+
+    db.collection('userData').doc(user.uid).update({
+      uid: user.uid,
+      email: user.email,
+      firstName:firstName,
+      lastName:lastName,
+      
+     
+    })
+ 
+ 
+    db.collection('users').doc(user.uid).update({
+      uid: user.uid,
+      email: user.email,
+      firstName:firstName,
+      lastName:lastName,
+    
+     
+    })
+
+
      dispatch(fetchUserData(user.uid, "sigin", navigate));
 
   }).catch((error) => {
@@ -116,10 +141,17 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
     
  .then((userCredential)=>{
   var user = userCredential.user;
+ // console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
+  var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
+  var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
+
+ console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
   
   db.collection('userData').doc(user.uid).set({
      uid: user.uid,
      email: user.email,
+     firstName:firstName,
+     lastName:lastName,
      registeredOn:new Date(),
     
    })
@@ -128,6 +160,8 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
    db.collection('users').doc(user.uid).set({
      uid: user.uid,
      email: user.email,
+     firstName:firstName,
+     lastName:lastName,
      registeredOn:new Date(),
     
    })

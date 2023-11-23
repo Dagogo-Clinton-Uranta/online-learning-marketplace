@@ -907,7 +907,8 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
       pvExamen:updateObject.pvExamen,
       classOption:updateObject.classes,
       schoolOrigin:updateObject.school,
-      fullName:updateObject.fullName,
+      firstName:updateObject.firstName,
+      lastName:updateObject.lastName,
       facebook:updateObject.facebook,
       uid:uid
     }
@@ -919,7 +920,8 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
         pvExamen:updateObject.pvExamen,
         classOption:updateObject.classes,
         schoolOrigin:updateObject.school,
-        fullName:updateObject.fullName,
+        firstName:updateObject.firstName,
+        lastName:updateObject.lastName,
         facebook:updateObject.facebook,
       }
     )
