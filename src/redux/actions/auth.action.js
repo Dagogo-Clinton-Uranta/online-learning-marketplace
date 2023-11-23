@@ -91,7 +91,8 @@ export const signup = (user,navigate) => async (dispatch) => {
   ).then((res)=>{
      db.collection('userData').doc(res.user.uid).set({
       uid: res.user.uid,
-      fullName: user.fullName,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       password: user.password,
       facebook:user.facebook,
@@ -106,7 +107,8 @@ export const signup = (user,navigate) => async (dispatch) => {
 
     db.collection('users').doc(res.user.uid).set({
       uid: res.user.uid,
-      fullName: user.fullName,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       password: user.password,
       facebook:user.facebook,

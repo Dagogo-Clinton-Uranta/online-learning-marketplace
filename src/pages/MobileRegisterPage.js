@@ -39,7 +39,8 @@ function MobileRegisterPage() {
   const [companySize,setCompanySize] =useState('')
   
   const [email,setEmail] = useState('')
-  const [fullName,setFullName] = useState('')
+  const [firstName,setFirstName] = useState('')
+  const [lastName,setLastName] = useState('')
   const [password,setPassword] = useState('')
  
   const [facebook,setFacebook] = useState('')
@@ -72,7 +73,8 @@ function MobileRegisterPage() {
   const newUser = 
   {
     email,
-    fullName,
+    firstName,
+    lastName,
     password ,
     facebook,
     pvExamen,
@@ -83,7 +85,7 @@ function MobileRegisterPage() {
  
 
   const registerFxn = (user,navigate) =>{
-    if(!email || !fullName || !password ||!facebook ||!pvExamen ||!telephone ||!classOption ||!schoolOrigin ||!classOption ||!schoolOrigin ){
+    if(!email || !firstName || !lastName || !password ||!facebook ||!pvExamen ||!telephone ||!classOption ||!schoolOrigin ||!classOption ||!schoolOrigin ){
       notifyErrorFxn("Please make sure to fill in all fields")
     }else{
       dispatch(signup(user,navigate))
@@ -186,10 +188,21 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
      <TextField
           sx ={{width:"100%"}}
           id="outlined-basic"
-          label="Full name"
+          label="First name"
           type="text"
           autoComplete="full name"
-          onChange={(e)=>{setFullName(e.target.value)}}
+          onChange={(e)=>{setFirstName(e.target.value)}}
+        />
+      </Grid>  
+
+      <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
+     <TextField
+          sx ={{width:"100%"}}
+          id="outlined-basic"
+          label="Last name"
+          type="text"
+          autoComplete="full name"
+          onChange={(e)=>{setLastName(e.target.value)}}
         />
       </Grid>  
 
@@ -228,7 +241,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"75%",height:"3rem",fontSize:"15px",
             }}
-            onClick ={()=>{if(email && fullName && password){
+            onClick ={()=>{if(email && firstName && lastName && password){
               setPage2(true);setPage1(false)
             }
             else{
@@ -273,12 +286,12 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           }}
  onClick={()=>{setPage2(false);setPage1(true)}}>Back</Button>
     
-{fullName &&
+{firstName && lastName &&
 <Grid item xs={12} style={{display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"0rem",paddingBottom:"0px"}}>
 
  <br/> 
  <h1>Bienvenue,</h1>
-<p style={{color:"gray"}}>{fullName}</p>
+<p style={{color:"gray"}}>{firstName + " " + lastName}</p>
 </Grid>
 }
 
