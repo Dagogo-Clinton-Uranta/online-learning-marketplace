@@ -910,6 +910,7 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
       firstName:updateObject.firstName,
       lastName:updateObject.lastName,
       facebook:updateObject.facebook,
+      affiliate:updateObject.affiliate,
       uid:uid
     }
   ).then((snapshot) => {
@@ -923,6 +924,7 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
         firstName:updateObject.firstName,
         lastName:updateObject.lastName,
         facebook:updateObject.facebook,
+        affiliate:updateObject.affiliate,
       }
     )
 
