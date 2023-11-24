@@ -45,6 +45,7 @@ const [school,setSchool] = useState(user && user.schoolOrigin?user.schoolOrigin:
 const [firstName,setFirstName] = useState(user && user.firstName?user.firstName:"")
 const [lastName,setLastName] = useState(user && user.lastName?user.lastName:"")
 const [facebook,setFacebook] = useState(user && user.facebook?user.facebook:"")
+const [affiliate,setAffiliate] = useState(user && user.affiliate?user.affiliate:"")
 
 const updateObject = {
   telephone,
@@ -54,6 +55,7 @@ const updateObject = {
   firstName,
   lastName,
   facebook,
+  affiliate
 }
 
 
@@ -181,6 +183,19 @@ const updateObject = {
         />
         </Grid>
 
+
+        <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+        <TextField
+        fullWidth
+        placeholder=" "
+        variant="outlined"
+        multiline
+        maxRows={2}
+        value={affiliate}
+        onChange = {(e)=>{setAffiliate(e.target.value)}}
+        label= "Affiliate"
+        />
+        </Grid>
 
         <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
         <TextField

@@ -96,6 +96,7 @@ export const signup = (user,navigate) => async (dispatch) => {
       email: user.email,
       password: user.password,
       facebook:user.facebook,
+      affiliate:user.affiliate,
       pvExamen:user.pvExamen,
       telephone:user.telephone,
       classOption:user.classOption,
@@ -112,6 +113,7 @@ export const signup = (user,navigate) => async (dispatch) => {
       email: user.email,
       password: user.password,
       facebook:user.facebook,
+      affiliate:user.affiliate,
       pvExamen:user.pvExamen,
       telephone:user.telephone,
       classOption:user.classOption,
@@ -155,6 +157,15 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
      firstName:firstName,
      lastName:lastName,
      registeredOn:new Date(),
+     password: '',
+      facebook:'',
+      affiliate:'',
+      pvExamen:'',
+      telephone:'',
+      classOption:'',
+      schoolOrigin:'',
+      
+     
     
    })
 

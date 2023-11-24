@@ -44,6 +44,7 @@ function MobileRegisterPage() {
   const [password,setPassword] = useState('')
  
   const [facebook,setFacebook] = useState('')
+  const [affiliate,setAffiliate] = useState('')
  const [pvExamen,setPvExamen] = useState('')
  const [classOption,setClassOption] = useState('')
  const [telephone,setTelephone] = useState('')
@@ -77,6 +78,7 @@ function MobileRegisterPage() {
     lastName,
     password ,
     facebook,
+    affiliate,
     pvExamen,
     telephone,
     classOption,
@@ -85,7 +87,7 @@ function MobileRegisterPage() {
  
 
   const registerFxn = (user,navigate) =>{
-    if(!email || !firstName || !lastName || !password ||!facebook ||!pvExamen ||!telephone ||!classOption ||!schoolOrigin ||!classOption ||!schoolOrigin ){
+    if(!email || !firstName || !lastName || !password ||!facebook|| !affiliate  ||!pvExamen ||!telephone ||!classOption ||!schoolOrigin ||!classOption ||!schoolOrigin ){
       notifyErrorFxn("Please make sure to fill in all fields")
     }else{
       dispatch(signup(user,navigate))
@@ -367,6 +369,22 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     label= "Facebook"
     value={facebook}
     onChange={(e)=>{setFacebook(e.target.value)}}
+    />
+    </Grid>
+
+
+
+    <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+    <TextField
+    fullWidth
+    placeholder=" "
+    variant="outlined"
+    multiline
+    maxRows={2}
+    //onChange = {(e)=>{setConfirmPassword(e.target.value)}}
+    label= "Affiliate"
+    value={affiliate}
+    onChange={(e)=>{setAffiliate(e.target.value)}}
     />
     </Grid>
 
