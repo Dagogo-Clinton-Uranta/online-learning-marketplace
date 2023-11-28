@@ -1,5 +1,6 @@
-import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
+import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box, InputLabel} from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import Select from '@mui/material/Select';
 
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
@@ -22,9 +23,67 @@ import users from 'src/_mock/user';
 import profileImg from 'src/assets/images/randomwoman2.jpg'
 
 import {FaCaretDown} from 'react-icons/fa'
+import { MenuItem } from 'material-ui';
+import { makeStyles } from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '4rem',
+    paddingRight: '4rem',
+    color:"black"
+  },
+  searchInput: {
+    background: '#FFFFFF',
+   
+    border: '1px solid #00000026',
+    padding: '10px',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    // marginRight: theme.spacing(2),
+    width: '100%',
+    minWidth: '100%',
+    '& .MuiInputBase-input': {
+      color: 'grey',
+    },
+    '& .MuiInputBase-input::placeholder': {
+      color: 'grey',
+    },
+    '& .MuiInput-underline:before': {
+      borderBottomColor: 'grey',
+    },
+    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+      borderBottomColor: 'grey',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'grey',
+    },
+  },
+
+  select: {
+    '&:before': {
+        borderColor: "black",
+    },
+    '&:after': {
+        borderColor: "black",
+    }
+  },
+  icon: {
+    fill: "black",
+}
+
+
+
+}));
+
 
 
 function MobileRegisterPage() {
+
+  const classes = useStyles()
+
   const navigate = useNavigate();
   const [file, setFile] = useState();
   const [file2, setFile2] = useState();
@@ -404,20 +463,54 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
     <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+    
     <TextField
     fullWidth
-    placeholder=" "
+    placeholder="e.g 6eme Annee, 10eme Annee,Terminales"
     variant="outlined"
     multiline
-    maxRows={2}
+    maxRows={1}
+    sx={{height:"32px",fontSize:"0.5rem"}}
     value={classOption}
-    onChange={(e)=>{setClassOption(e.target.value)}}
+    onChange={(event) => {
+      setClassOption(event.target.value);
+    }}
     label= "Classe et option"
-    />
+      />
+
+
+{/*<Select
+          style={{backgroundColor:"#FFFFFF",borderRadius:"0.1rem",width:"100%"}}
+         inputProps={{
+          classes: {
+              icon: classes.icon,
+          },
+      }}
+        
+          labelId="hi-label"
+          id="hi"
+          value={classOption}
+          label="Classe et option"
+          onChange={(event) => {
+            setClassOption(event.target.value);
+          }}
+        >
+       
+      
+  <MenuItem  value={"6eme Annee"}>6eme Annee</MenuItem>
+  <MenuItem   value={"10eme Annee"}>10eme Annee</MenuItem>
+  <MenuItem   value={"Terminales"}>Terminales</MenuItem>
+
+       
+        </Select>*/}
+
+       
+
+
     </Grid>
 
 
-    <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+    <Grid item xs={12} spacing={2} style={{marginTop:"2rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
     <TextField
     fullWidth
     placeholder=" "

@@ -162,7 +162,7 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
       affiliate:'',
       pvExamen:'',
       telephone:'',
-      classOption:'',
+      classOption:'6eme Annee',
       schoolOrigin:'',
       
      
@@ -176,6 +176,13 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
      firstName:firstName,
      lastName:lastName,
      registeredOn:new Date(),
+     password: '',
+      facebook:'',
+      affiliate:'',
+      pvExamen:'',
+      telephone:'',
+      classOption:'6eme Annee',
+      schoolOrigin:'',
     
    })
    
