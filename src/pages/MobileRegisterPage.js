@@ -441,7 +441,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     multiline
     maxRows={2}
     //onChange = {(e)=>{setConfirmPassword(e.target.value)}}
-    label= "Affiliate"
+    label= "Identifiant Affilié"
     value={affiliate}
     onChange={(e)=>{setAffiliate(e.target.value)}}
     />
