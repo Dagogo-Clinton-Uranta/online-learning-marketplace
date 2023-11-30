@@ -60,11 +60,11 @@ console.log("OUR USER DEETS---->",user)
  // };
 
 
-  const momoTokenUrl = 'http://localhost:5001/api/get-token';
-  const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
-
-// const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
-// const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+ // const momoTokenUrl = 'http://localhost:5001/api/get-token';
+ // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+//
+ const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
+ const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
@@ -113,9 +113,15 @@ console.log("OUR USER DEETS---->",user)
             payeeNote: 'Payment for order',
             momoToken: access_token
           }).then((res) => {
-              console.log("Payment completed...", res);
+              console.log("Payment completed...--->", res.data);
               let today = new Date().toLocaleDateString();
+
+            if(res.data && res.data.status === "SUCCESS"){
               dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
+              }else{
+
+                if(res.data && res.data.reason){notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)}
+              }
           }).catch((error) => {
             setIsLoading(false);
             console.error('Payment Request Error:', error);
