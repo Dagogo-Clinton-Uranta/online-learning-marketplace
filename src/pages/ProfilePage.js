@@ -38,7 +38,7 @@ useEffect(()=>{
 },[])
 
 
-const [telephone,setTelephone] = useState(user && user.telephone?user.telephone:"")
+const [telephone,setTelephone] = useState(user && user.telephone?user.telephone:(user && user.phone?user.phone:""))
 const [pvExamen,setPvExamen] = useState(user && user.pvExamen?user.pvExamen:"")
 const [classes,setClasses] = useState(user && user.classOption?user.classOption:"")
 const [school,setSchool] = useState(user && user.schoolOrigin?user.schoolOrigin:"")
@@ -193,7 +193,7 @@ const updateObject = {
         maxRows={2}
         value={affiliate}
         onChange = {(e)=>{setAffiliate(e.target.value)}}
-        label= "Affiliate"
+        label= "Identifiant Affilié"
         />
         </Grid>
 

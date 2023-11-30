@@ -22,7 +22,10 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
 
 
 
+
+
 import firebase from "firebase/app";
+import { fetchUserData } from './auth.action';
 
 
 let globalLessonsArray = []
@@ -904,6 +907,7 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
   db.collection("users").doc(uid).update(
     {
       telephone:updateObject.telephone,
+      phone:updateObject.telephone,
       pvExamen:updateObject.pvExamen,
       classOption:updateObject.classes,
       schoolOrigin:updateObject.school,
@@ -918,6 +922,7 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
     db.collection("userData").doc(uid).update(
       {
         telephone:updateObject.telephone,
+        phone:updateObject.telephone,
         pvExamen:updateObject.pvExamen,
         classOption:updateObject.classes,
         schoolOrigin:updateObject.school,
@@ -930,7 +935,9 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
 
  }).then((snapshot) => {
   //const publicGroups = snapshot.docs.map((doc) => ({ ...doc.data() }));
- dispatch(markRegisteredWithSocials(false))
+   dispatch(fetchUserData(uid))
+ 
+  dispatch(markRegisteredWithSocials(false))
   notifySuccessFxn("updated your Profile successfully")
   navigate('/dashboard/home')
 })

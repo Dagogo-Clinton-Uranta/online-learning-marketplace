@@ -27,7 +27,7 @@ const PaymentOptions = () => {
   }, 0);
 
 
-
+console.log("OUR USER DEETS---->",user)
 
 
   // const momoHost = 'sandbox.momodeveloper.mtn.com';
@@ -60,11 +60,11 @@ const PaymentOptions = () => {
  // };
 
 
- // const momoTokenUrl = 'http://localhost:5001/api/get-token';
- // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+  const momoTokenUrl = 'http://localhost:5001/api/get-token';
+  const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
 
- const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
- const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+// const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
+// const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
@@ -86,6 +86,12 @@ const PaymentOptions = () => {
       notifyErrorFxn("You must be logged in to proceed!");
       return;
     }
+
+
+     if(user && !user.phone){
+      notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
+      return;
+    }
      const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',  
@@ -97,11 +103,11 @@ const PaymentOptions = () => {
             console.log("ACCESS-TOKEN IS-->", access_token);
            axios.post(momoRequestToPayUrl, {
             amount: totalPrice,
-            currency: 'EUR',
+            currency: 'GNF',
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId: '46733123454', //phone
+              partyId: `${user && user.phone?user.phone:null}`, //phone 08106091838
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',
