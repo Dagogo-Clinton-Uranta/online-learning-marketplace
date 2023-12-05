@@ -115,7 +115,7 @@ console.log("OUR USER DEETS---->",user)
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId: `${user && user.phone?user.phone:null}`, //phone 08106091838
+              partyId: `${user && user.phone?(user.phone).toString():null}`, //phone 08106091838
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',
@@ -124,7 +124,7 @@ console.log("OUR USER DEETS---->",user)
               console.log("Payment completed...--->", res.data);
               let today = new Date().toLocaleDateString();
 
-            if(res.data && res.data.status === "SUCCESS"){
+            if(res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILURE"){
               dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
               }else{
 
