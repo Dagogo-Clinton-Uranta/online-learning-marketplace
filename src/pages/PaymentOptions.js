@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { buyCourse } from 'src/redux/actions/cart.action';
 import MTNLOGO from '../assets/images/MTN-logo.png';
 import PAYCARDLOGO from '../assets/images/paycard-logo.png';
+import ORANGELOGO from '../assets/images/orange-logo.png';
 import LockIcon from '@mui/icons-material/Lock';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import axios from 'axios';
@@ -14,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 const PaymentOptions = () => {
   const [pcChecked, setPcChecked] = useState(false);
   const [mtnChecked, setMtnChecked] = useState(false);
+  const [orangeChecked, setOrangeChecked] = useState(false);
   const [momoToken, setMomoToken] = useState(null);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -31,6 +33,11 @@ const momoTokenUrl = 'http://localhost:5001/api/get-token';
 const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
 
 
+  const handleOrangeCheckBox = () => {
+    setOrangeChecked(true);
+    setMtnChecked(false);
+    setPcChecked(false);
+  };
   const handlePcCheckboxChange = () => {
     setPcChecked(true);
     setMtnChecked(false);
@@ -164,6 +171,29 @@ const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
               </Grid>
               <Grid item style={{ marginLeft: '25%' }}>
                 <img src={PAYCARDLOGO} alt="PayCard Logo" style={{}} />
+              </Grid>
+            </Grid>
+          </Paper>
+          <br />
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 140,
+              width: 390,
+              border: '1px solid black',
+              justifyContent: 'center',
+              alignItems: 'center',
+              background: '#D85E01D1'
+            }}
+          >
+            <Grid container justifyContent="flex-start" alignItems="center">
+              <Grid item>
+                <Checkbox checked={orangeChecked} onChange={handleOrangeCheckBox} />
+              </Grid>
+              <Grid item style={{ marginLeft: '25%' }}>
+                <img src={ORANGELOGO} alt="Orange Logo" style={{}} />
               </Grid>
             </Grid>
           </Paper>
