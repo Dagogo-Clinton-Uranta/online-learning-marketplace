@@ -244,7 +244,7 @@ console.log("OUR USER DEETS---->",user)
               <Grid item>
                 <Checkbox checked={orangeChecked} onChange={handleOrangeCheckBox} />
               </Grid>
-              <Grid item style={{ marginLeft: '25%' }}>
+              <Grid item style={{ marginLeft: '15%' }}>
                 <img src={ORANGELOGO} alt="Orange Logo" style={{}} />
               </Grid>
             </Grid>
