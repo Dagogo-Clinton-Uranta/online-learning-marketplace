@@ -60,11 +60,12 @@ console.log("OUR USER DEETS---->",user)
  // };
 
 
- // const momoTokenUrl = 'http://localhost:5001/api/get-token';
- // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
-//
- const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
- const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+  const momoTokenUrl = 'http://localhost:5001/api/get-token';
+  const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+
+
+ //const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
+ //const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
