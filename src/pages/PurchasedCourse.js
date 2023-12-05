@@ -3,17 +3,35 @@ import { Container, Grid, TextField, Typography, IconButton, Button } from '@mui
 import { ArrowForward, Cancel } from '@material-ui/icons';
 import { fetchPurchasedCourse } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchCurrentSubjectFromDB, fetchSubjectChapters } from 'src/redux/actions/group.action';
+import { useNavigate } from 'react-router-dom';
 
 const PurchasedCourse = () => {
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate()
   const { purchasedCourses } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  console.log("purchased courses",purchasedCourses)
+
+  const [loading,setLoading] = useState(false)
 
   const modifiedPurchasedCourses = purchasedCourses.reduce((acc, cur) => acc.concat(cur.courses), []);
+
+  console.log("MODIFIED purchased courses-->",modifiedPurchasedCourses)
+
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid ?? user?.id));
   }, []);
+
+
+  const fetchChapters =(subjectId) =>{
+     console.log('THE ID I GOT IS---->',subjectId)
+    dispatch(fetchSubjectChapters(subjectId))
+    dispatch(fetchCurrentSubjectFromDB(subjectId))
+
+    setTimeout(()=>{( navigate('/dashboard/selected-course'))},2500)
+  }
 
   return (
     <Container
@@ -60,7 +78,9 @@ const PurchasedCourse = () => {
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <IconButton>
-                  <ArrowForward />
+                  {loading?<p style={{fontSize:"12px"}}>loading...</p>:
+                  <ArrowForward  onClick={()=>{fetchChapters(item.id)}}/>
+                  }
                 </IconButton>
               </div>
             </div>

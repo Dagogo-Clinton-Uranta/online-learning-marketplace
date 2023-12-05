@@ -132,8 +132,8 @@ export default function Router() {
     },
 
     {
-      path: 'regTest',
-      element:/* <Login />*/<RegisterUpdatedPage/>,
+      path: 'register',
+      element:/* <Login />*/<MobileRegisterPage/>,
     },
 
    

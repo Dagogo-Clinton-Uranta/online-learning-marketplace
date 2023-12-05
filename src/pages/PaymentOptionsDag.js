@@ -46,7 +46,7 @@ const PaymentOptions = () => {
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
-    getMomoToken()
+    //getMomoToken()
   }, []);
 
   const handlePcCheckboxChange = () => {

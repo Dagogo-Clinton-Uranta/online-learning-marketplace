@@ -1,5 +1,6 @@
-import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
+import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box, InputLabel} from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import Select from '@mui/material/Select';
 
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
@@ -22,9 +23,67 @@ import users from 'src/_mock/user';
 import profileImg from 'src/assets/images/randomwoman2.jpg'
 
 import {FaCaretDown} from 'react-icons/fa'
+import { MenuItem } from 'material-ui';
+import { makeStyles } from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '4rem',
+    paddingRight: '4rem',
+    color:"black"
+  },
+  searchInput: {
+    background: '#FFFFFF',
+   
+    border: '1px solid #00000026',
+    padding: '10px',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    // marginRight: theme.spacing(2),
+    width: '100%',
+    minWidth: '100%',
+    '& .MuiInputBase-input': {
+      color: 'grey',
+    },
+    '& .MuiInputBase-input::placeholder': {
+      color: 'grey',
+    },
+    '& .MuiInput-underline:before': {
+      borderBottomColor: 'grey',
+    },
+    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+      borderBottomColor: 'grey',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'grey',
+    },
+  },
+
+  select: {
+    '&:before': {
+        borderColor: "black",
+    },
+    '&:after': {
+        borderColor: "black",
+    }
+  },
+  icon: {
+    fill: "black",
+}
+
+
+
+}));
+
 
 
 function MobileRegisterPage() {
+
+  const classes = useStyles()
+
   const navigate = useNavigate();
   const [file, setFile] = useState();
   const [file2, setFile2] = useState();
@@ -39,10 +98,12 @@ function MobileRegisterPage() {
   const [companySize,setCompanySize] =useState('')
   
   const [email,setEmail] = useState('')
-  const [fullName,setFullName] = useState('')
+  const [firstName,setFirstName] = useState('')
+  const [lastName,setLastName] = useState('')
   const [password,setPassword] = useState('')
  
   const [facebook,setFacebook] = useState('')
+  const [affiliate,setAffiliate] = useState('')
  const [pvExamen,setPvExamen] = useState('')
  const [classOption,setClassOption] = useState('')
  const [telephone,setTelephone] = useState('')
@@ -72,9 +133,11 @@ function MobileRegisterPage() {
   const newUser = 
   {
     email,
-    fullName,
+    firstName,
+    lastName,
     password ,
     facebook,
+    affiliate,
     pvExamen,
     telephone,
     classOption,
@@ -83,7 +146,7 @@ function MobileRegisterPage() {
  
 
   const registerFxn = (user,navigate) =>{
-    if(!email || !fullName || !password ||!facebook ||!pvExamen ||!telephone ||!classOption ||!schoolOrigin ||!classOption ||!schoolOrigin ){
+    if(!email || !firstName || !lastName || !password ||!facebook|| !affiliate  ||!pvExamen ||!telephone ||!classOption ||!schoolOrigin ||!classOption ||!schoolOrigin ){
       notifyErrorFxn("Please make sure to fill in all fields")
     }else{
       dispatch(signup(user,navigate))
@@ -186,10 +249,21 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
      <TextField
           sx ={{width:"100%"}}
           id="outlined-basic"
-          label="Full name"
+          label="First name"
           type="text"
           autoComplete="full name"
-          onChange={(e)=>{setFullName(e.target.value)}}
+          onChange={(e)=>{setFirstName(e.target.value)}}
+        />
+      </Grid>  
+
+      <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
+     <TextField
+          sx ={{width:"100%"}}
+          id="outlined-basic"
+          label="Last name"
+          type="text"
+          autoComplete="full name"
+          onChange={(e)=>{setLastName(e.target.value)}}
         />
       </Grid>  
 
@@ -228,7 +302,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"75%",height:"3rem",fontSize:"15px",
             }}
-            onClick ={()=>{if(email && fullName && password){
+            onClick ={()=>{if(email && firstName && lastName && password){
               setPage2(true);setPage1(false)
             }
             else{
@@ -273,12 +347,12 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           }}
  onClick={()=>{setPage2(false);setPage1(true)}}>Back</Button>
     
-{fullName &&
+{firstName && lastName &&
 <Grid item xs={12} style={{display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"0rem",paddingBottom:"0px"}}>
 
  <br/> 
  <h1>Bienvenue,</h1>
-<p style={{color:"gray"}}>{fullName}</p>
+<p style={{color:"gray"}}>{firstName + " " + lastName}</p>
 </Grid>
 }
 
@@ -358,6 +432,22 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
 
 
+
+    <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+    <TextField
+    fullWidth
+    placeholder=" "
+    variant="outlined"
+    multiline
+    maxRows={2}
+    //onChange = {(e)=>{setConfirmPassword(e.target.value)}}
+    label= "Identifiant Affilié"
+    value={affiliate}
+    onChange={(e)=>{setAffiliate(e.target.value)}}
+    />
+    </Grid>
+
+
     <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
     <TextField
     fullWidth
@@ -373,20 +463,54 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
     <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+    
     <TextField
     fullWidth
-    placeholder=" "
+    placeholder="e.g 6eme Annee, 10eme Annee,Terminales"
     variant="outlined"
     multiline
-    maxRows={2}
+    maxRows={1}
+    sx={{height:"32px",fontSize:"0.5rem"}}
     value={classOption}
-    onChange={(e)=>{setClassOption(e.target.value)}}
+    onChange={(event) => {
+      setClassOption(event.target.value);
+    }}
     label= "Classe et option"
-    />
+      />
+
+
+{/*<Select
+          style={{backgroundColor:"#FFFFFF",borderRadius:"0.1rem",width:"100%"}}
+         inputProps={{
+          classes: {
+              icon: classes.icon,
+          },
+      }}
+        
+          labelId="hi-label"
+          id="hi"
+          value={classOption}
+          label="Classe et option"
+          onChange={(event) => {
+            setClassOption(event.target.value);
+          }}
+        >
+       
+      
+  <MenuItem  value={"6eme Annee"}>6eme Annee</MenuItem>
+  <MenuItem   value={"10eme Annee"}>10eme Annee</MenuItem>
+  <MenuItem   value={"Terminales"}>Terminales</MenuItem>
+
+       
+        </Select>*/}
+
+       
+
+
     </Grid>
 
 
-    <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+    <Grid item xs={12} spacing={2} style={{marginTop:"2rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
     <TextField
     fullWidth
     placeholder=" "

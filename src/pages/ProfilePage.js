@@ -38,20 +38,24 @@ useEffect(()=>{
 },[])
 
 
-const [telephone,setTelephone] = useState(user && user.telephone?user.telephone:"")
+const [telephone,setTelephone] = useState(user && user.telephone?user.telephone:(user && user.phone?user.phone:""))
 const [pvExamen,setPvExamen] = useState(user && user.pvExamen?user.pvExamen:"")
 const [classes,setClasses] = useState(user && user.classOption?user.classOption:"")
 const [school,setSchool] = useState(user && user.schoolOrigin?user.schoolOrigin:"")
-const [fullName,setFullName] = useState(user && user.fullName?user.fullName:"")
-const [facebook,setFacebook] = useState(user && user.fullName?user.fullName:"")
+const [firstName,setFirstName] = useState(user && user.firstName?user.firstName:"")
+const [lastName,setLastName] = useState(user && user.lastName?user.lastName:"")
+const [facebook,setFacebook] = useState(user && user.facebook?user.facebook:"")
+const [affiliate,setAffiliate] = useState(user && user.affiliate?user.affiliate:"")
 
 const updateObject = {
   telephone,
   pvExamen,
   classes,
   school,
-  fullName,
+  firstName,
+  lastName,
   facebook,
+  affiliate
 }
 
 
@@ -67,7 +71,7 @@ const updateObject = {
    
      <br/> 
      <h1>Bienvenue,</h1>
-    {user && user.fullName && user.fullName.length > 0 && <p style={{color:"gray"}}>{user.fullName}</p>}
+    {user && user.firstName && user.firstName.length > 0 && user.lastName && user.lastName.length > 0 &&  <p style={{color:"gray"}}>{user.firstName + " " + user.lastName }</p>}
 
   
    { registeredWithSocials &&
@@ -102,9 +106,23 @@ const updateObject = {
         variant="outlined"
         multiline
         maxRows={2}
-        value={fullName}
-        onChange = {(e)=>{setFullName(e.target.value)}}
+        value={firstName}
+        onChange = {(e)=>{setFirstName(e.target.value)}}
         label= "NOM"
+        />
+        </Grid>
+
+
+        <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+        <TextField
+        fullWidth
+        placeholder=""
+        variant="outlined"
+        multiline
+        maxRows={2}
+        value={lastName}
+        onChange = {(e)=>{setLastName(e.target.value)}}
+        label= "NOM DE FAMILLE"
         />
         </Grid>
 
@@ -165,6 +183,19 @@ const updateObject = {
         />
         </Grid>
 
+
+        <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+        <TextField
+        fullWidth
+        placeholder=" "
+        variant="outlined"
+        multiline
+        maxRows={2}
+        value={affiliate}
+        onChange = {(e)=>{setAffiliate(e.target.value)}}
+        label= "Identifiant Affilié"
+        />
+        </Grid>
 
         <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
         <TextField

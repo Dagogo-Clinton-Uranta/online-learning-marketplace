@@ -22,7 +22,10 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
 
 
 
+
+
 import firebase from "firebase/app";
+import { fetchUserData } from './auth.action';
 
 
 let globalLessonsArray = []
@@ -904,11 +907,14 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
   db.collection("users").doc(uid).update(
     {
       telephone:updateObject.telephone,
+      phone:updateObject.telephone,
       pvExamen:updateObject.pvExamen,
       classOption:updateObject.classes,
       schoolOrigin:updateObject.school,
-      fullName:updateObject.fullName,
+      firstName:updateObject.firstName,
+      lastName:updateObject.lastName,
       facebook:updateObject.facebook,
+      affiliate:updateObject.affiliate,
       uid:uid
     }
   ).then((snapshot) => {
@@ -916,17 +922,22 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
     db.collection("userData").doc(uid).update(
       {
         telephone:updateObject.telephone,
+        phone:updateObject.telephone,
         pvExamen:updateObject.pvExamen,
         classOption:updateObject.classes,
         schoolOrigin:updateObject.school,
-        fullName:updateObject.fullName,
+        firstName:updateObject.firstName,
+        lastName:updateObject.lastName,
         facebook:updateObject.facebook,
+        affiliate:updateObject.affiliate,
       }
     )
 
  }).then((snapshot) => {
   //const publicGroups = snapshot.docs.map((doc) => ({ ...doc.data() }));
- dispatch(markRegisteredWithSocials(false))
+   dispatch(fetchUserData(uid))
+ 
+  dispatch(markRegisteredWithSocials(false))
   notifySuccessFxn("updated your Profile successfully")
   navigate('/dashboard/home')
 })
@@ -1024,7 +1035,7 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
      const chaptersArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (chaptersArray.length) {
     
-     console.log(`chapters for  subject ${uid} are:`, chaptersArray);
+     console.log(`chapters for T subject ${uid} are:`, chaptersArray);
      dispatch(saveSubjectChapters(chaptersArray));
      return chaptersArray
    } else {
@@ -1054,6 +1065,25 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
   
  });
  };
+
+
+  /*========== SAVING THE SELECTED SUBJECT FOR WHEN A CARD IS CLICKED===========*/
+  export const fetchCurrentSubjectFromDB = (id) => async (dispatch) => {
+
+   
+      //dispatch(isItLoading(true));
+  db.collection("sections")
+  .doc(id)
+   .get().then((doc)=>{
+   
+    const subject = doc.data(); 
+    dispatch(savePresentSubject(subject))
+   })
+   
+   
+   
+  
+   }
 
 
  /*========== SAVING THE SELECTED SUBJECT FOR WHEN A CARD IS CLICKED===========*/

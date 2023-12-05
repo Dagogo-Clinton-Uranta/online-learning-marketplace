@@ -29,8 +29,7 @@ const PaymentOptions = () => {
   }, 0);
 
 
-const momoTokenUrl = 'http://localhost:5001/api/get-token';
-const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+console.log("OUR USER DEETS---->",user)
 
 
   const handleOrangeCheckBox = () => {
@@ -38,6 +37,47 @@ const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
     setMtnChecked(false);
     setPcChecked(false);
   };
+  // const momoHost = 'sandbox.momodeveloper.mtn.com';
+  // const momoTokenUrl = `https://${momoHost}/collection/token/`;
+  // const momoRequestToPayUrl = `https://${momoHost}/collection/v1_0/requesttopay`;
+//
+  //const momoTokenUrl = '/api/collection/token/';
+  //const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
+
+  
+
+  
+
+ // const getMomoToken = async () => {
+ //   const token = await axios({
+ //     method: 'post',
+ //     url: `https://proxy.momoapi.mtn.com/collection/token/`, 
+ //     headers: {
+ //       'Content-Type': 'application/json',
+ //       'Ocp-Apim-Subscription-key': `${process.env.REACT_APP_SUBSCRIPTION_KEY}`,
+ //     },
+ //   });
+//
+ //   console.log('OUR FETCHED TOKEN IS:', token);
+ //   setMomoToken(token.data.access_token);
+//
+ //   //possible errors, if you do CORS, you may need to set up a server and get the token from there
+ //   // only EUR currency works in sandbox, but we have specified production so..lets see how it goes
+
+ // };
+
+
+ // const momoTokenUrl = 'http://localhost:5001/api/get-token';
+ // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+//
+ const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
+ const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+
+  useEffect(() => {
+    dispatch(fetchPurchasedCourse(user?.uid));
+ 
+  }, []);
+
   const handlePcCheckboxChange = () => {
     setPcChecked(true);
     setMtnChecked(false);
@@ -50,7 +90,13 @@ const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
 
   const handleMtnPay = async () => {
     if(!user){
-      notifyErrorFxn("You must me logged in to proceed!");
+      notifyErrorFxn("You must be logged in to proceed!");
+      return;
+    }
+
+
+     if(user && !user.phone){
+      notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
       return;
     }
      const headers = {
@@ -61,22 +107,28 @@ const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
        axios.post(momoTokenUrl, {}, { headers })
         .then(response => {
             const access_token = response.data.access_token;
-            console.log("ACCESS-TOKEN", access_token);
+            console.log("ACCESS-TOKEN IS-->", access_token);
            axios.post(momoRequestToPayUrl, {
             amount: totalPrice,
-            currency: 'EUR',
+            currency: 'GNF',
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId: 46733123454, //phone
+              partyId: `${user && user.phone?user.phone:null}`, //phone 08106091838
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',
             momoToken: access_token
           }).then((res) => {
-              console.log("Payment completed...", res);
+              console.log("Payment completed...--->", res.data);
               let today = new Date().toLocaleDateString();
+
+            if(res.data && res.data.status === "SUCCESS"){
               dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
+              }else{
+
+                if(res.data && res.data.reason){notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)}
+              }
           }).catch((error) => {
             setIsLoading(false);
             console.error('Payment Request Error:', error);
@@ -85,7 +137,7 @@ const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
         }).catch(error => {
             // Handle errors
             setIsLoading(false);
-            console.error('Error:', error);
+            console.error(' Overall Error is------->', error);
             notifyErrorFxn('Failed to get token');
         });
   };
