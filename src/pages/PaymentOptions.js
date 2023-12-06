@@ -124,7 +124,7 @@ console.log("OUR USER DEETS---->",user)
               console.log("Payment completed...--->", res.data);
               let today = new Date().toLocaleDateString();
 
-            if(res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILURE"|| res.data && res.data.status === "SUCCESSFUL"){
+            if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILURE"||*/ res.data && res.data.status === "SUCCESSFUL"){
               dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
               }else{
 
