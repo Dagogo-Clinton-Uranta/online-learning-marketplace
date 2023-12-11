@@ -142,7 +142,7 @@ const PaymentOptions = () => {
                 window.open(res.data.payment_url, '_blank');
               }else{
                 console.log("Res", res);
-                notifyErrorFxn("An error occured!");
+                notifyErrorFxn("An error occured!");  
               }
           }).catch((error) => {
             setIsLoading(false);
