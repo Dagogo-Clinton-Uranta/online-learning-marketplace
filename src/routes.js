@@ -60,6 +60,7 @@ import LoginDesktopViewPage from './pages/LoginDesktopViewPage';
 import MainPage from './pages/MainPage';
 import CoursePage from './pages/CoursePage';
 import PaymentOptions from './pages/PaymentOptions';
+import PaymentCallBackPageOM from './pages/PaymentCallBackOM';
 
 export default function Router() {
   const routes = useRoutes([
@@ -88,6 +89,7 @@ export default function Router() {
         { path: 'saved-courses', element: <SavedCoursesPage /> },
         { path: 'my-cart', element: <MyCartPage /> },
         { path: 'payment-callback', element: <PaymentCallBackPage /> },
+        { path: 'payment-callback2', element: <PaymentCallBackPageOM /> },
         { path: 'payment-method', element: <PaymentTypePage /> },
         { path: 'purchased-courses', element: <PurchasedCourse /> },
         { path: 'payment-options', element: <PaymentOptions /> },

@@ -28,50 +28,22 @@ const PaymentOptions = () => {
     return acc + itemPrice;
   }, 0);
 
-
-console.log("OUR USER DEETS---->",user)
-
-
   const handleOrangeCheckBox = () => {
     setOrangeChecked(true);
     setMtnChecked(false);
     setPcChecked(false);
   };
-  // const momoHost = 'sandbox.momodeveloper.mtn.com';
-  // const momoTokenUrl = `https://${momoHost}/collection/token/`;
-  // const momoRequestToPayUrl = `https://${momoHost}/collection/v1_0/requesttopay`;
-//
-  //const momoTokenUrl = '/api/collection/token/';
-  //const momoRequestToPayUrl = '/api/collection/v1_0/requesttopay';
-
-  
-
-  
-
- // const getMomoToken = async () => {
- //   const token = await axios({
- //     method: 'post',
- //     url: `https://proxy.momoapi.mtn.com/collection/token/`, 
- //     headers: {
- //       'Content-Type': 'application/json',
- //       'Ocp-Apim-Subscription-key': `${process.env.REACT_APP_SUBSCRIPTION_KEY}`,
- //     },
- //   });
-//
- //   console.log('OUR FETCHED TOKEN IS:', token);
- //   setMomoToken(token.data.access_token);
-//
- //   //possible errors, if you do CORS, you may need to set up a server and get the token from there
- //   // only EUR currency works in sandbox, but we have specified production so..lets see how it goes
-
- // };
-
 
  // const momoTokenUrl = 'http://localhost:5001/api/get-token';
  // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
 //
  const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
  const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+
+//  const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
+//  const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
+ const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
+ const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
@@ -138,6 +110,47 @@ console.log("OUR USER DEETS---->",user)
             // Handle errors
             setIsLoading(false);
             console.error(' Overall Error is------->', error);
+            notifyErrorFxn('Failed to get token');
+        });
+  };
+
+
+  const handleOrangePay = async () => {
+    if(!user){
+      notifyErrorFxn("You must be logged in to proceed!");
+      return;
+    }
+
+     const headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',  
+     };
+       setIsLoading(true);
+       axios.post(orangeMTokenUrl, {}, { headers })
+        .then(response => {
+            const access_token = response.data.access_token;
+          
+           axios.post(orangeMPaymentUrl, {
+            amount: totalPrice,
+            currency: 'GNF', //OUV
+            order_id: `${uuid.v4()}`,
+            reference: "ref Merchant",
+            orangeMToken: access_token
+          }).then((res) => {
+              console.log("RESPONSE--->", res.data);
+              if (res.data.payment_url) {
+                window.open(res.data.payment_url, '_blank');
+              }else{
+                console.log("Res", res);
+                notifyErrorFxn("An error occured!");
+              }
+          }).catch((error) => {
+            setIsLoading(false);
+            console.error('Payment Request Error:', error);
+            notifyErrorFxn('Payment Request Error...');
+          })
+        }).catch(error => {
+            setIsLoading(false);
             notifyErrorFxn('Failed to get token');
         });
   };
@@ -330,6 +343,24 @@ console.log("OUR USER DEETS---->",user)
             variant="contained"
             style={{
               color: 'white',
+              backgroundColor: '#CC4436',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+              paddingRight: '30px',
+              paddingLeft: '30px',
+            }}
+          >
+           {isLoading ? "Loading..." : "Pay"}
+          </Button>
+        ) : orangeChecked ? (
+          <Button
+            type="button"
+            onClick={() => {
+              handleOrangePay();
+            }}
+            disabled={isLoading === true ? true : pcChecked === false && orangeChecked === false ? true : false}
+            variant="contained"
+            style={{
               backgroundColor: '#CC4436',
               paddingTop: '10px',
               paddingBottom: '10px',
