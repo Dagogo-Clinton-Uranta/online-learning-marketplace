@@ -36,7 +36,8 @@ const PaymentOptions = () => {
 
  // const momoTokenUrl = 'http://localhost:5001/api/get-token';
  // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
-//
+
+
  const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
  const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
 
@@ -86,7 +87,7 @@ const PaymentOptions = () => {
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId: `${user && user.phone?user.phone:null}`, //phone 08106091838
+              partyId: `${user && user.phone?(user.phone).toString():null}`, //phone 08106091838
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',
@@ -95,11 +96,12 @@ const PaymentOptions = () => {
               console.log("Payment completed...--->", res.data);
               let today = new Date().toLocaleDateString();
 
-            if(res.data && res.data.status === "SUCCESS"){
+            if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILURE"||*/ res.data && res.data.status === "SUCCESSFUL"){
               dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
               }else{
 
                 if(res.data && res.data.reason){notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)}
+                console.log("OUR REASON IS HEREEE---->",res.data.reason)
               }
           }).catch((error) => {
             setIsLoading(false);
