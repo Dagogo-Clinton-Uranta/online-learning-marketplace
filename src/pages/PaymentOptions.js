@@ -134,7 +134,7 @@ const PaymentOptions = () => {
           
            axios.post(orangeMPaymentUrl, {
             amount: totalPrice,
-            currency: 'GNF', //OUV
+            currency: 'OUV', //OUV
             order_id: `${uuid.v4()}`,
             reference: "ref Merchant",
             orangeMToken: access_token
