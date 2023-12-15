@@ -60,6 +60,7 @@ import LoginDesktopViewPage from './pages/LoginDesktopViewPage';
 import MainPage from './pages/MainPage';
 import CoursePage from './pages/CoursePage';
 import PaymentOptions from './pages/PaymentOptions';
+import PaymentOptionsMtn from './pages/PaymentOptionsMtn';
 
 export default function Router() {
   const routes = useRoutes([
@@ -91,6 +92,7 @@ export default function Router() {
         { path: 'payment-method', element: <PaymentTypePage /> },
         { path: 'purchased-courses', element: <PurchasedCourse /> },
         { path: 'payment-options', element: <PaymentOptions /> },
+        { path: 'payment-options-mtn', element: <PaymentOptionsMtn /> },
         { path: '10e', element: <TenePage /> },
         { path: '6e', element: <SixePage /> },
         { path: 'packs', element: <PacksPage /> },

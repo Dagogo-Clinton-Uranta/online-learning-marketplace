@@ -12,7 +12,7 @@ import axios from 'axios';
 import * as uuid from 'uuid';
 import { useNavigate } from 'react-router-dom';
 
-const PaymentOptions = () => {
+const PaymentOptionsMtn = () => {
   const [pcChecked, setPcChecked] = useState(false);
   const [mtnChecked, setMtnChecked] = useState(false);
   const [orangeChecked, setOrangeChecked] = useState(false);
@@ -23,6 +23,13 @@ const PaymentOptions = () => {
   const { purchasedCourses } = useSelector((state) => state.cart);
   const { cart } = useSelector((state) => state.cart);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingOne, setIsLoadingOne] = useState(false);
+  const [isLoadingTwo, setIsLoadingTwo] = useState(true);
+
+
+  const [accessToken,setAccessToken] = useState('');
+  const [referenceStore,setReferenceStore] = useState('')
+
   const totalPrice = cart.reduce((acc, item) => {
     const itemPrice = parseFloat(item.price.replace(',', ''));
     return acc + itemPrice;
@@ -32,11 +39,7 @@ const PaymentOptions = () => {
 console.log("OUR USER DEETS---->",user)
 
 
-  const handleOrangeCheckBox = () => {
-    setOrangeChecked(true);
-    setMtnChecked(false);
-    setPcChecked(false);
-  };
+ 
   // const momoHost = 'sandbox.momodeveloper.mtn.com';
   // const momoTokenUrl = `https://${momoHost}/collection/token/`;
   // const momoRequestToPayUrl = `https://${momoHost}/collection/v1_0/requesttopay`;
@@ -67,12 +70,15 @@ console.log("OUR USER DEETS---->",user)
  // };
 
 
- // const momoTokenUrl = 'http://localhost:5001/api/get-token';
- // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
+
+ // const momoTokenUrl = 'http://localhost:5008/api/get-token';
+ // const momoRequestToPayUrl = 'http://localhost:5008/api/requesttopay';
+ //const momoPayStatusUrl = 'http://localhost:5008/api/paystatus'
 
 
  const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
  const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+ const momoPayStatusUrl = 'https://boncole-server-2.vercel.app/api/paystatus'
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
@@ -89,7 +95,135 @@ console.log("OUR USER DEETS---->",user)
     setPcChecked(false);
   };
 
-  const handleMtnPay = async () => {
+
+  const startRequestToPay = async () => {
+    if(!user){
+      notifyErrorFxn("You must be logged in to proceed!");
+      return;
+    }
+
+
+     setIsLoadingOne(true);
+   
+         /* if(user && !user.phone){
+      notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
+      return;
+    }*/
+    const headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',  
+     };
+       setIsLoading(true);
+       axios.post(momoTokenUrl, {}, { headers })
+        .then(response => {
+            const access_token = response.data.access_token;
+            console.log("ACCESS-TOKEN 1ST REQUEST-->", access_token);
+           axios.post(momoRequestToPayUrl, {
+            amount: '500'/*totalPrice*/,
+            currency: 'GNF',
+            externalId: `${uuid.v4()}`,
+            payer: {
+              partyIdType: 'MSISDN',
+              partyId:'224664930445' /*`${user && user.phone?(user.phone).toString():null}`*/, //phone 08106091838
+            },
+            payerMessage: 'Payment for order',
+            payeeNote: 'Payment for order',
+            momoToken: access_token
+          }).then((res) => {
+              console.log("Payment completed...---->", res.data);
+              let today = new Date().toLocaleDateString();
+
+            if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.payerReferenceId){
+                 console.log("OUR PAYER REFERENCE ID IS--->",res.data.payerReferenceId)
+              setReferenceStore(res.data.payerReferenceId) //,<--- maybe store it in redux for persistence
+
+               setTimeout(()=>{setIsLoadingTwo(false)},30000)
+              }else{
+                setIsLoadingOne(false);
+                notifyErrorFxn(`THERE WAS A PROBLEM INITIATING PAYMENT, PLEASE TRY AGAIN`)
+
+                console.log("OUR ISSUE LIES IS HERE, CHECK THROUGH RES.DATA---->",res.data)
+              }
+          }).catch((error) => {
+            setIsLoading(false);
+            setIsLoadingOne(false);
+            console.error('Payment Request Error:', error);
+            notifyErrorFxn('Payment Request Error...');
+          })
+        }).catch(error => {
+            // Handle errors
+            setIsLoadingOne(false)
+            setIsLoading(false);
+            console.error(' FAILED TO EVEN GET A TOKEN IN THE FIRST PLACE ------->', error);
+            notifyErrorFxn('PROBLEM INITIATING PAYMENT, PLEASE TRY AGAIN');
+        });
+
+  }
+
+
+  const getPaymentStatusAndPurchase = async () => {
+
+
+    setIsLoadingTwo(true);
+    //setTimeout(()=>{setIsLoadingOne(false);},30000) ---> actually I will set it after i get my response on the payment status, for us to be able to try payment again, if it goes wrong
+
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',  
+     };
+
+     axios.post(momoTokenUrl, {}, { headers })
+     .then(response => {
+      const access_token = response.data.access_token;
+      console.log("ACCESS-TOKEN 2ND REQUEST-->", access_token);
+
+     axios.post(momoPayStatusUrl, {
+      payerReferenceId: referenceStore,
+      momoToken: access_token
+    }).then((res) => {
+        console.log("Payment STATUS (IN FINISH PAYMENT) HAS BEEN REQUESTED...---->", res.data);
+        let today = new Date().toLocaleDateString();
+
+      if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"){
+        dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
+        }else{
+
+        
+          if(res.data && res.data.status !== "SUCCESSFUL" ||res.data && res.data.status !== "SUCCESS"  ){
+            setIsLoadingOne(false)
+            notifyErrorFxn(`THE PAYMENT YOU  TRIED TO MAKE WAS NOT SUCCESSFUL, YOU CAN TRY AGAIN`)
+
+            }
+
+
+          if(res.data && res.data.reason){
+            setIsLoadingOne(false)
+            notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)
+            console.log("OUR REASON IS HEREEE---->",res.data.reason)
+          }
+         
+        }
+    }).catch((error) => {
+      
+      setIsLoadingTwo(false);
+      console.error('Payment Request Error:', error);
+      notifyErrorFxn('Payment Request Error...');
+    })
+
+  }).catch(error => {
+    // Handle errors
+    setIsLoading(false);
+    setIsLoadingTwo(false)
+    console.error(' FAILED TO EVEN GET A TOKEN IN THE SECOND PLACE ------->', error);
+    notifyErrorFxn('PROBLEM FINISHING PAYMENT,MAKE SURE YOU HAVE VERIFIED ON YOUR MOBILE AND TRY AGAIN');
+});
+
+
+  }
+
+  /*========================= YOU ARE COPYING FROM BELOW==================================*/
+  const handleMtnPay = async () => { 
     if(!user){
       notifyErrorFxn("You must be logged in to proceed!");
       return;
@@ -139,14 +273,10 @@ console.log("OUR USER DEETS---->",user)
         }).catch(error => {
             // Handle errors
             setIsLoading(false);
-            console.error(' Overall Error is------->', error);
+            console.error(' FAILED TO EVEN MAKE AXIOS REQUEST IN THE FIRST PLACE ------->', error);
             notifyErrorFxn('Failed to get token');
         });
   };
-
-  const navToMtnPay = () => {
-    navigate('/dashboard/payment-options-mtn')
-  }
 
   return (
     <Container
@@ -165,28 +295,26 @@ console.log("OUR USER DEETS---->",user)
               display: 'block',
               fontWeight: 'bold',
               fontSize: '1.3rem',
-              borderBottom: '3px solid red',
+              //borderBottom: '3px solid red',
               width: '250px',
               marginTop: '20px',
             }}
           >
-            Payment Options
+           <img src={MTNLOGO} alt="MTN Logo" style={{ width: '100px', height: '100px' }} />
           </p>
         </center>
       </Grid>
       <Grid container xs={12} style={{ paddingTop: '1.5rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px' }}>
-            Mode de Paiement
+           1.)  Click "Verify"
           </Typography>
           <Typography
             variant="body1"
             style={{ fontWeight: 400, fontSize: '18px', marginTop: '15px', marginBottom: '15px' }}
           >
-            Connexion sécurisée
-            <IconButton style={{ marginLeft: '10px' }}>
-              <LockIcon />
-            </IconButton>
+           2.)  After Verifying on your mobile, click "Finish Payment"
+          
           </Typography>
           <Paper
             sx={{
@@ -201,16 +329,32 @@ console.log("OUR USER DEETS---->",user)
               background: '#F4C109DB',
             }}
           >
-            <Grid container justifyContent="flex-start" alignItems="center">
-              <Grid item>
-                <Checkbox checked={mtnChecked} onChange={handleMtnCheckboxChange} />
-              </Grid>
-              <Grid item style={{ marginLeft: '25%' }}>
-                <img src={MTNLOGO} alt="MTN Logo" style={{ width: '100px', height: '100px' }} />
+            <Grid container justifyContent="center" alignItems="center">
+             
+              <Grid item >
+               
+              <Button
+            type="button"
+            onClick={() => { startRequestToPay()
+             
+            }}
+            disabled={isLoadingOne === true ? true:false }
+            variant="contained"
+            style={{
+              backgroundColor: '#CC4436',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+              paddingRight: '30px',
+              paddingLeft: '30px',
+            }}
+          >
+           { "Verify"}
+          </Button>
               </Grid>
             </Grid>
           </Paper>
           <br />
+         
           <Paper
             sx={{
               p: 2,
@@ -218,154 +362,50 @@ console.log("OUR USER DEETS---->",user)
               flexDirection: 'column',
               height: 140,
               width: 390,
-              border: '1px solid black',
+              border: '0px solid black',
               justifyContent: 'center',
               alignItems: 'center',
+              background: '#F4C109DB',
             }}
           >
-            <Grid container justifyContent="flex-start" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center">
+              
               <Grid item>
-                <Checkbox checked={pcChecked} onChange={handlePcCheckboxChange} />
-              </Grid>
-              <Grid item style={{ marginLeft: '25%' }}>
-                <img src={PAYCARDLOGO} alt="PayCard Logo" style={{}} />
-              </Grid>
-            </Grid>
-          </Paper>
-          <br />
-          <Paper
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 140,
-              width: 390,
-              border: '1px solid black',
-              justifyContent: 'center',
-              alignItems: 'center',
-              background: '#D85E01D1'
+             
+              <Button
+            type="button"
+            onClick={() => {
+             getPaymentStatusAndPurchase()
+            }}
+            disabled={isLoadingTwo === true ? true:false }
+            variant="contained"
+            style={{
+              backgroundColor: '#CC4436',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+              paddingRight: '30px',
+              paddingLeft: '30px',
             }}
           >
-            <Grid container justifyContent="flex-start" alignItems="center">
-              <Grid item>
-                <Checkbox checked={orangeChecked} onChange={handleOrangeCheckBox} />
-              </Grid>
-              <Grid item style={{ marginLeft: '15%' }}>
-                <img src={ORANGELOGO} alt="Orange Logo" style={{}} />
-              </Grid>
-            </Grid>
-          </Paper>
-          <br />
-          <br />
-          <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px' }}>
-            Commande
-          </Typography>
-          <br />
+           {"Finish Payment"}
+          </Button>
 
-          {cart.map((item, index) => (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                borderBottom: '0px solid #eee',
-                marginBottom: '10px',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                  {item?.title}
-                </Typography>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                  {item?.price} GNF
-                </Typography>
-              </div>
-            </div>
-          ))}
+              </Grid>
+            </Grid>
+          </Paper>
+
+          <br />
+         
+          <br />
+         
+
+         
         </div>
       </Grid>
 
-      {
-        <form id="paycard" action="https://mapaycard.com/epay/" method="POST">
-          <input type="hidden" name="c" value="MjcyMDQxNzM" />
-          <input type="hidden" name="paycard-amount" value={totalPrice} />
-          <input type="hidden" name="paycard-description" value="Course sale" />
-          <input
-            type="hidden"
-            name="paycard-callback-url"
-            value="https://bonecole-student.netlify.app/dashboard/payment-callback"
-          />
+      
 
-          <input type="hidden" name="paycard-redirect-with-get" value="on" />
-          <input type="hidden" name="paycard-auto-redirect" value="off" />
-          <input type="hidden" name="cart_data" value={JSON.stringify(cart)} />
-
-          {/* <Button
-                  type="submit"
-                  disabled={isLoading}
-                  variant="contained"
-                  style={{
-                    backgroundColor: '#CC4436',
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
-                    paddingRight: '30px',
-                    paddingLeft: '30px',
-                  }}
-                >
-                  Make Payment
-                </Button>*/}
-        </form>
-      }
-
-      <center
-        style={{
-          marginTop: '3rem',
-          marginBottom: '2rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {pcChecked === true ? (
-          <Button
-            form="paycard"
-            type="submit"
-            disabled={isLoading === true ? true : pcChecked === false && mtnChecked === false ? true : false}
-            variant="contained"
-            style={{
-              color: 'white',
-              backgroundColor: '#CC4436',
-              paddingTop: '10px',
-              paddingBottom: '10px',
-              paddingRight: '30px',
-              paddingLeft: '30px',
-            }}
-          >
-           {isLoading ? "Loading..." : "Pay"}
-          </Button>
-        ) : (
-          <Button
-            type="button"
-            onClick={() => {
-              navToMtnPay();
-            }}
-            disabled={isLoading === true ? true : pcChecked === false && mtnChecked === false ? true : false}
-            variant="contained"
-            style={{
-              backgroundColor: '#CC4436',
-              paddingTop: '10px',
-              paddingBottom: '10px',
-              paddingRight: '30px',
-              paddingLeft: '30px',
-            }}
-          >
-           {isLoading ? "Loading..." : "Pay"}
-          </Button>
-        )}
-      </center>
     </Container>
   );
 };
-export default PaymentOptions;
+export default PaymentOptionsMtn;
