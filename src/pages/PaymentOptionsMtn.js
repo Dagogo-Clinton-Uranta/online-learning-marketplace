@@ -326,7 +326,7 @@ console.log("OUR USER DEETS---->",user)
               border: '0px solid black',
               justifyContent: 'center',
               alignItems: 'center',
-              background: '#F4C109DB',
+              background: '#FFFFFF',
             }}
           >
             <Grid container justifyContent="center" alignItems="center">
@@ -353,19 +353,19 @@ console.log("OUR USER DEETS---->",user)
               </Grid>
             </Grid>
           </Paper>
-          <br />
+          
          
           <Paper
             sx={{
               p: 2,
               display: 'flex',
               flexDirection: 'column',
-              height: 140,
+              height: 30,
               width: 390,
               border: '0px solid black',
               justifyContent: 'center',
               alignItems: 'center',
-              background: '#F4C109DB',
+              background: '#FFFFFF',
             }}
           >
             <Grid container justifyContent="center" alignItems="center">
