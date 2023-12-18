@@ -8,6 +8,9 @@ import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import { signin,signInWithGoogle} from 'src/redux/actions/auth.action';
+import googleSI from 'src/assets/images/googleSI.svg'
+
+
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
 
@@ -69,7 +72,7 @@ function ExternalLoginPage() {
            
           
            <Button   variant="contained" 
-          style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
+          style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
           }}
           onClick ={()=>{navigate('/login')}}
           >
@@ -86,11 +89,11 @@ function ExternalLoginPage() {
            
           
            <Button   variant="contained" 
-          style={{ backgroundColor: "#f00c44",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
+          style={{ backgroundColor: "#FFFFFF",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",boxShadow:"none",
           }}
           onClick ={()=>{googleLoginFxn(navigate)}}
           >
-          Se connecter avec Google
+         <img src={googleSI} style={{width:"60%"}}/>
           </Button>
        
         </Grid>
@@ -103,7 +106,7 @@ function ExternalLoginPage() {
            
           
              <Button   variant="contained" 
-            style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
+            style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
             }}
             onClick ={()=>{navigate('/login')}}
             >
@@ -122,7 +125,7 @@ function ExternalLoginPage() {
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"40px"}}>
     <center>
     
-    <p style={{textDecoration:"underline"}} onClick ={()=>{navigate('/login')}}>En vous connectant, vous acceptez nos conditions generales d'utilisation et notre politique de confidentialite </p>
+    <p style={{textDecoration:"underline"}} onClick ={()=>{navigate('/dashboard/privacy')}}>En vous connectant, vous acceptez nos conditions generales d'utilisation et notre politique de confidentialite </p>
    
    <br/>
    

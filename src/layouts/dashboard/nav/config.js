@@ -51,8 +51,8 @@ const navConfig = [
     // icon: icon('ic_analytics'),
   },
   {
-    title: 'Terms',
-    path: '/dashboard/terms',
+    title: 'Privacy & Terms',
+    path: '/dashboard/privacy',
     icon:<SlDocs/>
     // icon: icon('ic_analytics'),
   },

@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 import { signUpWithGoogle } from 'src/redux/actions/auth.action';
+import googleSU from 'src/assets/images/googleSU.svg'
 
 
 function ExternalRegisterPage() {
@@ -69,7 +70,7 @@ function ExternalRegisterPage() {
            
           
            <Button   variant="contained" 
-          style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
+          style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
           }}
           onClick ={()=>{navigate('/login')}}
           >
@@ -89,14 +90,14 @@ function ExternalRegisterPage() {
         <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center',alignItems:"center" }}>
            
           
-           <Button   variant="contained" 
-          style={{ backgroundColor: "#f00c44",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
+        <Button   variant="contained" 
+          style={{ backgroundColor: "#FFFFFF",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",boxShadow:"none",
           }}
           onClick ={()=>{dispatch(signUpWithGoogle(navigate))}}
           >
-          S'inscrire avec Google
+          <img src={googleSU} style={{width:"60%"}}/>
           </Button>
-       
+         
         </Grid>
 
 
@@ -107,7 +108,7 @@ function ExternalRegisterPage() {
            
           
              <Button   variant="contained" 
-            style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
+            style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
             }}
             onClick ={()=>{navigate('/register')}}
             >
@@ -126,7 +127,7 @@ function ExternalRegisterPage() {
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"40px"}}>
     <center>
     
-    <p style={{textDecoration:"underline"}} onClick ={()=>{navigate('/register')}}>En vous inscrivant, vous acceptez nos conditions generales d'utilisation et notre politique de confidentialite </p>
+    <p style={{textDecoration:"underline"}} onClick ={()=>{navigate('/dashboard/privacy')}}>En vous inscrivant, vous acceptez nos conditions generales d'utilisation et notre politique de confidentialite </p>
    
    <br/>
    
