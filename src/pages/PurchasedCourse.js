@@ -20,6 +20,14 @@ const PurchasedCourse = () => {
   console.log("MODIFIED purchased courses-->",modifiedPurchasedCourses)
 
 
+  useEffect(()=>{
+      if(!user){
+       navigate('/external-login')
+      }
+ 
+   },[])
+ 
+
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid ?? user?.id));
   }, []);

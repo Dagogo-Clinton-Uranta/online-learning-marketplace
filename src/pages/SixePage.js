@@ -81,9 +81,9 @@ console.log("category subs are ",categorySubjects)
 
 
 useEffect(()=>{
-   if(!user){
+  /* if(!user){
     navigate('/login')
-   }
+   }*/
 
 
    setTopics(categorySubjects)
@@ -223,7 +223,7 @@ useEffect(()=>{
      <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
      {packs && packs.map((pack,i)=>(    /*you may need to change the action to fetch subjects inside the pack */
-         <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(pack))}} 
+         <Grid item xs={11}  onClick={()=>{if(!user){navigate('/external-login')}else{ dispatch(fetchCurrentSubject(pack))} }} 
          style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
           <SampleCardPage 
           uid={pack.uid} title={pack.title} image = {pack && pack.subjectImageUrl && pack.subjectImageUrl.length > 1?pack.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={pack.instructor} price={pack.price} lessons={15} time={"2H 26 MINS"} subjectsInPack={pack.subjectsInPack} /> 
@@ -237,7 +237,7 @@ useEffect(()=>{
        <Grid container item xs={12} spacing={3} style={{ display: 'flex', justifyContent: 'center',marginBottom:"20px" }}>
          {console.log("TOPICS____", topics)}
      {topics.map((topic,i)=>(   
-         <Grid item xs={6} onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
+         <Grid item xs={6} onClick={()=>{ dispatch(fetchCurrentSubject(topic))} }
          style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>
           <SmallerCardPage 
           uid={topic.uid}  title={topic.title} image = {topic && topic.subjectImageUrl && topic.subjectImageUrl.length > 1 ?topic.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={topic.instructor} price={"22,000"} lessons={15} time={"2H 26 MINS"} /> 

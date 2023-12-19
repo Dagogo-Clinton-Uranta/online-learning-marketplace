@@ -58,9 +58,19 @@ function SavedCoursesPage() {
     p: 4,
   };
  
-
+const navigate = useNavigate
 
 const dispatch  = useDispatch()
+
+const { user } = useSelector((state) => state.auth);
+
+useEffect(()=>{
+   if(!user){
+     navigate('/external-login')
+    }
+
+ },[])
+
 
   const topics = [
     {title:"Chemie ",author:"Sidiki...",price:"22,000",lessons:14,time:"2H 26 MINS",image:chem2},

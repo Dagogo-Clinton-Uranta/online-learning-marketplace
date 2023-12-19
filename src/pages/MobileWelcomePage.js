@@ -164,9 +164,9 @@ useEffect(()=>{
 
 
 useEffect(()=>{
-   if(!user){
+   /*if(!user){
     navigate('/login')
-   }
+   }*/
 
    dispatch(getTeachers())
    dispatch(fetchCategorySubjects("Terminales"))
@@ -287,7 +287,7 @@ aria-describedby="modal-modal-description"
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", width:"70%",fontSize:"15px",
             paddingRight: '8px', paddingLeft: '8px'}}
-            //onClick ={()=>{navigate('/dashboard/other-courses')}}
+            onClick ={()=>{navigate('/dashboard/external-login')}}
             >
             S'inscrire maintenant
             </Button>
@@ -548,7 +548,8 @@ aria-describedby="modal-modal-description"
          <p style={{fontSize:"1rem"}} onClick={()=>{ window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}}>Accueil</p>
          <p style={{fontSize:"1rem"}}><Link to={'/dashboard/6e'}>Cours</Link></p>
          {/*<p style={{fontSize:"1rem"}}>A Propos</p>*/}
-         <p style={{fontSize:"1rem"}}> <Link to={'/dashboard/privacy'}>Conditions d'utilisation</Link></p>
+         <u style={{fontSize:"1rem",pointer:"cursor"}}> <Link to={'/dashboard/terms'}>Conditions d'utilisation</Link></u>
+         <u style={{fontSize:"1rem",pointer:"cursor"}}> <Link to={'/dashboard/privacy'}>politique de confidentialité</Link></u>
 
          <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"3rem",fontSize:"1.2rem",gap:"0.5rem"}}>
          ©℗ 2023 BONECOLE.INC. ALL RIGHTS RESERVED

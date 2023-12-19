@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/redux/actions/group.action';
 import { addToLessonsWatched } from 'src/redux/actions/auth.action';
 import { blobToDataURL } from 'blob-util'
+import { useNavigate } from 'react-router-dom';
 
 const LogoSwitch = ({uid,audioFile}) => {
 
@@ -19,10 +20,13 @@ const LogoSwitch = ({uid,audioFile}) => {
   const [urlLink,setUrlLink] = useState(audioFile?audioFile:" ")
   const [urlSample,setUrlSample] = useState("https://streaming.bonecole.com/courses_new/ecm_6e/original/1.+Le+mariage.mp3")
   /*const URLSound = window.URL || window.webkitURL;*/
+  const { user,error } = useSelector((state) => state.auth);
+
  const dispatch = useDispatch()
+ const navigate = useNavigate()
 
  const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
- const {user} = useSelector((state) => state.auth);
+
  const [trackUser,setTrackUser] = useState(user && user.lessonsWatched ? user.lessonsWatched.map((item)=>(item.lessonId)):[])
 
  useEffect(()=>{
@@ -74,6 +78,10 @@ const LogoSwitch = ({uid,audioFile}) => {
    
 
   const playAudio = (audio) => {
+
+    if(!user){
+      navigate('/external-login')
+    }
    
     setPlay(!play)
  //do lesson watched logic here !!

@@ -85,12 +85,12 @@ function SelectedCoursePage() {
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
-  console.log("USER'S PURCHASED COURSES--->",user.purchasedCourses)
+  
   
   useEffect(()=>{
-     if(!user){
+   /*  if(!user){
       navigate('/login')
-     }
+     }*/
 
      return () => {
       dispatch(setSelectedAudioId(null))
@@ -101,6 +101,8 @@ function SelectedCoursePage() {
   
    
   },[])
+
+ // console.log("USER'S PURCHASED COURSES AARE--->",user.purchasedCourses)
 /*login check end */
 
 
@@ -211,7 +213,11 @@ const pauseAudio = audio => {
 
  const handleViewPdf = (pdfUrl) => {
 
-  if(/*presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))*/true ===false){
+  if(!user){
+    navigate('/external-login')
+   }else{
+
+  if(presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))){
     notifyInfoFxn('Please purchase course to view document.')
   }else{
 
@@ -224,6 +230,8 @@ const pauseAudio = audio => {
   );
 
   }
+
+ }
 };
 
 
@@ -262,6 +270,12 @@ const pauseAudio = audio => {
 
 
   const doVideoActions = () => {
+  
+      if(!user){
+      navigate('/external-login')
+     }
+
+
     setOpen(true)
     
     setTimeout(
@@ -305,6 +319,11 @@ const URLSound = window.URL || window.webkitURL
 
 
 async function saveCourse(subjectTitle,url,courseName,uid,duration) {
+
+  if(!user){
+    navigate('/external-login')
+    return
+   }
  
   if(/*presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))*/true ==false){
     notifyInfoFxn('Please purchase course to save media.')
@@ -427,6 +446,11 @@ const fetchQuizAndNavigate =(uid)=>{
 
 
 const addToCartFxn = () => {
+  if(!user){
+    navigate('/external-login')
+   }
+
+  
   const cartItem = { id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price };
 
   const isItemInCart = cart.some((item) => item.id === cartItem.id);
@@ -697,19 +721,21 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
  } 
   </Grid>  
     
+  {user && 
    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"20px",gap:"10px" }}>
   
 
   <Button   variant="contained" 
   style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
   padding: '8px'}}
-  onClick={()=>{navigate('/dashboard/saved-courses')}}
+  onClick={()=>{if(!user){navigate('/external-login')}else{navigate('/dashboard/saved-courses')}}}
   >
   View My Courses
   </Button>
 
 
 </center>
+}
 
 <Container maxWidth="xs">
 

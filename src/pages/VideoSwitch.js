@@ -13,9 +13,11 @@ import Modal from '@mui/material/Modal';
 import { findDOMNode } from 'react-dom'
 
 import { blobToDataURL } from 'blob-util'
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const VideoSwitch = ({audioFile}) => {
-
+ const navigate = useNavigate()
 
   const style = {
     position: 'absolute',
@@ -35,6 +37,7 @@ const VideoSwitch = ({audioFile}) => {
   const [play,setPlay] = useState(false)
   const [urlLink,setUrlLink] = useState('')
   /*const URLSound = window.URL || window.webkitURL;*/
+  const { user,error } = useSelector((state) => state.auth);
 
   const linkMaker = (blob) => {
     let link;
@@ -115,6 +118,11 @@ const handleEsc = (event) => {
 
 
 const doVideoActions = () => {
+ if(!user){
+  navigate('/external-login')
+ }
+ 
+ 
   setOpen(true)
   
   setTimeout(

@@ -10,6 +10,20 @@ import { useNavigate } from 'react-router-dom';
 const MyCartPage = () => {
   const { cart } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
+
+
+  useEffect(()=>{
+      if(!user){
+       navigate('/external-login')
+      }
+ 
+      
+    
+   },[])
+ 
+
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setisLoading] = useState(false);
@@ -20,8 +34,8 @@ const MyCartPage = () => {
   }, 0);
   let amount = 100000;
   // let price;
-  const [email, setEmail] = useState(user.email);
-  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user && user.email);
+  const [name, setName] = useState(user && user.name);
 
   const componentProps = {
     email,

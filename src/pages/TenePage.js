@@ -47,14 +47,18 @@ function TenePage() {
   const dispatch = useDispatch();
   const [chosen,setChosen] = useState(1);
 
+  const { user } = useSelector((state) => state.auth);
   const {packSubjects} = useSelector((state) => state.group);
   const { presentSubject } = useSelector((state) => state.group);
   const { cart } = useSelector((state) => state.cart);
 
- /* useEffect(()=>{
-  fetchPackSubjects(location.state.data)
+  useEffect(()=>{
+   if(!user){
+      navigate('/external-login')
+     }
 
-  },[])*/
+
+  },[])
 
 
    const oldTopics = [

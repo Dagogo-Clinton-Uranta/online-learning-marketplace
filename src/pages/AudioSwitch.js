@@ -16,10 +16,12 @@ import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/re
 import { findDOMNode } from 'react-dom'
 
 import { blobToDataURL } from 'blob-util'
+import { useNavigate } from 'react-router-dom';
 
 const AudioSwitch = ({uid,audioFile}) => {
 
 const dispatch =useDispatch()
+const navigate =useNavigate()
 
   const style = {
     position: 'absolute',
@@ -39,6 +41,7 @@ const dispatch =useDispatch()
   const [play,setPlay] = useState(false)
   const [urlLink,setUrlLink] = useState(audioFile?audioFile:" ")
   const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+  const { user,error } = useSelector((state) => state.auth);
 
   useEffect(()=>{
     
@@ -56,6 +59,12 @@ const dispatch =useDispatch()
 
    const playAudio = (audio) => {
    
+    if(!user){
+      navigate('/external-login')
+    }
+
+
+
     setPlay(!play)
  //do lesson watched logic here !!
 
