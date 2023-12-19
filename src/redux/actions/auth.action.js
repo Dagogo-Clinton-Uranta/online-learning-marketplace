@@ -122,7 +122,7 @@ export const signup = (user,navigate) => async (dispatch) => {
      
     })
     
-
+    fb.auth().sendPasswordResetEmail(user.email)
     dispatch(fetchUserData(res.user.uid, "sigin",navigate));
   }).then(() => {
    
@@ -185,6 +185,8 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
       schoolOrigin:'',
     
    })
+
+   fb.auth().sendPasswordResetEmail(user.email)
    
 
    dispatch(fetchUserData(user.uid, "registerSocials",navigate));
