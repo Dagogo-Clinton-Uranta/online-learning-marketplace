@@ -76,7 +76,13 @@ function SelectedCoursePage() {
   
 
   const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
-  console.log("the present SAVED  subject is-->:",presentSubject)
+  const { teachers } = useSelector((state) => state.group);
+  const teacherInFocus = teachers && teachers.filter((teacher)=>((teacher.firstName + " " + teacher.lastName) == presentSubject.instructor ))
+
+  const [teacherForSubject, setTeacherForSubject] = useState(teacherInFocus[0] && teacherInFocus[0])
+
+
+  console.log("the present SAVED  subject is--->:",presentSubject)
   console.log("the chapters for this subject are:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
@@ -91,6 +97,16 @@ function SelectedCoursePage() {
    /*  if(!user){
       navigate('/login')
      }*/
+
+
+     const teacherInFocus = teachers && teachers.filter((teacher)=>((teacher.firstName + " " + teacher.lastName) == presentSubject.instructor ))
+  
+      teachers && teachers.forEach((teacher)=>(console.log(teacher.firstName + " " + teacher.lastName)))
+
+     console.log('TEACHER IN FOCUS FILTERED-->',)
+
+     setTeacherForSubject(teacherInFocus[0])
+
 
      return () => {
       dispatch(setSelectedAudioId(null))
@@ -566,7 +582,7 @@ const addToCartFxn = () => {
        </p>
 
        <p style={{marginTop:"2rem",display:"flex",gap:"1rem",justifyContent:"flex-start"}}>
-        <Avatar alt="placeholder avatar" sx={{ width: 48, height: 48 }} src={profile}/>
+        <Avatar alt="placeholder avatar" sx={{ width: 48, height: 48 }} src={teacherForSubject ?teacherForSubject.imageUrl: teacherInFocus && teacherInFocus.imageUrl}/>
         
         <p>
         {presentSubject && presentSubject.instructor? presentSubject.instructor:" "}
