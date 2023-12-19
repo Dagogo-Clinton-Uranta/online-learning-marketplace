@@ -444,7 +444,7 @@ aria-describedby="modal-modal-description"
           style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
            
            <TeacherCardPage 
-           uid={topic.uid} firstName={topic.firstName} lastName={topic.lastName} imageUrl = {topic && topic.imageUrl && topic.imageUrl.length > 1?topic.imageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} subject ={topic.subject} bio={topic.bio}  level={topic.level} /> 
+           uid={topic.uid} firstName={topic.firstName} lastName={topic.lastName} imageUrl = {topic && topic.imageUrl && topic.imageUrl.length > 1?topic.imageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} subject ={topic.subject} bio={topic.body?topic.body : topic.bio &&topic.bio }  level={topic.level} /> 
           {/*gotta pass the id into the card so we can use it when clicked */}
           </Grid>
        ))}
