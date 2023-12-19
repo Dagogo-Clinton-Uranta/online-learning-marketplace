@@ -88,6 +88,8 @@ const VideoSwitch = ({audioFile}) => {
 /*MODAL MANIPULATION LOGIC */
 
 const [open, setOpen] = React.useState(false);
+const [doubleClose, setDoubleClose] = React.useState(false);
+
 const handleOpen = () => {doVideoActions()}
 const handleClose = () => {setOpen(false);setVideoTime(false)};
 
@@ -107,12 +109,22 @@ const [fullScreen, setFullScreen] = useState(false);
 
 
 const videoRef = useRef(true)
+const modalRef = useRef(true)
 
 
 const handleEsc = (event) => {
+ 
+  setOpen(false)
+ 
   findDOMNode(videoRef.current).pause()
-  window.removeEventListener('fullscreenchange', handleEsc)
+ window.removeEventListener('fullscreenchange', handleEsc)
+  
+  
+   console.log("MODAL CURRENT DETAILS ARE---->", findDOMNode(modalRef.current))
+
   setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
+  setTimeout(()=>{setDoubleClose(true)},100)
+  
 
 };
 
@@ -149,6 +161,16 @@ useEffect(()=>{
 
 },[open])
 
+
+/*useEffect(()=>{
+
+  if(doubleClose){
+  setOpen(false)
+ 
+ }
+
+},[doubleClose])*/
+
 /*video manipulation logic end */
 
 
@@ -158,13 +180,17 @@ useEffect(()=>{
   return (
     <div style={{display:"inline"}}>
 
+
+
 <Modal
 open={open}
 onClose={handleClose}
 aria-labelledby="modal-modal-title"
 aria-describedby="modal-modal-description"
-
+ref={modalRef}
 >
+
+
 <Box sx={style}>
  <ReactPlayer   
       config={{ file: { attributes: { controlsList: 'nodownload',disablepictureinpicture: 'true' } } }}
@@ -183,8 +209,10 @@ aria-describedby="modal-modal-description"
        
      />
 </Box>
-</Modal>
+  
 
+
+</Modal>
 
 
 
