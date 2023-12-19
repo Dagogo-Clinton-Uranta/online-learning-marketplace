@@ -32,6 +32,7 @@ const initialState = {
        privateGroups: [],
        groupMembers: [], 
        employeer: {}, 
+       transactionReference:'',
        message: '',
       isLoading: false,
 };
@@ -138,6 +139,9 @@ saveSelectedAudioState: (state, action) => {
   state.selectedAudioState = action.payload;
  
 },
+saveTransactionReference: (state, action) => {
+  state.transactionReference= action.payload;
+},
     saveEmployeer: (state, action) => {
       state.employeer = action.payload;
   },
@@ -185,6 +189,7 @@ export const {
  savePrivateGroup,
  saveGroupMembers,
  saveEmployeer,
+ saveTransactionReference,
  setRequestedSection,
  isItLoading,
  clearGroup

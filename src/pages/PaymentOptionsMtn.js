@@ -7,17 +7,23 @@ import MTNLOGO from '../assets/images/MTN-logo.png';
 import PAYCARDLOGO from '../assets/images/paycard-logo.png';
 import ORANGELOGO from '../assets/images/orange-logo.png';
 import LockIcon from '@mui/icons-material/Lock';
-import { notifyErrorFxn } from 'src/utils/toast-fxn';
+import { notifyErrorFxn,notifyInfoFxn } from 'src/utils/toast-fxn';
 import axios from 'axios';
 import * as uuid from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import {setTransactionReference} from 'src/redux/actions/group.action.js'
 
 const PaymentOptionsMtn = () => {
   const [pcChecked, setPcChecked] = useState(false);
   const [mtnChecked, setMtnChecked] = useState(false);
   const [orangeChecked, setOrangeChecked] = useState(false);
   const [momoToken, setMomoToken] = useState(null);
+
   const { user } = useSelector((state) => state.auth);
+
+  const { transactionReference } = useSelector((state) => state.group);
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { purchasedCourses } = useSelector((state) => state.cart);
@@ -104,6 +110,7 @@ console.log("OUR USER DEETS---->",user)
 
 
      setIsLoadingOne(true);
+     notifyInfoFxn("Please wait... be sure not to refresh the screen while payment is in process..")
    
          /* if(user && !user.phone){
       notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
@@ -136,6 +143,7 @@ console.log("OUR USER DEETS---->",user)
             if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.payerReferenceId){
                  console.log("OUR PAYER REFERENCE ID IS--->",res.data.payerReferenceId)
               setReferenceStore(res.data.payerReferenceId) //,<--- maybe store it in redux for persistence
+              dispatch(setTransactionReference(res.data.payerReferenceId))
 
                setTimeout(()=>{setIsLoadingTwo(false)},30000)
               }else{
@@ -178,8 +186,14 @@ console.log("OUR USER DEETS---->",user)
       const access_token = response.data.access_token;
       console.log("ACCESS-TOKEN 2ND REQUEST-->", access_token);
 
+
+          if(!transactionReference && !referenceStore){
+            notifyErrorFxn(`SOMETHING WENT WRONG,WE ARE NOT ABLE TO TRACK THE TRANSACTION`)
+            return
+          }
+
      axios.post(momoPayStatusUrl, {
-      payerReferenceId: referenceStore,
+      payerReferenceId: transactionReference?transactionReference:referenceStore,
       momoToken: access_token
     }).then((res) => {
         console.log("Payment STATUS (IN FINISH PAYMENT) HAS BEEN REQUESTED...---->", res.data);
@@ -348,7 +362,7 @@ console.log("OUR USER DEETS---->",user)
               paddingLeft: '30px',
             }}
           >
-           { "Verify"}
+           {isLoadingOne && isLoadingTwo?"Please Wait..": "Verify"}
           </Button>
               </Grid>
             </Grid>

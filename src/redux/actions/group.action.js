@@ -14,7 +14,7 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
    saveOpenQuestionIndex,saveCurrentQuestionIndex,
    fetchTeachers,
    saveDownloadReload,
-   savePacks
+   savePacks,saveTransactionReference,
     } from '../reducers/group.slice';
 
  import {markRegisteredWithSocials}   from '../reducers/auth.slice';
@@ -1267,3 +1267,10 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
     dispatch(saveDownloadReload(downrel))
   
    }
+
+
+
+   export const  setTransactionReference =  (reference) => async (dispatch) => {
+
+    dispatch(saveTransactionReference(reference))
+  }

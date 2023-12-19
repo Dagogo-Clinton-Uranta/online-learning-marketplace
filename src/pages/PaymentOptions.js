@@ -40,6 +40,7 @@ const PaymentOptions = () => {
 
  const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
  const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
+ const momoTwoActionUrl = 'https://boncole-server-2.vercel.app/api/twoaction';
 
 //  const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
 //  const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
@@ -81,7 +82,7 @@ const PaymentOptions = () => {
         .then(response => {
             const access_token = response.data.access_token;
             console.log("ACCESS-TOKEN IS-->", access_token);
-           axios.post(momoRequestToPayUrl, {
+           axios.post(momoTwoActionUrl, {
             amount: '500'/*totalPrice*/,
             currency: 'GNF',
             externalId: `${uuid.v4()}`,
@@ -96,7 +97,7 @@ const PaymentOptions = () => {
               console.log("Payment completed...---->", res.data);
               let today = new Date().toLocaleDateString();
 
-            if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"){
+            if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"|| res.data && res.data.status === "SUCCESS"){
               dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
               }else{
 
@@ -422,6 +423,7 @@ const PaymentOptions = () => {
             type="button"
             onClick={() => {
               navToMtnPay();
+             // handleMtnPay()
             }}
             disabled={isLoading === true ? true : pcChecked === false && mtnChecked === false ? true : false}
             variant="contained"
