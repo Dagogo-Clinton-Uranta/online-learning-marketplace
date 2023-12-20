@@ -661,7 +661,13 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   
   
   }     &nbsp; {index + 1}.</p>
-  <p style={{display:"inline"}}>  {lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`}</p>
+  <p style={{display:"inline",width:"12rem"}}>  
+   
+    {lesson.title && lesson.title}
+  
+  {/*lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`*/}
+  
+  </p>
   <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(presentSubject.title,/*(index % 2 === 0?"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4":)*/lesson.lessonUrl,lesson.title,lesson.uid,lesson.duration)}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>
  )
