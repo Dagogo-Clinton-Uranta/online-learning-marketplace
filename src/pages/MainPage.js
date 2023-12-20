@@ -31,7 +31,7 @@ const MainPage = () => {
         {/* Second Grid Item for Card Component */}
         <Grid container rowSpacing={2} item xs={4.4} style={{border: '0px solid red', }}>
             <Grid xs={12} style={{border: '1px solid black', padding: '20px', margin: '0px 20px 0x 20px', justifyContent: 'center', justifyItems: 'center'}}>
-               <center> <h1>My Courses</h1></center>
+               <center> <h1>Mes cours</h1></center>
             </Grid>
         {COURSEDATA.slice(1,COURSEDATA.length).map((topic,i)=>(   
          <Grid item xs={6} onClick={{}}
@@ -69,7 +69,7 @@ const MainPage = () => {
   }}
 >
   <div style={{color: 'white'}}>Email: contact@bonecole.com</div>
-  <div style={{color: 'white'}}>&copy; {new Date().getFullYear()} 2023 Boncole Inc. All Rights Reserved</div>
+  <div style={{color: 'white'}}>&copy; {new Date().getFullYear()} 2023 Boncole Inc. tous droits réservés</div>
   <div style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
     <a href="https://www.facebook.com">
       <FacebookRoundedIcon />

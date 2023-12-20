@@ -539,7 +539,8 @@ aria-describedby="modal-modal-description"
 
        <div style={{display: 'flex',gap:"0.5rem", flexDirection:"column", justifyContent: 'flex-start',alignItems:"flex-start"}}>
        <p style={{fontSize:"1rem"}}>Tel: +224 611 23 88 88</p>
-       <p style={{fontSize:"1rem"}}>Contact Email : contact@bonecole.com</p>
+       <p style={{fontSize:"1rem"}}>
+        Email du contact: contact@bonecole.com</p>
        </div>
 
      
@@ -552,7 +553,7 @@ aria-describedby="modal-modal-description"
          <u style={{fontSize:"1rem",pointer:"cursor"}}> <Link to={'/dashboard/privacy'}>politique de confidentialité</Link></u>
 
          <div  style={{display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"3rem",fontSize:"1.2rem",gap:"0.5rem"}}>
-         ©℗ 2023 BONECOLE.INC. ALL RIGHTS RESERVED
+         ©℗ 2023 BONECOLE.INC. tous droits réservés
          </div>
 
        </div>

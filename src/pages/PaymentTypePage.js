@@ -86,7 +86,7 @@ const PaymentTypePage = () => {
               marginTop: '20px',
             }}
           >
-            Payment Options
+            Modes de paiements
           </p>
         </center>
       </Grid>
@@ -305,7 +305,7 @@ const PaymentTypePage = () => {
                     paddingLeft: '30px',
                   }}
                 >
-                  Pay
+                  Payer
             </Button>
 
           </center>

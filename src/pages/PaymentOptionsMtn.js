@@ -322,13 +322,13 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
       <Grid container xs={12} style={{ paddingTop: '1.5rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px' }}>
-           1.)  Click "Verify"
+           1.)  Cliquez sur “Vérifier”
           </Typography>
           <Typography
             variant="body1"
             style={{ fontWeight: 400, fontSize: '18px', marginTop: '15px', marginBottom: '15px' }}
           >
-           2.)  After Verifying on your mobile, click "Finish Payment"
+           2.)  Après avoir vérifié sur votre téléphone cliquez sur  “Finir paiement”
           
           </Typography>
           <Paper

@@ -63,7 +63,7 @@ const PurchasedCourse = () => {
               marginTop: '20px',
             }}
           >
-            Purchased Courses
+            Cours achetés
           </p>
         </center>
       </Grid>

@@ -74,7 +74,7 @@ const CoursePage = () => {
   }}
 >
   <div style={{color: 'white'}}>Email: contact@bonecole.com</div>
-  <div style={{color: 'white'}}>&copy; {new Date().getFullYear()} 2023 Boncole Inc. All Rights Reserved</div>
+  <div style={{color: 'white'}}>&copy; {new Date().getFullYear()} 2023 Boncole Inc. tous droits réservés</div>
   <div style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
     <a href="https://www.facebook.com">
       <FacebookRoundedIcon />

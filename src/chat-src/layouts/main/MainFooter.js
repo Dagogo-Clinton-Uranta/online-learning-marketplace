@@ -109,7 +109,7 @@ export default function MainFooter() {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          © 2021. All rights reserved
+          © 2021. tous droits réservés
         </Typography>
       </Container>
     </RootStyle>

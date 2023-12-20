@@ -347,7 +347,7 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
 
   try {
     
-    notifyInfoFxn("Your download has begun, you will be alerted once it is completed...")
+    notifyInfoFxn("Votre téléchargement a commencé")
 
    //const res = await fetch(`https://thingproxy.freeboard.io/fetch/${url}`) UNCOMMENT THIS LATER, AND COMMENT OUT TH ONE BELOW
    //const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
@@ -383,7 +383,7 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
   
       setStatus(`Media file ${name} successfully added. Got id ${id}`);
       setLoading(false)
-      notifySuccessFxn("Successfully Downloaded!");
+      notifySuccessFxn("Téléchargement réussi!");
       console.log("status is now:", status)
       console.log("loading is now:", loading)
 
@@ -752,7 +752,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   padding: '8px'}}
   onClick={()=>{if(!user){navigate('/external-login')}else{navigate('/dashboard/saved-courses')}}}
   >
-  View My Courses
+  Voir mes cours
   </Button>
 
 

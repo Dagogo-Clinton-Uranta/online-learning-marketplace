@@ -14,20 +14,20 @@ const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ 
 
 const navConfig = [
   {
-    title: 'Home',
+    title: 'Accueil',
     path: '/dashboard/home',
     icon:<AiOutlineHome/>
     // icon: icon('ic_analytics'),
   },
   {
-    title: 'My Courses',
+    title: 'Cours téléchargés',
     // path: '/dashboard/test-payment',
     path: '/dashboard/saved-courses',
     icon:<AiOutlineInbox/>
     // icon: icon('ic_analytics'),
   },
   {
-    title: 'Purchased Courses',
+    title: 'Mes cours achetés',
     path: '/dashboard/purchased-courses',
     icon:<AiOutlineInbox/>
     // icon: icon('ic_analytics'),
@@ -39,26 +39,26 @@ const navConfig = [
      icon: icon('ic_analytics'),
 },*/
   {
-    title: 'My Cart',
+    title: 'Mon panier',
     path: '/dashboard/my-cart',
     icon:<BiBasket/>
     // icon: icon('ic_analytics'),
   },
   {
-    title: 'Profile',
+    title: 'Profil',
     path: '/dashboard/profile',
     icon:<CgToolbox/>
     // icon: icon('ic_analytics'),
   },
   {
-    title: 'Privacy & Terms',
+    title: 'CGU',
     path: '/dashboard/privacy',
     icon:<SlDocs/>
     // icon: icon('ic_analytics'),
   },
 
   {
-    title: 'Logout',
+    title: 'Se déconnecter',
     path: '/dashboard/logout',
     icon:<BiLogOut/>
     // icon: icon('ic_analytics'),

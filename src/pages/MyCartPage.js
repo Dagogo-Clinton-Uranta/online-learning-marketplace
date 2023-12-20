@@ -99,7 +99,7 @@ const MyCartPage = () => {
               marginTop: '20px',
             }}
           >
-            My Cart
+            Mon panier
           </p>
         </center>
       </Grid>
@@ -159,7 +159,7 @@ const MyCartPage = () => {
                   fontWeight: 'bold',
                 }}
               >
-                Cart is empty
+                Panier vide
               </h1>
             </Grid>
           </div>
@@ -198,7 +198,7 @@ const MyCartPage = () => {
                     paddingLeft: '30px',
                   }}
                 >
-                  Make Payment
+                  Procéder au paiement
                 </Button>
           {/* <form action="https://mapaycard.com/epay/" method="POST">
               <input type="hidden" name="c" value="MjcyMDQxNzM" />

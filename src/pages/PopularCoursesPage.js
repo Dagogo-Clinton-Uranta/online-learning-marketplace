@@ -141,7 +141,7 @@ function PopularCoursesPage() {
   padding: '8px'}}
   onClick={()=>{navigate('/dashboard/saved-courses')}}
   >
-  My Courses
+  Mes cours
   </Button>
 
 
