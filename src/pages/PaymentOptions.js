@@ -14,7 +14,9 @@ import { useNavigate } from 'react-router-dom';
 
 const PaymentOptions = () => {
   const [pcChecked, setPcChecked] = useState(false);
-  const [mtnChecked, setMtnChecked] = useState(false);
+  const [mtnChecked1, setMtnChecked1] = useState(false);
+  const [mtnChecked2, setMtnChecked2] = useState(false);
+
   const [orangeChecked, setOrangeChecked] = useState(false);
   const [momoToken, setMomoToken] = useState(null);
   const { user } = useSelector((state) => state.auth);
@@ -32,7 +34,8 @@ const PaymentOptions = () => {
 
   const handleOrangeCheckBox = () => {
     setOrangeChecked(true);
-    setMtnChecked(false);
+    setMtnChecked1(false);
+    setMtnChecked2(false);
     setPcChecked(false);
   };
 
@@ -56,13 +59,27 @@ const PaymentOptions = () => {
 
   const handlePcCheckboxChange = () => {
     setPcChecked(true);
-    setMtnChecked(false);
+    setMtnChecked1(false);
+    setMtnChecked2(false);
+    setOrangeChecked(false);
   };
 
   const handleMtnCheckboxChange = () => {
-    setMtnChecked(true);
+    setMtnChecked1(true);
+    setMtnChecked2(false);
     setPcChecked(false);
+    setOrangeChecked(false);
   };
+
+
+  const handleMtnCheckboxChange2 = () => {
+    setMtnChecked1(false);
+    setMtnChecked2(true);
+    setPcChecked(false);
+    setOrangeChecked(false);
+  };
+
+
 
   const handleMtnPay = async () => {
     if(!user){
@@ -245,6 +262,33 @@ const PaymentOptions = () => {
               <LockIcon />
             </IconButton>
           </Typography>
+
+          <Paper
+            sx={{
+              p: 2,
+              mb:3,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 140,
+              width: 390,
+              border: '0px solid black',
+              justifyContent: 'center',
+              alignItems: 'center',
+              background: '#F4C109DB',
+            }}
+          >
+            <Grid container justifyContent="flex-start" alignItems="center">
+              <Grid item>
+                <Checkbox checked={mtnChecked1} onChange={handleMtnCheckboxChange} />
+              </Grid>
+              <Grid item style={{ marginLeft: '25%' }}>
+                <img src={MTNLOGO} alt="MTN Logo" style={{ width: '100px', height: '100px' }} />
+                one click method
+              </Grid>
+            </Grid>
+          </Paper>
+
+
           <Paper
             sx={{
               p: 2,
@@ -260,10 +304,11 @@ const PaymentOptions = () => {
           >
             <Grid container justifyContent="flex-start" alignItems="center">
               <Grid item>
-                <Checkbox checked={mtnChecked} onChange={handleMtnCheckboxChange} />
+                <Checkbox checked={mtnChecked2} onChange={handleMtnCheckboxChange2} />
               </Grid>
               <Grid item style={{ marginLeft: '25%' }}>
                 <img src={MTNLOGO} alt="MTN Logo" style={{ width: '100px', height: '100px' }} />
+                two click method
               </Grid>
             </Grid>
           </Paper>
@@ -389,7 +434,7 @@ const PaymentOptions = () => {
           <Button
             form="paycard"
             type="submit"
-            disabled={isLoading === true ? true : pcChecked === false && mtnChecked === false ? true : false}
+            disabled={isLoading === true ? true : pcChecked === false && mtnChecked1 === false ? true : false}
             variant="contained"
             style={{
               color: 'white',
@@ -420,14 +465,40 @@ const PaymentOptions = () => {
           >
            {isLoading ? "Loading..." : "Pay"}
           </Button>
-        ) : (
+        ) :mtnChecked1?
+        
+        (
+          <Button
+            type="button"
+            onClick={() => {
+             
+             handleMtnPay()
+            }}
+            disabled={isLoading === true ? true : pcChecked === false && mtnChecked1 === false ? true : false}
+            variant="contained"
+            style={{
+              backgroundColor: '#CC4436',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+              paddingRight: '30px',
+              paddingLeft: '30px',
+            }}
+          >
+           {isLoading ? "Loading..." : "Pay"}
+          </Button>
+        )
+        
+        
+        :
+        
+        (
           <Button
             type="button"
             onClick={() => {
               navToMtnPay();
              // handleMtnPay()
             }}
-            disabled={isLoading === true ? true : pcChecked === false && mtnChecked === false ? true : false}
+            disabled={isLoading === true ? true : pcChecked === false && mtnChecked2 === false ? true : false}
             variant="contained"
             style={{
               backgroundColor: '#CC4436',
