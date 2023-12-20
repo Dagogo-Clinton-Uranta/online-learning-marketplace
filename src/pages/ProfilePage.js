@@ -77,7 +77,7 @@ const updateObject = {
    { registeredWithSocials &&
      <>
      <br/> 
-     <h1 style={{color:"red"}}>Please Include the rest of your data now, or at another time.</h1>
+     <h1 style={{color:"red"}}>Veuillez inclure le reste de vos données maintenant</h1>
 
      </>
     }
