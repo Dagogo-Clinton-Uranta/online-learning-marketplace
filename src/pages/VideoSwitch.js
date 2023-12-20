@@ -13,11 +13,13 @@ import Modal from '@mui/material/Modal';
 import { findDOMNode } from 'react-dom'
 
 import { blobToDataURL } from 'blob-util'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setSelectedAudio, setSelectedAudioId, setSelectedAudioState } from 'src/redux/actions/group.action';
 
 const VideoSwitch = ({audioFile}) => {
  const navigate = useNavigate()
+ const dispatch = useDispatch()
 
   const style = {
     position: 'absolute',
@@ -130,13 +132,22 @@ const handleEsc = (event) => {
 
 
 const doVideoActions = () => {
- if(!user){
+
+  
+
+  if(!user){
   navigate('/external-login')
+  return
  }
  
+ dispatch(setSelectedAudioId('no'))
+ dispatch(setSelectedAudio('no'))
+ dispatch(setSelectedAudioState(false))
  
-  setOpen(true)
-  
+ setOpen(true)
+
+
+
   setTimeout(
    ()=> {
   
@@ -155,9 +166,15 @@ const doVideoActions = () => {
 
 useEffect(()=>{
 
-  if(open === false){
-    setTimeout(()=>(window.removeEventListener('fullscreenchange', handleEsc)),10)
-  }
+
+    setTimeout(()=>{
+
+      if(open ===false){
+      window.removeEventListener('fullscreenchange', handleEsc)
+      } 
+      
+    },100)
+ 
 
 },[open])
 
