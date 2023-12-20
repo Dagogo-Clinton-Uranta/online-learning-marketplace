@@ -28,6 +28,8 @@ const PaymentOptions = () => {
     return acc + itemPrice;
   }, 0);
 
+  const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
+
   const handleOrangeCheckBox = () => {
     setOrangeChecked(true);
     setMtnChecked(false);
@@ -98,7 +100,7 @@ const PaymentOptions = () => {
               let today = new Date().toLocaleDateString();
 
             if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"|| res.data && res.data.status === "SUCCESS"){
-              dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
+              dispatch(buyCourse(cartToSubmit, user.id ?? user.uid, today, navigate, setIsLoading));
               }else{
 
                 if(res.data && res.data.reason){notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)}

@@ -41,8 +41,9 @@ const PaymentOptionsMtn = () => {
     return acc + itemPrice;
   }, 0);
 
+   const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
 
-console.log("OUR USER DEETS---->",user)
+console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
 
 
  
@@ -200,7 +201,7 @@ console.log("OUR USER DEETS---->",user)
         let today = new Date().toLocaleDateString();
 
       if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"){
-        dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
+        dispatch(buyCourse(cartToSubmit, user.id ?? user.uid, today, navigate, setIsLoading));
         }else{
 
         
