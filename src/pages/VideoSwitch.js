@@ -121,13 +121,14 @@ const handleEsc = (event) => {
   findDOMNode(videoRef.current).pause()
   
   findDOMNode(videoRef.current).remove() 
-  findDOMNode(modalRef.current).remove() 
 
- window.removeEventListener('fullscreenchange', handleEsc) 
- window.removeEventListener('webkitfullscreenchange', handleEsc)
- window.removeEventListener('mozfullscreenchange', handleEsc)
+  setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
+
+   window.removeEventListener('fullscreenchange', handleEsc) 
+   window.removeEventListener('webkitfullscreenchange', handleEsc)
+   window.removeEventListener('mozfullscreenchange', handleEsc)
   
-   console.log("MODAL CURRENT DETAILS ARE---->", findDOMNode(modalRef.current))
+   console.log("MODAL CURRENT DETAILS ARE----->", findDOMNode(modalRef.current))
 
   setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
   setTimeout(()=>{setDoubleClose(true)},100)
@@ -159,6 +160,18 @@ const doVideoActions = () => {
   setVideoTime(!videoTime)
   
    if(!videoTime){
+
+
+    if (findDOMNode(videoRef.current).requestFullscreen) {
+      findDOMNode(videoRef.current).requestFullscreen();
+  } else if (findDOMNode(videoRef.current).webkitRequestFullscreen) {
+    findDOMNode(videoRef.current).webkitRequestFullscreen();
+  } else if (findDOMNode(videoRef.current).mozRequestFullScreen) {
+    findDOMNode(videoRef.current).mozRequestFullScreen();
+  }
+
+
+
     findDOMNode(videoRef.current).requestFullscreen()
     }
   },10) 
