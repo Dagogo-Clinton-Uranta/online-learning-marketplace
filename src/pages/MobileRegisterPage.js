@@ -209,7 +209,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"40px"}}>
     <center>
-    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Bienvenue à bonÉcole!</h1>
+    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Bienvenue à Bonécole!</h1>
     </center>
 
     </Grid>
