@@ -29,7 +29,7 @@ export const buyCourse = (courses, uid, today, navigate, setLoading) => async (d
       affiliate:courses.affiliateId
   })
   .then(() => {
-    notifySuccessFxn("Course purchased successfully");
+    notifySuccessFxn("Cours acheté avec succès");
     dispatch(clearCart());
     navigate('/dashboard/purchased-courses');
   })
@@ -42,19 +42,18 @@ export const buyCourse = (courses, uid, today, navigate, setLoading) => async (d
 }
 
 export const buyCourseUpdateUser = (courses, uid, today, navigate) => async (dispatch) => {
-  var userRef = db.collection("purchasedCourses").doc(uid);
+  var userRef = db.collection("users").doc(uid);
  userRef.update({
-   purchasedCourses:db.FieldValue.arrayUnion(...courses.courses), //<--- will this array of values spread into individual courses ids , confirm upon testing ?
-   affiliateId:courses.affiliateId 
+   purchasedCourses:db.FieldValue.arrayUnion(...courses), //<--- will this array of values spread into individual courses ids , confirm upon testing ?
  })
   .then(() => {
-    notifySuccessFxn("Course purchased successfully");
+    //notifySuccessFxn("Course purchased successfully");
     dispatch(clearCart());
-    navigate('/dashboard/purchased-courses');
+    //navigate('/dashboard/purchased-courses');
   })
   .catch((error) => {
     var errorMessage = error.message;
-    notifyErrorFxn("Error with Purchasing Course");
+    notifyErrorFxn("Error with updating user's purchased courses");
     console.log('Error with buying course', errorMessage);
   });
 }

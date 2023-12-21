@@ -341,7 +341,7 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
     return
    }
  
-  if(/*presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))*/true ==false){
+  if(presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))/*true ==false*/){
     notifyInfoFxn('Please purchase course to save media.')
   }else{
 

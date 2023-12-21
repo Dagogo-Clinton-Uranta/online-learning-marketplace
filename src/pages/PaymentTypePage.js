@@ -220,7 +220,7 @@ const PaymentTypePage = () => {
               <input
                 type="hidden"
                 name="paycard-callback-url"
-                value="https://bonecole-student.netlify.app/dashboard/payment-callback"
+                value="https://bonecole.com/dashboard/payment-callback"
               />
               {/* <input type="hidden" name="paycard-callback-url" value="https://www.monsite.com/check_payment" /> */}
               <input type="hidden" name="paycard-redirect-with-get" value="on" />

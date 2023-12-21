@@ -81,8 +81,12 @@ const PaymentOptions = () => {
     headers: {
       'Content-Type':'application/json',
         'X-Reference-Id': `${uuid.v4()}`,
-        'X-Callback-Url': 'https://bonecole-student.netlify.app/dashboard/payment-callback', 
-        'X-Callback-Host': 'https://bonecole-student.netlify.app',
+        //'X-Callback-Url': 'https://bonecole-student.netlify.app/dashboard/payment-callback', 
+        //'X-Callback-Host': 'https://bonecole-student.netlify.app',
+
+        'X-Callback-Url': 'https://bonecole.com/dashboard/payment-callback', 
+        'X-Callback-Host': 'https://bonecole.com',
+
         'Ocp-Apim-Subscription-Key':process.env.REACT_APP_SUBSCRIPTION_KEY,
         'X-Target-Environment':'production', /*<-- in the tutorials they only ever used sandbox */
         'Authorization':`Bearer ${momoToken}`
@@ -217,7 +221,8 @@ const PaymentOptions = () => {
               <input
                 type="hidden"
                 name="paycard-callback-url"
-                value="https://bonecole-student.netlify.app/dashboard/payment-callback"
+                //value="https://bonecole-student.netlify.app/dashboard/payment-callback"
+                 value="https://bonecole.com/dashboard/payment-callback"
               />
               
               <input type="hidden" name="paycard-redirect-with-get" value="on" />

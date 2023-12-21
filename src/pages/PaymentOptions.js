@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Checkbox, Typography, IconButton, Button } from '@mui/material';
-import { fetchPurchasedCourse } from '../redux/actions/cart.action';
+import { buyCourseUpdateUser, fetchPurchasedCourse } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
 import { buyCourse } from 'src/redux/actions/cart.action';
 import MTNLOGO from '../assets/images/MTN-logo.png';
@@ -30,6 +30,7 @@ const PaymentOptions = () => {
     return acc + itemPrice;
   }, 0);
 
+  const courseIdArray = cart.map((item)=>(item.id))
   const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
 
   const handleOrangeCheckBox = () => {
@@ -118,6 +119,9 @@ const PaymentOptions = () => {
 
             if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"|| res.data && res.data.status === "SUCCESS"){
               dispatch(buyCourse(cartToSubmit, user.id ?? user.uid, today, navigate, setIsLoading));
+              
+             
+              dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
               }else{
 
                 if(res.data && res.data.reason){notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)}
@@ -397,7 +401,8 @@ const PaymentOptions = () => {
           <input
             type="hidden"
             name="paycard-callback-url"
-            value="https://bonecole-student.netlify.app/dashboard/payment-callback"
+            //value="https://bonecole-student.netlify.app/dashboard/payment-callback"
+            value="https://bonecole.com.app/dashboard/payment-callback"
           />
 
           <input type="hidden" name="paycard-redirect-with-get" value="on" />

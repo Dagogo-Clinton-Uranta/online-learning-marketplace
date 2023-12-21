@@ -16,6 +16,7 @@ import { blobToDataURL } from 'blob-util'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSelectedAudio, setSelectedAudioId, setSelectedAudioState } from 'src/redux/actions/group.action';
+import { notifyInfoFxn } from 'src/utils/toast-fxn';
 
 const VideoSwitch = ({audioFile}) => {
  const navigate = useNavigate()
@@ -40,6 +41,7 @@ const VideoSwitch = ({audioFile}) => {
   const [urlLink,setUrlLink] = useState('')
   /*const URLSound = window.URL || window.webkitURL;*/
   const { user,error } = useSelector((state) => state.auth);
+  const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
 
   const linkMaker = (blob) => {
     let link;
@@ -150,16 +152,22 @@ const handleEsc = (event) => {
 
 const doVideoActions = () => {
 
-  
+  dispatch(setSelectedAudioId('no'))
+  dispatch(setSelectedAudio('no'))
+  dispatch(setSelectedAudioState(false))
 
   if(!user){
   navigate('/external-login')
   return
  }
+
+
+ if(presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))){
+  notifyInfoFxn('Please purchase course to view media.')
+  return
+}
  
- dispatch(setSelectedAudioId('no'))
- dispatch(setSelectedAudio('no'))
- dispatch(setSelectedAudioState(false))
+
  
  setOpen(true)
 
@@ -241,6 +249,8 @@ aria-labelledby="modal-modal-title"
 aria-describedby="modal-modal-description"
 ref={modalRef}
 >
+
+
 
 
 <Box sx={style}>

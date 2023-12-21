@@ -10,6 +10,7 @@ import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/re
 import { addToLessonsWatched } from 'src/redux/actions/auth.action';
 import { blobToDataURL } from 'blob-util'
 import { useNavigate } from 'react-router-dom';
+import { notifyInfoFxn } from 'src/utils/toast-fxn';
 
 const LogoSwitch = ({uid,audioFile}) => {
 
@@ -26,6 +27,7 @@ const LogoSwitch = ({uid,audioFile}) => {
  const navigate = useNavigate()
 
  const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+ const { presentSubject } = useSelector((state) => state.group);
 
  const [trackUser,setTrackUser] = useState(user && user.lessonsWatched ? user.lessonsWatched.map((item)=>(item.lessonId)):[])
 
@@ -82,6 +84,15 @@ const LogoSwitch = ({uid,audioFile}) => {
     if(!user){
       navigate('/external-login')
     }
+
+
+    if(presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))){
+      notifyInfoFxn('Please purchase course to listen to media.')
+      return
+    }
+     
+
+
    
     setPlay(!play)
  //do lesson watched logic here !!
@@ -98,6 +109,7 @@ const LogoSwitch = ({uid,audioFile}) => {
     dispatch(setSelectedAudioId(uid))
    dispatch(setSelectedAudio(audioFile))
    dispatch(setSelectedAudioState(true))
+
     }
 
     

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Checkbox, Typography, IconButton, Button } from '@mui/material';
-import { fetchPurchasedCourse } from '../redux/actions/cart.action';
+import { buyCourseUpdateUser, fetchPurchasedCourse } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
 import { buyCourse } from 'src/redux/actions/cart.action';
 import MTNLOGO from '../assets/images/MTN-logo.png';
@@ -40,6 +40,10 @@ const PaymentOptionsMtn = () => {
     const itemPrice = parseFloat(item.price.replace(',', ''));
     return acc + itemPrice;
   }, 0);
+
+  const courseIdArray = cart.map((item)=>(item.id))
+
+  console.log("COURSE ID ARRAY IS,----->",courseIdArray)
 
    const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
 
@@ -111,7 +115,7 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
 
 
      setIsLoadingOne(true);
-     notifyInfoFxn("Please wait... be sure not to refresh the screen while payment is in process..")
+     notifyInfoFxn("Veuillez patienter... assurez-vous de ne pas actualiser l'écran pendant le processus de paiement.")
    
          /* if(user && !user.phone){
       notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
@@ -202,6 +206,9 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
 
       if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"){
         dispatch(buyCourse(cartToSubmit, user.id ?? user.uid, today, navigate, setIsLoading));
+
+        
+        dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
         }else{
 
         
@@ -237,61 +244,7 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
 
   }
 
-  /*========================= YOU ARE COPYING FROM BELOW==================================*/
-  const handleMtnPay = async () => { 
-    if(!user){
-      notifyErrorFxn("You must be logged in to proceed!");
-      return;
-    }
-
-
-    /* if(user && !user.phone){
-      notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
-      return;
-    }*/
-     const headers = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',  
-     };
-       setIsLoading(true);
-       axios.post(momoTokenUrl, {}, { headers })
-        .then(response => {
-            const access_token = response.data.access_token;
-            console.log("ACCESS-TOKEN IS-->", access_token);
-           axios.post(momoRequestToPayUrl, {
-            amount: '500'/*totalPrice*/,
-            currency: 'GNF',
-            externalId: `${uuid.v4()}`,
-            payer: {
-              partyIdType: 'MSISDN',
-              partyId:'224664930445' /*`${user && user.phone?(user.phone).toString():null}`*/, //phone 08106091838
-            },
-            payerMessage: 'Payment for order',
-            payeeNote: 'Payment for order',
-            momoToken: access_token
-          }).then((res) => {
-              console.log("Payment completed...---->", res.data);
-              let today = new Date().toLocaleDateString();
-
-            if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"){
-              dispatch(buyCourse(cart, user.id ?? user.uid, today, navigate, setIsLoading));
-              }else{
-
-                if(res.data && res.data.reason){notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)}
-                console.log("OUR REASON IS HEREEE---->",res.data.reason)
-              }
-          }).catch((error) => {
-            setIsLoading(false);
-            console.error('Payment Request Error:', error);
-            notifyErrorFxn('Payment Request Error...');
-          })
-        }).catch(error => {
-            // Handle errors
-            setIsLoading(false);
-            console.error(' FAILED TO EVEN MAKE AXIOS REQUEST IN THE FIRST PLACE ------->', error);
-            notifyErrorFxn('Failed to get token');
-        });
-  };
+  
 
   return (
     <Container
@@ -363,7 +316,7 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
               paddingLeft: '30px',
             }}
           >
-           {isLoadingOne && isLoadingTwo?"Please Wait..": "Verify"}
+           {isLoadingOne && isLoadingTwo?"Please Wait..": "Vérifier"}
           </Button>
               </Grid>
             </Grid>
@@ -402,7 +355,7 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
               paddingLeft: '30px',
             }}
           >
-           {"Finish Payment"}
+           {"Finir paiement"}
           </Button>
 
               </Grid>
