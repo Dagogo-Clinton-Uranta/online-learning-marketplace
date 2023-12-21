@@ -123,8 +123,9 @@ const handleEsc = (event) => {
   findDOMNode(videoRef.current).remove() 
   findDOMNode(modalRef.current).remove() 
 
- window.removeEventListener('fullscreenchange', handleEsc)
-  
+ window.removeEventListener('fullscreenchange', handleEsc) 
+ window.removeEventListener('webkitfullscreenchange', handleEsc)
+ window.removeEventListener('mozfullscreenchange', handleEsc)
   
    console.log("MODAL CURRENT DETAILS ARE---->", findDOMNode(modalRef.current))
 
@@ -163,6 +164,8 @@ const doVideoActions = () => {
   },10) 
 
   setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
+  setTimeout(()=>(window.addEventListener('webkitfullscreenchange', handleEsc)),1000)
+  setTimeout(()=>(window.addEventListener('mozfullscreenchange', handleEsc)),1000)
 }
 
 
@@ -175,6 +178,8 @@ useEffect(()=>{
 
       if(open ===false){
       window.removeEventListener('fullscreenchange', handleEsc)
+      window.removeEventListener('webkitfullscreenchange', handleEsc)
+      window.removeEventListener('mozfullscreenchange', handleEsc)
       } 
       
     },100)
