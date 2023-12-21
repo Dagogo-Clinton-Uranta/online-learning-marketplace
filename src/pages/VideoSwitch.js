@@ -117,12 +117,22 @@ const modalRef = useRef(true)
 const handleEsc = (event) => {
  
   setOpen(false)
- 
+
+
+
+    
+    
+  
   findDOMNode(videoRef.current).pause()
   
   findDOMNode(videoRef.current).remove() 
 
   setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
+
+
+  if(!document.fullscreenElement) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
+    setOpen(false)
+    }
 
    window.removeEventListener('fullscreenchange', handleEsc) 
    window.removeEventListener('webkitfullscreenchange', handleEsc)
@@ -172,7 +182,7 @@ const doVideoActions = () => {
 
 
 
-    findDOMNode(videoRef.current).requestFullscreen()
+   // findDOMNode(videoRef.current).requestFullscreen()
     }
   },10) 
 
@@ -185,6 +195,8 @@ const doVideoActions = () => {
 
 
 useEffect(()=>{
+
+ 
 
 
     setTimeout(()=>{
