@@ -125,6 +125,7 @@ const handleEsc = (event) => {
   findDOMNode(videoRef.current).pause()
   
   //findDOMNode(videoRef.current).remove() i am pausing on removing the video for now
+  findDOMNode(modalRef.current).remove()
 
   setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
 

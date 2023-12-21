@@ -661,7 +661,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   
   
   }     &nbsp; {index + 1}.</p>
-  <p style={{display:"inline",width:{xs:"9rem",sm:"12rem"}}}>  
+  <p style={{display:"inline",width:{xs:"8rem",sm:"9rem"}}}>  
    
     {lesson.title && lesson.title}
   
