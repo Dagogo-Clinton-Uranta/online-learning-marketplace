@@ -121,6 +121,7 @@ const handleEsc = (event) => {
   findDOMNode(videoRef.current).pause()
   
   findDOMNode(videoRef.current).remove() 
+  findDOMNode(modalRef.current).remove() 
 
  window.removeEventListener('fullscreenchange', handleEsc)
   
