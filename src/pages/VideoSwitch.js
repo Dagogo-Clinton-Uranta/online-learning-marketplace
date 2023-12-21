@@ -112,25 +112,25 @@ const [fullScreen, setFullScreen] = useState(false);
 
 const videoRef = useRef(true)
 const modalRef = useRef(true)
+console.log('THIS IS DOCUMENT FULL SCREEN ELEMENT-->',document.fullscreenElement)
 
 
 const handleEsc = (event) => {
- 
-  setOpen(false)
+  
+  console.log('THIS IS DOCUMENT FULL SCREEN ELEMENT-->',document.fullscreenElement)
 
 
-
-    
-    
+  setOpen(false) 
   
   findDOMNode(videoRef.current).pause()
   
-  findDOMNode(videoRef.current).remove() 
+  //findDOMNode(videoRef.current).remove() i am pausing on removing the video for now
 
   setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
 
 
   if(!document.fullscreenElement) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
+     
     setOpen(false)
     }
 
