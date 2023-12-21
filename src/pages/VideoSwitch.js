@@ -119,6 +119,9 @@ const handleEsc = (event) => {
   setOpen(false)
  
   findDOMNode(videoRef.current).pause()
+  
+  findDOMNode(videoRef.current).remove() 
+
  window.removeEventListener('fullscreenchange', handleEsc)
   
   
