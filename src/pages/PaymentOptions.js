@@ -266,7 +266,8 @@ const PaymentOptions = () => {
               <LockIcon />
             </IconButton>
           </Typography>
-
+    
+           {/*
           <Paper
             sx={{
               p: 2,
@@ -291,6 +292,7 @@ const PaymentOptions = () => {
               </Grid>
             </Grid>
           </Paper>
+          */}  
 
 
           <Paper
@@ -312,7 +314,7 @@ const PaymentOptions = () => {
               </Grid>
               <Grid item style={{ marginLeft: '25%' }}>
                 <img src={MTNLOGO} alt="MTN Logo" style={{ width: '100px', height: '100px' }} />
-                two click method
+                {/*two click method*/}
               </Grid>
             </Grid>
           </Paper>
