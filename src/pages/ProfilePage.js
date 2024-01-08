@@ -1,4 +1,4 @@
-import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
+import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box,CardMedia} from '@mui/material';
 import { useEffect,useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
@@ -11,21 +11,67 @@ import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import {FaCaretDown} from 'react-icons/fa'
 
 
-import {updateProfile} from 'src/redux/actions/group.action';
+
 import {logout} from 'src/redux/actions/auth.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 
+import {  uploadImage, uploadProfileImage,updateProfile} from 'src/redux/actions/auth.action';
+
+import DEFAULTIMG from '../assets/images/rec.png';
+
 
 function ProfilePage() {
   const navigate = useNavigate(); 
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
+  const { user,error,registeredWithSocials } = useSelector((state) => state.auth);
+  console.log("registered with socials is",registeredWithSocials)
+
+  const [selectedFile, setSelectedFile] = useState({selectedFile: [], selectedFileName: []});
+  const [file, setFile] = useState();
+  
+ const [state, setState] = useState({
+    paymentLink: user?.paymentLink ? user?.paymentLink : "",
+    password: "",
+    imageUrl: user?.imageUrl ? user?.imageUrl : "",
+  })
+
+  const handleselectedFile = event => {
+    setSelectedFile({
+        selectedFile: event.target.files[0],
+        selectedFileName: event.target.files[0].name
+    });
+    setFile(URL.createObjectURL(event.target.files[0]));
+};
+
+
+const settingsUpdate = (e) => {
+  e.preventDefault();
+//   console.log("OLD SATE: ",state);
+  state.paymentLink = state.paymentLink == "" ? user?.paymentLink : state.paymentLink;
+  state.imageUrl = selectedFile.selectedFile == "" ? user?.imageUrl : selectedFile.selectedFile;
+//   return;
+  setLoading(true);
+  const id = user.uid;
+  const imageUrl = user.imageUrl;
+  if(selectedFile.selectedFile.length == 0){
+    // notifyErrorFxn("You have not uploaded Image");
+    //dispatch(updateProfile(state, id, '', navigate, setLoading, imageUrl));
+   // dispatch(updateProfile(user.uid,updateObject,navigate))
+
+    dispatch(updateProfile(updateObject, user.uid, '', navigate, setLoading, imageUrl));
+  }else{
+    dispatch(uploadProfileImage(updateObject, selectedFile.selectedFile, user.uid, navigate, setLoading));
+  }
+ 
+}
  
 
-  const { user,error,registeredWithSocials } = useSelector((state) => state.auth);
-console.log("registered with socials is",registeredWithSocials)
+
 
 
 useEffect(()=>{
@@ -94,7 +140,26 @@ const updateObject = {
        <p style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center" ,width:"95%"}}>  <span>MON PROFIL</span> <FaCaretDown/></p>
        <Divider variant="fullWidth" sx={{backgroundColor:"#000000",width:"100%"}}  />
         
-       <img src={profileImg} alt="profile image" style={{borderRadius:"10px",height:"100px",width:"150px"}}/>
+       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' }}>
+          <CardMedia
+            style={{ border: '0.2px solid black', backgroundColor: '#fff', width: '200px' }}
+            component="img"
+            height="200"
+            width="300"
+            image={file ? file : state.imageUrl !== "" ? state.imageUrl : DEFAULTIMG}
+            alt="IMG"
+          />
+          <Button component="label" variant="contained" style={{ minHeight: '45px', minWidth: '145px', backgroundColor: '#000000', marginTop: '15px' }}>
+            <b>TÉLÉCHARGER</b>
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              onChange={handleselectedFile}
+            />
+          </Button>
+        </div>
+
+
 
         </Grid>
 
@@ -264,7 +329,7 @@ const updateObject = {
            <Button   variant="contained" 
           style={{ backgroundColor: "#f00c44",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
           }}
-          onClick ={()=>{dispatch(updateProfile(user.uid,updateObject,navigate))}}
+          onClick ={(e)=>{settingsUpdate(e)}}
           >
           Sauvegarder changement
           </Button>

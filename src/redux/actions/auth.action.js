@@ -372,7 +372,14 @@ export const uploadProfileImage = (profileData, file, userID, navigate, setLoadi
 export const updateProfile = (profileData, userID, file, navigate, setLoading, url) => async (dispatch) => {
   // return  
   db.collection('users').doc(userID).update({
-    paymentLink: profileData.paymentLink,
+    telephone: profileData.telephone,
+    pvExamen: profileData.pvExamen,
+    classOption: profileData.classes,
+    schoolOrigin: profileData.school,
+    firstName: profileData.firstName,
+    lastName: profileData.lastName,
+    facebook: profileData.facebook,
+    affiliate: profileData.affiliate,
     imageUrl: url,
   }).then((res)=>{
        if(profileData?.password){
@@ -381,9 +388,25 @@ export const updateProfile = (profileData, userID, file, navigate, setLoading, u
         user.updatePassword(profileData.password)
           .then(() => {
             setLoading(false);
-            console.log("Password updated successfully");
-            notifySuccessFxn("Updated successfully");
-            navigate('/dashboard/home', { replace: true });
+           
+            //navigate('/dashboard/home', { replace: true });
+          }).then(()=>{
+
+            var user = db.collection("users").doc(userID);
+            user.get().then((doc) => {
+            if (doc.exists) {
+             
+              dispatch(storeUserData(doc.data()));
+             
+              notifySuccessFxn("mise à jour réussie!");
+              
+            } else {
+               
+                notifyErrorFxn("problème de mise à jour du profil utilisateur, veuillez réessayer")
+                console.log("No such document!");
+            }
+          })
+
           })
           .catch((error) => {
             setLoading(false);
@@ -392,10 +415,26 @@ export const updateProfile = (profileData, userID, file, navigate, setLoading, u
           });
        //update password end
        }else{
+
+        var user = db.collection("users").doc(userID);
+        user.get().then((doc) => {
+        if (doc.exists) {
+          // console.log("User Data:", doc.data());
+          dispatch(storeUserData(doc.data()));
+          
+        } else {
+           
+            notifyErrorFxn("problème de mise à jour de ce profil, veuillez réessayer")
+            console.log("No such document!");
+        }
+      })
+
+
+
         setLoading(false);
         console.error("No Password to update");
-        notifySuccessFxn("Updated successfully");
-        navigate('/dashboard/home', { replace: true });
+        notifySuccessFxn("mise à jour réussie!");
+        //navigate('/dashboard/home', { replace: true });
        }
      
   }).catch((err) => {
