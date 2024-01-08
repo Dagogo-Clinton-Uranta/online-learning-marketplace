@@ -16,9 +16,11 @@ const PaymentCallBackPage = () => {
   const cart_data = urlParams.get("cart_data"); 
   if (cart_data) {
       const cartObject = JSON.parse(cart_data);
-      const courseIdArray = cartObject.map((item)=>(item.id))
+     
       let today = new Date().toLocaleDateString();
       dispatch(buyCourse(cartObject, user.uid, today, navigate));
+      
+      const courseIdArray = cartObject.map((item)=>(item.id))
       dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
   }
   setLoading(false);

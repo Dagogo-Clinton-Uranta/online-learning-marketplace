@@ -63,6 +63,8 @@ const { allCategories,categorySubjects } = useSelector((state) => state.group);
 const [topics,setTopics] = useState([])
 const { teachers } = useSelector((state) => state.group);
 const [teacherArr, setTeacherArr] = useState([]/*teachers*/);
+const myRef = useRef(null)
+const executeScroll = () => myRef.current.scrollIntoView({behavior:"smooth"})
 
 console.log("teachers from DATABASE",teachers)
 
@@ -287,7 +289,13 @@ aria-describedby="modal-modal-description"
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",border:"1px solid black", width:"70%",fontSize:"15px",
             paddingRight: '8px', paddingLeft: '8px'}}
-            onClick ={()=>{navigate('/dashboard/external-login')}}
+            onClick ={()=>{
+             if(user){
+              executeScroll()
+             } else{
+              navigate('/external-login')
+             }
+              }}
             >
             S'inscrire maintenant
             </Button>
@@ -362,7 +370,7 @@ aria-describedby="modal-modal-description"
 
 
 <center>
-<h2 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Cours Populaires</h2>
+<h2 ref={myRef} style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Cours Populaires</h2>
 </center>
 
 <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",gap:"15px" }}>
