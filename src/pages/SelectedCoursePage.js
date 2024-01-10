@@ -742,6 +742,100 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
  
  } 
   </Grid>  
+
+
+{
+
+<Grid item xs={12} style={{paddingTop:"4rem",paddingBottom:"1rem"}}>
+    
+<p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
+  {"Past Exams"}
+ <PictureAsPdfIcon onClick={()=>{handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")/*handleOpenPdf()*/}}  style={{fontSize:"2.2rem",display:"none"}} />
+ </p>
+
+
+ <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
+    {
+      
+   /*  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))?
+       
+     <NotPlayableSwitch />
+  :*/
+ <NotPlayableSwitch />
+  
+  
+  }  
+  
+  </p>
+  <p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
+   
+    {"Spring 2014 Past Exam"}
+  
+  </p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
+    
+  <PictureAsPdfIcon   style={{fontSize:"2.2rem"}} />
+  </p>
+ </Grid>
+
+ <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
+    {
+      
+   /*  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))?
+       
+     <NotPlayableSwitch />
+  :*/
+ <NotPlayableSwitch />
+  
+  
+  }  
+  
+  </p>
+  <p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
+   
+    {"Fall 2015 Past Exam"}
+  
+  </p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
+    
+  <PictureAsPdfIcon   style={{fontSize:"2.2rem"}} />
+  </p>
+ </Grid>
+
+
+ <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
+    {
+      
+   /*  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))?
+       
+     <NotPlayableSwitch />
+  :*/
+ <NotPlayableSwitch />
+  
+  
+  }  
+  
+  </p>
+  <p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
+   
+    {"Spring 2016 Past Exam"}
+  
+  </p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
+    
+  <PictureAsPdfIcon   style={{fontSize:"2.2rem"}} />
+  </p>
+ </Grid>
+
+
+</Grid>
+}
+
+
+
     
   {user && 
    <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"20px",gap:"10px" }}>
