@@ -404,7 +404,7 @@ const PaymentOptions = () => {
             type="hidden"
             name="paycard-callback-url"
             //value="https://bonecole-student.netlify.app/dashboard/payment-callback"
-            value="https://bonecole.com.app/dashboard/payment-callback"
+            value="http://bonecole.com.app/dashboard/payment-callback"
           />
 
           <input type="hidden" name="paycard-redirect-with-get" value="on" />
