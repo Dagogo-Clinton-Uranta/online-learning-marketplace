@@ -9,8 +9,7 @@ import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import { signin,signInWithFacebook,signInWithGoogle} from 'src/redux/actions/auth.action';
 import googleSI from 'src/assets/images/googleSI.svg'
-//import FacebookLogin from 'react-facebook-login';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+
 import { FaFacebookF } from "react-icons/fa";
 
 
