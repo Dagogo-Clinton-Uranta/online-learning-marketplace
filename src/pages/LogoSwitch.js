@@ -35,7 +35,7 @@ const LogoSwitch = ({uid,audioFile}) => {
 
   setTrackUser(user && user.lessonsWatched ? user.lessonsWatched.map((item)=>(item.lessonId)):[])
 
- },[user.lessonsWatched])
+ },[user])
 
   const linkMaker = (blob) => {
     let link;

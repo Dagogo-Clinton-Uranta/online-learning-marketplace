@@ -182,6 +182,7 @@ useEffect(()=>{
 useEffect(()=>{
 
   setTopics(categorySubjects)
+  console.log("CATEGORY SUBJECTS FOR IMAGES-->",categorySubjects)
 
 },[categorySubjects])
 
@@ -426,7 +427,8 @@ aria-describedby="modal-modal-description"
       
 <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
-      {categorySubjects && categorySubjects.length >0 && topics.slice(0,4).map((topic,i)=>(   
+      {categorySubjects && categorySubjects.length >0 && topics.slice(0,4).map((topic,i)=>(
+        
           <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
           style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
            <HomeCardPage 
