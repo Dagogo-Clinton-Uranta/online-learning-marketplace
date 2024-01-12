@@ -7,9 +7,11 @@ import startQuote from 'src/assets/images/startQuote.png'
 import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
-import { signin,signInWithGoogle} from 'src/redux/actions/auth.action';
+import { signin,signInWithFacebook,signInWithGoogle} from 'src/redux/actions/auth.action';
 import googleSI from 'src/assets/images/googleSI.svg'
-
+//import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { FaFacebookF } from "react-icons/fa";
 
 
 import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
@@ -35,6 +37,15 @@ function ExternalLoginPage() {
 
   const googleLoginFxn = (navigate) =>{
     dispatch(signInWithGoogle(navigate))
+  }
+
+
+  const facebookLoginFxn = (navigate) =>{
+    dispatch(signInWithFacebook(navigate))
+  }
+
+  const responseFacebook = (response) => {
+    console.log("THIS IS THE RESPONSE FROM OUR FB-->",response);
   }
   
 
@@ -71,13 +82,37 @@ function ExternalLoginPage() {
       <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center',alignItems:"center" }}>
            
           
-           <Button   variant="contained" 
+          <Button   variant="contained" 
           style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
           }}
-          onClick ={()=>{navigate('/login')}}
+          onClick ={()=>{facebookLoginFxn(navigate)}}
           >
           Se connecter avec Facebook
           </Button>
+
+       {/*
+       <FacebookLogin
+           appId="1025666841349330"
+           autoLoad={true}
+           fields="name,email,picture"
+           callback={responseFacebook}
+          
+           
+           render={renderProps => (
+            <Button   variant="contained" 
+            style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
+            display:"flex",justifyContent:'space-around',alignItems:"center",gap:"0.5rem"
+            }}
+           
+            onClick={renderProps.onClick}
+            >
+              <FaFacebookF style={{fontSize:"21px"}} />
+            Se connecter Facebook
+            </Button>
+          )}
+         /> */}
+
+
         </Grid>
 
 
@@ -106,7 +141,7 @@ function ExternalLoginPage() {
            
           
              <Button   variant="contained" 
-            style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
+            style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"57%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
             }}
             onClick ={()=>{navigate('/login')}}
             >

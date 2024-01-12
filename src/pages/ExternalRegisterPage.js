@@ -13,7 +13,7 @@ import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
-import { signUpWithGoogle } from 'src/redux/actions/auth.action';
+import { signUpWithFacebook, signUpWithGoogle } from 'src/redux/actions/auth.action';
 import googleSU from 'src/assets/images/googleSU.svg'
 
 
@@ -72,7 +72,7 @@ function ExternalRegisterPage() {
            <Button   variant="contained" 
           style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
           }}
-          onClick ={()=>{navigate('/login')}}
+          onClick ={()=>{dispatch(signUpWithFacebook(navigate))}}
           >
           S'inscrire avec Facebook
           </Button>

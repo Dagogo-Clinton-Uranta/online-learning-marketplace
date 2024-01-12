@@ -1,8 +1,11 @@
-import { db, fb, auth,provider, storage } from '../../config/firebase';
+import { db, fb, auth,provider,fbProvider, storage } from '../../config/firebase';
 import { clearUser, loginFailed, loginSuccess, logoutFxn, signupPending, signupFailed, storeUserData,storeProfileImages, markRegisteredWithSocials } from '../reducers/auth.slice';
 import { v4 as uuidv4 } from 'uuid';
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { clearGroup } from '../reducers/group.slice';
+
+import "firebase/auth";
+import firebase from "firebase/app";
 
 
   export const signin = (user, navigate,) => async (dispatch) => {
@@ -28,6 +31,65 @@ import { clearGroup } from '../reducers/group.slice';
     });
 
 };
+
+
+
+export const signInWithFacebook = (navigate) => async (dispatch) => {
+ const provider =  new firebase.auth.FacebookAuthProvider();
+
+ fb.auth().useDeviceLanguage();
+ 
+  fb.auth().signInWithPopup(provider)
+  .then((result)=>{
+
+    
+    var user = result.user;
+  
+    var firstName= result.user.displayName?result.user.displayName.split(" ")[0]:''
+    var lastName = result.user.displayName?result.user.displayName.split(" ")[1]:''
+  
+   console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
+
+
+    db.collection('userData').doc(user.uid).update({
+      uid: user.uid,
+      email: user.email,
+      firstName:firstName,
+      lastName:lastName,
+      
+     
+    })
+ 
+ 
+    db.collection('users').doc(user.uid).update({
+      uid: user.uid,
+      email: user.email,
+      firstName:firstName,
+      lastName:lastName,
+    
+     
+    })
+
+
+     dispatch(fetchUserData(user.uid, "sigin", navigate));
+
+  }).catch((error) => {
+    console.log( ' PROBLEM REPORT ', error.message);
+    dispatch(loginFailed(error.message));
+   
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    //notifyErrorFxn(errorMessage);
+    
+    console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
+   
+  });
+
+}
+
+
+
+
 
 export const signInWithGoogle = (navigate) => async (dispatch) => {
 
@@ -135,12 +197,84 @@ export const signup = (user,navigate) => async (dispatch) => {
 }
 
 
-
 export const signUpWithGoogle = (navigate) => async (dispatch) => {
 
  
   dispatch(signupPending());
   console.log("Just before the google sign up happens!!!!")
+  fb.auth().signInWithPopup(provider)
+    
+ .then((userCredential)=>{
+  var user = userCredential.user;
+ // console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
+  var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
+  var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
+
+ console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
+  
+  db.collection('userData').doc(user.uid).set({
+     uid: user.uid,
+     email: user.email,
+     firstName:firstName,
+     lastName:lastName,
+     registeredOn:new Date(),
+     password: '',
+      facebook:'',
+      affiliate:'',
+      pvExamen:'',
+      telephone:'',
+      classOption:'6eme Annee',
+      schoolOrigin:'',
+      
+     
+    
+   })
+
+
+   db.collection('users').doc(user.uid).set({
+     uid: user.uid,
+     email: user.email,
+     firstName:firstName,
+     lastName:lastName,
+     registeredOn:new Date(),
+     password: '',
+      facebook:'',
+      affiliate:'',
+      pvExamen:'',
+      telephone:'',
+      classOption:'6eme Annee',
+      schoolOrigin:'',
+    
+   })
+
+   fb.auth().sendPasswordResetEmail(user.email)
+   
+
+   dispatch(fetchUserData(user.uid, "registerSocials",navigate));
+ }).then(() => {
+    dispatch(markRegisteredWithSocials(true))
+
+   if(navigate){navigate("/dashboard/profile")};
+
+
+ }).catch((err) => {
+   console.error("Error signing up: ", err);
+   var errorMessage = err.message;
+   dispatch(signupFailed({ errorMessage }));
+ })
+
+
+
+}
+
+
+export const signUpWithFacebook = (navigate) => async (dispatch) => {
+
+  const provider =  new firebase.auth.FacebookAuthProvider();
+  fb.auth().useDeviceLanguage();
+ 
+  dispatch(signupPending());
+  console.log("Just before the facebook sign up happens!!!!")
   fb.auth().signInWithPopup(provider)
     
  .then((userCredential)=>{
