@@ -47,7 +47,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | Bon-Ecole Network </title>
+        <title> Login | Bonecole Network </title>
       </Helmet>
 
       <StyledRoot>

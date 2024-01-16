@@ -171,7 +171,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> Bon-Ecole| COMPANY </title>
+        <title> Bonecole| COMPANY </title>
       </Helmet>
 
       <Container>

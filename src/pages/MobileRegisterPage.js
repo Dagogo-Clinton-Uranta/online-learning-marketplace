@@ -23,7 +23,7 @@ import users from 'src/_mock/user';
 import profileImg from 'src/assets/images/randomwoman2.jpg'
 
 import {FaCaretDown} from 'react-icons/fa'
-import { MenuItem } from 'material-ui';
+import { MenuItem } from '@mui/material';
 import { makeStyles } from '@material-ui/core';
 
 
@@ -463,7 +463,8 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
 
     <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
-    
+
+  {/*  
     <TextField
     fullWidth
     placeholder="e.g 6eme Annee, 10eme Annee,Terminales"
@@ -477,9 +478,11 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     }}
     label= "Classe et option"
       />
+  */}
 
 
-{/*<Select
+
+{<Select
           style={{backgroundColor:"#FFFFFF",borderRadius:"0.1rem",width:"100%"}}
          inputProps={{
           classes: {
@@ -502,7 +505,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
   <MenuItem   value={"Terminales"}>Terminales</MenuItem>
 
        
-        </Select>*/}
+        </Select>}
 
        
 

@@ -87,7 +87,7 @@ const myCoolerGroups = myGroups?.length ? (
   return (
     <>
       <Helmet>
-        <title> Bon-Ecole | Dashboard </title>
+        <title> Bonecole | Dashboard </title>
       </Helmet>
 
       <Container maxWidth="xl">

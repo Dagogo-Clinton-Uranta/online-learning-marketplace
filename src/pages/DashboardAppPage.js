@@ -26,7 +26,7 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Bon-Ecole </title>
+        <title> Dashboard | Bonecole </title>
       </Helmet>
 
       <Container maxWidth="xl">

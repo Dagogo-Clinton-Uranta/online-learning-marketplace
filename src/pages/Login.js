@@ -126,7 +126,7 @@ function Login() {
               <Typography variant="h3" color="inherit" style={{ fontFamily: 'Poppins, Roboto, "Helvetica Neue", Arial, sans-serif;', fontWeight: 'bold' }} className="font-semibold leading-tight">
                 Welcome <br />
                 to <br /> 
-                <div>Bon-Ecole</div>
+                <div>Bonecole</div>
               </Typography>
             </motion.div>
 

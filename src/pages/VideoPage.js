@@ -64,7 +64,7 @@ const allVideosData = currentVideosData?.length ? (
   return (
     <>
       <Helmet>
-        <title> Bon-Ecole| VIDEOS </title>
+        <title> Bonecole| VIDEOS </title>
       </Helmet>
       <Container maxWidth="xl">
       {/* <SearchBox style={{ width: '100%' }} /> */}

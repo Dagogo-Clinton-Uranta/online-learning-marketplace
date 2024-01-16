@@ -52,7 +52,7 @@ export default function DesktopSmallerCardPage({uid,title,author,price,lessons,t
         height="100"
         image={image}
         onClick={()=>{fetchChapters(uid)}}
-        alt="Paella dish"
+        alt="image du sujet"
       />
 
 

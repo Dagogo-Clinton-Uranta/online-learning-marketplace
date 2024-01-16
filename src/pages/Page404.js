@@ -22,7 +22,7 @@ export default function Page404() {
   return (
     <>
       <Helmet>
-        <title> 404 Page Not Found | Bon-Ecole</title>
+        <title> 404 Page Not Found | Bonecole</title>
       </Helmet>
 
       <Container>

@@ -7,7 +7,7 @@ export default function FeedPage() {
   return (
     <>
       <Helmet>
-        <title> Bon-Ecole</title>
+        <title> Bonecole</title>
       </Helmet>
     
       <Container maxWidth="xl">
