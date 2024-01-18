@@ -1,4 +1,4 @@
-import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box,CardMedia} from '@mui/material';
+import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box,CardMedia, MenuItem, Select} from '@mui/material';
 import { useEffect,useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPLOADIMG from '../assets/images/upload.png';
@@ -236,16 +236,30 @@ const updateObject = {
 
 
         <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
-        <TextField
-        fullWidth
-        placeholder=" "
-        variant="outlined"
-        multiline
-        maxRows={2}
-        value={classes}
-        onChange = {(e)=>{setClasses(e.target.value)}}
-        label= "Classe et option"
-        />
+        {<Select
+          style={{backgroundColor:"#FFFFFF",borderRadius:"0.1rem",width:"100%"}}
+         inputProps={{
+          classes: {
+              icon: classes.icon,
+          },
+      }}
+        
+          labelId="hi-label"
+          id="hi"
+          value={classes}
+          label="Classe et option"
+          onChange={(event) => {
+            setClasses(event.target.value);
+          }}
+        >
+       
+      
+  <MenuItem  value={"6eme Annee"}>6eme Annee</MenuItem>
+  <MenuItem   value={"10eme Annee"}>10eme Annee</MenuItem>
+  <MenuItem   value={"Terminales"}>Terminales</MenuItem>
+
+       
+        </Select>}
         </Grid>
 
 
