@@ -144,7 +144,7 @@ const handleEsc = (event) => {
    console.log("MODAL CURRENT DETAILS ARE----->", findDOMNode(modalRef.current))
 
   setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
-  setTimeout(()=>{setDoubleClose(true)},100)
+  setTimeout(()=>{setOpen(false)},300)
   
 
 };
