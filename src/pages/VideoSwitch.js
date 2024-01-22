@@ -135,6 +135,7 @@ const handleEsc = (event) => {
   if(!document.fullscreenElement ||!document.webkitfullscreenElement ||!document.mozfullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
      
     setOpen(false)
+    setTimeout(()=>{setOpen(false)},300)
     }
 
    window.removeEventListener('fullscreenchange', handleEsc) 
