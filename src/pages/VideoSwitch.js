@@ -198,6 +198,7 @@ const doVideoActions = () => {
 
   setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('webkitfullscreenchange', handleEsc)),1000)
+  setTimeout(()=>(window.addEventListener('webkitendfullscreen', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('mozfullscreenchange', handleEsc)),1000)
 }
 
