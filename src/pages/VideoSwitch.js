@@ -132,7 +132,7 @@ const handleEsc = (event) => {
   setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
 
 
-  if(!document.fullscreenElement ||!document.webkitfullscreenElement ||!document.mozfullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
+  if(!document.fullscreenElement ||!document.webkitfullscreenElement||!document.webkitIsFullScreen ||!document.mozfullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
      
     setOpen(false)
     setTimeout(()=>{setOpen(false)},300)
@@ -140,6 +140,9 @@ const handleEsc = (event) => {
 
    window.removeEventListener('fullscreenchange', handleEsc) 
    window.removeEventListener('webkitfullscreenchange', handleEsc)
+
+   window.removeEventListener(' webkitendfullscreen', handleEsc)
+  
    window.removeEventListener('mozfullscreenchange', handleEsc)
   
    console.log("MODAL CURRENT DETAILS ARE----->", findDOMNode(modalRef.current))
@@ -198,6 +201,14 @@ const doVideoActions = () => {
 
   setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('webkitfullscreenchange', handleEsc)),1000)
+  
+  setTimeout(()=>(window.addEventListener('webkitfullscreenchange', function() {
+    if (document.webkitIsFullScreen) {
+      setFullScreen(true)
+   
+    }
+   }
+    )),1000)
   setTimeout(()=>(window.addEventListener('webkitendfullscreen', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('mozfullscreenchange', handleEsc)),1000)
 }
