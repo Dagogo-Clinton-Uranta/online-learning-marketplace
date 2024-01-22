@@ -109,7 +109,7 @@ const handleClosePdf = () => {setOpenPdf(false)};
  
 const [videoTime,setVideoTime] = useState(false)
 const [fullScreen, setFullScreen] = useState(false);
-
+var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
 
 const videoRef = useRef(true)
@@ -132,7 +132,7 @@ const handleEsc = (event) => {
   setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
 
 
-  if(!document.fullscreenElement ||!document.webkitfullscreenElement||!document.webkitIsFullScreen ||!document.mozfullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
+  if(!document.fullscreenElement ||!document.webkitFullscreenElement||!document.webkitIsFullScreen ||!document.mozFullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
      
     setOpen(false)
     setTimeout(()=>{setOpen(false)},300)
@@ -141,7 +141,7 @@ const handleEsc = (event) => {
    window.removeEventListener('fullscreenchange', handleEsc) 
    window.removeEventListener('webkitfullscreenchange', handleEsc)
 
-   window.removeEventListener(' webkitendfullscreen', handleEsc)
+   //window.removeEventListener(' webkitendfullscreen', handleEsc)
   
    window.removeEventListener('mozfullscreenchange', handleEsc)
   
@@ -209,6 +209,7 @@ const doVideoActions = () => {
     }
    }
     )),1000)
+    setTimeout(()=>(window.addEventListener('webkitbeginfullscreen', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('webkitendfullscreen', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('mozfullscreenchange', handleEsc)),1000)
 }
