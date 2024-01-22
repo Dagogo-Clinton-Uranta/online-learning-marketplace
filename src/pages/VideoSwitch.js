@@ -132,7 +132,7 @@ const handleEsc = (event) => {
   setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
 
 
-  if(!document.fullscreenElement) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
+  if(!document.fullscreenElement ||!document.webkitfullscreenElement ||!document.mozfullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
      
     setOpen(false)
     }
