@@ -148,7 +148,7 @@ const handleEsc = (event) => {
    console.log("MODAL CURRENT DETAILS ARE----->", findDOMNode(modalRef.current))
 
   setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
-  setTimeout(()=>{setOpen(false)},300)
+  setTimeout(()=>{setOpen(false);findDOMNode(modalRef.current).remove()},300)
   
 
 };
@@ -189,8 +189,8 @@ const doVideoActions = () => {
       findDOMNode(videoRef.current).requestFullscreen();
   } else if (findDOMNode(videoRef.current).webkitRequestFullscreen) {
     findDOMNode(videoRef.current).webkitRequestFullscreen();
-  } else if (findDOMNode(videoRef.current).mozRequestFullScreen) {
-    findDOMNode(videoRef.current).mozRequestFullScreen();
+  } else if (findDOMNode(videoRef.current).mozRequestFullscreen) {
+    findDOMNode(videoRef.current).mozRequestFullscreen();
   }
 
 
