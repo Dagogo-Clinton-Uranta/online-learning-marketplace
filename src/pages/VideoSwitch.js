@@ -132,7 +132,7 @@ const handleEsc = (event) => {
   setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
 
 
-  if(!document.fullscreenElement ||!videoRef.current.webkitFullscreenElement||!videoRef.current.webkitIsFullScreen ||!document.mozFullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
+  if(!document.fullscreenElement ||!document.webkitFullscreenElement||!document.webkitIsFullScreen||!videoRef.current.webkitFullscreenElement||!videoRef.current.webkitIsFullScreen ||!document.mozFullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
      
     setOpen(false)
     setTimeout(()=>{setOpen(false)},300)
@@ -201,6 +201,8 @@ const doVideoActions = () => {
 
   setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('webkitfullscreenchange', handleEsc)),1000)
+  setTimeout(()=>(document.addEventListener('webkitfullscreenchange', handleEsc)),1000)
+  
   
   setTimeout(()=>(window.addEventListener('webkitfullscreenchange', function() {
     if (document.webkitIsFullScreen) {
@@ -209,7 +211,18 @@ const doVideoActions = () => {
     }
    }
     )),1000)
-    setTimeout(()=>(videoRef.current.addEventListener('webkitbeginfullscreen', handleEsc)),1000)
+
+
+    setTimeout(()=>(document.addEventListener('webkitfullscreenchange', function() {
+      if (document.webkitIsFullScreen) {
+        setFullScreen(true)
+     
+      }
+     }
+      )),1000)
+
+   
+    setTimeout(()=>(document.addEventListener('webkitendfullscreen', handleEsc)),1000)
   setTimeout(()=>(videoRef.current.addEventListener('webkitendfullscreen', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('mozfullscreenchange', handleEsc)),1000)
 }
@@ -228,6 +241,11 @@ useEffect(()=>{
       window.removeEventListener('fullscreenchange', handleEsc)
       window.removeEventListener('webkitfullscreenchange', handleEsc)
       window.removeEventListener('mozfullscreenchange', handleEsc)
+
+      document.removeEventListener('fullscreenchange', handleEsc)
+      document.removeEventListener('webkitfullscreenchange', handleEsc)
+      document.removeEventListener('mozfullscreenchange', handleEsc)
+
       } 
       
     },100)
