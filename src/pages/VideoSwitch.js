@@ -132,7 +132,7 @@ const handleEsc = (event) => {
   setTimeout(()=>{findDOMNode(modalRef.current).remove()},50) 
 
 
-  if(!document.fullscreenElement ||!document.webkitFullscreenElement||!document.webkitIsFullScreen ||!document.mozFullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
+  if(!document.fullscreenElement ||!videoRef.current.webkitFullscreenElement||!videoRef.current.webkitIsFullScreen ||!document.mozFullscreenElement ) {  //<-- if the browser is NOT fullscreen,ClOSE THE MODAL
      
     setOpen(false)
     setTimeout(()=>{setOpen(false)},300)
@@ -209,8 +209,8 @@ const doVideoActions = () => {
     }
    }
     )),1000)
-    setTimeout(()=>(window.addEventListener('webkitbeginfullscreen', handleEsc)),1000)
-  setTimeout(()=>(window.addEventListener('webkitendfullscreen', handleEsc)),1000)
+    setTimeout(()=>(videoRef.current.addEventListener('webkitbeginfullscreen', handleEsc)),1000)
+  setTimeout(()=>(videoRef.current.addEventListener('webkitendfullscreen', handleEsc)),1000)
   setTimeout(()=>(window.addEventListener('mozfullscreenchange', handleEsc)),1000)
 }
 
