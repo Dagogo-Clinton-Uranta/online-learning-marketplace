@@ -50,8 +50,8 @@ const PaymentOptions = () => {
 
 //  const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
 //  const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
- const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/gn/get-token';
- const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/gn/webpayment';
+ const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
+ const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
