@@ -106,7 +106,7 @@ function MobileRegisterPage() {
   const [affiliate,setAffiliate] = useState('')
  const [pvExamen,setPvExamen] = useState('')
  const [classOption,setClassOption] = useState('')
- const [telephone,setTelephone] = useState('')
+ const [telephone,setTelephone] = useState('224')
  const [schoolOrigin,setSchoolOrigin] = useState('')
 
 
@@ -146,9 +146,14 @@ function MobileRegisterPage() {
  
 
   const registerFxn = (user,navigate) =>{
-    if(!email || !firstName || !lastName || !password ||!facebook|| !affiliate  ||!pvExamen ||!telephone ||!classOption ||!schoolOrigin ||!classOption ||!schoolOrigin ){
+    if(!email || !firstName  || !password ||!facebook|| !affiliate  ||!pvExamen ||!telephone  ||!schoolOrigin ||!classOption ||!schoolOrigin ){
       notifyErrorFxn("Please make sure to fill in all fields")
-    }else{
+    }
+    else if(telephone.substring(0,3) !== '224'){
+
+      notifyErrorFxn("assurez-vous que le numéro de téléphone commence par 224")
+    }
+    else{
       dispatch(signup(user,navigate))
     }
   }
@@ -249,13 +254,14 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
      <TextField
           sx ={{width:"100%"}}
           id="outlined-basic"
-          label="First name"
+          label="nom et prénom"
           type="text"
           autoComplete="full name"
           onChange={(e)=>{setFirstName(e.target.value)}}
         />
       </Grid>  
 
+    {/*
       <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
      <TextField
           sx ={{width:"100%"}}
@@ -266,20 +272,78 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           onChange={(e)=>{setLastName(e.target.value)}}
         />
       </Grid>  
-
+       */}
 
 
       <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
      <TextField
           sx ={{width:"100%"}}
           id="outlined-basic"
-          label="Email address"
+          label="adresse e-mail"
           type="email"
           autoComplete="current-email"
           onChange={(e)=>{setEmail(e.target.value)}}
         />
       </Grid>  
+
+
+
+
+    <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+    <TextField
+    fullWidth
+    placeholder=" "
+    variant="outlined"
+    multiline
+    maxRows={2}
+    value={telephone}
+    onChange={(e)=>{setTelephone(e.target.value)}}
+    label= "Numero de Telephone"
+    />
+    </Grid>
+
      
+
+
+
+      <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
+
+
+{<Select
+          style={{backgroundColor:"#FFFFFF",borderRadius:"0.1rem",width:"100%"}}
+         inputProps={{
+          classes: {
+              icon: classes.icon,
+          },
+      }}
+        
+          labelId="hi-label"
+          id="hi"
+          value={classOption}
+          label="Classe et option"
+          displayEmpty
+          renderValue={(selected) => {
+            if (selected.length === 0) {
+              return <em style={{color:"lightgray"}}>Classe et option</em>;
+            }
+
+            return selected;
+          }}
+          onChange={(event) => {
+            setClassOption(event.target.value);
+          }}
+        >
+       
+       <MenuItem disabled value={""}>Classe et Option</MenuItem>
+  <MenuItem  value={"6eme Annee"}>6eme Annee</MenuItem>
+  <MenuItem   value={"10eme Annee"}>10eme Annee</MenuItem>
+  <MenuItem   value={"Terminales"}>Terminales</MenuItem>
+
+       
+        </Select>}
+
+
+    </Grid>
      
      
      
@@ -287,7 +351,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
       <TextField 
          sx ={{width:"100%"}}
           id="outlined-password-input"
-          label="Password"
+          label="mot de passe"
           type="password"
           autoComplete="current-password"
           onChange={(e)=>{setPassword(e.target.value)}}
@@ -302,16 +366,16 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"75%",height:"3rem",fontSize:"15px",
             }}
-            onClick ={()=>{if(email && firstName && lastName && password){
+            onClick ={()=>{if(email && firstName  && password && telephone && classOption){
               setPage2(true);setPage1(false)
             }
             else{
-              notifyErrorFxn("please fill in all fields before proceeding!")
+              notifyErrorFxn("veuillez remplir tous les champs avant de continuer !")
             }
                  
           }}
             >
-            REGISTER
+             S'INSCRIRE
             </Button>
          
           
@@ -352,7 +416,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
  <br/> 
  <h1>Bienvenue,</h1>
-<p style={{color:"gray"}}>{firstName + " " + lastName}</p>
+<p style={{color:"gray"}}>{firstName}</p>
 </Grid>
 }
 
@@ -363,7 +427,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
   <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
        
       
-   <p style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center" ,width:"95%"}}>  <span>REGISTRATION (2)</span> <FaCaretDown/></p>
+   <p style={{ display: 'flex', justifyContent: 'space-between',alignItems:"center" ,width:"95%"}}>  <span>INSCRIPTION (2)</span> <FaCaretDown/></p>
    <Divider variant="fullWidth" sx={{backgroundColor:"#000000",width:"100%"}}  />
     
 
@@ -373,7 +437,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
    <Grid item xs={12} md={8} lg={6}>
     
       <Typography variant="p" component="p">
-      Profile Picture
+      image de profil
        </Typography>
       <Paper
         sx={{
@@ -404,7 +468,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
             variant="p"
             component="p"
           >
-        Browse files to upload
+        Parcourir les fichiers à télécharger
       </Typography>
       </center>
       </Paper>
@@ -462,55 +526,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     </Grid>
 
 
-    <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
-
-  {/*  
-    <TextField
-    fullWidth
-    placeholder="e.g 6eme Annee, 10eme Annee,Terminales"
-    variant="outlined"
-    multiline
-    maxRows={1}
-    sx={{height:"32px",fontSize:"0.5rem"}}
-    value={classOption}
-    onChange={(event) => {
-      setClassOption(event.target.value);
-    }}
-    label= "Classe et option"
-      />
-  */}
-
-
-
-{<Select
-          style={{backgroundColor:"#FFFFFF",borderRadius:"0.1rem",width:"100%"}}
-         inputProps={{
-          classes: {
-              icon: classes.icon,
-          },
-      }}
-        
-          labelId="hi-label"
-          id="hi"
-          value={classOption}
-          label="Classe et option"
-          onChange={(event) => {
-            setClassOption(event.target.value);
-          }}
-        >
-       
-      
-  <MenuItem  value={"6eme Annee"}>6eme Annee</MenuItem>
-  <MenuItem   value={"10eme Annee"}>10eme Annee</MenuItem>
-  <MenuItem   value={"Terminales"}>Terminales</MenuItem>
-
-       
-        </Select>}
-
-       
-
-
-    </Grid>
+ 
 
 
     <Grid item xs={12} spacing={2} style={{marginTop:"2rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
@@ -526,26 +542,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
     />
     </Grid>
 
-    <Grid item xs={12} spacing={2} style={{marginTop:"1rem",gap:"10px", display: 'flex',flexDirection:"column", justifyContent: 'space-between',alignItems:"space-between" }}>
-    <TextField
-    fullWidth
-    placeholder=" "
-    variant="outlined"
-    multiline
-    maxRows={2}
-    value={telephone}
-    onChange={(e)=>{setTelephone(e.target.value)}}
-    label= "Numero de Telephone"
-    />
-    </Grid>
-
-   
-
-  
-
-
-   
-
+ 
 
     <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center',alignItems:"center" }}>
            
@@ -555,7 +552,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           }}
           onClick ={()=>{registerFxn(newUser,navigate)}}
           >
-          SUBMIT
+           SOUMETTRE
           </Button>
        
         

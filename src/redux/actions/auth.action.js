@@ -153,8 +153,8 @@ export const signup = (user,navigate) => async (dispatch) => {
   ).then((res)=>{
      db.collection('userData').doc(res.user.uid).set({
       uid: res.user.uid,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      fullName: user.firstName,
+      
       email: user.email,
       password: user.password,
       facebook:user.facebook,
@@ -173,8 +173,8 @@ export const signup = (user,navigate) => async (dispatch) => {
 
     db.collection('users').doc(res.user.uid).set({
       uid: res.user.uid,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      fullName: user.firstName,
+      
       email: user.email,
       password: user.password,
       facebook:user.facebook,
@@ -528,11 +528,12 @@ export const updateProfile = (profileData, userID, file, navigate, setLoading, u
     pvExamen: profileData.pvExamen,
     classOption: profileData.classes,
     schoolOrigin: profileData.school,
-    firstName: profileData.firstName,
-    lastName: profileData.lastName,
+    fullName: profileData.fullName,
+   
     facebook: profileData.facebook,
     affiliate: profileData.affiliate,
     imageUrl: url,
+    surveyAnswer:profileData.surveyAnswer
   }).then((res)=>{
        if(profileData?.password){
         //update password start
