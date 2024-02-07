@@ -1,7 +1,7 @@
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { db, fb, auth, storage } from '../../config/firebase';
 import { fetchTransactions, isItLoading } from '../reducers/transactions.slice';
-import { clearCart, savePurchasedCourses } from '../reducers/cart.slice';
+import { clearCart, savePurchasedCourses,saveCartPackSortIds, saveCartPackIds } from '../reducers/cart.slice';
 
 export const saveToCart = (uid) => async (dispatch) => {
      dispatch(isItLoading(true));
@@ -74,3 +74,10 @@ export const fetchPurchasedCourse = (uid) => async (dispatch) => {
     console.log("Error getting purchasedCourses:", error);
   });
 };
+
+
+export const setCartPackSortIds = (packTitles) => async (dispatch) => {
+
+  dispatch(saveCartPackIds(packTitles))
+
+ }

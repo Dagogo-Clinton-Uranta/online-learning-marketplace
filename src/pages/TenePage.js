@@ -84,18 +84,29 @@ function TenePage() {
     {image:a10},
   ]
 
-
+console.log("PRESENT SUBJECT--->", presentSubject)
+console.log("PACK SUBJECTS--->", packSubjects)
 
 const addToCartFxn = () => {
-  const cartItem = { id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price };
+  
+
+  let cartItems = presentSubject?.title.substring(0,4) ==="Pack" ?
+  
+  [...cart,{ id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price,packLead:true }]
+
+  : [...cart,{ id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price }]
+  
+  packSubjects.forEach((item)=>{
+   cartItems = [ ...cartItems,{ id: item?.uid, title: item?.title,price:0, packId: presentSubject?.uid, packName: presentSubject?.title} ]
+  })
 
 
-  const isItemInCart = cart.some((item) => item.id === cartItem.id);
+  const isItemInCart = cart.filter((item)=>(item.packId)).some((item) => item.packId === cartItems[0].packId);
 
   if (isItemInCart) {
-    notifyErrorFxn('Item is already in the cart');
+    notifyErrorFxn('Pack is already in the cart');
   } else {
-    dispatch(addToCart(cartItem));
+    dispatch(addToCart(cartItems));
     notifySuccessFxn('Added to cart');
     navigate('/dashboard/my-cart');
   }

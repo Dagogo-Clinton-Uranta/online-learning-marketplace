@@ -3,12 +3,12 @@ import { Container, Grid, TextField, Typography, IconButton, Button, CircularPro
 import { Cancel } from '@material-ui/icons';
 import { usePaystackPayment, PaystackButton, PaystackConsumer } from 'react-paystack';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart } from 'src/redux/reducers/cart.slice';
-import { buyCourse } from 'src/redux/actions/cart.action';
+import { removeAllFromCart, removeFromCart } from 'src/redux/reducers/cart.slice';
+import { buyCourse,setCartPackSortIds } from 'src/redux/actions/cart.action';
 import { useNavigate } from 'react-router-dom';
 
 const MyCartPage = () => {
-  const { cart } = useSelector((state) => state.cart);
+  const { cart,cartPackIds } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
 
@@ -20,8 +20,27 @@ const MyCartPage = () => {
       
     
    },[])
- 
 
+
+   useEffect(()=>{
+
+   
+   if(cart && cart.length >0 ){
+    cart.forEach((item)=>{
+      if( item.packId &&item.packId.length &&  item.packName &&  item.packName.length &&  cartPackIds.indexOf(item.packName) === -1 ){
+        
+        dispatch(setCartPackSortIds([...cartPackIds,item.packName]))
+  
+      }
+    
+    })
+  }
+  
+  
+   
+    },[cart,cartPackIds])
+ 
+console.log("cart is -->",cart)
 
 
   const dispatch = useDispatch();
@@ -29,9 +48,11 @@ const MyCartPage = () => {
   const [isLoading, setisLoading] = useState(false);
   const publicKey = '';
   const totalPrice = cart.reduce((acc, item) => {
-    const itemPrice = parseFloat(item.price.replace(',', ''));
+    const itemPrice = parseFloat(item.price && item.price.replace(',', ''));
     return acc + itemPrice;
   }, 0);
+
+  console.log("TOTAL PRICE IS-->",totalPrice)
   let amount = 100000;
   // let price;
   const [email, setEmail] = useState(user && user.email);
@@ -61,6 +82,11 @@ const MyCartPage = () => {
   };
 
   const handleRemoveFromCart = (itemId) => {
+    dispatch(removeFromCart(itemId));
+  };
+
+  const handleRemoveAllFromCart = (itemId) => {
+    dispatch(removeAllFromCart(itemId));
     dispatch(removeFromCart(itemId));
   };
 
@@ -107,14 +133,16 @@ const MyCartPage = () => {
       <Grid container xs={12} style={{ paddingTop: '1.5rem' }}>
         {cart?.length > 0 ? (
           <>
-            {cart.map((item, index) => (
+            {cart.filter((item)=>(!item.packId &&!item.packName /*&& !item.packLead*/)).map((item, index) => (
               <Grid item xs={12} key={index} style={{ paddingTop: '0.5rem', marginBottom: '10px' }}>
+               
+               
                 <div
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderBottom: '3px solid black',
+                    borderBottom: '1px solid black',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -126,13 +154,99 @@ const MyCartPage = () => {
                     <Typography variant="body1" style={{ marginRight: '0.2rem' }}>
                       {item.price} GNF
                     </Typography>
-                    <IconButton onClick={() => handleRemoveFromCart(item.id)}>
+                    <IconButton onClick={() => {item.packLead ===false? handleRemoveFromCart(item.id):handleRemoveAllFromCart(item.id) }}>
                       <Cancel />
                     </IconButton>
                   </div>
                 </div>
               </Grid>
             ))}
+
+{/*
+ cartPackIds && cartPackIds.length > 0 &&
+
+cartPackIds.map((packName)=>(
+
+  <>
+           <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",width:"24rem",paddingTop:"3rem",marginBottom:"0.7rem",borderBottom:"3px solid black"}}>
+            {packName}
+            
+             <IconButton >
+              <Cancel />
+             </IconButton>
+          </p>
+     
+     
+                {cart.filter((item)=>(item.packName&& item.packName === packName)).map((item, index) => (
+                   <Grid item xs={12} key={index} style={{ paddingTop: '0.5rem', marginBottom: '10px' }}>
+                    
+                   
+                     <div
+                       style={{
+                         display: 'flex',
+                         justifyContent: 'space-between',
+                         alignItems: 'center',
+                         borderBottom: '1px solid black',
+                         padding:"0.2rem"
+                       }}
+                     >
+                       <div style={{ display: 'flex', alignItems: 'center' }}>
+                         <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
+                           {item.title}
+                         </Typography>
+                       </div>
+                       <div style={{ display: 'flex', alignItems: 'center' }}>
+                         <Typography variant="body1" style={{ marginRight: '0.2rem' }}>
+                           
+                         </Typography>
+                         {<IconButton onClick={() => handleRemoveFromCart(item.id)}>
+                           <Cancel />
+                      </IconButton>}
+                       </div>
+                     </div>
+                   </Grid>
+                 ))
+         }
+   
+   
+       
+   <Grid item xs={12}  style={{ paddingTop: '0.5rem', marginBottom: '10px' }}>
+               
+               
+              
+               <div
+                 style={{
+                   display: 'flex',
+                   justifyContent: 'space-between',
+                   alignItems: 'center',
+                   borderBottom: '1px solid black',
+                 }}
+               >
+                 <div style={{ display: 'flex', alignItems: 'center' }}>
+                   <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
+                   total cost of pack
+                   </Typography>
+                 </div>
+                 <div style={{ display: 'flex', alignItems: 'center' }}>
+                   <Typography variant="body1" style={{ marginRight: '0.2rem' }}>
+                   { cart.filter((item)=>(item.title === packName))[0].price}{ ' GNF'}
+                   </Typography>
+                  
+                 </div>
+               </div>
+             </Grid>
+
+   
+   
+    </>
+    ))
+
+       
+    
+
+          */}
+
+
           </>
         ) : (
           <div>

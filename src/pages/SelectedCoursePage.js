@@ -129,6 +129,7 @@ const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state)
 const { cart } = useSelector((state) => state.cart);
 const  [showPlayer,setShowPlayer] = useState(true)
 
+console.log("CART IN SELECTED COURSE PAGE is --->",cart)
 
 useEffect(()=>{
 
@@ -467,14 +468,16 @@ const addToCartFxn = () => {
    }
 
   
-  const cartItem = { id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price };
+const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price }
+  
+  let cartItems = [...cart,{ id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price }];
 
-  const isItemInCart = cart.some((item) => item.id === cartItem.id);
+  const isItemInCart = cart.some((item) => item.id === newItem.id);
 
   if (isItemInCart) {
     notifyErrorFxn('Item is already in the cart');
   } else {
-    dispatch(addToCart(cartItem));
+    dispatch(addToCart(cartItems));
     notifySuccessFxn('Added to cart');
     navigate('/dashboard/my-cart');
   }
