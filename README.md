@@ -45,21 +45,6 @@ It is done in React JS, makes use of firebase for authentication and data storag
  
  ## Database Structure -
  
- Products = {\
-        _id:{type:mongoDB object ID type,required:true},\
-        user:{type:mongoDB object ID type,required:true, ref:'User ID in users collection'},\
-        name:{type: String ,required:true},\
-        image:{type: String ,required:true},\
-        brand:{type: String ,required:true},\
-        category:{type:String ,required:true},\
-        description:{type:String ,required:true},\
-        rating:{type:Number ,required:true ,default:0},\
-        numReviews:{type:Number ,required:true ,default:0},\
-        price:{type:Number ,required:true ,default:0},\
-        countInStock:{type:Number ,required:true ,default:0}  
- 
- }  
- 
   users = {\
         uid:{type:string,required:true},\
         fullName:{type: string ,required:true},\
