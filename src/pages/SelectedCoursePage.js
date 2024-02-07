@@ -75,7 +75,7 @@ function SelectedCoursePage() {
   const [renderNavButtons, setRenderNavButtons] = useState(true)
   
 
-  const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
+  const { subjectPastExams,subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
   const { teachers } = useSelector((state) => state.group);
   const teacherInFocus = teachers && teachers.filter((teacher)=>((teacher.firstName + " " + teacher.lastName) == presentSubject.instructor ))
 
@@ -744,6 +744,9 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   </Grid>  
 
 
+
+
+
 {
 
 <Grid item xs={12} style={{paddingTop:"4rem",paddingBottom:"1rem"}}>
@@ -754,48 +757,23 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
  </p>
 
 
- <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
-    {
-      
-   /*  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))?
-       
-     <NotPlayableSwitch />
-  :*/
- <NotPlayableSwitch />
-  
-  
-  }  
-  
-  </p>
-  <p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
-   
-    {"Spring 2014 Past Exam"}
-  
-  </p>
-  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
-    
-  <PictureAsPdfIcon   style={{fontSize:"2.2rem"}} />
-  </p>
- </Grid>
+
+ {
+ subjectPastExams && subjectPastExams.length >0?
+ subjectPastExams.map((exam,index)=>(
+ 
+ 
+
+
 
  <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
   <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
-    {
-      
-   /*  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))?
-       
-     <NotPlayableSwitch />
-  :*/
+  
  <NotPlayableSwitch />
-  
-  
-  }  
-  
   </p>
   <p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
    
-    {"Fall 2015 Past Exam"}
+    {exam.examName}
   
   </p>
   <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
@@ -805,32 +783,31 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
  </Grid>
 
 
- <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
-  <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
-    {
-      
-   /*  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))?
-       
-     <NotPlayableSwitch />
-  :*/
- <NotPlayableSwitch />
-  
-  
-  }  
-  
-  </p>
-  <p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
-   
-    {"Spring 2016 Past Exam"}
-  
-  </p>
-  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
-    
-  <PictureAsPdfIcon   style={{fontSize:"2.2rem"}} />
-  </p>
- </Grid>
+
+))
+:
 
 
+<Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+<p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
+
+
+</p>
+<p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
+ 
+  {"No Past Exams Yet"}
+
+</p>
+<p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
+  
+
+</p>
+</Grid>
+
+
+}
+
+ 
 </Grid>
 }
 

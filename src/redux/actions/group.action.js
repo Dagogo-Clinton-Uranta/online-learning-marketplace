@@ -6,8 +6,9 @@ import { isItLoading, saveAllGroup ,saveEmployeer,
   saveCategories ,saveGroupMembers, saveMyGroup,
    savePrivateGroup, savePublicGroup, saveSectionVideos,
    saveNextUpVideo,savelastWatchedVideo,saveCategoryVideos,
-   saveCategorySubjects,savePackSubjects,savePresentSubject,saveSubjectChapters
-   ,saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,
+   saveCategorySubjects,savePackSubjects,savePresentSubject,saveSubjectChapters,
+   saveSubjectPastExams,
+   saveAllChapterLessons,saveSelectedAudioId,saveSelectedAudio,
    saveSelectedAudioState,saveAllQuizzesForSubject
    ,savePresentQuizQuestion,saveChosenQuiz,
    saveCurrentQuizDetailsAndAnswers, saveSubmittingSingleAnswer,
@@ -1027,6 +1028,29 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
  export const fetchSubjectChapters = (uid) => async (dispatch) => {
   globalLessonsArray = []
   globalQuizzesArray =[]
+
+  db.collection("pastExams")
+  .where("sectionId", "==", uid )
+   .get()
+   .then(
+
+    (snapshot) => {
+      const pastExamsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
+    if (pastExamsArray.length) {
+     
+      console.log(`pastExams for T subject ${uid} are:`, pastExamsArray);
+      dispatch(saveSubjectPastExams(pastExamsArray));
+      return pastExamsArray
+    } else {
+     dispatch(saveSubjectPastExams([]));
+        console.log(`No past exams for the subject; ${uid}`);
+        return []
+    }
+  }
+   )
+
+
+
 
   db.collection("chapters")
    .where("sectionId", "==", uid )

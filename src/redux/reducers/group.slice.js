@@ -11,6 +11,7 @@ const initialState = {
        packs:[],
        chosenQuiz:{},
        subjectChapters:[],
+       subjectPastExams:[],
        presentSubject:{},
        selectedAudioId:null,
        teachers: [],
@@ -76,6 +77,9 @@ fetchTeachers: (state, action) => {
 },
 saveSubjectChapters: (state, action) => {
   state.subjectChapters = action.payload;
+},
+saveSubjectPastExams: (state, action) => {
+  state.subjectPastExams = action.payload;
 },
 saveAllChapterLessons: (state, action) => {
   state.allChapterLessons = action.payload;
@@ -168,6 +172,7 @@ export const {
  savePacks,
  savePackSubjects,
  saveSubjectChapters,
+ saveSubjectPastExams,
  saveAllChapterLessons,
  saveAllQuizzesForSubject,
  saveCurrentQuizDetailsAndAnswers,
