@@ -89,10 +89,10 @@ const PaymentOptions = () => {
     }
 
 
-    /* if(user && !user.phone){
+     if(user && !user.phone){
       notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
       return;
-    }*/
+    }
      const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',  
@@ -103,12 +103,12 @@ const PaymentOptions = () => {
             const access_token = response.data.access_token;
             console.log("ACCESS-TOKEN IS-->", access_token);
            axios.post(momoTwoActionUrl, {
-            amount: '500'/*totalPrice*/,
+            amount: totalPrice,
             currency: 'GNF',
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId:'224664930445' /*`${user && user.phone?(user.phone).toString():null}`*/, //phone 08106091838
+              partyId:/*'224664930445'*/ `${user && user.phone?(user.phone).toString():null}`, 
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',

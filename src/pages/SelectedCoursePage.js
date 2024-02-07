@@ -598,7 +598,7 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
       </Grid>
     </Grid>
    
-   { /* presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid)) &&*/
+   {  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid)) &&
    
    <center>
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"2rem",flexDirection:"column",gap:"1rem",border:"1px solid lightgrey",width:"85%",padding:"1rem",borderRadius:"0.5rem"}}>
