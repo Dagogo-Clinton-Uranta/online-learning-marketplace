@@ -49,6 +49,7 @@ import db from '../browserDb/db'
 import { blobToDataURL,dataURLToBlob,imgSrcToBlob,arrayBufferToBlob } from 'blob-util'
 import { addToCart } from 'src/redux/reducers/cart.slice';
 import NotPlayableSwitch from './NotPlayableSwitch';
+import { fetchUserData } from 'src/redux/actions/auth.action';
 
 
 function SelectedCoursePage() {
@@ -83,6 +84,8 @@ function SelectedCoursePage() {
 
 
   console.log("the present SAVED  subject is--->:",presentSubject)
+
+
   console.log("the chapters for this subject are:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
@@ -91,7 +94,14 @@ function SelectedCoursePage() {
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
-  
+  console.log("the user's purchased courses--->:", user && user.purchasedCourses)
+
+
+  useEffect(()=>{
+
+    dispatch(fetchUserData(user.uid, "user refresh",navigate));
+
+  },[])
   
   useEffect(()=>{
    /*  if(!user){

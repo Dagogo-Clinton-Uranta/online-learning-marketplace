@@ -144,54 +144,11 @@ const PaymentOptions = () => {
     navigate('/dashboard/payment-options-mtn')
   }
 
-
-  /*const handleOrangePay = async () => {
-    if(!user){
-      notifyErrorFxn("You must be logged in to proceed!");
-      return;
-    }
-
-     const headers = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',  
-     };
-       setIsLoading(true);
-       axios.post(orangeMTokenUrl, {}, { headers })
-        .then(response => {
-            const access_token = response.data.access_token;
-          
-           axios.post(orangeMPaymentUrl, {
-            amount: totalPrice,
-            currency: 'OUV', //OUV
-            order_id: `${uuid.v4()}`,
-            reference: "ref Merchant",
-            orangeMToken: access_token
-          }).then((res) => {
-              console.log("RESPONSE--->", res.data);
-              if (res.data.payment_url) {
-                window.open(res.data.payment_url, '_blank');
-              }else{
-                console.log("Res", res);
-                notifyErrorFxn("An error occured!");  
-              }
-          }).catch((error) => {
-            setIsLoading(false);
-            console.error('Payment Request Error:', error);
-            notifyErrorFxn('Payment Request Error...');
-          })
-        }).catch(error => {
-            setIsLoading(false);
-            notifyErrorFxn('Failed to get token');
-        });
-  };*/
-
-
   const handleOrangePay = async () => {
     if(!user){
       notifyErrorFxn("You must be logged in to proceed!");
       return;
     }
-
      const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',  

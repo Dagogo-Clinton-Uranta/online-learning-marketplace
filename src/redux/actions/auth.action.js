@@ -144,9 +144,22 @@ export const signInWithGoogle = (navigate) => async (dispatch) => {
 
 
 export const signup = (user,navigate) => async (dispatch) => {
-  console.log(user);
+     console.log(user);
    dispatch(signupPending());
    console.log("Just before the sign up happens!!!!")
+
+
+   db.collection('users')
+   .where('email', '==', user.email)
+   .get()
+   .then((snapshot) => {
+     const usersWithEmail = snapshot.docs.map((doc) => ({ ...doc.data() }));
+     if (usersWithEmail.length) {
+        notifyErrorFxn("cet utilisateur existe déjà, veuillez vous inscrire avec une autre adresse e-mail")
+        return
+       }
+     else {
+
     fb.auth().createUserWithEmailAndPassword(
       user.email,
       user.password
@@ -200,11 +213,22 @@ export const signup = (user,navigate) => async (dispatch) => {
     var errorMessage = err.message;
     dispatch(signupFailed({ errorMessage }));
   })
+
+}
+ }).catch((err) => {
+  console.error("Error signing up: ", err);
+  var errorMessage = err.message;
+  dispatch(signupFailed({ errorMessage }));
+})
+
+
 }
 
 
 export const signUpWithGoogle = (navigate) => async (dispatch) => {
 
+
+  
  
   dispatch(signupPending());
   console.log("Just before the google sign up happens!!!!")
@@ -217,6 +241,18 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
   var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
 
  console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
+
+ db.collection('users')
+ .where('email', '==', user.email)
+ .get()
+ .then((snapshot) => {
+   const usersWithEmail = snapshot.docs.map((doc) => ({ ...doc.data() }));
+   if (usersWithEmail.length) {
+      notifyErrorFxn("cet utilisateur existe déjà, veuillez vous inscrire avec une autre adresse e-mail")
+      return
+     }
+   else {
+
   
   db.collection('userData').doc(user.uid).set({
      uid: user.uid,
@@ -262,13 +298,17 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
    fb.auth().sendPasswordResetEmail(user.email)
    
 
-   dispatch(fetchUserData(user.uid, "registerSocials",navigate));
- }).then(() => {
+   dispatch(fetchUserData(user.uid, "registerSocials",navigate)).then(() => {
     dispatch(markRegisteredWithSocials(true))
 
    if(navigate){navigate("/dashboard/profile")};
 
+     })
 
+ }
+})
+
+ 
  }).catch((err) => {
    console.error("Error signing up: ", err);
    var errorMessage = err.message;
@@ -296,6 +336,18 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
   var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
 
  console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
+
+
+ db.collection('users')
+ .where('email', '==', user.email)
+ .get()
+ .then((snapshot) => {
+   const usersWithEmail = snapshot.docs.map((doc) => ({ ...doc.data() }));
+   if (usersWithEmail.length) {
+      notifyErrorFxn("cet utilisateur existe déjà, veuillez vous inscrire avec une autre adresse e-mail")
+      return
+     }
+   else {
   
   db.collection('userData').doc(user.uid).set({
      uid: user.uid,
@@ -341,12 +393,16 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
    fb.auth().sendPasswordResetEmail(user.email)
    
 
-   dispatch(fetchUserData(user.uid, "registerSocials",navigate));
- }).then(() => {
+   dispatch(fetchUserData(user.uid, "registerSocials",navigate)).then(() => {
     dispatch(markRegisteredWithSocials(true))
 
    if(navigate){navigate("/dashboard/profile")};
 
+
+   })
+   
+  }
+  });
 
  }).catch((err) => {
    console.error("Error signing up: ", err);
