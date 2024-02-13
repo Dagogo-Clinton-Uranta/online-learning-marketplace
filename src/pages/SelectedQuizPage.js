@@ -83,7 +83,8 @@ useEffect(()=>{
   setChosenId(openQuestionIndex)
   setChosenOption('')
 
-  console.log("our questions array is this long",chosenQuiz.questionsArray.length)
+ console.log("our chosen quiz is--->",chosenQuiz)
+ console.log("our sorted quiz is-->",sortedQuiz)
 
 console.log("our QUIZ DETAILS AND ANSWER REDUX STATE IS:",currentQuizDetailsAndAnswers)
 
@@ -162,7 +163,9 @@ const submitQuizAnswers = (userId,quizAnswersObject,navigate) =>{
  }
 
 const addToStudentAnswers = (questionNumber,chosenAnswer,questionIndex) =>{
-  console.log("QUESTION NUMBER INPUT IS:", questionNumber)
+ // console.log("QUESTION NUMBER INPUT IS:", questionNumber)
+  console.log("our chosen quiz is-->",chosenQuiz)
+  console.log("our sorted quiz is-->",sortedQuiz)
 
  if(!chosenAnswer){notifyErrorFxn("please pick an answer to continue!")}
  else{
@@ -398,7 +401,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
            
             />
 
-    <Button onClick={()=>{addToStudentAnswers(chapter.questionNumber,chosenOption.optionLetter,index)}}
+    <Button onClick={()=>{addToStudentAnswers(chapter.questionNumber,chosenOption,index)}}
     
     style={{ backgroundColor: "#000000",color:"#FFFFFF", paddingTop: '10px', paddingBottom: '10px', 
                      paddingRight: '30px', paddingLeft: '30px'}}>
