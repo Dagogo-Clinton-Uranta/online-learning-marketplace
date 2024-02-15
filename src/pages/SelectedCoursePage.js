@@ -766,7 +766,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {"Past Exams"}
- <PictureAsPdfIcon onClick={()=>{handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")/*handleOpenPdf()*/}}  style={{fontSize:"2.2rem",display:"none"}} />
+ <PictureAsPdfIcon onClick={()=>{/*handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")*//*handleOpenPdf()*/}}  style={{fontSize:"2.2rem",display:"none"}} />
  </p>
 
 
