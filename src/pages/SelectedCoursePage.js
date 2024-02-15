@@ -779,20 +779,17 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 
 
 
- <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+ <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",paddingBottom:"0.8rem",borderBottom:"1px solid lightgrey"}}>
   <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
-  
- <NotPlayableSwitch />
+  <PictureAsPdfIcon   style={{fontSize:"2.2rem"}} />
+   
   </p>
-  <p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
+  <p style={{display:"inline",width:"12.5rem",marginTop:"0.2rem"}}>  
    
     {exam.examName}
   
   </p>
-  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
-    
-  <PictureAsPdfIcon   style={{fontSize:"2.2rem"}} />
-  </p>
+ 
  </Grid>
 
 
@@ -801,7 +798,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 :
 
 
-<Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
+<Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",paddingBottom:"0.8rem",borderBottom:"1px solid lightgrey"}}>
 <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
 
 

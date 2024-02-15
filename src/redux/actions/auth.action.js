@@ -41,26 +41,18 @@ export const signInWithFacebook = (navigate) => async (dispatch) => {
  
   fb.auth().signInWithPopup(provider)
   .then((result)=>{
-
-    
     var user = result.user;
   
     var firstName= result.user.displayName?result.user.displayName.split(" ")[0]:''
     var lastName = result.user.displayName?result.user.displayName.split(" ")[1]:''
-  
-   console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
-
-
+   console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
     db.collection('userData').doc(user.uid).update({
       uid: user.uid,
       email: user.email,
       firstName:firstName,
       lastName:lastName,
       
-     
     })
- 
- 
     db.collection('users').doc(user.uid).update({
       uid: user.uid,
       email: user.email,
