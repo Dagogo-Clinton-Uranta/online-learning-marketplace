@@ -29,25 +29,25 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
    purchasedOn:today
 }))
 
-
-  var purchasedCourseRef = db.collection("purchasedCourses");
-  purchasedCourseRef.add({
-      uid: studentId,
-      courses: courses.courses,
-      createdAt: today,
-      affiliate:courses.affiliateId
-  })
-  .then(() => {
-    notifySuccessFxn("Cours acheté avec succès");
-    dispatch(clearCart());
-    navigate('/dashboard/purchased-courses');
-  })
-  .catch((error) => {
-    var errorMessage = error.message;
-    notifyErrorFxn("Error with Purchasing Course");
-    console.log('Error with buying course', errorMessage);
-    setLoading(false);
-  });
+//
+//  var purchasedCourseRef = db.collection("purchasedCourses");
+//  purchasedCourseRef.add({
+//      uid: studentId,
+//      courses: courses.courses,
+//      createdAt: today,
+//      affiliate:courses.affiliateId
+//  })
+//  .then(() => {
+//    notifySuccessFxn("Cours acheté avec succès");
+//    dispatch(clearCart());
+//    navigate('/dashboard/purchased-courses');
+//  })
+//  .catch((error) => {
+//    var errorMessage = error.message;
+//    notifyErrorFxn("Error with Purchasing Course");
+//    console.log('Error with buying course', errorMessage);
+//    setLoading(false);
+//  });
 
 
 

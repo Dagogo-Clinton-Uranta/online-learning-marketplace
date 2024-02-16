@@ -75,7 +75,12 @@ function SelectedCoursePage() {
   const [allVids,setAllVids] =  React.useState([]);
   const [renderNavButtons, setRenderNavButtons] = useState(true)
   
+  /*PURCHASED COURSES CHECK */
   const { purchasedCourses } = useSelector((state) => state.cart);
+  const modifiedPurchasedCourses = purchasedCourses.reduce((acc, cur) => acc.concat(cur.courses), []);
+  const condensedPurchasedCourses =modifiedPurchasedCourses &&  modifiedPurchasedCourses.map((item)=>(item.id))
+
+
   const { subjectPastExams,subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
   const { teachers } = useSelector((state) => state.group);
   const teacherInFocus = teachers && teachers.filter((teacher)=>((teacher.firstName + " " + teacher.lastName) == presentSubject.instructor ))
@@ -90,11 +95,10 @@ function SelectedCoursePage() {
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
 
-  const modifiedPurchasedCourses = purchasedCourses.reduce((acc, cur) => acc.concat(cur.courses), []);
-
+ 
   console.log("MODIFIED purchased courses-->",modifiedPurchasedCourses)
-  const condensedPurchasedCourses =modifiedPurchasedCourses &&  modifiedPurchasedCourses.map((item)=>(item.id))
-  console.log("CONDENSED purchased courses-->",condensedPurchasedCourses)
+ 
+  console.log("CONDENSED purchased courses--->",condensedPurchasedCourses)
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
