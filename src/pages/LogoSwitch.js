@@ -29,6 +29,13 @@ const LogoSwitch = ({uid,audioFile}) => {
  const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
  const { presentSubject } = useSelector((state) => state.group);
 
+   /*PURCHASED COURSES CHECK */
+   const { purchasedCourses } = useSelector((state) => state.cart);
+   const modifiedPurchasedCourses = purchasedCourses.reduce((acc, cur) => acc.concat(cur.courses), []);
+   const condensedPurchasedCourses =modifiedPurchasedCourses &&  modifiedPurchasedCourses.map((item)=>(item.id))
+   /*purchased courses check end */
+
+
  const [trackUser,setTrackUser] = useState(user && user.lessonsWatched ? user.lessonsWatched.map((item)=>(item.lessonId)):[])
 
  useEffect(()=>{
@@ -86,7 +93,7 @@ const LogoSwitch = ({uid,audioFile}) => {
     }
 
 
-    if(presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))){
+    if(presentSubject && purchasedCourses &&  !(condensedPurchasedCourses.includes(presentSubject.uid))){
       notifyInfoFxn('Please purchase course to listen to media.')
       return
     }

@@ -1094,6 +1094,7 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
   /*========== SAVING THE SELECTED SUBJECT FOR WHEN A CARD IS CLICKED===========*/
   export const fetchCurrentSubjectFromDB = (id) => async (dispatch) => {
 
+    console.log("THE ID GEOGRAPHY IS SUPPOSED TO GET----->",id)
    
       //dispatch(isItLoading(true));
   db.collection("sections")
@@ -1101,6 +1102,9 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
    .get().then((doc)=>{
    
     const subject = doc.data(); 
+
+  console.log("WHERE GEOGRAPHY HAS A PROBLEM------>",subject)
+
     dispatch(savePresentSubject(subject))
    })
    

@@ -75,7 +75,7 @@ function SelectedCoursePage() {
   const [allVids,setAllVids] =  React.useState([]);
   const [renderNavButtons, setRenderNavButtons] = useState(true)
   
-
+  const { purchasedCourses } = useSelector((state) => state.cart);
   const { subjectPastExams,subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
   const { teachers } = useSelector((state) => state.group);
   const teacherInFocus = teachers && teachers.filter((teacher)=>((teacher.firstName + " " + teacher.lastName) == presentSubject.instructor ))
@@ -86,15 +86,19 @@ function SelectedCoursePage() {
   console.log("the present SAVED  subject is--->:",presentSubject)
 
 
-  console.log("the chapters for this subject are:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
+  console.log("the chapters for this subject are--->:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
   console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
 
+  const modifiedPurchasedCourses = purchasedCourses.reduce((acc, cur) => acc.concat(cur.courses), []);
 
+  console.log("MODIFIED purchased courses-->",modifiedPurchasedCourses)
+  const condensedPurchasedCourses =modifiedPurchasedCourses &&  modifiedPurchasedCourses.map((item)=>(item.id))
+  console.log("CONDENSED purchased courses-->",condensedPurchasedCourses)
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
-  console.log("the user's purchased courses--->:", user && user.purchasedCourses)
+  console.log("the user's purchased courses---->:", user && user.purchasedCourses)
 
 
   useEffect(()=>{
@@ -244,7 +248,7 @@ const pauseAudio = audio => {
     navigate('/external-login')
    }else{
 
-  if(presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))){
+  if(presentSubject && purchasedCourses &&  !(condensedPurchasedCourses.includes(presentSubject.uid))){
     notifyInfoFxn('Please purchase course to view document.')
   }else{
 
@@ -352,7 +356,7 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
     return
    }
  
-  if(presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))/*true ==false*/){
+  if(presentSubject && purchasedCourses &&  !(condensedPurchasedCourses.includes(presentSubject.uid))/*true ==false*/){
     notifyInfoFxn('Please purchase course to save media.')
   }else{
 
@@ -608,7 +612,7 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
       </Grid>
     </Grid>
    
-   {  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid)) &&
+   {  presentSubject && purchasedCourses &&  !(condensedPurchasedCourses.includes(presentSubject.uid)) &&
    
    <center>
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"2rem",flexDirection:"column",gap:"1rem",border:"1px solid lightgrey",width:"85%",padding:"1rem",borderRadius:"0.5rem"}}>
