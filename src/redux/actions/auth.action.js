@@ -51,6 +51,7 @@ export const signInWithFacebook = (navigate) => async (dispatch) => {
       email: user.email,
       firstName:firstName,
       lastName:lastName,
+      fullName:firstName + " " + lastName
       
     })
     db.collection('users').doc(user.uid).update({
@@ -58,6 +59,7 @@ export const signInWithFacebook = (navigate) => async (dispatch) => {
       email: user.email,
       firstName:firstName,
       lastName:lastName,
+      fullName:firstName + " " + lastName
     
      
     })
@@ -102,6 +104,7 @@ export const signInWithGoogle = (navigate) => async (dispatch) => {
       email: user.email,
       firstName:firstName,
       lastName:lastName,
+      fullName:firstName + " " + lastName
       
      
     })
@@ -112,6 +115,7 @@ export const signInWithGoogle = (navigate) => async (dispatch) => {
       email: user.email,
       firstName:firstName,
       lastName:lastName,
+      fullName:firstName + " " + lastName
     
      
     })
@@ -251,6 +255,7 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
      email: user.email,
      firstName:firstName,
      lastName:lastName,
+     fullName:firstName + " " + lastName,
      registeredOn:new Date(),
      lessonsWatched:[],
       purchasedCourses:[],
@@ -273,6 +278,7 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
      email: user.email,
      firstName:firstName,
      lastName:lastName,
+     fullName:firstName + " " + lastName,
      registeredOn:new Date(),
      lessonsWatched:[],
       purchasedCourses:[],
@@ -346,6 +352,7 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
      email: user.email,
      firstName:firstName,
      lastName:lastName,
+     fullName:firstName + " " + lastName,
      registeredOn:new Date(),
      lessonsWatched:[],
       purchasedCourses:[],
@@ -368,6 +375,7 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
      email: user.email,
      firstName:firstName,
      lastName:lastName,
+     fullName:firstName + " " + lastName,
      registeredOn:new Date(),
      lessonsWatched:[],
       purchasedCourses:[],
