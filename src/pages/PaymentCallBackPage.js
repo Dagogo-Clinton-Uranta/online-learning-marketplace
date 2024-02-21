@@ -14,6 +14,8 @@ const PaymentCallBackPage = () => {
  useEffect(() => {
   const urlParams = new URLSearchParams(window.location.search);
   const cart_data = urlParams.get("cart_data"); 
+
+
   if (cart_data) {
       const cartObject = JSON.parse(cart_data);
      

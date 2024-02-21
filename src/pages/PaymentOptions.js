@@ -31,8 +31,8 @@ const PaymentOptions = () => {
   }, 0);
 
   const courseIdArray = cart.map((item)=>(item.id))
-  const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
-
+  
+  const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate} //cart.map((item)=>({...item,affiliateId:user &&user.affiliate}))
   const handleOrangeCheckBox = () => {
     setOrangeChecked(true);
     setMtnChecked1(false);
@@ -366,7 +366,7 @@ const PaymentOptions = () => {
 
           <input type="hidden" name="paycard-redirect-with-get" value="on" />
           <input type="hidden" name="paycard-auto-redirect" value="off" />
-          <input type="hidden" name="cart_data" value={JSON.stringify(cart)} />
+          <input type="hidden" name="cart_data" value={JSON.stringify(cartToSubmit)} />
 
           {/* <Button
                   type="submit"
