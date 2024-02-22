@@ -24,6 +24,9 @@ export const saveToCart = (uid) => async (dispatch) => {
  
 export const buyCourse = (courses, studentId, today, navigate, setLoading) => async (dispatch) => {
  
+   notifyErrorFxn("BUY COURSES FUNCTION IS ACTIVATED")
+
+
  const newPurchasedCourses =courses && courses.courses.map((element)=>({
    ...element,
    purchasedOn:today

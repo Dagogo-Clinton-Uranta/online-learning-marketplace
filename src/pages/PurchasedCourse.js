@@ -5,6 +5,7 @@ import { fetchPurchasedCourse } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCurrentSubjectFromDB, fetchSubjectChapters } from 'src/redux/actions/group.action';
 import { useNavigate } from 'react-router-dom';
+import { notifyErrorFxn } from 'src/utils/toast-fxn';
 
 const PurchasedCourse = () => {
   const { user } = useSelector((state) => state.auth);
@@ -29,6 +30,7 @@ const PurchasedCourse = () => {
  
 
   useEffect(() => {
+    notifyErrorFxn("PURCHASED COURSES PAGE IS REACHED")
     dispatch(fetchPurchasedCourse(user?.uid ?? user?.id));
   }, []);
 
