@@ -789,7 +789,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 
  <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",paddingBottom:"0.8rem",borderBottom:"1px solid lightgrey"}}>
   <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
-  <PictureAsPdfIcon   style={{fontSize:"2.2rem"}} />
+  <PictureAsPdfIcon  onClick={()=>{handleViewPdf(exam.examUrl?exam.examUrl:"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}}   style={{fontSize:"2.2rem"}} />
    
   </p>
   <p style={{display:"inline",width:"12.5rem",marginTop:"0.2rem"}}>  
