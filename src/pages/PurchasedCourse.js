@@ -83,7 +83,7 @@ const PurchasedCourse = () => {
             >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                  {item.title}
+                  {item && item.title}
                 </Typography>
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>

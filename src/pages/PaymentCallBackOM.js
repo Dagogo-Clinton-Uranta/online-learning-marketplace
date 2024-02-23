@@ -15,6 +15,7 @@ const PaymentCallBackPageOM = () => {
 
 
  useEffect(() => {
+  const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
     const token = urlParams.get('token');
@@ -24,8 +25,8 @@ const PaymentCallBackPageOM = () => {
     if (status === 'success' && isValidToken) {
     const courseIdArray = cart.map((item)=>(item.id))
     let today = new Date().toLocaleDateString();
-    dispatch(buyCourse(cart, user.uid, today, navigate));
-    // dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
+    dispatch(buyCourse(cartToSubmit, user.uid, today, navigate));
+     dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
     }else{
         notifyErrorFxn("Payment was not successful");
         navigate('/dashboard/my-cart');

@@ -97,12 +97,12 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
     
     
    } else {
-   
+    let newPurchasedCourseIds = newPurchasedCourses.map((item)=>(item.id))
     db.collection("users").doc(studentId).get().then((doc)=>{
       if(doc.exists){
       db.collection("users").doc(studentId)
       .update({
-        purchasedCourses:firebase.firestore.FieldValue.arrayUnion(...newPurchasedCourses)
+        purchasedCourses:firebase.firestore.FieldValue.arrayUnion(...newPurchasedCourseIds)
           // courses:[...allGroups[0].courses,...newPurchasedCourses]
         }) 
 
@@ -123,7 +123,7 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
   
         notifySuccessFxn("Cours acheté avec succès");
         dispatch(clearCart());
-        navigate('/dashboard/purchased-courses');
+        navigate('/dashboard/home');
       })
    }
  }).catch((error) => {
