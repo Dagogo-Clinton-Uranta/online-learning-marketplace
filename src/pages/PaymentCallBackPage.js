@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { buyCourse, buyCourseUpdateUser } from 'src/redux/actions/cart.action';
 import { useNavigate } from 'react-router-dom';
+import { notifyErrorFxn } from 'src/utils/toast-fxn';
 
 
 const PaymentCallBackPage = () => {
@@ -24,6 +25,11 @@ const PaymentCallBackPage = () => {
       
       const courseIdArray = cartObject.map((item)=>(item.id))
       dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
+  }else{
+  
+     notifyErrorFxn("NO CART DATA _ THIS IS A TESTING NOTIFICATION")
+
+
   }
   setLoading(false);
 }, []);

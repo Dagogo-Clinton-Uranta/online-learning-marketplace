@@ -23,37 +23,13 @@ export const saveToCart = (uid) => async (dispatch) => {
 
  
 export const buyCourse = (courses, studentId, today, navigate, setLoading) => async (dispatch) => {
- 
    notifyErrorFxn("BUY COURSES FUNCTION IS ACTIVATED")
-
-
  const newPurchasedCourses =courses && courses.courses.map((element)=>({
    ...element,
    purchasedOn:today
 }))
 
-//
-//  var purchasedCourseRef = db.collection("purchasedCourses");
-//  purchasedCourseRef.add({
-//      uid: studentId,
-//      courses: courses.courses,
-//      createdAt: today,
-//      affiliate:courses.affiliateId
-//  })
-//  .then(() => {
-//    notifySuccessFxn("Cours acheté avec succès");
-//    dispatch(clearCart());
-//    navigate('/dashboard/purchased-courses');
-//  })
-//  .catch((error) => {
-//    var errorMessage = error.message;
-//    notifyErrorFxn("Error with Purchasing Course");
-//    console.log('Error with buying course', errorMessage);
-//    setLoading(false);
-//  });
-
-
-
+/// CODE FOR ADDING TO DATABASE BELOW //////////
   let accurateStudentId
   db.collection("purchasedCourses")
   .where('uid', '==', studentId)
@@ -63,20 +39,16 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
    if (allGroups.length > 0) {
       console.log("THE PURCHASED COURSE---->",allGroups)
     db.collection("purchasedCourses").doc(allGroups[0].purchaseId).update({
-    // courses:firebase.firestore.FieldValue.arrayUnion(...newPurchasedCourses)
+   //////////////////////////////////////////////////////////////////////////////////////
        courses:[...allGroups[0].courses,...newPurchasedCourses]
     })
-    
-    
-    
-    
-    
+
     db.collection("users").doc(studentId).get().then((doc)=>{
     if(doc.exists){
       let newPurchasedCourseIds = newPurchasedCourses.map((item)=>(item.id))
     db.collection("users").doc(studentId)
     .update({
-      //purchasedCourses:firebase.firestore.FieldValue.arrayUnion(newPurchasedCourses)
+    ////////////////////////////////////////////////////////////////////////////////////
         purchasedCourses:[...doc.data().purchasedCourses,...newPurchasedCourseIds]
       }) 
     }else{
@@ -89,8 +61,13 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
 
       notifySuccessFxn("Cours acheté avec succès");
     dispatch(clearCart());
-    navigate('/dashboard/purchased-courses');
-    })
+    navigate('/dashboard/home');
+    }).catch((error) => {
+      var errorMessage = error.message;
+        notifyErrorFxn("Error with Updating user !");
+        console.log('Error with buying course', errorMessage);
+        setLoading(false);
+     });
 
 
       

@@ -107,7 +107,7 @@ function SelectedCoursePage() {
 
   useEffect(()=>{
 
-    dispatch(fetchUserData(user.uid, "user refresh",navigate));
+    dispatch(fetchUserData(user && user.uid, "user refresh",navigate));
 
   },[])
   
