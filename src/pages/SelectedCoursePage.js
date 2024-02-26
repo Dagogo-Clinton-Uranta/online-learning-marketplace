@@ -773,7 +773,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 <Grid item xs={12} style={{paddingTop:"4rem",paddingBottom:"1rem"}}>
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
-  {"Past Exams"}
+  {"Annales et Traités"}
  <PictureAsPdfIcon onClick={()=>{/*handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")*//*handleOpenPdf()*/}}  style={{fontSize:"2.2rem",display:"none"}} />
  </p>
 
@@ -813,7 +813,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 </p>
 <p style={{display:"inline",width:"10.5rem",marginTop:"0.2rem"}}>  
  
-  {"No Past Exams Yet"}
+  {"pas encore d'examens"}
 
 </p>
 <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>
