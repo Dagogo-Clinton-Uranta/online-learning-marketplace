@@ -129,7 +129,7 @@ const LogoSwitch = ({uid,audioFile}) => {
 
  {/*AUDIO PLAYER*/}
    
-<audio   src={urlLink} type="audio/mp3"/>
+<audio    src={urlLink} type="audio/mp3"/>
  
 
 <span onClick={()=>{playAudio(urlLink)}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>

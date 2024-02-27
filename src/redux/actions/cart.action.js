@@ -61,7 +61,7 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
 
       notifySuccessFxn("Cours acheté avec succès");
     dispatch(clearCart());
-    navigate('/dashboard/home');
+    navigate('/dashboard/purchased-courses');
     }).catch((error) => {
       var errorMessage = error.message;
         notifyErrorFxn("Error with Updating user !");
@@ -100,7 +100,7 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
   
         notifySuccessFxn("Cours acheté avec succès");
         dispatch(clearCart());
-        navigate('/dashboard/home');
+        navigate('/dashboard/purchased-courses');
       })
    }
  }).catch((error) => {

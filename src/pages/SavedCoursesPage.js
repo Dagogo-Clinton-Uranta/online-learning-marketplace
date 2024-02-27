@@ -393,7 +393,7 @@ downloadReload.map((category)=>(
  </div> 
  }
 
-<audio controls={showPlayer}  ref={audioRef} src={selectedAudio} type="audio/mp3"/>
+<audio controls={showPlayer}  controlsList="nodownload" ref={audioRef} src={selectedAudio} type="audio/mp3"/>
 
 </div>
 

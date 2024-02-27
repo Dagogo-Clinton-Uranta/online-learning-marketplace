@@ -200,7 +200,7 @@ export const signup = (user,navigate) => async (dispatch) => {
     })
     
     fb.auth().sendPasswordResetEmail(user.email)
-    dispatch(fetchUserData(res.user.uid, "sigin",navigate));
+    dispatch(fetchUserData(res.user.uid, "registered",navigate));
   }).then(() => {
    
     navigate("/dashboard/home");
@@ -296,10 +296,10 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
    fb.auth().sendPasswordResetEmail(user.email)
    
 
-   dispatch(fetchUserData(user.uid, "registerSocials",navigate)).then(() => {
+   dispatch(fetchUserData(user.uid, "registered",navigate)).then(() => {
     dispatch(markRegisteredWithSocials(true))
 
-   if(navigate){navigate("/dashboard/profile")};
+   //if(navigate){navigate("/dashboard/profile")};
 
      })
 
@@ -393,10 +393,10 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
    fb.auth().sendPasswordResetEmail(user.email)
    
 
-   dispatch(fetchUserData(user.uid, "registerSocials",navigate)).then(() => {
+   dispatch(fetchUserData(user.uid, "registered",navigate)).then(() => {
     dispatch(markRegisteredWithSocials(true))
 
-   if(navigate){navigate("/dashboard/profile")};
+  // if(navigate){navigate("/dashboard/profile")};
 
 
    })
@@ -456,9 +456,9 @@ export const fetchUserData = (id, type, navigate) => async (dispatch) => {
     if(type === "sigin"){
      
       notifySuccessFxn("Logged In😊");
-      navigate('/dashboard/home', { replace: true });
+      navigate('/dashboard/6e', { replace: true });
     }
-    if(type === "registerSocials"){
+    if(type === "registered"){
      
       notifySuccessFxn("Logged In😊");
       navigate('/dashboard/profile', { replace: true });
