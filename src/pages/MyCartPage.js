@@ -27,7 +27,7 @@ const MyCartPage = () => {
    
    if(cart && cart.length >0 ){
     cart.forEach((item)=>{
-      if( item.packId &&item.packId.length &&  item.packName &&  item.packName.length &&  cartPackIds.indexOf(item.packName) === -1 ){
+      if( item.packId &&item.packId.length &&  item.packName &&  item.packName.length && cartPackIds &&  cartPackIds.indexOf(item.packName) === -1 ){
         
         dispatch(setCartPackSortIds([...cartPackIds,item.packName]))
   
