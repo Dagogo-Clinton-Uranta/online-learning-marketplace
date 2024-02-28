@@ -46,6 +46,7 @@ console.log("cart is -->",cart)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setisLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const publicKey = '';
   const totalPrice = cart.reduce((acc, item) => {
     const itemPrice = parseFloat(item.price && item.price.replace(',', ''));
@@ -301,7 +302,11 @@ cartPackIds.map((packName)=>(
 
               <Button
                   type="button"
-                  onClick={()=>{navigate('/dashboard/payment-options')}}
+                  onClick={()=>{
+                    setLoading(true)
+                    setTimeout(()=>{setLoading(false)},1500)
+                    setTimeout(()=>{navigate('/dashboard/payment-options')},1500)
+                  }}
                   disabled={isLoading}
                   variant="contained"
                   style={{
@@ -310,9 +315,12 @@ cartPackIds.map((packName)=>(
                     paddingBottom: '10px',
                     paddingRight: '30px',
                     paddingLeft: '30px',
+                    width:"14rem",
+                    color:loading?"gray":"white"
                   }}
                 >
-                  Procéder au paiement
+
+                  {loading?"loading...":"Procéder au paiement"}
                 </Button>
           {/* <form action="https://mapaycard.com/epay/" method="POST">
               <input type="hidden" name="c" value="MjcyMDQxNzM" />
