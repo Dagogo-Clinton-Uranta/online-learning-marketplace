@@ -26,7 +26,7 @@ const PaymentOptions = () => {
   const { cart } = useSelector((state) => state.cart);
   const [isLoading, setIsLoading] = useState(false);
   const totalPrice = cart.reduce((acc, item) => {
-    const itemPrice = parseFloat(item.price.replace(',', ''));
+    const itemPrice = parseFloat(item.price && item.price.replace(',', ''));
     return acc + itemPrice;
   }, 0);
 
@@ -40,6 +40,7 @@ const PaymentOptions = () => {
     setPcChecked(false);
   };
 
+  console.log("TESTING CHECKPOINT-->")
  // const momoTokenUrl = 'http://localhost:5001/api/get-token';
  // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
 
@@ -327,7 +328,7 @@ const PaymentOptions = () => {
           </Typography>
           <br />
 
-          {cart.map((item, index) => (
+          {cart.filter((item)=>(!item.packId &&!item.packName /*&& !item.packLead*/)).map((item, index) => (
             <div
               style={{
                 display: 'flex',
