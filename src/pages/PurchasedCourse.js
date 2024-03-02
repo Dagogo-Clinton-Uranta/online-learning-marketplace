@@ -30,7 +30,7 @@ const PurchasedCourse = () => {
  
 
   useEffect(() => {
-    notifyErrorFxn("PURCHASED COURSES PAGE IS REACHED")
+    //notifyErrorFxn("PURCHASED COURSES PAGE IS REACHED")
     dispatch(fetchPurchasedCourse(user?.uid ?? user?.id));
   }, []);
 

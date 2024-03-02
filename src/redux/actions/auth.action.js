@@ -34,8 +34,9 @@ import firebase from "firebase/app";
 
 
 
-export const signInWithFacebook = (navigate) => async (dispatch) => {
- const provider =  new firebase.auth.FacebookAuthProvider();
+export const signInWithFacebook = (e,navigate) => async (dispatch) => {
+  e.preventDefault()
+  const provider =  new firebase.auth.FacebookAuthProvider();
 
  fb.auth().useDeviceLanguage();
  
