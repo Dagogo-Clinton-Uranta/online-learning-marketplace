@@ -9729,6 +9729,11 @@
     "prop-types" "^15.6.0"
     "warning" "^4.0.1"
 
+"react-facebook-login@^4.1.1":
+  "integrity" "sha512-COnHEHlYGTKipz4963safFAK9PaNTcCiXfPXMS/yxo8El+/AJL5ye8kMJf23lKSSGGPgqFQuInskIHVqGqTvSw=="
+  "resolved" "https://registry.npmjs.org/react-facebook-login/-/react-facebook-login-4.1.1.tgz"
+  "version" "4.1.1"
+
 "react-fast-compare@^2.0.1":
   "integrity" "sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw=="
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-2.0.4.tgz"

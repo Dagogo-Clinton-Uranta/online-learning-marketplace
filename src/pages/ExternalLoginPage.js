@@ -18,6 +18,7 @@ import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
+import ReactFacebookLogin from 'react-facebook-login';
 
 
 function ExternalLoginPage() {
@@ -39,8 +40,9 @@ function ExternalLoginPage() {
   }
 
 
-  const facebookLoginFxn = (navigate) =>{
-    dispatch(signInWithFacebook(navigate))
+  const facebookLoginFxn = (e,navigate) =>{
+    e.preventDefault()
+    dispatch(signInWithFacebook(e,navigate))
   }
 
   const responseFacebook = (response) => {
@@ -81,16 +83,16 @@ function ExternalLoginPage() {
       <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center',alignItems:"center" }}>
            
           
-          <Button   variant="contained" 
+        {/*  <Button   variant="contained" 
           style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
           }}
           onClick ={()=>{facebookLoginFxn(navigate)}}
           >
           Se connecter avec Facebook
-          </Button>
+        </Button>*/}
 
-       {/*
-       <FacebookLogin
+       {
+       <ReactFacebookLogin
            appId="1025666841349330"
            autoLoad={true}
            fields="name,email,picture"
@@ -109,7 +111,7 @@ function ExternalLoginPage() {
             Se connecter Facebook
             </Button>
           )}
-         /> */}
+         /> }
 
 
         </Grid>
