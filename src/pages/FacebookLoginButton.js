@@ -8,8 +8,9 @@ const FacebookLoginButton = () => {
       window.FB.init({
         appId: '1025666841349330',
         cookie: true,
+        status:true,
         xfbml: true,
-        version: 'v2.7'
+        version: 'v19.0'
       });
     };
 
@@ -24,6 +25,8 @@ const FacebookLoginButton = () => {
   }, []);
 
   const handleLogin = () => {
+  
+
     window.FB.login(function(response) {
       if (response.authResponse) {
         console.log('You are logged in:', response.authResponse);
@@ -32,6 +35,9 @@ const FacebookLoginButton = () => {
         console.log('User cancelled login or did not fully authorize.');
       }
     }, { scope: 'email' }); // Add any additional permissions you need
+
+  
+
   };
   {/* OLD BUTTON THAT CAME WITH THE CHAT GPT CODE <button onClick={handleLogin}>Login with Facebook for Business</button>*/}
 
