@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 import ReactFacebookLogin from 'react-facebook-login';
+import FacebookLoginButton from './FacebookLoginButton';
 
 
 function ExternalLoginPage() {
@@ -91,7 +92,7 @@ function ExternalLoginPage() {
           Se connecter avec Facebook
         </Button>*/}
 
-       {
+       {/*
        <ReactFacebookLogin
            appId="1025666841349330"
            autoLoad={true}
@@ -111,7 +112,10 @@ function ExternalLoginPage() {
             Se connecter Facebook
             </Button>
           )}
-         /> }
+          /> */}
+
+
+          <FacebookLoginButton/>
 
 
         </Grid>
