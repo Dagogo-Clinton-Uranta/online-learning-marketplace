@@ -163,6 +163,8 @@ const PaymentOptions = () => {
             amount: totalPrice,
             currency: 'GNF', //OUV
             order_id: `${uuid.v4()}`,
+            userId:user.uid,
+            cartData:cartToSubmit,
             reference: "ref Merchant",
             orangeMToken: access_token
           }).then((res) => {

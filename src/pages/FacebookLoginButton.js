@@ -34,7 +34,7 @@ const FacebookLoginButton = () => {
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-    }, { scope: 'email' }); // Add any additional permissions you need
+    }, { /*scope: 'email'*/  config_id: '<CONFIG_ID>'  }); // Add any additional permissions you need
 
   
 

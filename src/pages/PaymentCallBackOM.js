@@ -19,13 +19,22 @@ const PaymentCallBackPageOM = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
     const token = urlParams.get('token');
+    const userId= urlParams.get('userId');
+    const cart_data = urlParams.get('cart_data');
+
+    console.log("token is --> ",token)
+    console.log("cart__data -->",cart_data)
 
     const isValidToken = validateToken(token);
 
     if (status === 'success' && isValidToken) {
-    const courseIdArray = cart.map((item)=>(item.id))
+
+      const cartObject = JSON.parse(cart_data);
+
+    const courseIdArray = cartObject.courses.map((item)=>(item.id))
     let today = new Date().toLocaleDateString();
-    dispatch(buyCourse(cartToSubmit, user.uid, today, navigate));
+
+    dispatch(buyCourse(cartObject, userId, today, navigate));
      dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
     }else{
         notifyErrorFxn("Payment was not successful");
