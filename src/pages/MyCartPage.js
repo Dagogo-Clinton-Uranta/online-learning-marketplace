@@ -4,13 +4,13 @@ import { Cancel } from '@material-ui/icons';
 import { usePaystackPayment, PaystackButton, PaystackConsumer } from 'react-paystack';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeAllFromCart, removeFromCart } from 'src/redux/reducers/cart.slice';
-import { buyCourse,setCartPackSortIds } from 'src/redux/actions/cart.action';
+import { buyCourse,saveCartToDatabase,setCartPackSortIds } from 'src/redux/actions/cart.action';
 import { useNavigate } from 'react-router-dom';
 
 const MyCartPage = () => {
   const { cart,cartPackIds } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
-
+  const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
 
   useEffect(()=>{
       if(!user){
@@ -306,6 +306,11 @@ cartPackIds.map((packName)=>(
                     setLoading(true)
                     setTimeout(()=>{setLoading(false)},1500)
                     setTimeout(()=>{navigate('/dashboard/payment-options')},1500)
+                    //YOU ARE HERE 
+
+                     dispatch(saveCartToDatabase(user.uid,cartToSubmit))
+
+                    //DISPATCH THE CURRENT CART TO THE USER
                   }}
                   disabled={isLoading}
                   variant="contained"

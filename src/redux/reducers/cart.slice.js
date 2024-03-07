@@ -6,6 +6,7 @@ const initialState = {
   cartPackIds:[],
   error: '',
   message: '',
+  cartToProcess:{}
 };
 
 const cartSlice = createSlice({
@@ -40,6 +41,11 @@ const cartSlice = createSlice({
         state.cartPackIds = action.payload;
         
       },
+
+      saveCartToProcess: (state, action) => {
+        state.cartToProcess = action.payload;
+        
+      },
     clearCart: (state) => {
       return {
         ...initialState,
@@ -56,6 +62,7 @@ export const {
  removeAllFromCart,
  savePurchasedCourses,
  saveCartPackIds,
+ saveCartToProcess,
  clearCart,
 } = actions;
 

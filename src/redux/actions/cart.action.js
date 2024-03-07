@@ -1,7 +1,7 @@
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { db, fb, auth, storage } from '../../config/firebase';
 import { fetchTransactions, isItLoading } from '../reducers/transactions.slice';
-import { clearCart, savePurchasedCourses,saveCartPackSortIds, saveCartPackIds } from '../reducers/cart.slice';
+import { clearCart, savePurchasedCourses,saveCartPackSortIds, saveCartPackIds,saveCartToProcess } from '../reducers/cart.slice';
 import firebase from "firebase/app";
 
 
@@ -20,6 +20,57 @@ export const saveToCart = (uid) => async (dispatch) => {
        dispatch(isItLoading(false));
      });
  };
+
+
+ export const saveCartToDatabase = (uid,cartToSubmit) => async (dispatch) => {
+  dispatch(isItLoading(true));
+   db.collection("users")
+   .doc(uid)
+    .update({
+      cartInProgress:cartToSubmit
+    })
+    .then((snapshot) => {
+     
+     console.log("---->THE CART ITEMS HAVE BEEN SAVED TO THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
+     dispatch(isItLoading(false));
+    
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+    notifyErrorFxn("ISSUE WITH STORAGE OF CART")
+    dispatch(isItLoading(false));
+  });
+};
+
+
+
+export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
+  dispatch(isItLoading(true));
+   db.collection("users")
+   .doc(uid)
+    .get()
+    .then((doc) => {
+     
+
+      if (doc.exists) {
+        // console.log("User Data:", doc.data());
+        dispatch(saveCartToProcess(doc.data().cartInProgress));
+
+      }
+      else {
+        console.log("THE USER WE ARE TRYING TO GET THEIR MOST UP TO DATE CART, SEEMS TO BE MISSING")
+      }
+     dispatch(isItLoading(false));
+
+
+
+    
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+    notifyErrorFxn("WE HAVE CART TO PROGRESS, NOW WE HAVE AN ISSUE IN DISPENSING IT TO PURCHASED COURSES")
+    console.log("WE HAVE CART TO PROGRESS, NOW WE HAVE AN ISSUE IN DISPENSING IT TO PURCHASED COURSES")
+    dispatch(isItLoading(false));
+  });
+};
 
  
 export const buyCourse = (courses, studentId, today, navigate, setLoading) => async (dispatch) => {
@@ -106,7 +157,7 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
  }).catch((error) => {
   var errorMessage = error.message;
     notifyErrorFxn("Error with Purchasing Course");
-    console.log('Error with buying course', errorMessage);
+    console.log('Error with buying course--->', errorMessage);
     setLoading(false);
  });
 

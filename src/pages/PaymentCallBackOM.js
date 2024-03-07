@@ -1,54 +1,79 @@
 import { CircularProgress } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { buyCourse, buyCourseUpdateUser } from 'src/redux/actions/cart.action';
+import { buyCourse, buyCourseUpdateUser, fetchCartToProcessFromUser } from 'src/redux/actions/cart.action';
 import { useNavigate } from 'react-router-dom';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
+import lzjs from 'lzjs';
 
 
 const PaymentCallBackPageOM = () => {
  const [loading, setLoading] = useState(true);
  const { user } = useSelector((state) => state.auth);
- const { cart } = useSelector((state) => state.cart);
+ const { cart,cartToProcess } = useSelector((state) => state.cart);
  const navigate = useNavigate();
  const dispatch = useDispatch();
 
 
  useEffect(() => {
-  const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
+ // const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
     const token = urlParams.get('token');
     const userId= urlParams.get('userId');
-    const cart_data = urlParams.get('cart_data');
+   // const cart_data = urlParams.get('cart_data');
 
     console.log("token is --> ",token)
-    console.log("cart__data -->",cart_data)
+    console.log("userId is -->",userId)
 
+    
+  
+    const getCartToProcess = ()=>{
+
+      dispatch(fetchCartToProcessFromUser(userId))
+
+    }
+
+    
+
+    const validateToken = (token) => {
+      const expectedToken = 'AHIPS2893';
+      return token === expectedToken;
+    };
+
+    
     const isValidToken = validateToken(token);
 
     if (status === 'success' && isValidToken) {
 
-      const cartObject = JSON.parse(cart_data);
+  console.log("I HAVE REACHED THE CALLBACK PAGE---> ")
 
-    const courseIdArray = cartObject.courses.map((item)=>(item.id))
+      dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
+   
+      console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART NOW---> ")
+
+  
+
+    const cartObject = cartToProcess && cartToProcess;
+    console.log("CART OBJECT ------>",cartObject)
+
+    const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
     let today = new Date().toLocaleDateString();
+  
+    console.log("COURSE ID ARRAY IS----->",courseIdArray)
+   
 
     dispatch(buyCourse(cartObject, userId, today, navigate));
      dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
+
+    })  
+
     }else{
         notifyErrorFxn("Payment was not successful");
         navigate('/dashboard/my-cart');
     }
     setLoading(false);
-  }, [dispatch, navigate, user.uid]);
-
-
-
-  const validateToken = (token) => {
-    const expectedToken = 'AHIPS2893';
-    return token === expectedToken;
-  };
+  }, [dispatch, navigate]);
 
 
 
