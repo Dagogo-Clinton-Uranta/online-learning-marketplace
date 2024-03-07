@@ -579,7 +579,7 @@ export const uploadProfileImage = (profileData, file, userID, navigate, setLoadi
 
 
 export const updateProfile = (profileData, userID, file, navigate, setLoading, url) => async (dispatch) => {
-  // return  
+    console.log("PROFILE IS UPDATED NOW--->")
   db.collection('users').doc(userID).update({
     telephone: profileData.telephone,
     pvExamen: profileData.pvExamen,
@@ -642,7 +642,7 @@ export const updateProfile = (profileData, userID, file, navigate, setLoading, u
 
 
         setLoading(false);
-        console.error("No Password to update");
+        console.log("No Password to update - so we didn't call auth.currentUser");
         notifySuccessFxn("mise à jour réussie!");
         //navigate('/dashboard/home', { replace: true });
        }

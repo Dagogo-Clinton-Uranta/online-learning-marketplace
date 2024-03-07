@@ -49,21 +49,23 @@ function ProfilePage() {
 };
 
 
-const settingsUpdate = (e) => {
-  e.preventDefault();
+const settingsUpdate = () => {
+  
 //   console.log("OLD SATE: ",state);
 
 //   return;
   setLoading(true);
  
-  const imageUrl = user.imageUrl;
+  const imageUrl = user && user.imageUrl?user.imageUrl:" ";
+
+  console.log("LOOK HERE-->",telephone.substring(0,3))
 
   if(telephone.substring(0,3) !== '224'){
 
     notifyErrorFxn("assurez-vous que le numéro de téléphone commence par 224")
     return
   }else{
-  if(selectedFile.selectedFile.length == 0){
+  if(selectedFile.selectedFile.length === 0){
     // notifyErrorFxn("You have not uploaded Image");
     //dispatch(updateProfile(state, id, '', navigate, setLoading, imageUrl));
    // dispatch(updateProfile(user.uid,updateObject,navigate))
@@ -417,7 +419,7 @@ const updateObject = {
            <Button   variant="contained" 
           style={{ backgroundColor: "#f00c44",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",
           }}
-          onClick ={(e)=>{settingsUpdate(e)}}
+          onClick ={()=>{settingsUpdate()}}
           >
           Sauvegarder changement
           </Button>
