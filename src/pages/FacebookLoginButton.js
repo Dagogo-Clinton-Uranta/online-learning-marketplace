@@ -42,7 +42,7 @@ const FacebookLoginButton = () => {
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-    }, { /*scope: 'email'*/  config_id: '<CONFIG_ID>'  }); // CONFIG ID GOES HERE
+    }, { scope: 'email' /* config_id: '<CONFIG_ID>'*/  }); // CONFIG ID GOES HERE
 
   };
   

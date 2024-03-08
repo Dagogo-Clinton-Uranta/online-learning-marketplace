@@ -44,31 +44,23 @@ export const UseFacebookDetailsToSignIn = (navigate) => async (dispatch) => {
   .then((result)=>{
     var user = result.user;
   
-    var firstName= result.user.displayName?result.user.displayName.split(" ")[0]:''
-    var lastName = result.user.displayName?result.user.displayName.split(" ")[1]:''
-   console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
-   
-    /*db.collection('userData').doc(user.uid).update({
-      uid: user.uid,
-      email: user.email,
-      firstName:firstName,
-      lastName:lastName,
-      fullName:firstName + " " + lastName
-      
-    })*/
-
-    db.collection('users').doc(user.uid).update({
-      uid: user.uid,
-      email: user.email,
-      firstName:firstName,
-      lastName:lastName,
-      fullName:firstName + " " + lastName
+        var firstName= result.user.displayName?result.user.displayName.split(" ")[0]:''
+        var lastName = result.user.displayName?result.user.displayName.split(" ")[1]:''
+       console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
+       
     
-     
-    })
-
-
-     dispatch(fetchUserData(user.uid, "sigin", navigate));
+        db.collection('users').doc(user.uid).update({
+          uid: user.uid,
+          email: user.email,
+          firstName:firstName,
+          lastName:lastName,
+          fullName:firstName + " " + lastName
+        
+         
+        })
+    
+    
+         dispatch(fetchUserData(user.uid, "sigin", navigate));
 
   }).catch((error) => {
     console.log( ' PROBLEM REPORT ', error.message);
