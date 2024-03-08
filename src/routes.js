@@ -90,7 +90,7 @@ export default function Router() {
         { path: 'saved-courses', element: <SavedCoursesPage /> },
         { path: 'my-cart', element: <MyCartPage /> },
         { path: 'payment-callback', element: <PaymentCallBackPage /> },
-        { path: 'payment-callback2', element: <PaymentCallBackPageOM /> },
+        { path: 'omcb', element: <PaymentCallBackPageOM /> },
         { path: 'payment-method', element: <PaymentTypePage /> },
         { path: 'purchased-courses', element: <PurchasedCourse /> },
         { path: 'payment-options', element: <PaymentOptions /> },

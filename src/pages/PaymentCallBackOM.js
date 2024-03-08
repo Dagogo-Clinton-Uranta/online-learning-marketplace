@@ -20,13 +20,17 @@ const PaymentCallBackPageOM = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
     const token = urlParams.get('token');
-    const userId= urlParams.get('userId');
+    const userId= urlParams.get('user');
+
+    const payToken= urlParams.get('pto');
+    const orderId= urlParams.get('oid');
    // const cart_data = urlParams.get('cart_data');
 
-    console.log("token is --> ",token)
-    console.log("userId is -->",userId)
-
-    
+   // console.log("token is --> ",token)
+   // console.log("userId is -->",userId)
+  
+   console.log("PAY TOKEN is -->",payToken)
+   console.log("ORDER ID is -->",orderId)
   
     const getCartToProcess = ()=>{
 
@@ -50,21 +54,21 @@ const PaymentCallBackPageOM = () => {
 
       dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
    
-      console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART NOW---> ")
-
-  
-
-    const cartObject = cartToProcess && cartToProcess;
-    console.log("CART OBJECT ------>",cartObject)
-
-    const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
-    let today = new Date().toLocaleDateString();
-  
-    console.log("COURSE ID ARRAY IS----->",courseIdArray)
-   
-
-    dispatch(buyCourse(cartObject, userId, today, navigate));
-     dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
+           console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART NOW---> ")
+     
+       
+     
+         const cartObject = cartToProcess && cartToProcess;
+         console.log("CART OBJECT ------>",cartObject)
+     
+         const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
+         let today = new Date().toLocaleDateString();
+       
+         console.log("COURSE ID ARRAY IS----->",courseIdArray)
+        
+     
+         dispatch(buyCourse(cartObject, userId, today, navigate));
+          dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
 
     })  
 
