@@ -36,7 +36,7 @@ const FacebookLoginButton = () => {
       if (response.authResponse) {
         console.log('You are logged in:', response.authResponse);
         // USING THE SUCCESSFUL FACEBOOK LOGIN DETAILS TO SIGN UP TO FIREBASE
-           dispatch(UseFacebookDetailsToSignIn(response.authResponse))
+         //dispatch(UseFacebookDetailsToSignIn(response.authResponse))
 
 
       } else {
