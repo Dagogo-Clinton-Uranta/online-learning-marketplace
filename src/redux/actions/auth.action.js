@@ -34,6 +34,62 @@ import firebase from "firebase/app";
 
 
 
+export const UseFacebookDetailsToSignIn = (navigate) => async (dispatch) => {
+
+  const provider =  new firebase.auth.FacebookAuthProvider();
+
+ fb.auth().useDeviceLanguage();
+ 
+  fb.auth().signInWithPopup(provider)
+  .then((result)=>{
+    var user = result.user;
+  
+    var firstName= result.user.displayName?result.user.displayName.split(" ")[0]:''
+    var lastName = result.user.displayName?result.user.displayName.split(" ")[1]:''
+   console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
+   
+    /*db.collection('userData').doc(user.uid).update({
+      uid: user.uid,
+      email: user.email,
+      firstName:firstName,
+      lastName:lastName,
+      fullName:firstName + " " + lastName
+      
+    })*/
+
+    db.collection('users').doc(user.uid).update({
+      uid: user.uid,
+      email: user.email,
+      firstName:firstName,
+      lastName:lastName,
+      fullName:firstName + " " + lastName
+    
+     
+    })
+
+
+     dispatch(fetchUserData(user.uid, "sigin", navigate));
+
+  }).catch((error) => {
+    console.log( ' PROBLEM REPORT ', error.message);
+    dispatch(loginFailed(error.message));
+   
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    //notifyErrorFxn(errorMessage);
+    
+    console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
+   
+  });
+
+}
+
+
+
+
+
+
+
 export const signInWithFacebook = (e,navigate) => async (dispatch) => {
   e.preventDefault()
   const provider =  new firebase.auth.FacebookAuthProvider();
@@ -47,6 +103,7 @@ export const signInWithFacebook = (e,navigate) => async (dispatch) => {
     var firstName= result.user.displayName?result.user.displayName.split(" ")[0]:''
     var lastName = result.user.displayName?result.user.displayName.split(" ")[1]:''
    console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
+   
     db.collection('userData').doc(user.uid).update({
       uid: user.uid,
       email: user.email,
@@ -55,6 +112,7 @@ export const signInWithFacebook = (e,navigate) => async (dispatch) => {
       fullName:firstName + " " + lastName
       
     })
+
     db.collection('users').doc(user.uid).update({
       uid: user.uid,
       email: user.email,

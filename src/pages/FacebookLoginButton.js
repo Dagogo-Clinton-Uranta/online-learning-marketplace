@@ -1,7 +1,14 @@
 import React, { useEffect } from 'react';
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
+import { UseFacebookDetailsToSignIn } from 'src/redux/actions/auth.action';
+import { useDispatch } from 'react-redux';
+
+
+
 
 const FacebookLoginButton = () => {
+   const dispatch  = useDispatch()
+  
   useEffect(() => {
     // Load the Facebook SDK asynchronously
     window.fbAsyncInit = function() {
@@ -25,23 +32,20 @@ const FacebookLoginButton = () => {
   }, []);
 
   const handleLogin = () => {
-  
-
     window.FB.login(function(response) {
       if (response.authResponse) {
         console.log('You are logged in:', response.authResponse);
-        // Handle the successful login here
+        // USING THE SUCCESSFUL FACEBOOK LOGIN DETAILS TO SIGN UP TO FIREBASE
+           dispatch(UseFacebookDetailsToSignIn(response.authResponse))
+
+
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-    }, { /*scope: 'email'*/  config_id: '<CONFIG_ID>'  }); // Add any additional permissions you need
-
-  
+    }, { /*scope: 'email'*/  config_id: '<CONFIG_ID>'  }); // CONFIG ID GOES HERE
 
   };
-  {/* OLD BUTTON THAT CAME WITH THE CHAT GPT CODE <button onClick={handleLogin}>Login with Facebook for Business</button>*/}
-
-
+  
   return (
   
      <Button   variant="contained" 

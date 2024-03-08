@@ -43,8 +43,16 @@ import db from '../browserDb/db'
 import soundBytes from 'src/assets/images/soundBytes.mp3'
 import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
+
+
+
+
+
+
+
 function SavedCoursesPage() {
   
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -57,15 +65,19 @@ function SavedCoursesPage() {
     boxShadow: 24,
     p: 4,
   };
- 
-const navigate = useNavigate
+  
+
+const navigate = useNavigate()
 
 const dispatch  = useDispatch()
 
 const { user } = useSelector((state) => state.auth);
 
+console.log("user is --->",user)
+
+
 useEffect(()=>{
-   if(!user){
+   if(!user ){
      navigate('/external-login')
     }
 
@@ -88,7 +100,8 @@ const URLSound = window.URL || window.webkitURL;
 
 
 let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
-console.log("files is",Files)
+
+//console.log("files is",Files)
 
 
 
