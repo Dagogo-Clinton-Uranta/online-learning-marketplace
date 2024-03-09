@@ -6,7 +6,9 @@ const initialState = {
   cartPackIds:[],
   error: '',
   message: '',
-  cartToProcess:{}
+  cartToProcess:{},
+  mostRecentPayToken:'',
+  mostRecentOrderAmount:'',
 };
 
 const cartSlice = createSlice({
@@ -46,6 +48,16 @@ const cartSlice = createSlice({
         state.cartToProcess = action.payload;
         
       },
+
+      saveMostRecentPayToken: (state, action) => {
+        state.mostRecentPayToken = action.payload;
+        
+      },
+
+      saveMostRecentOrderAmount: (state, action) => {
+        state.mostRecentOrderAmount = action.payload;
+        
+      },
     clearCart: (state) => {
       return {
         ...initialState,
@@ -63,6 +75,8 @@ export const {
  savePurchasedCourses,
  saveCartPackIds,
  saveCartToProcess,
+ saveMostRecentOrderAmount,
+ saveMostRecentPayToken,
  clearCart,
 } = actions;
 

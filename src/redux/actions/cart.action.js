@@ -1,7 +1,7 @@
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { db, fb, auth, storage } from '../../config/firebase';
 import { fetchTransactions, isItLoading } from '../reducers/transactions.slice';
-import { clearCart, savePurchasedCourses,saveCartPackSortIds, saveCartPackIds,saveCartToProcess } from '../reducers/cart.slice';
+import { clearCart, savePurchasedCourses,saveCartPackSortIds, saveCartPackIds,saveCartToProcess, saveMostRecentOrderAmount, saveMostRecentPayToken } from '../reducers/cart.slice';
 import firebase from "firebase/app";
 
 
@@ -41,6 +41,29 @@ export const saveToCart = (uid) => async (dispatch) => {
   });
 };
 
+export const savePayTokenToDatabase = (uid,orderId,pay_token,orderAmount) => async (dispatch) => {
+  dispatch(isItLoading(true));
+   db.collection("users")
+   .doc(uid)
+    .update({
+      
+      mostRecentOrderAmount:orderAmount,
+      mostRecentPayToken:pay_token
+      
+    })
+    .then((snapshot) => {
+     
+     console.log("---->THE Order ID HAS BEEN SAVED TO THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
+     dispatch(isItLoading(false));
+    
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+    notifyErrorFxn("ISSUE WITH STORAGE OF CART")
+    dispatch(isItLoading(false));
+  });
+};
+
+
 
 
 export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
@@ -54,6 +77,8 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
       if (doc.exists) {
         // console.log("User Data:", doc.data());
         dispatch(saveCartToProcess(doc.data().cartInProgress));
+        dispatch(saveMostRecentOrderAmount(doc.data().mostRecentOrderAmount));
+        dispatch(saveMostRecentPayToken(doc.data().mostRecentPayToken));
 
       }
       else {

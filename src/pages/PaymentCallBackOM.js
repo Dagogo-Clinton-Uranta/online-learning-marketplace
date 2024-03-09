@@ -10,73 +10,95 @@ import lzjs from 'lzjs';
 const PaymentCallBackPageOM = () => {
  const [loading, setLoading] = useState(true);
  const { user } = useSelector((state) => state.auth);
- const { cart,cartToProcess } = useSelector((state) => state.cart);
+ const { cart,cartToProcess,mostRecentOrderAmount,mostRecentPayToken} = useSelector((state) => state.cart);
  const navigate = useNavigate();
  const dispatch = useDispatch();
 
 
- useEffect(() => {
- // const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-    const token = urlParams.get('token');
-    const userId= urlParams.get('user');
+ const orangeTranactionUrl = 'http://localhost:5008/api/om/get-token';
+  const orangeTransactionUrl = 'http://localhost:5008/api/om/webpayment';
+ //const orangeTranactionUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
+ //const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
 
-    const payToken= urlParams.get('pto');
+
+
+ useEffect(() => {
+ 
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId= urlParams.get('user');
     const orderId= urlParams.get('oid');
+
    // const cart_data = urlParams.get('cart_data');
 
-   // console.log("token is --> ",token)
    // console.log("userId is -->",userId)
   
-   console.log("PAY TOKEN is -->",payToken)
-   console.log("ORDER ID is -->",orderId)
-  
-    const getCartToProcess = ()=>{
 
-      dispatch(fetchCartToProcessFromUser(userId))
-
-    }
-
-    
-
-    const validateToken = (token) => {
+   /* const validateToken = (token) => {
       const expectedToken = 'AHIPS2893';
       return token === expectedToken;
     };
 
     
-    const isValidToken = validateToken(token);
+    const isValidToken = validateToken(token);*/
 
-    if (status === 'success' && isValidToken) {
 
-  console.log("I HAVE REACHED THE CALLBACK PAGE---> ")
+  console.log("I HAVE REACHED THE CALLBACK PAGE, NOW I WAIT FOR 2 SECONDS---> ")
 
+
+  setTimeout(()=>{  
       dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
    
-           console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART NOW---> ")
+           console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
      
-       
-     
-         const cartObject = cartToProcess && cartToProcess;
-         console.log("CART OBJECT ------>",cartObject)
-     
-         const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
-         let today = new Date().toLocaleDateString();
-       
-         console.log("COURSE ID ARRAY IS----->",courseIdArray)
+           const headers = {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',  
+           };
+           
+       axios.post(orangeMTokenUrl, {}, { headers })
+        .then(response => {
+            const access_token = response.data.access_token;
+          
+           axios.post(orangeTransactionUrl, {
+            amount: mostRecentOrderAmount,
+            order_id: orderId,
+            payToken:mostRecentPayToken,
+            orangeMToken: access_token
+          }).then((res) => {
+              console.log("LOOK HERE FOR INITIATED --->", res.data);
+              if (res.data.status && res.data.status === 'SUCCESS' ) {
+               
+                const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
+                let today = new Date().toLocaleDateString();
+              
+                console.log("COURSE ID ARRAY IS----->",courseIdArray)
+               
+            
+                dispatch(buyCourse(cartObject, userId, today, navigate));
+                 dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
+                
+      
+
+              }else{
+                console.log("Res", res);
+                notifyErrorFxn("PAYMENT STATUS IS NOT SUCCESS,SO NO COURSES WERE ADDED TO PURCHASED COURSES!");  
+              }
+          }).catch((error) => {
+           
+            console.error('could not get transaction status, so this page failed:', error);
+            notifyErrorFxn('could not get transaction status, so this page failed...');
+          })
+        }).catch(error => {
+           
+            notifyErrorFxn('Failed to get token');
+        });
+          
         
-     
-         dispatch(buyCourse(cartObject, userId, today, navigate));
-          dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
 
     })  
 
-    }else{
-        notifyErrorFxn("Payment was not successful");
-        navigate('/dashboard/my-cart');
-    }
-    setLoading(false);
+  },2000)
+   
   }, [dispatch, navigate]);
 
 

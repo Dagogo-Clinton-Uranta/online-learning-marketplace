@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Checkbox, Typography, IconButton, Button } from '@mui/material';
-import { buyCourseUpdateUser, fetchPurchasedCourse } from '../redux/actions/cart.action';
+import { buyCourseUpdateUser, fetchPurchasedCourse, saveOrderIdToDatabase, savePayTokenToDatabase } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
-import { buyCourse } from 'src/redux/actions/cart.action';
+import { buyCourse,saveOrderIdToDatabase } from 'src/redux/actions/cart.action';
 import MTNLOGO from '../assets/images/MTN-logo.png';
 import PAYCARDLOGO from '../assets/images/paycard-logo.png';
 import ORANGELOGO from '../assets/images/orange-logo.png';
@@ -170,6 +170,7 @@ const PaymentOptions = () => {
           }).then((res) => {
               console.log("RESPONSE--->", res.data);
               if (res.data.payment_url) {
+                dispatch(savePayTokenToDatabase(user.uid,res.data.pay_token,totalPrice))
                 window.open(res.data.payment_url, '_blank');
               }else{
                 console.log("Res", res);
