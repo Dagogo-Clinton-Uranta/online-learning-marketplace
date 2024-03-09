@@ -5,6 +5,7 @@ import { buyCourse, buyCourseUpdateUser, fetchCartToProcessFromUser } from 'src/
 import { useNavigate } from 'react-router-dom';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import lzjs from 'lzjs';
+import axios from 'axios';
 
 
 const PaymentCallBackPageOM = () => {
@@ -20,7 +21,11 @@ const PaymentCallBackPageOM = () => {
  const orangeTranactionUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
  const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
 
-
+ //const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
+  //const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
+  const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
+  const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
+ 
 
  useEffect(() => {
  
@@ -67,7 +72,8 @@ const PaymentCallBackPageOM = () => {
           }).then((res) => {
               console.log("LOOK HERE FOR INITIATED --->", res.data);
               if (res.data.status && res.data.status === 'SUCCESS' ) {
-               
+                
+                const cartObject = cartToProcess
                 const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
                 let today = new Date().toLocaleDateString();
               
