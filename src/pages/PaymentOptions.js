@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Checkbox, Typography, IconButton, Button } from '@mui/material';
-import { buyCourseUpdateUser, fetchPurchasedCourse, saveOrderIdToDatabase, savePayTokenToDatabase } from '../redux/actions/cart.action';
+import { buyCourseUpdateUser, fetchPurchasedCourse, savePayTokenToDatabase } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
 import { buyCourse,saveOrderIdToDatabase } from 'src/redux/actions/cart.action';
 import MTNLOGO from '../assets/images/MTN-logo.png';
@@ -49,10 +49,10 @@ const PaymentOptions = () => {
  const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
  const momoTwoActionUrl = 'https://boncole-server-2.vercel.app/api/twoaction';
 
-  const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
-  const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
- //const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
- //const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
+  //const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
+  //const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
+ const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
+ const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));

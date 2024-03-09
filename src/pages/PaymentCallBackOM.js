@@ -15,10 +15,10 @@ const PaymentCallBackPageOM = () => {
  const dispatch = useDispatch();
 
 
- const orangeTranactionUrl = 'http://localhost:5008/api/om/get-token';
-  const orangeTransactionUrl = 'http://localhost:5008/api/om/webpayment';
- //const orangeTranactionUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
- //const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
+ //const orangeTranactionUrl = 'http://localhost:5008/api/om/get-token';
+ // const orangeTransactionUrl = 'http://localhost:5008/api/om/webpayment';
+ const orangeTranactionUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
+ const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
 
 
 
