@@ -11,18 +11,18 @@ import axios from 'axios';
 const PaymentCallBackPageOM = () => {
  const [loading, setLoading] = useState(true);
  const { user } = useSelector((state) => state.auth);
- const { cart,cartToProcess,mostRecentOrderAmount,mostRecentPayToken} = useSelector((state) => state.cart);
+ const { cart,cartToProcess,mostRecentOrderAmount,mostRecentOrderId,mostRecentPayToken} = useSelector((state) => state.cart);
  const navigate = useNavigate();
  const dispatch = useDispatch();
 
 
- //const orangeTranactionUrl = 'http://localhost:5008/api/om/get-token';
- // const orangeTransactionUrl = 'http://localhost:5008/api/om/webpayment';
- const orangeTranactionUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
- const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
+
+  //const orangeTransactionUrl = 'http://localhost:5008/api/om/transaction';
+ const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/transaction';
+
 
  //const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
-  //const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
+ // const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
   const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
   const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
  
@@ -31,7 +31,7 @@ const PaymentCallBackPageOM = () => {
  
     const urlParams = new URLSearchParams(window.location.search);
     const userId= urlParams.get('user');
-    const orderId= urlParams.get('oid');
+    //const orderId= urlParams.get('oid'); ---> I AM NOT USING THIS FOR NOW, BUT IT'S POSSIBLE I USE IT LATER
 
    // const cart_data = urlParams.get('cart_data');
 
@@ -66,7 +66,7 @@ const PaymentCallBackPageOM = () => {
           
            axios.post(orangeTransactionUrl, {
             amount: mostRecentOrderAmount,
-            order_id: orderId,
+            order_id: mostRecentOrderId,
             payToken:mostRecentPayToken,
             orangeMToken: access_token
           }).then((res) => {
@@ -80,7 +80,7 @@ const PaymentCallBackPageOM = () => {
                 console.log("COURSE ID ARRAY IS----->",courseIdArray)
                
             
-                dispatch(buyCourse(cartObject, userId, today, navigate));
+                dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id));
                  dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
                 
       

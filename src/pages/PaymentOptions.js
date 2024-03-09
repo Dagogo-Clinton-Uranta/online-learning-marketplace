@@ -158,20 +158,24 @@ const PaymentOptions = () => {
        axios.post(orangeMTokenUrl, {}, { headers })
         .then(response => {
             const access_token = response.data.access_token;
+            const generateOrderId = uuid.v4()
           
            axios.post(orangeMPaymentUrl, {
             amount: totalPrice,
             currency: 'GNF', //OUV
-            order_id: `${uuid.v4()}`,
+            order_id: `${generateOrderId}`,
             userId:user.uid,
             cartData:cartToSubmit,
             reference: "ref Merchant",
             orangeMToken: access_token
           }).then((res) => {
-              console.log("RESPONSE--->", res.data);
+              console.log("RESPONSE IS--->", res.data);
               if (res.data.payment_url) {
-                dispatch(savePayTokenToDatabase(user.uid,res.data.pay_token,totalPrice))
+                dispatch(savePayTokenToDatabase(user.uid,res.data.pay_token,totalPrice,generateOrderId)).then(()=>{
+               
                 window.open(res.data.payment_url, '_blank');
+                  }
+                )
               }else{
                 console.log("Res", res);
                 notifyErrorFxn("An error occured!");  

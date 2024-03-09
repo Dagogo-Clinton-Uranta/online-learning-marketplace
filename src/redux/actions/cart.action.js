@@ -1,7 +1,7 @@
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { db, fb, auth, storage } from '../../config/firebase';
 import { fetchTransactions, isItLoading } from '../reducers/transactions.slice';
-import { clearCart, savePurchasedCourses,saveCartPackSortIds, saveCartPackIds,saveCartToProcess, saveMostRecentOrderAmount, saveMostRecentPayToken } from '../reducers/cart.slice';
+import { clearCart, savePurchasedCourses,saveCartPackSortIds, saveCartPackIds,saveCartToProcess,saveMostRecentOrderId, saveMostRecentOrderAmount, saveMostRecentPayToken } from '../reducers/cart.slice';
 import firebase from "firebase/app";
 
 
@@ -41,14 +41,15 @@ export const saveToCart = (uid) => async (dispatch) => {
   });
 };
 
-export const savePayTokenToDatabase = (uid,orderId,pay_token,orderAmount) => async (dispatch) => {
+export const savePayTokenToDatabase = (uid,pay_token,orderAmount,orderId) => async (dispatch) => {
   dispatch(isItLoading(true));
    db.collection("users")
    .doc(uid)
     .update({
       
       mostRecentOrderAmount:orderAmount,
-      mostRecentPayToken:pay_token
+      mostRecentPayToken:pay_token,
+      mostRecentOrderId:orderId,
       
     })
     .then((snapshot) => {
@@ -78,6 +79,7 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
         // console.log("User Data:", doc.data());
         dispatch(saveCartToProcess(doc.data().cartInProgress));
         dispatch(saveMostRecentOrderAmount(doc.data().mostRecentOrderAmount));
+        dispatch(saveMostRecentOrderId(doc.data().mostRecentOrderId));
         dispatch(saveMostRecentPayToken(doc.data().mostRecentPayToken));
 
       }
@@ -98,12 +100,22 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
 };
 
  
-export const buyCourse = (courses, studentId, today, navigate, setLoading) => async (dispatch) => {
+export const buyCourse = (courses, studentId, today, navigate, txnId= null ,order_id = null) => async (dispatch) => {
    notifyErrorFxn("BUY COURSES FUNCTION IS ACTIVATED")
- const newPurchasedCourses =courses && courses.courses.map((element)=>({
+ const newPurchasedCourses =txnId.length && order_id.length ?
+ 
+ courses && courses.courses.map((element)=>({
    ...element,
-   purchasedOn:today
+   purchasedOn:today,
+   orangeOrderId:order_id,
+   orangeTxnId:txnId
+})):
+   
+courses && courses.courses.map((element)=>({
+  ...element,
+  purchasedOn:today
 }))
+
 
 /// CODE FOR ADDING TO DATABASE BELOW //////////
   let accurateStudentId
@@ -142,7 +154,7 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
       var errorMessage = error.message;
         notifyErrorFxn("Error with Updating user !");
         console.log('Error with buying course', errorMessage);
-        setLoading(false);
+       
      });
 
 
@@ -183,7 +195,7 @@ export const buyCourse = (courses, studentId, today, navigate, setLoading) => as
   var errorMessage = error.message;
     notifyErrorFxn("Error with Purchasing Course");
     console.log('Error with buying course--->', errorMessage);
-    setLoading(false);
+    
  });
 
 
