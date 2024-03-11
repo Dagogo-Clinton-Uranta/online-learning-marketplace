@@ -86,9 +86,9 @@ const PaymentCallBackPageOM = () => {
                 console.log("COURSE ID ARRAY IS----->",courseIdArray)
                
                 dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate))
-                dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id)).then(()=>{
-                  dispatch(clearPayTokenFromDatabase(userId))
-                })
+                dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id))/*.then(()=>{*/
+                 setTimeout( dispatch(clearPayTokenFromDatabase(userId)),1800)
+                /*})*/
                 
                  
       
@@ -112,7 +112,7 @@ const PaymentCallBackPageOM = () => {
 
     })  
 
-  },2000)
+  },3200)
    
   }, [dispatch, navigate,mostRecentOrderAmount,mostRecentOrderId,mostRecentPayToken]);
 
