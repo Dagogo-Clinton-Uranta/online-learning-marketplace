@@ -45,6 +45,9 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedinIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import ReactPlayer from 'react-player';
+import { buyCourse, buyCourseUpdateUser, clearPayTokenFromDatabase, fetchCartToProcessFromUser } from 'src/redux/actions/cart.action';
+import axios from 'axios';
+import { notifyErrorFxn } from 'src/utils/toast-fxn';
 
 function MobileWelcomePage() {
   const navigate = useNavigate();
@@ -58,8 +61,21 @@ function MobileWelcomePage() {
  // 
  // }
 
+  //const orangeTransactionUrl = 'http://localhost:5008/api/om/transaction';
+  const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/transaction';
+
+
+  //const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
+  // const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
+   const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
+   const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
+  
+
+
+
 const { user,error } = useSelector((state) => state.auth);
 const { allCategories,categorySubjects } = useSelector((state) => state.group);
+const { cart,cartToProcess,mostRecentOrderAmount,mostRecentOrderId,mostRecentPayToken} = useSelector((state) => state.cart);
 const [topics,setTopics] = useState([])
 const { teachers } = useSelector((state) => state.group);
 const [teacherArr, setTeacherArr] = useState([]/*teachers*/);
@@ -187,9 +203,77 @@ useEffect(()=>{
 },[categorySubjects])
 
 
+/*TO PAY FOR ORANGE*/
+useEffect(()=>{
 
 
+if(user && user.mostRecentPayToken && user.mostRecentPayToken.length){
+  let userId = user && user.uid
 
+
+  dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
+   
+    console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
+    
+
+    const headers = {
+     'Content-Type': 'application/json',
+     'Access-Control-Allow-Origin': '*',  
+    };
+    
+axios.post(orangeMTokenUrl, {}, { headers })
+ .then(response => {
+     const access_token = response.data.access_token;
+   
+    axios.post(orangeTransactionUrl, {
+     amount: mostRecentOrderAmount,
+     order_id: mostRecentOrderId,
+     payToken:mostRecentPayToken,
+     orangeMToken: access_token
+   }).then((res) => {
+    
+       console.log("LOOK HERE FOR INITIATED --->", res.data);
+       if (res.data.status && res.data.status === 'SUCCESS' ) {
+         
+         const cartObject = cartToProcess
+         const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
+         let today = new Date().toLocaleDateString();
+       
+         console.log("COURSE ID ARRAY IS----->",courseIdArray)
+        
+         dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate))
+         dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id)).then(()=>{
+           dispatch(clearPayTokenFromDatabase(userId))
+         })
+         
+          
+
+
+       }else{
+         console.log("Res", res.data);
+         console.log("AT THE HOME PAGE, MOST RECENT ORANGE PAYMENT NOT SUCCESSFUL");  
+         
+       }
+   }).catch((error) => {
+    
+     console.error('could not get transaction status, so this page failed:', error);
+    
+   })
+ }).catch(error => {
+    
+     notifyErrorFxn('Failed to get token');
+ });
+   
+ 
+
+})  
+
+
+}
+
+},[])
+
+/*TO PAY FOR ORANGE -- END*/
 
 
   const populateCategory = (category) => {

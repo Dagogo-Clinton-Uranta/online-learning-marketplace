@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { buyCourse, buyCourseUpdateUser, fetchCartToProcessFromUser } from 'src/redux/actions/cart.action';
+import { buyCourse, buyCourseUpdateUser, clearPayTokenFromDatabase, fetchCartToProcessFromUser } from 'src/redux/actions/cart.action';
 import { useNavigate } from 'react-router-dom';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import lzjs from 'lzjs';
@@ -27,6 +27,10 @@ const PaymentCallBackPageOM = () => {
   const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
  
 
+  console.log("TEST 1 --->");
+
+
+
  useEffect(() => {
  
     const urlParams = new URLSearchParams(window.location.search);
@@ -48,13 +52,14 @@ const PaymentCallBackPageOM = () => {
 
 
   console.log("I HAVE REACHED THE CALLBACK PAGE, NOW I WAIT FOR 2 SECONDS---> ")
-
+  console.log("TEST 2 --->");
 
   setTimeout(()=>{  
       dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
    
            console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
-     
+           console.log("TEST 3 --->");
+
            const headers = {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',  
@@ -70,6 +75,7 @@ const PaymentCallBackPageOM = () => {
             payToken:mostRecentPayToken,
             orangeMToken: access_token
           }).then((res) => {
+            console.log("TEST 4 --->");
               console.log("LOOK HERE FOR INITIATED --->", res.data);
               if (res.data.status && res.data.status === 'SUCCESS' ) {
                 
@@ -79,20 +85,23 @@ const PaymentCallBackPageOM = () => {
               
                 console.log("COURSE ID ARRAY IS----->",courseIdArray)
                
-            
-                dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id));
-                 dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate));
+                dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate))
+                dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id)).then(()=>{
+                  dispatch(clearPayTokenFromDatabase(userId))
+                })
                 
+                 
       
 
               }else{
                 console.log("Res", res);
-                notifyErrorFxn("PAYMENT STATUS IS NOT SUCCESS,SO NO COURSES WERE ADDED TO PURCHASED COURSES!");  
+                notifyErrorFxn("PAYMENT NOT SUCCESSFUL");  
+                navigate('/dashboard/payment-options')
               }
           }).catch((error) => {
            
             console.error('could not get transaction status, so this page failed:', error);
-            notifyErrorFxn('could not get transaction status, so this page failed...');
+            notifyErrorFxn('ERROR TRACKING THE MOST RECENT TRANSACATION...');
           })
         }).catch(error => {
            
@@ -105,7 +114,7 @@ const PaymentCallBackPageOM = () => {
 
   },2000)
    
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate,mostRecentOrderAmount,mostRecentOrderId,mostRecentPayToken]);
 
 
 

@@ -66,6 +66,30 @@ export const savePayTokenToDatabase = (uid,pay_token,orderAmount,orderId) => asy
 
 
 
+export const clearPayTokenFromDatabase = (uid,pay_token,orderAmount,orderId) => async (dispatch) => {
+  dispatch(isItLoading(true));
+   db.collection("users")
+   .doc(uid)
+    .update({
+      
+      mostRecentOrderAmount:0,
+      mostRecentPayToken:'',
+      mostRecentOrderId:'',
+      
+    })
+    .then((snapshot) => {
+     
+     console.log("---->THE Order ID HAS BEEN CLEARED FROM THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
+     dispatch(isItLoading(false));
+    
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+    notifyErrorFxn("ISSUE WITH STORAGE OF CART")
+    dispatch(isItLoading(false));
+  });
+};
+
+
 
 export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
   dispatch(isItLoading(true));
@@ -93,7 +117,7 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
     
   }).catch((error) => {
     console.log("Error getting document:", error);
-    notifyErrorFxn("WE HAVE CART TO PROGRESS, NOW WE HAVE AN ISSUE IN DISPENSING IT TO PURCHASED COURSES")
+   
     console.log("WE HAVE CART TO PROGRESS, NOW WE HAVE AN ISSUE IN DISPENSING IT TO PURCHASED COURSES")
     dispatch(isItLoading(false));
   });
@@ -149,7 +173,7 @@ courses && courses.courses.map((element)=>({
 
       notifySuccessFxn("Cours acheté avec succès");
     dispatch(clearCart());
-    navigate('/dashboard/purchased-courses');
+    navigate('/dashboard/home');
     }).catch((error) => {
       var errorMessage = error.message;
         notifyErrorFxn("Error with Updating user !");
@@ -188,7 +212,7 @@ courses && courses.courses.map((element)=>({
   
         notifySuccessFxn("Cours acheté avec succès");
         dispatch(clearCart());
-        navigate('/dashboard/purchased-courses');
+        navigate('/dashboard/home');
       })
    }
  }).catch((error) => {
@@ -217,7 +241,7 @@ export const buyCourseUpdateUser = (courses, uid, today, navigate) => async (dis
   .then(() => {
     //notifySuccessFxn("Course purchased successfully");
     dispatch(clearCart());
-    //navigate('/dashboard/purchased-courses');
+    navigate('/dashboard/home');
   })
   .catch((error) => {
     var errorMessage = error.message;

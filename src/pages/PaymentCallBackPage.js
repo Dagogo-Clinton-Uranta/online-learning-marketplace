@@ -32,6 +32,10 @@ const PaymentCallBackPage = () => {
 
   }
   setLoading(false);
+
+  setTimeout(()=>{navigate('/dashboard/home')},4500)
+
+
 }, []);
 
 
