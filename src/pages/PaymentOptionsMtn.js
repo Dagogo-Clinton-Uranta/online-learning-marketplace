@@ -117,10 +117,10 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
      setIsLoadingOne(true);
      notifyInfoFxn("Veuillez patienter... assurez-vous de ne pas actualiser l'écran pendant le processus de paiement.")
    
-         /* if(user && !user.phone){
+         if(user && !user.phone){
       notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
       return;
-    }*/
+    }
     const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',  
@@ -131,12 +131,12 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
             const access_token = response.data.access_token;
             console.log("ACCESS-TOKEN 1ST REQUEST-->", access_token);
            axios.post(momoRequestToPayUrl, {
-            amount: '500'/*totalPrice*/,
+            amount: totalPrice,
             currency: 'GNF',
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId:'224664930445' /*`${user && user.phone?(user.phone).toString():null}`*/, //phone 08106091838
+              partyId:`${user && user.phone?(user.phone).toString():null}`,
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',

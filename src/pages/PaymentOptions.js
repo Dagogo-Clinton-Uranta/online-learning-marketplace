@@ -94,6 +94,10 @@ const PaymentOptions = () => {
       notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
       return;
     }
+
+     console.log("USERS PHONE NUMBER IS--->",user.phone)
+
+
      const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',  
@@ -109,7 +113,7 @@ const PaymentOptions = () => {
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId:/*'224664930445'*/ `${user && user.phone?(user.phone).toString():null}`, 
+              partyId:`${user && user.phone?(user.phone).toString():null}`, 
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',
@@ -140,6 +144,8 @@ const PaymentOptions = () => {
             notifyErrorFxn('Failed to get token');
         });
   };
+
+  
 
   const navToMtnPay = () => {
     navigate('/dashboard/payment-options-mtn')
