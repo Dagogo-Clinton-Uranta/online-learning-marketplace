@@ -95,7 +95,7 @@ const PaymentOptions = () => {
       return;
     }
 
-     console.log("USERS PHONE NUMBER IS--->",user.phone)
+    
 
 
      const headers = {
@@ -145,7 +145,7 @@ const PaymentOptions = () => {
         });
   };
 
-  
+
 
   const navToMtnPay = () => {
     navigate('/dashboard/payment-options-mtn')
@@ -374,12 +374,12 @@ const PaymentOptions = () => {
           <input
             type="hidden"
             name="paycard-callback-url"
-            //value="https://bonecole-student.netlify.app/dashboard/payment-callback"
+           
             value="https://bonecole.com/dashboard/payment-callback"
           />
 
           <input type="hidden" name="paycard-redirect-with-get" value="on" />
-          <input type="hidden" name="paycard-auto-redirect" value="off" />
+          <input type="hidden" name="paycard-auto-redirect" value="on" />
           <input type="hidden" name="cart_data" value={JSON.stringify(cartToSubmit)} />
 
           {/* <Button

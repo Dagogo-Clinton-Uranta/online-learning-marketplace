@@ -37,7 +37,7 @@ const PaymentOptionsMtn = () => {
   const [referenceStore,setReferenceStore] = useState('')
 
   const totalPrice = cart.reduce((acc, item) => {
-    const itemPrice = parseFloat(item.price.replace(',', ''));
+    const itemPrice = parseFloat(item.price && item.price.replace(',', ''));
     return acc + itemPrice;
   }, 0);
 
