@@ -125,15 +125,17 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
 
  
 export const buyCourse = (courses, studentId, today, navigate, txnId= null ,order_id = null) => async (dispatch) => {
-   notifyErrorFxn("BUY COURSES FUNCTION IS ACTIVATED")
- const newPurchasedCourses =txnId.length && order_id.length ?
+   //notifyErrorFxn("BUY COURSES FUNCTION IS ACTIVATED")
+ const newPurchasedCourses = txnId  && order_id ?
  
  courses && courses.courses.map((element)=>({
    ...element,
    purchasedOn:today,
    orangeOrderId:order_id,
    orangeTxnId:txnId
-})):
+}))
+
+:
    
 courses && courses.courses.map((element)=>({
   ...element,

@@ -379,7 +379,7 @@ const PaymentOptions = () => {
           />
 
           <input type="hidden" name="paycard-redirect-with-get" value="on" />
-          <input type="hidden" name="paycard-auto-redirect" value="on" />
+          <input type="hidden" name="paycard-auto-redirect" value="off" />
           <input type="hidden" name="cart_data" value={JSON.stringify(cartToSubmit)} />
 
           {/* <Button

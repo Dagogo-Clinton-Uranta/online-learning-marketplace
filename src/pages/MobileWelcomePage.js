@@ -54,7 +54,7 @@ function MobileWelcomePage() {
  
   const dispatch = useDispatch();
 
- 
+ console.log("TRYING TO LOCATE WHERE THE APP CRASHES , AFTER BEING PURCHASED FROM PAYCARD--->")
   
  // window.onbeforeunload = function () {
  //   usePrompt("you may have to go online to retrieve this page")
@@ -462,14 +462,14 @@ aria-describedby="modal-modal-description"
    
     {allCategories && allCategories.length > 0 ?
      
-      allCategories.map((item)=>(
+     allCategories && allCategories.map((item)=>(
 
         <Button   variant="contained" 
         style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",
         paddingRight: '4px', paddingLeft: '4px',width:"30%"}}
-        onClick={()=>{populateCategory(item.title)}}
+        onClick={()=>{populateCategory(item.title && item.title)}}
         >
-        {item.title}
+        {item.title && item.title}
         </Button>
 
       ))
@@ -511,7 +511,7 @@ aria-describedby="modal-modal-description"
       
 <Grid container item xs={12} spacing={1} style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
       
-      {categorySubjects && categorySubjects.length >0 && topics.slice(0,4).map((topic,i)=>(
+      {categorySubjects && categorySubjects.length >0 &&  topics.length > 0 && topics.slice(0,4).length> 0  && topics.slice(0,4).map((topic,i)=>(
         
           <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
           style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
