@@ -62,6 +62,7 @@ import CoursePage from './pages/CoursePage';
 import PaymentOptions from './pages/PaymentOptions';
 import PaymentOptionsMtn from './pages/PaymentOptionsMtn';
 import PaymentCallBackPageOM from './pages/PaymentCallBackOM';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 export default function Router() {
   const routes = useRoutes([
@@ -116,6 +117,14 @@ export default function Router() {
       element: <DashboardLayout />,
       children:[
         {path:'', element:<MobileLoginPage/>}
+      ]
+    },
+
+    {
+      path: 'forgot-password',
+      element: <DashboardLayout />,
+      children:[
+        {path:'', element:<ForgotPasswordPage/>}
       ]
     },
     {

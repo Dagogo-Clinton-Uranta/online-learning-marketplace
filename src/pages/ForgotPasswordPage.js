@@ -10,7 +10,7 @@ import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import Alert from '@mui/material/Alert';
 
 import {  uploadUserSettings} from 'src/redux/actions/group.action';
-import { signin,signInWithGoogle} from 'src/redux/actions/auth.action';
+import { passwordResetEmail, signin,signInWithGoogle} from 'src/redux/actions/auth.action';
 import { logoutSuccess} from 'src/redux/reducers/auth.slice';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 
 
-function MobileLoginPage() {
+function ForgotPasswordPage() {
   const navigate = useNavigate();
   const [file, setFile] = useState();
   const [file2, setFile2] = useState();
@@ -37,12 +37,15 @@ function MobileLoginPage() {
   const [email,setEmail] = useState('')
  
   const [password,setPassword] = useState('')
-  
+  const [submitLoading,setSubmitLoading] = useState(false)
+
+  const externalSetSubmit = (input) =>{
+    setSubmitLoading(input)
+  }
 
   const existingUser = 
   {
-    email,
-    password 
+    email
   }
 
   const { user,error } = useSelector((state) => state.auth);
@@ -56,54 +59,24 @@ function MobileLoginPage() {
   },[user])
 
 
-  const LoginFxn = (user,navigate) =>{
-    if(!email  || !password){
-      notifyErrorFxn("Please make sure to fill in all fields")
+
+
+  const PasswordResetFxn = (userEmail,externalSetSubmit) =>{
+    if(!email){
+      notifyErrorFxn("Veuillez entrer votre adresse e-mail avant de soumettre")
     }else{
-      dispatch(signin(user,navigate))
+      setSubmitLoading(true)
+      dispatch(passwordResetEmail(userEmail,externalSetSubmit))
     }
   }
 
   
 
 
-  const handleselectedFile = event => {
-    console.log("these are the picture deets!",event.target.files[0])
-    setSelectedFile({
-        selectedFile: event.target.files[0],
-        selectedFileName: event.target.files[0].name
-    });
-    
-    setFile(URL.createObjectURL(event.target.files[0]));
-    setFileSize(event.target.files[0].size)
-};
- /* const handleselectedFile2 = event => {
-    console.log("these are the video deets!",event.target.files[0])
-    setSelectedFile2({
-        selectedFile2: event.target.files[0],
-        selectedFileName2: event.target.files[0].name
-    });
-    setFile2(URL.createObjectURL(event.target.files[0]));
-    setFileSize2(event.target.files[0].size)
-};*/
 
 
 
-const uploadMovie = (movieData = 0,image = 0,) => {
-if(!companySize.length && !newPassword.length &&  file === undefined ){
-  console.log("THE EMPTY FIELDS ARE:",file)
-  notifyErrorFxn("Please fill in the field(s) you want to update!")
-}else{
- if( fileSize  > 300000){
-  notifyErrorFxn("Image size too large! please upload a smaller picture.")
- }
- /*else if( fileSize2  > 20000000){
-  notifyErrorFxn("Video size too large! please upload a smaller video.")
- }*/else{
-  dispatch(uploadUserSettings(movieData,image))
- }
-}
-}
+
 
   return (
     <>
@@ -132,9 +105,10 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
 
       </Grid>
 
-
-
-      {error && error.length &&  <div><Alert
+  
+     <p style={{marginTop:"5rem"}}>Entrez l'adresse e-mail pour réinitialiser le mot de passe</p>
+  
+      {/*error && error.length &&  <div><Alert
         severity="error" color="error"
         action={
           <Button color="inherit" size="small" style={{ fontSize: '15px' }} onClick={() => {dispatch(logoutSuccess())}}>
@@ -143,16 +117,16 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
         }
       >
         <p style={{ fontSize: '14px' }}><b>{error}</b></p>
-      </Alert><br/></div>}
+      </Alert><br/></div>*/}
 
 
-      <Grid container item xs={12} spacing={2} style={{ display: 'flex',flexDirection:"column" ,justifyContent: 'center',marginTop:error?"20px":"80px",marginBottom:"40px" }}>
+      <Grid container item xs={12} spacing={2} style={{ display: 'flex',flexDirection:"column" ,justifyContent: 'center',marginTop:"20px",marginBottom:"40px" }}>
          
       <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
      <TextField
           sx ={{width:"100%"}}
           id="outlined-basic"
-          label="Email address"
+          label="adresse e-mail"
           type="email"
           autoComplete="current-email"
           onChange={(e)=>{setEmail(e.target.value)}}
@@ -162,7 +136,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
      
      
      
-      <Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
+      {/*<Grid item xs={12} spacing={2} style={{ display: 'flex', justifyContent: 'center' }}>     
       <TextField 
          sx ={{width:"100%"}}
           id="outlined-password-input"
@@ -171,7 +145,7 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
           autoComplete="current-password"
           onChange={(e)=>{setPassword(e.target.value)}}
         />
-      </Grid> 
+      </Grid>*/} 
          
          
          
@@ -181,10 +155,10 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
              <Button   variant="contained" 
             style={{ backgroundColor: "#000000",color:"#FFFFFF",width:"75%",height:"3rem",fontSize:"15px",
             }}
-            onClick ={()=>{LoginFxn(existingUser,navigate)}}
+            onClick ={()=>{PasswordResetFxn(email,externalSetSubmit)}}
 
             >
-            LOGIN
+            {submitLoading?"loading...":"SOUMETTRE"}
             </Button>
          
           
@@ -198,14 +172,14 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
          <br/>
 
          <center style={{marginBottom:"0.7rem"}}>
-        <p> Mot de passe oublié?  &nbsp; <span onClick ={()=>{navigate('/forgot-password')}} style={{color:"red",cursor:"pointer",textDecoration:"underline"}}>Cliquez ici</span> </p>
+         <span onClick ={()=>{navigate('/external-login')}} style={{color:"red",cursor:"pointer",textDecoration:"underline"}}>revenir à la page de connexion</span>
       </center>
 
        
 
-       <center>
+       {/*<center>
         <p> Vous n'avez pas déjà un compte? &nbsp; <span onClick ={()=>{navigate('/external-register')}} style={{color:"red",cursor:"pointer",textDecoration:"underline"}}>S'inscrire</span> </p>
-      </center>
+          </center>*/}
 
         </Grid>
 
@@ -225,4 +199,4 @@ if(!companySize.length && !newPassword.length &&  file === undefined ){
   );
 }
 
-export default MobileLoginPage;
+export default ForgotPasswordPage;

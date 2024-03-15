@@ -153,29 +153,30 @@ courses && courses.courses.map((element)=>({
    if (allGroups.length > 0) {
       console.log("THE PURCHASED COURSE---->",allGroups)
     db.collection("purchasedCourses").doc(allGroups[0].purchaseId).update({
-   //////////////////////////////////////////////////////////////////////////////////////
+  
        courses:[...allGroups[0].courses,...newPurchasedCourses]
     })
 
+   //////////////////////////////////////////////////////////////////////////////////// 
     db.collection("users").doc(studentId).get().then((doc)=>{
     if(doc.exists){
       let newPurchasedCourseIds = newPurchasedCourses.map((item)=>(item.id))
     db.collection("users").doc(studentId)
     .update({
-    ////////////////////////////////////////////////////////////////////////////////////
+    
         purchasedCourses:[...doc.data().purchasedCourses,...newPurchasedCourseIds]
       }) 
     }else{
 
      notifyErrorFxn(" cannot find student to update purchased courses")
     }
-
+////////////////////////////////////////////////////////////////////////////////////
 
     }).then(()=>{
 
       notifySuccessFxn("Cours acheté avec succès");
     dispatch(clearCart());
-    navigate('/dashboard/home');
+    navigate('/dashboard/purchased-courses');
     }).catch((error) => {
       var errorMessage = error.message;
         notifyErrorFxn("Error with Updating user !");
@@ -214,7 +215,7 @@ courses && courses.courses.map((element)=>({
   
         notifySuccessFxn("Cours acheté avec succès");
         dispatch(clearCart());
-        navigate('/dashboard/home');
+        navigate('/dashboard/purchased-courses');
       })
    }
  }).catch((error) => {
@@ -243,7 +244,7 @@ export const buyCourseUpdateUser = (courses, uid, today, navigate) => async (dis
   .then(() => {
     //notifySuccessFxn("Course purchased successfully");
     dispatch(clearCart());
-    navigate('/dashboard/home');
+    navigate('/dashboard/purchased-courses');
   })
   .catch((error) => {
     var errorMessage = error.message;

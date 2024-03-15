@@ -34,6 +34,30 @@ import firebase from "firebase/app";
 
 
 
+
+
+
+
+
+export const passwordResetEmail = (email, setForgotPassword) => async (dispatch) => {
+
+  fb
+ .auth()
+ .sendPasswordResetEmail(email)
+ .then(() => {
+   
+   notifySuccessFxn('E-mail de réinitialisation du mot de passe envoyé. Vérifiez votre boîte de réception pour obtenir des instructions.');
+   setForgotPassword(false);
+ })
+ .catch(error => {
+  setForgotPassword(false);
+   notifyErrorFxn(`Erreur lors de l'envoi de l'e-mail de réinitialisation du mot de passe: ${error.message}`);
+   // setMessage(`Error sending password reset email: ${error.message}`);
+ });
+};
+
+
+
 export const UseFacebookDetailsToSignIn = (navigate) => async (dispatch) => {
 
   const provider =  new firebase.auth.FacebookAuthProvider();
