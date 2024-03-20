@@ -71,7 +71,7 @@ export default function DesktopSmallerCardPage({uid,title,author,price,lessons,t
         <Typography sx={{fontSize:"11px",marginTop:"-10px",marginBottom:"-20px"}} variant="body2" color="text.secondary">
           {loading?"LOADING ...":
         <>
-        <b style={{color:"black"}}>{price} GNF</b>&nbsp;  <s>50,000 GNF</s>
+        <b style={{color:"black"}}>{price} GNF</b>&nbsp; {/*<s>50,000 GNF</s>*/}
         </>
         }
 

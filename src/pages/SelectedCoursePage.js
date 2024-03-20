@@ -622,7 +622,7 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center',alignItems:"center",marginTop:"2rem",flexDirection:"column",gap:"1rem",border:"1px solid lightgrey",width:"85%",padding:"1rem",borderRadius:"0.5rem"}}>
    
     <center >
-    <b style={{fontSize:"1.2rem"}}> {presentSubject && presentSubject.price} GNF</b> <s>50,000 GNF</s>
+    <b style={{fontSize:"1.2rem"}}> {presentSubject && presentSubject.price} GNF</b> {/*<s>50,000 GNF</s>*/}
     </center>
     
     <p >

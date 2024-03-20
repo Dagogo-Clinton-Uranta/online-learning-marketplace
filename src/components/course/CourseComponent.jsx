@@ -90,7 +90,7 @@ const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.b
           }}
         >
           <center>
-            <b style={{ fontSize: '1.2rem' }}> 30,000 GNF</b> <s>50,000 GNF</s>
+            <b style={{ fontSize: '1.2rem' }}> 30,000 GNF</b> {/*<s>50,000 GNF</s>*/}
           </center>
 
           <p>Achat unique, accès à toutes les leçons</p>

@@ -117,7 +117,7 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
      setIsLoadingOne(true);
      notifyInfoFxn("Veuillez patienter... assurez-vous de ne pas actualiser l'écran pendant le processus de paiement.")
    
-         if(user && !user.phone){
+         if(user && !user.telephone){
       notifyErrorFxn("Please add your phone number in the profile section before you pay via mtn");
       return;
     }
@@ -136,7 +136,8 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
             externalId: `${uuid.v4()}`,
             payer: {
               partyIdType: 'MSISDN',
-              partyId:`${user && user.phone?(user.phone).toString():null}`,
+              partyId:`${user && user.telephone && (user.telephone).toString()}`,
+              //partyId: '2246534566'
             },
             payerMessage: 'Payment for order',
             payeeNote: 'Payment for order',

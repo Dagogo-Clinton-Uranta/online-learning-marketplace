@@ -85,7 +85,7 @@ export default function HomeCardPage({uid,title,author,price,lessons,time,image}
         <Typography sx={{fontSize:"16px",marginTop:"-10px",marginBottom:"-20px"}} variant="body2" color="text.secondary">
           {loading?"LOADING ...":
         <>
-        <b style={{color:"black"}}>{price?price:"22,000"} GNF</b>&nbsp;  <s>50,000 GNF</s>
+        <b style={{color:"black"}}>{price?price:"22,000"} GNF</b>&nbsp;  {/*<s>50,000 GNF</s>*/}
         </>
         }
 
