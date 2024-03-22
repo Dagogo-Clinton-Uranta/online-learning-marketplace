@@ -31,7 +31,7 @@ const PaymentCallBackPageOM = () => {
   function gtag(){window.dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'TAG_ID');
+  gtag('config', 'TAG_ID',{ 'debug_mode': true });
 
 
 
@@ -99,6 +99,8 @@ const PaymentCallBackPageOM = () => {
                   // from the previous purchase event so Analytics
                   // doesn't deduplicate the events.
                   // Learn more: https://support.google.com/analytics/answer/12313109
+                  fullName:user && user.fullName,
+                  telephone:user && user.telephone,
                   transaction_id: mostRecentOrderId,
                   value: mostRecentOrderAmount,
                   tax: 0,

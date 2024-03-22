@@ -17,7 +17,7 @@ const PaymentCallBackPage = () => {
  function gtag(){window.dataLayer.push(arguments);}
  gtag('js', new Date());
 
- gtag('config', 'TAG_ID');
+ gtag('config', 'TAG_ID',{ 'debug_mode': true });
 
  const totalPrice = cart.reduce((acc, item) => {
   const itemPrice = parseFloat(item.price && item.price.replace(',', ''));
@@ -50,6 +50,8 @@ const generateOrderId = uuid.v4()
       // from the previous purchase event so Analytics
       // doesn't deduplicate the events.
       // Learn more: https://support.google.com/analytics/answer/12313109
+      fullName:user && user.fullName,
+      telephone:user && user.telephone,
       transaction_id: `${generateOrderId}`,
       value: totalPrice,
       tax: 0,
