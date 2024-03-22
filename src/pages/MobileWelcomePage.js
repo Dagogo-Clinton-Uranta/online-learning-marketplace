@@ -342,7 +342,7 @@ aria-describedby="modal-modal-description"
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
     <center>
-    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Préparez le BACS,</h1>
+    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Préparez le BAC,</h1>
     </center>
 
     <center>
