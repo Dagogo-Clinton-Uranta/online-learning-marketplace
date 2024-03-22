@@ -22,6 +22,14 @@ const PaymentOptionsMtn = () => {
   const { user } = useSelector((state) => state.auth);
 
   const { transactionReference } = useSelector((state) => state.group);
+ 
+ 
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'TAG_ID');
+
 
 
   const dispatch = useDispatch();
@@ -41,6 +49,8 @@ const PaymentOptionsMtn = () => {
     return acc + itemPrice;
   }, 0);
 
+  const generateOrderId = uuid.v4()
+
   const courseIdArray = cart.map((item)=>(item.id))
 
   console.log("COURSE ID ARRAY IS,----->",courseIdArray)
@@ -48,6 +58,26 @@ const PaymentOptionsMtn = () => {
    const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
 
 console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
+
+
+document.getElementById("purchase").addEventListener("click", function () {
+  gtag("event", "purchase", {
+          // This purchase event uses a different transaction ID
+          // from the previous purchase event so Analytics
+          // doesn't deduplicate the events.
+          // Learn more: https://support.google.com/analytics/answer/12313109
+          transaction_id: `${generateOrderId}`,
+          value: totalPrice,
+          tax: 0,
+          shipping: 0,
+          currency: "GNF",
+          coupon: "n/a",
+          affiliateId:user &&user.affiliate?user.affiliate:"none",
+          items: [
+            ...cart
+          ]
+    });
+});
 
 
  
@@ -133,7 +163,7 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
            axios.post(momoRequestToPayUrl, {
             amount: totalPrice,
             currency: 'GNF',
-            externalId: `${uuid.v4()}`,
+            externalId: `${generateOrderId}`,
             payer: {
               partyIdType: 'MSISDN',
               partyId:`${user && user.telephone && (user.telephone).toString()}`,
@@ -342,6 +372,7 @@ console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
               <Grid item>
              
               <Button
+              id="purchase"
             type="button"
             onClick={() => {
              getPaymentStatusAndPurchase()

@@ -4,13 +4,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import { buyCourse, buyCourseUpdateUser } from 'src/redux/actions/cart.action';
 import { useNavigate } from 'react-router-dom';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
-
+import * as uuid from 'uuid';
 
 const PaymentCallBackPage = () => {
  const [loading, setLoading] = useState(true);
  const { user } = useSelector((state) => state.auth);
+ const { cart } = useSelector((state) => state.cart);
  const navigate = useNavigate();
  const dispatch = useDispatch();
+
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){window.dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'TAG_ID');
+
+ const totalPrice = cart.reduce((acc, item) => {
+  const itemPrice = parseFloat(item.price && item.price.replace(',', ''));
+  return acc + itemPrice;
+}, 0);
+
+
+const generateOrderId = uuid.v4()
 
  useEffect(() => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -27,6 +42,27 @@ const PaymentCallBackPage = () => {
       
       const courseIdArray = cartObject && cartObject.courses &&  cartObject.courses.map((item)=>(item.id))
      if(courseIdArray){ dispatch(buyCourseUpdateUser(courseIdArray,user && user.uid, today, navigate));}
+
+
+
+     gtag("event", "purchase", {
+      // This purchase event uses a different transaction ID
+      // from the previous purchase event so Analytics
+      // doesn't deduplicate the events.
+      // Learn more: https://support.google.com/analytics/answer/12313109
+      transaction_id: `${generateOrderId}`,
+      value: totalPrice,
+      tax: 0,
+      shipping: 0,
+      currency: "GNF",
+      coupon: "n/a",
+      affiliateId:user &&user.affiliate?user.affiliate:"none",
+      items: [
+        ...cartObject.courses
+      ]
+});
+
+
   }else{
   
      notifyErrorFxn("NO CART DATA _ THIS IS A TESTING NOTIFICATION")

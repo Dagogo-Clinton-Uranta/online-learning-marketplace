@@ -27,7 +27,11 @@ const PaymentCallBackPageOM = () => {
   const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
  
 
-  console.log("TEST 1 --->");
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'TAG_ID');
 
 
 
@@ -90,7 +94,22 @@ const PaymentCallBackPageOM = () => {
                  setTimeout( dispatch(clearPayTokenFromDatabase(userId)),1800)
                 /*})*/
                 
-                 
+                gtag("event", "purchase", {
+                  // This purchase event uses a different transaction ID
+                  // from the previous purchase event so Analytics
+                  // doesn't deduplicate the events.
+                  // Learn more: https://support.google.com/analytics/answer/12313109
+                  transaction_id: mostRecentOrderId,
+                  value: mostRecentOrderAmount,
+                  tax: 0,
+                  shipping: 0,
+                  currency: "GNF",
+                  coupon: "n/a",
+                  affiliateId:user &&user.affiliate?user.affiliate:"none",
+                  items: [
+                    ...cart
+                  ]
+            }); 
       
 
               }else{
