@@ -28,7 +28,7 @@ const PaymentOptionsMtn = () => {
   function gtag(){window.dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'TAG_ID',{ 'debug_mode': true });
+  gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
 
 
 
