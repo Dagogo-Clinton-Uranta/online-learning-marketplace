@@ -24,7 +24,7 @@ const PaymentOptions = () => {
   const navigate = useNavigate();
   const { purchasedCourses } = useSelector((state) => state.cart);
   const { cart } = useSelector((state) => state.cart);
-  console.log("THIS IS THE STRUCTURE OF CART ITEMS-->",cart)
+  console.log("THIS IS THE STRUCTURE OF CART ITEMS--->",cart)
   const [isLoading, setIsLoading] = useState(false);
   const totalPrice = cart.reduce((acc, item) => {
     const itemPrice = parseFloat(item.price && item.price.replace(',', ''));

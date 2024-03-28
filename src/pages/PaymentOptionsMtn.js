@@ -53,11 +53,11 @@ const PaymentOptionsMtn = () => {
 
   const courseIdArray = cart.map((item)=>(item.id))
 
-  console.log("COURSE ID ARRAY IS,----->",courseIdArray)
+  console.log("COURSE ID ARRAY IS,---->" ,courseIdArray)
 
    const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
 
-console.log("OUR USER DEETS,DO WE GET AFFILIATE?---->",cartToSubmit)
+console.log("OUR USER DEETS,DO WE GET AFFILIATE?----->",cartToSubmit)
 
 
 document.getElementById("purchase").addEventListener("click", function () {
@@ -76,7 +76,18 @@ document.getElementById("purchase").addEventListener("click", function () {
           coupon: "n/a",
           affiliateId:user &&user.affiliate?user.affiliate:"none",
           items: [
-            ...cart
+            ...(cart.map((item)=>(
+              {
+                  packLead:item.packLead?item.packLead:false,
+                  price:item.price,
+                  packId:item.packId?item.packId:null,
+                  item_id:item.id,
+                  item_name:item.title,
+                  coursepack_name:item.packName?packName:null,
+
+              }
+            ))
+             )
           ]
     });
 });
@@ -175,7 +186,7 @@ document.getElementById("purchase").addEventListener("click", function () {
             payeeNote: 'Payment for order',
             momoToken: access_token
           }).then((res) => {
-              console.log("Payment completed...---->", res.data);
+              console.log("Payment completed...--->", res.data);
               let today = new Date().toLocaleDateString();
 
             if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.payerReferenceId){

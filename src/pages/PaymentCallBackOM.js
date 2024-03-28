@@ -109,7 +109,18 @@ const PaymentCallBackPageOM = () => {
                   coupon: "n/a",
                   affiliateId:user &&user.affiliate?user.affiliate:"none",
                   items: [
-                    ...cart
+                    ...(cart.map((item)=>(
+                      {
+                          packLead:item.packLead?item.packLead:false,
+                          price:item.price,
+                          packId:item.packId?item.packId:null,
+                          item_id:item.id,
+                          item_name:item.title,
+                          coursepack_name:item.packName?packName:null,
+
+                      }
+                    ))
+                     )
                   ]
             }); 
       
