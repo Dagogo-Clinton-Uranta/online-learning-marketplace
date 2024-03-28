@@ -83,7 +83,7 @@ document.getElementById("purchase").addEventListener("click", function () {
                   packId:item.packId?item.packId:null,
                   item_id:item.id,
                   item_name:item.title,
-                  coursepack_name:item.packName?packName:null,
+                  coursepack_name:item.packName?item.packName:null,
 
               }
             ))
