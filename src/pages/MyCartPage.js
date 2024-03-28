@@ -12,6 +12,19 @@ const MyCartPage = () => {
   const { user } = useSelector((state) => state.auth);
   const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
 
+/*SETTING UP GOOGLE TAG MANAGER */
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+ 
+   /**SETTING UP GOOGLE TAG MANAGER-- END */
+
+
+
+
+
   useEffect(()=>{
       if(!user){
        navigate('/external-login')
@@ -40,7 +53,7 @@ const MyCartPage = () => {
    
     },[cart,cartPackIds])
  
-console.log("cart is -->",cart)
+console.log("cart is ---->",cart)
 
 
   const dispatch = useDispatch();
@@ -90,6 +103,37 @@ console.log("cart is -->",cart)
     dispatch(removeAllFromCart(itemId));
     dispatch(removeFromCart(itemId));
   };
+
+
+
+  const checkoutEvent = ()=>{
+      
+    gtag("event", "begin_checkout", {
+    
+      fullName:user && user.fullName,
+      telephone:user && user.telephone,
+      user_id: user && user.uid,
+      value: totalPrice,
+      currency: "GNF",
+      
+      affiliateId:user &&user.affiliate?user.affiliate:"none",
+      items: [
+        ...(cart.map((item)=>(
+          {
+              packLead:item.packLead?item.packLead:false,
+              price:item.price,
+              packId:item.packId?item.packId:null,
+              item_id:item.id,
+              item_name:item.title,
+              coursepack_name:item.packName?item.packName:null,
+
+          }
+        ))
+         )
+      ]
+});
+
+  }
 
   return (
     <Container
@@ -307,7 +351,7 @@ cartPackIds.map((packName)=>(
                     setTimeout(()=>{setLoading(false)},1500)
                     setTimeout(()=>{navigate('/dashboard/payment-options')},1500)
                     //YOU ARE HERE 
-
+                     checkoutEvent()
                      dispatch(saveCartToDatabase(user.uid,cartToSubmit))
 
                     //DISPATCH THE CURRENT CART TO THE USER

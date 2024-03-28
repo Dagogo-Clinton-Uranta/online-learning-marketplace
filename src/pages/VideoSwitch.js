@@ -18,9 +18,18 @@ import { useNavigate } from 'react-router-dom';
 import { setSelectedAudio, setSelectedAudioId, setSelectedAudioState } from 'src/redux/actions/group.action';
 import { notifyInfoFxn } from 'src/utils/toast-fxn';
 
-const VideoSwitch = ({audioFile}) => {
+const VideoSwitch = ({videoFile,chapterObject,uid}) => {
  const navigate = useNavigate()
  const dispatch = useDispatch()
+
+  /*GOOGLE TAG MANAGER PREP FOR ADDING TO CART */
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+/*GOOGLE TAG MANAGER PREP FOR ADDING TO CART - END*/
+
 
   const style = {
     position: 'absolute',
@@ -75,7 +84,7 @@ const VideoSwitch = ({audioFile}) => {
      //return urlSound;
    }
    useEffect(()=>{
-    setUrlLink(audioFile)
+    setUrlLink(videoFile)
    },[])
 
 
@@ -298,11 +307,76 @@ ref={modalRef}
         height="100%"
         id="full-screenVideo"                                              
         className="videoFrame"
-        url={audioFile}
+        url={videoFile}
         //light={thumbnail}
         playing={true}
         playIcon={' '}
         controls
+        progressInterval={4*60000}
+        onProgress={(progress) => {
+         // setPlayed(progress.playedSeconds);
+
+        if(progress.playedSeconds >= 300){
+        
+          gtag("event", "video-progress-5min", {
+            "user-id":user && user.uid?user.uid:"no uid found",
+            email:user && user.email?user.email:"no email found",
+            fullName:user && user.fullName,
+            classOption:user && user.classes,
+            affiliateId:user &&user.affiliate?user.affiliate:"none",
+
+            "video-url":videoFile,
+
+            "chapter-id":chapterObject.uid,
+            "chapter-number":chapterObject.chapterNumber,
+            "subject":chapterObject.subject,
+            "level":chapterObject.category,
+            
+          });
+           
+        }
+
+        if(progress.playedSeconds >= 600){
+        
+          gtag("event", "video-progress-10min", {
+            "user-id":user && user.uid?user.uid:"no uid found",
+            email:user && user.email?user.email:"no email found",
+            fullName:user && user.fullName,
+            classOption:user && user.classes,
+            affiliateId:user &&user.affiliate?user.affiliate:"none",
+    
+            "video-url":videoFile,
+
+            "chapter-id":chapterObject.uid,
+            "chapter-number":chapterObject.chapterNumber,
+            "subject":chapterObject.subject,
+            "level":chapterObject.category,
+            
+          });
+        }
+
+        if(progress.playedSeconds >= 1800){
+           
+          gtag("event", "video-progress-30min", {
+            "user-id":user && user.uid?user.uid:"no uid found",
+            email:user && user.email?user.email:"no email found",
+            fullName:user && user.fullName,
+            classOption:user && user.classes,
+            affiliateId:user &&user.affiliate?user.affiliate:"none",
+
+            "video-url":videoFile,
+
+            "chapter-id":chapterObject.uid,
+            "chapter-number":chapterObject.chapterNumber,
+            "subject":chapterObject.subject,
+            "level":chapterObject.category,
+            
+          });
+        }
+
+
+
+        }}
         
         ref={videoRef}
       //onClickPreview = {()=>{setTouch(false);}}

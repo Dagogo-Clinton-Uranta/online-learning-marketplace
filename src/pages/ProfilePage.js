@@ -40,6 +40,18 @@ function ProfilePage() {
     imageUrl: user?.imageUrl ? user?.imageUrl : "",
   })
 
+
+  /*SETTING UP GOOGLE TAG MANAGER--*/
+  window.dataLayer = window.dataLayer || [];
+ function gtag(){window.dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+/*SETTING UP GOOGLE TAG MANAGER-- END */
+
+
+
+
   const handleselectedFile = event => {
     setSelectedFile({
         selectedFile: event.target.files[0],
@@ -72,8 +84,32 @@ const settingsUpdate = () => {
 
    
     dispatch(updateProfile(updateObject, user.uid, '', navigate, setLoading, imageUrl));
+
+    gtag("event", "profile-survey", {
+      "user-id":user && user.uid?user.uid:"no uid found",
+      email:user && user.email?user.email:"no email found",
+      fullName:updateObject && updateObject.fullName,
+      classOption:updateObject && updateObject.classes,
+      telephone: (updateObject.telephone.toString().length > 3?updateObject.telephone :'none') ,
+      affiliateId:updateObject &&updateObject.affiliate?updateObject.affiliate:"none",
+      "survey-answer": updateObject &&updateObject.surveyAnswer?updateObject.surveyAnswer:"none",
+   });
+
+
   }else{
     dispatch(uploadProfileImage(updateObject, selectedFile.selectedFile, user.uid, navigate, setLoading));
+
+    gtag("event", "profile-survey", {
+      "user-id":user && user.uid?user.uid:"no uid found",
+      email:user && user.email?user.email:"no email found",
+      fullName:updateObject && updateObject.fullName,
+      classOption:updateObject && updateObject.classes,
+      telephone: (updateObject.telephone.toString().length > 3?updateObject.telephone :'none') ,
+      affiliateId:updateObject &&updateObject.affiliate?updateObject.affiliate:"none",
+      "survey-answer": updateObject &&updateObject.surveyAnswer?updateObject.surveyAnswer:"none",
+   });
+
+
   }
  
 }

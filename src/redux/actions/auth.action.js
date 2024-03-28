@@ -298,6 +298,13 @@ export const signup = (user,navigate) => async (dispatch) => {
 
 export const signUpWithGoogle = (navigate) => async (dispatch) => {
 
+   /*SETTING UP GOOGLE TAG MANAGER--*/
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+ /*SETTING UP GOOGLE TAG MANAGER-- END */
 
   
  
@@ -325,6 +332,19 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
    else {
 
   
+
+    gtag("event", "sign-up", {
+      // This purchase event uses a different transaction ID
+      // from the previous purchase event so Analytics
+      // doesn't deduplicate the events.
+      // Learn more: https://support.google.com/analytics/answer/12313109
+      fullName:firstName + " " + lastName,
+      telephone:'none',
+      affiliateId:'none',
+      "registered-with":  "google"
+   });
+
+
   db.collection('userData').doc(user.uid).set({
      uid: user.uid,
      email: user.email,
@@ -395,6 +415,17 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
 
 export const signUpWithFacebook = (navigate) => async (dispatch) => {
 
+
+    /*SETTING UP GOOGLE TAG MANAGER--*/
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    gtag('js', new Date());
+   
+    gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+   /*SETTING UP GOOGLE TAG MANAGER-- END */
+
+
+
   const provider =  new firebase.auth.FacebookAuthProvider();
   fb.auth().useDeviceLanguage();
  
@@ -405,11 +436,27 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
  .then((userCredential)=>{
   var user = userCredential.user;
  // console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
-  var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
+ 
+ //YOU'VE NEVER ACTUALLY SIGNED UP WITH FACEBOOK BEFORE YET,
+ // SO FIRST NAME, LAST NAME AND GTAG BELOW, MAY GIVE YOU PROBLEMS
+ 
+ var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
   var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
 
  console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
 
+
+
+ gtag("event", "sign-up", {
+  // This purchase event uses a different transaction ID
+  // from the previous purchase event so Analytics
+  // doesn't deduplicate the events.
+  // Learn more: https://support.google.com/analytics/answer/12313109
+  fullName:firstName + " " + lastName,
+  telephone:'none',
+  affiliateId:'none',
+  "registered-with":  "facebook"
+});
 
  db.collection('users')
  .where('email', '==', user.email)

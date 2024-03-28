@@ -52,6 +52,14 @@ function TenePage() {
   const { presentSubject } = useSelector((state) => state.group);
   const { cart } = useSelector((state) => state.cart);
 
+   /*GOOGLE TAG MANAGER PREP FOR ADDING TO CART */
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){window.dataLayer.push(arguments);}
+   gtag('js', new Date());
+  
+   gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+ /*GOOGLE TAG MANAGER PREP FOR ADDING TO CART - END*/
+
   useEffect(()=>{
    if(!user){
       navigate('/external-login')
@@ -107,6 +115,48 @@ const addToCartFxn = () => {
     notifyErrorFxn('Pack is already in the cart');
   } else {
     dispatch(addToCart(cartItems));
+
+
+    const totalPrice = cartItems.reduce((acc, item) => {
+      const itemPrice = parseFloat(item.price && item.price.replace(',', ''));
+      return acc + itemPrice;
+    }, 0);
+
+ 
+    gtag("event", "add_to_cart", {
+      // This purchase event uses a different transaction ID
+      // from the previous purchase event so Analytics
+      // doesn't deduplicate the events.
+      // Learn more: https://support.google.com/analytics/answer/12313109
+      fullName:user && user.fullName,
+      telephone:user && user.telephone,
+      user_id: user && user.uid,
+      value: totalPrice,
+      pack_name:presentSubject?.title,
+      //tax: 0,
+      //shipping: 0,
+      currency: "GNF",
+      //coupon: "n/a",
+      affiliateId:user &&user.affiliate?user.affiliate:"none",
+      items: [
+        ...(cartItems.map((item)=>(
+          {
+              packLead:item.packLead?item.packLead:false,
+              price:item.price,
+              packId:item.packId?item.packId:null,
+              item_id:item.id,
+              item_name:item.title,
+              coursepack_name:item.packName?item.packName:null,
+
+          }
+        ))
+         )
+      ]
+});
+
+
+
+
     notifySuccessFxn('Added to cart');
     navigate('/dashboard/my-cart');
   }

@@ -113,6 +113,14 @@ function MobileRegisterPage() {
   const [page2,setPage2] = useState(false)
   const [page1,setPage1] = useState(true)
 
+/*SETTING UP GOOGLE TAG MANAGER--*/
+  window.dataLayer = window.dataLayer || [];
+ function gtag(){window.dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+/*SETTING UP GOOGLE TAG MANAGER-- END */
+
 
   const { user,error } = useSelector((state) => state.auth);
   console.log("error is",error)
@@ -155,6 +163,18 @@ function MobileRegisterPage() {
     }
     else{
       dispatch(signup(user,navigate))
+
+
+      gtag("event", "sign-up", {
+        // This purchase event uses a different transaction ID
+        // from the previous purchase event so Analytics
+        // doesn't deduplicate the events.
+        // Learn more: https://support.google.com/analytics/answer/12313109
+        fullName:user && user.firstName,
+        telephone:user && user.telephone,
+        affiliateId:user &&user.affiliate?user.affiliate:"none",
+        "registered-with":  "email"
+     });
     }
   }
 

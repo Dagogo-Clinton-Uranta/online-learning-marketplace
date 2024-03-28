@@ -56,6 +56,14 @@ function SelectedCoursePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
+  /*GOOGLE TAG MANAGER PREP FOR ADDING TO CART */
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+/*GOOGLE TAG MANAGER PREP FOR ADDING TO CART - END*/
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -246,7 +254,7 @@ const pauseAudio = audio => {
 
 
 
- const handleViewPdf = (pdfUrl) => {
+ const handleViewPdf = (pdfUrl,chapterObject) => {
 
   if(!user){
     navigate('/external-login')
@@ -256,6 +264,19 @@ const pauseAudio = audio => {
     notifyInfoFxn('Please purchase course to view document.')
   }else{
 
+    gtag("event", "pdf-open", {
+      "user-id":user && user.uid?user.uid:"no uid found",
+      email:user && user.email?user.email:"no email found",
+      fullName:user && user.fullName,
+      classOption:user && user.classes,
+      affiliateId:user &&user.affiliate?user.affiliate:"none",
+      "pdf-url":pdfUrl,
+      "chapter-id":chapterObject.uid,
+      "chapter-number":chapterObject.chapterNumber,
+      "subject":chapterObject.subject,
+      "level":chapterObject.category,
+      
+    });
   
   window.open(
     //`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`,
@@ -353,7 +374,7 @@ const URLSound = window.URL || window.webkitURL
 
 
 
-async function saveCourse(subjectTitle,url,courseName,uid,duration) {
+async function saveCourse(subjectTitle,url,courseName,uid,duration,chapterObject) {
 
   if(!user){
     navigate('/external-login')
@@ -385,6 +406,26 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration) {
  
   });
 }*/
+console.log("details for the chapter of thisdownloadable media are -->",
+ chapterObject
+)
+
+gtag("event", "media-download", {
+  "user-id":user && user.uid?user.uid:"no uid found",
+  email:user && user.email?user.email:"no email found",
+  fullName:user && user.fullName,
+  classOption:user && user.classes,
+  affiliateId:user &&user.affiliate?user.affiliate:"none",
+  "course-name":courseName,
+  "lesson-title":subjectTitle,
+  "lesson-url":url,
+  "lesson-duration":duration,
+  "lesson-id":uid,
+  "chapter-id":chapterObject.uid,
+  "chapter-number":chapterObject.chapterNumber,
+  "subject":chapterObject.subject,
+  "level":chapterObject.category
+});
   
   returnImage.then((item)=>{ setView(item);setLoading(true);
     let second = item
@@ -483,7 +524,7 @@ const fetchQuizAndNavigate =(uid)=>{
 const addToCartFxn = () => {
   if(!user){
     navigate('/external-login')
-   }
+   }else{
 
   
 const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: presentSubject?.price }
@@ -496,9 +537,52 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
     notifyErrorFxn('Item is already in the cart');
   } else {
     dispatch(addToCart(cartItems));
+
+
+
+    gtag("event", "add_to_cart", {
+      // This purchase event uses a different transaction ID
+      // from the previous purchase event so Analytics
+      // doesn't deduplicate the events.
+      // Learn more: https://support.google.com/analytics/answer/12313109
+      fullName:user && user.fullName,
+      telephone:user && user.telephone,
+      //transaction_id: `${generateOrderId}`,
+      user_id:user && user.uid,
+      value: newItem.price,
+      //tax: 0,
+      //shipping: 0,
+      currency: "GNF",
+      coupon: "n/a",
+      affiliateId:user &&user.affiliate?user.affiliate:"none",
+      items: [
+          {
+              packLead:false,
+              price:newItem.price,
+              packId:null,
+              item_id:newItem.id,
+              item_name:newItem.title,
+              coursepack_name:null,
+
+          }
+        
+      ]
+});
+
+
+
+
+
+
+
+
+
     notifySuccessFxn('Added to cart');
     navigate('/dashboard/my-cart');
   }
+
+   }
+
 };
 
 // presentSubject.title
@@ -657,7 +741,7 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.title}
- <PictureAsPdfIcon onClick={()=>{handleViewPdf(chapter.chapterPdfUrl?chapter.chapterPdfUrl:"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")/*handleOpenPdf()*/}}  style={{fontSize:"2.2rem"}} />
+ <PictureAsPdfIcon onClick={()=>{handleViewPdf(chapter.chapterPdfUrl?chapter.chapterPdfUrl:"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf",chapter)/*handleOpenPdf()*/}}  style={{fontSize:"2.2rem"}} />
  </p>
 
 </Grid>
@@ -678,7 +762,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
        
      <NotPlayableSwitch />
   :*/
-  lesson.lessonUrl && lesson.lessonUrl.slice(lesson.lessonUrl.length-3,lesson.lessonUrl.length) ==="mp4"?<VideoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> 
+  lesson.lessonUrl && lesson.lessonUrl.slice(lesson.lessonUrl.length-3,lesson.lessonUrl.length) ==="mp4"?<VideoSwitch uid={lesson.uid} chapterObject={chapter} videoFile={lesson.lessonUrl}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> 
   
   
   }     &nbsp; {index + 1}.</p>
@@ -689,7 +773,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   {/*lesson.title && lesson.title.substring(0,25)+ `${lesson.title.length > 25 ?"...":''}`*/}
   
   </p>
-  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(presentSubject.title,/*(index % 2 === 0?"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4":)*/lesson.lessonUrl,lesson.title,lesson.uid,lesson.duration)}} style={{fontSize:"1.5rem"}}/></p>
+  <p style={{position:"absolute",right:"1%",display:"flex",gap:"15px",alignItems:"center"}}>{lesson.duration}<AiOutlineDownload onClick={()=>{saveCourse(presentSubject.title,/*(index % 2 === 0?"https://streaming.bonecole.com/courses_new/mathemaiques_10e/original/1.1+Propriete+de+Thales+dans+le+triangle.mp4":)*/lesson.lessonUrl,lesson.title,lesson.uid,lesson.duration,chapter)}} style={{fontSize:"1.5rem"}}/></p>
  </Grid>
  )
 :
