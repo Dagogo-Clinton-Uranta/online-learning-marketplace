@@ -375,6 +375,27 @@ ref={modalRef}
         }
 
 
+        if(progress.played === 1){
+           
+          gtag("event", "video-progress-completed", {
+            "user-id":user && user.uid?user.uid:"no uid found",
+            email:user && user.email?user.email:"no email found",
+            fullName:user && user.fullName,
+            classOption:user && user.classes,
+            affiliateId:user &&user.affiliate?user.affiliate:"none",
+
+            "video-url":videoFile,
+
+            "chapter-id":chapterObject.uid,
+            "chapter-number":chapterObject.chapterNumber,
+            "subject":chapterObject.subject,
+            "level":chapterObject.category,
+            
+          });
+        }
+
+
+
 
         }}
         
