@@ -31,6 +31,13 @@ function ExternalRegisterPage() {
   const [confirmPassword,setConfirmPassword] =useState('')
   const [companySize,setCompanySize] =useState('')
 
+  /*SETTING UP GOOGLE TAG MANAGER--*/
+  window.dataLayer = window.dataLayer || [];
+ function gtag(){window.dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+/*SETTING UP GOOGLE TAG MANAGER-- END */
  
 
   const { user,error } = useSelector((state) => state.auth);
@@ -42,8 +49,19 @@ function ExternalRegisterPage() {
  },[user])
   
 
+const signUpEvent = ()=> {
+ gtag("event", "sign-up", {
+  // This purchase event uses a different transaction ID
+  // from the previous purchase event so Analytics
+  // doesn't deduplicate the events.
+  // Learn more: https://support.google.com/analytics/answer/12313109
+  fullName:user && user.firstName,
+  telephone:user && user.telephone,
+  affiliateId:user &&user.affiliate?user.affiliate:"none",
+    
+});
 
-
+}
 
 
   return (
@@ -54,7 +72,7 @@ function ExternalRegisterPage() {
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"40px"}}>
     <center>
-    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Bienvenue sur Bonécole!</h1>
+    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Inscription</h1>
      <br/> 
     <p>Plateforme de cours en ligne sur - demande</p>
     </center>
@@ -72,7 +90,12 @@ function ExternalRegisterPage() {
            <Button   variant="contained" 
           style={{ backgroundColor: "#483c94",color:"#FFFFFF",width:"55%",height:"3rem",fontSize:"12px",borderRadius:"5rem",
           }}
-          onClick ={()=>{dispatch(signUpWithFacebook(navigate))}}
+          onClick ={()=>{
+            
+            dispatch(signUpWithFacebook(navigate))
+
+            
+          }}
           >
           S'inscrire avec Facebook
           </Button>
@@ -93,7 +116,12 @@ function ExternalRegisterPage() {
         <Button   variant="contained" 
           style={{ backgroundColor: "#FFFFFF",color:"#FFFFFF",width:"100%",height:"3rem",fontSize:"12px",boxShadow:"none",
           }}
-          onClick ={()=>{dispatch(signUpWithGoogle(navigate))}}
+          onClick ={()=>{
+            
+            dispatch(signUpWithGoogle(navigate))
+
+          
+          }}
           >
           <img src={googleSU} style={{width:"60%"}}/>
           </Button>

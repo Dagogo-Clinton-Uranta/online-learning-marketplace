@@ -334,10 +334,7 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
   
 
     gtag("event", "sign-up", {
-      // This purchase event uses a different transaction ID
-      // from the previous purchase event so Analytics
-      // doesn't deduplicate the events.
-      // Learn more: https://support.google.com/analytics/answer/12313109
+     
       fullName:firstName + " " + lastName,
       telephone:'none',
       affiliateId:'none',

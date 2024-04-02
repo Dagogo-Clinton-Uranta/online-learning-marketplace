@@ -263,8 +263,8 @@ const pauseAudio = audio => {
   if(presentSubject && purchasedCourses &&  !(condensedPurchasedCourses.includes(presentSubject.uid))){
     notifyInfoFxn('Please purchase course to view document.')
   }else{
-
-    gtag("event", "pdf-open", {
+  if(chapterObject && chapterObject.chapterNumber){
+    gtag("event", "pdf-open-chapter", {
       "user-id":user && user.uid?user.uid:"no uid found",
       email:user && user.email?user.email:"no email found",
       fullName:user && user.fullName,
@@ -277,6 +277,23 @@ const pauseAudio = audio => {
       "level":chapterObject.category,
       
     });
+
+  }else{
+    gtag("event", "pdf-open-exam", {
+      "user-id":user && user.uid?user.uid:"no uid found",
+      email:user && user.email?user.email:"no email found",
+      fullName:user && user.fullName,
+      classOption:user && user.classes,
+      affiliateId:user &&user.affiliate?user.affiliate:"none",
+      "exam-url":pdfUrl,
+      "exam-id":chapterObject.uid,
+      
+      "subject":chapterObject.subject,
+      "level":chapterObject.category,
+      
+    });
+
+  }
   
   window.open(
     //`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`,
@@ -541,10 +558,7 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
 
 
     gtag("event", "add_to_cart", {
-      // This purchase event uses a different transaction ID
-      // from the previous purchase event so Analytics
-      // doesn't deduplicate the events.
-      // Learn more: https://support.google.com/analytics/answer/12313109
+      
       fullName:user && user.fullName,
       telephone:user && user.telephone,
       //transaction_id: `${generateOrderId}`,
@@ -873,7 +887,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 
  <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",paddingBottom:"0.8rem",borderBottom:"1px solid lightgrey"}}>
   <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >
-  <PictureAsPdfIcon  onClick={()=>{handleViewPdf(exam.examUrl?exam.examUrl:"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}}   style={{fontSize:"2.2rem"}} />
+  <PictureAsPdfIcon  onClick={()=>{handleViewPdf(exam.examUrl?exam.examUrl:"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf",exam)}}   style={{fontSize:"2.2rem"}} />
    
   </p>
   <p style={{display:"inline",width:"12.5rem",marginTop:"0.2rem"}}>  

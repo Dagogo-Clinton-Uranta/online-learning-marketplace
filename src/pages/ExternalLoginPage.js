@@ -69,7 +69,7 @@ function ExternalLoginPage() {
 
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",paddingTop:"1rem",paddingBottom:"40px"}}>
     <center>
-    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Bienvenue sur Bonécole!</h1>
+    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Se connecter</h1>
      <br/> 
     <p>Plateforme de cours en ligne sur - demande</p>
     </center>

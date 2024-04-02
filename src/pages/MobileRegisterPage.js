@@ -166,10 +166,7 @@ function MobileRegisterPage() {
 
 
       gtag("event", "sign-up", {
-        // This purchase event uses a different transaction ID
-        // from the previous purchase event so Analytics
-        // doesn't deduplicate the events.
-        // Learn more: https://support.google.com/analytics/answer/12313109
+       
         fullName:user && user.firstName,
         telephone:user && user.telephone,
         affiliateId:user &&user.affiliate?user.affiliate:"none",
