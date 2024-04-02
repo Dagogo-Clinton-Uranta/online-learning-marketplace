@@ -121,7 +121,7 @@ const PaymentOptions = () => {
             momoToken: access_token
           }).then((res) => {
               console.log("Payment completed...---->", res.data);
-              let today = new Date().toLocaleDateString();
+              let today = new Date();
 
             if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"|| res.data && res.data.status === "SUCCESS"){
               dispatch(buyCourse(cartToSubmit, user.id ?? user.uid, today, navigate, setIsLoading));

@@ -88,7 +88,7 @@ console.log("cart is ---->",cart)
 
   const handleSubmit = () => {
     setisLoading(true);
-    let today = new Date().toLocaleDateString();
+    let today = new Date();
     dispatch(buyCourse(cart, user.uid, today, navigate));
   };
   const validatePayment = (initializePayment) => {
