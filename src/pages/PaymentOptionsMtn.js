@@ -187,7 +187,7 @@ document.getElementById("purchase").addEventListener("click", function () {
             momoToken: access_token
           }).then((res) => {
               console.log("Payment completed...--->", res.data);
-              let today = new Date().toLocaleDateString();
+              let today = new Date().toDateString();
 
             if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.payerReferenceId){
                  console.log("OUR PAYER REFERENCE ID IS--->",res.data.payerReferenceId)
@@ -246,7 +246,7 @@ document.getElementById("purchase").addEventListener("click", function () {
       momoToken: access_token
     }).then((res) => {
         console.log("Payment STATUS (IN FINISH PAYMENT) HAS BEEN REQUESTED...---->", res.data);
-        let today = new Date();
+        let today = new Date().toDateString();
 
       if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"){
         dispatch(buyCourse(cartToSubmit, user.id ?? user.uid, today, navigate, setIsLoading));

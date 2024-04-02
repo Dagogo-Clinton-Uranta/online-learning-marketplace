@@ -39,7 +39,7 @@ const MyCartPage = () => {
 
   const handleSubmit = () => {
     setisLoading(true);
-    let today = new Date();
+    let today = new Date().toDateString();
     dispatch(buyCourse(cart, user.uid, today, navigate));
   };
   const validatePayment = (initializePayment) => {

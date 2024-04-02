@@ -237,7 +237,7 @@ axios.post(orangeMTokenUrl, {}, { headers })
          
          const cartObject = cartToProcess
          const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
-         let today = new Date();
+         let today = new Date().toDateString();
        
          console.log("COURSE ID ARRAY IS----->",courseIdArray)
         
