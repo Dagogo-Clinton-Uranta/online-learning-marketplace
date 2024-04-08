@@ -54,7 +54,7 @@ function MobileWelcomePage() {
  
   const dispatch = useDispatch();
 
- console.log("TRYING TO LOCATE WHERE THE APP CRASHES , AFTER BEING PURCHASED FROM PAYCARD--->")
+ //console.log("TRYING TO LOCATE WHERE THE APP CRASHES , AFTER BEING PURCHASED FROM PAYCARD--->")
   
  // window.onbeforeunload = function () {
  //   usePrompt("you may have to go online to retrieve this page")
@@ -82,9 +82,9 @@ const [teacherArr, setTeacherArr] = useState([]/*teachers*/);
 const myRef = useRef(null)
 const executeScroll = () => myRef.current.scrollIntoView({behavior:"smooth"})
 
-console.log("teachers from DATABASE",teachers)
+//console.log("teachers from DATABASE",teachers)
 
-console.log("categories/COURSES",allCategories)
+//console.log("categories/COURSES",allCategories)
 
 
 
@@ -198,7 +198,7 @@ useEffect(()=>{
 useEffect(()=>{
 
   setTopics(categorySubjects)
-  console.log("CATEGORY SUBJECTS FOR IMAGES-->",categorySubjects)
+  //console.log("CATEGORY SUBJECTS FOR IMAGES-->",categorySubjects)
 
 },[categorySubjects])
 
@@ -213,7 +213,7 @@ if(user && user.mostRecentPayToken && user.mostRecentPayToken.length){
 
   dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
    
-    console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
+    //console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
     
 
     const headers = {
@@ -232,14 +232,14 @@ axios.post(orangeMTokenUrl, {}, { headers })
      orangeMToken: access_token
    }).then((res) => {
     
-       console.log("LOOK HERE FOR INITIATED --->", res.data);
+       //console.log("LOOK HERE FOR INITIATED --->", res.data);
        if (res.data.status && res.data.status === 'SUCCESS' ) {
          
          const cartObject = cartToProcess
          const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
          let today = new Date().toDateString();
        
-         console.log("COURSE ID ARRAY IS----->",courseIdArray)
+         //console.log("COURSE ID ARRAY IS----->",courseIdArray)
         
          dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate))
          dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id)).then(()=>{
@@ -250,8 +250,8 @@ axios.post(orangeMTokenUrl, {}, { headers })
 
 
        }else{
-         console.log("Res", res.data);
-         console.log("AT THE HOME PAGE, MOST RECENT ORANGE PAYMENT NOT SUCCESSFUL");  
+         //console.log("Res", res.data);
+         //console.log("AT THE HOME PAGE, MOST RECENT ORANGE PAYMENT NOT SUCCESSFUL");  
          
        }
    }).catch((error) => {
@@ -280,7 +280,7 @@ axios.post(orangeMTokenUrl, {}, { headers })
    
     dispatch(fetchCategorySubjects(category))
     dispatch(fetchCategoryPacks(category))
-    console.log(`NOW REDIRECTING to ${category}!!!`)
+    //console.log(`NOW REDIRECTING to ${category}!!!`)
       
     setTimeout(()=>{ navigate('/dashboard/6e')},1000)
 

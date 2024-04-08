@@ -156,7 +156,7 @@ export default function CJobList({jobs}) {
   //   url: '/setup/update-field',
   //   method: 'post',
   //   onSuccess: (data) => {
-  //     // console.log('data: ', data);
+  //     // //console.log('data: ', data);
   //     setLoadingButton(false);
   //     if (data?.message === 'done') {
   //       history.push('profile-picture?job=' + jobID);

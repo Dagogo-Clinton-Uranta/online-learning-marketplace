@@ -9,24 +9,24 @@ import firebase from "firebase/app";
 
 
   export const signin = (user, navigate,) => async (dispatch) => {
-    console.log("all is still well at this point")
+   
     fb.auth().signInWithEmailAndPassword(user.email, user.password)
     .then((userCredential) => {
       // Signed in
      
       var user = userCredential.user;
-      console.log('Signed In user is: ', user.email);
+      //console.log('Signed In user is: ', user.email);
        dispatch(fetchUserData(user.uid, "sigin", navigate));
     })
     .catch((error) => {
-      console.log( ' PROBLEM REPORT ', error.message);
+      //console.log( ' PROBLEM REPORT ', error.message);
       dispatch(loginFailed(error.message));
      
       var errorCode = error.code;
       var errorMessage = error.message;
       //notifyErrorFxn(errorMessage);
       
-      console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
+      //console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
      
     });
 
@@ -70,7 +70,7 @@ export const UseFacebookDetailsToSignIn = (navigate) => async (dispatch) => {
   
         var firstName= result.user.displayName?result.user.displayName.split(" ")[0]:''
         var lastName = result.user.displayName?result.user.displayName.split(" ")[1]:''
-       console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
+       //console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
        
     
         db.collection('users').doc(user.uid).update({
@@ -87,14 +87,14 @@ export const UseFacebookDetailsToSignIn = (navigate) => async (dispatch) => {
          dispatch(fetchUserData(user.uid, "sigin", navigate));
 
   }).catch((error) => {
-    console.log( ' PROBLEM REPORT ', error.message);
+    //console.log( ' PROBLEM REPORT ', error.message);
     dispatch(loginFailed(error.message));
    
     var errorCode = error.code;
     var errorMessage = error.message;
     //notifyErrorFxn(errorMessage);
     
-    console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
+    //console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
    
   });
 
@@ -118,7 +118,7 @@ export const signInWithFacebook = (e,navigate) => async (dispatch) => {
   
     var firstName= result.user.displayName?result.user.displayName.split(" ")[0]:''
     var lastName = result.user.displayName?result.user.displayName.split(" ")[1]:''
-   console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
+   //console.log("FIRST AND LAST NAME FROM FACEBOOK ARE ---->",firstName,lastName)
    
     db.collection('userData').doc(user.uid).update({
       uid: user.uid,
@@ -143,14 +143,14 @@ export const signInWithFacebook = (e,navigate) => async (dispatch) => {
      dispatch(fetchUserData(user.uid, "sigin", navigate));
 
   }).catch((error) => {
-    console.log( ' PROBLEM REPORT ', error.message);
+    //console.log( ' PROBLEM REPORT ', error.message);
     dispatch(loginFailed(error.message));
    
     var errorCode = error.code;
     var errorMessage = error.message;
     //notifyErrorFxn(errorMessage);
     
-    console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
+    //console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
    
   });
 
@@ -171,7 +171,7 @@ export const signInWithGoogle = (navigate) => async (dispatch) => {
     var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
     var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
   
-   console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
+   //console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
 
 
     db.collection('userData').doc(user.uid).update({
@@ -199,14 +199,14 @@ export const signInWithGoogle = (navigate) => async (dispatch) => {
      dispatch(fetchUserData(user.uid, "sigin", navigate));
 
   }).catch((error) => {
-    console.log( ' PROBLEM REPORT ', error.message);
+    //console.log( ' PROBLEM REPORT ', error.message);
     dispatch(loginFailed(error.message));
    
     var errorCode = error.code;
     var errorMessage = error.message;
     //notifyErrorFxn(errorMessage);
     
-    console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
+    //console.log('Error Code is: ', errorCode, + ' Msg is: ', errorMessage);
    
   });
 
@@ -215,9 +215,9 @@ export const signInWithGoogle = (navigate) => async (dispatch) => {
 
 
 export const signup = (user,navigate) => async (dispatch) => {
-     console.log(user);
+     //console.log(user);
    dispatch(signupPending());
-   console.log("Just before the sign up happens!!!!")
+   //console.log("Just before the sign up happens!!!!")
 
 
    db.collection('users')
@@ -309,16 +309,16 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
   
  
   dispatch(signupPending());
-  console.log("Just before the google sign up happens!!!!")
+  //console.log("Just before the google sign up happens!!!!")
   fb.auth().signInWithPopup(provider)
     
  .then((userCredential)=>{
   var user = userCredential.user;
- // console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
+ // //console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
   var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
   var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
 
- console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
+ //console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
 
  db.collection('users')
  .where('email', '==', user.email)
@@ -427,12 +427,12 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
   fb.auth().useDeviceLanguage();
  
   dispatch(signupPending());
-  console.log("Just before the facebook sign up happens!!!!")
+  //console.log("Just before the facebook sign up happens!!!!")
   fb.auth().signInWithPopup(provider)
     
  .then((userCredential)=>{
   var user = userCredential.user;
- // console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
+ // //console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
  
  //YOU'VE NEVER ACTUALLY SIGNED UP WITH FACEBOOK BEFORE YET,
  // SO FIRST NAME, LAST NAME AND GTAG BELOW, MAY GIVE YOU PROBLEMS
@@ -440,7 +440,7 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
  var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
   var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
 
- console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
+ //console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
 
 
 
@@ -539,7 +539,7 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
 
 export const uploadImage = (user, file, navigate, setLoading) => async (dispatch) => {
   const imageName = uuidv4() + '.' + file?.name?.split('.')?.pop();
-  console.log('File Name: ', imageName);
+  //console.log('File Name: ', imageName);
   const uploadTask = storage.ref(`profile_images/${imageName}`).put(file);
   uploadTask.on(
     "state_changed",
@@ -550,7 +550,7 @@ export const uploadImage = (user, file, navigate, setLoading) => async (dispatch
       // setProgress(progress);
     },
     error => {
-      console.log(error);
+      //console.log(error);
     },
     () => {
       storage
@@ -558,7 +558,7 @@ export const uploadImage = (user, file, navigate, setLoading) => async (dispatch
         .child(imageName)
         .getDownloadURL()
         .then(url => {
-          console.log('Image URL: ', url);
+          //console.log('Image URL: ', url);
           dispatch(signup(user, file, navigate, setLoading, url));
         });
     }
@@ -570,7 +570,7 @@ export const fetchUserData = (id, type, navigate) => async (dispatch) => {
   var user = db.collection("users").doc(id);
   user.get().then((doc) => {
   if (doc.exists) {
-    // console.log("User Data:", doc.data());
+    // //console.log("User Data:", doc.data());
     dispatch(storeUserData(doc.data()));
     if(type === "sigin"){
      
@@ -585,10 +585,10 @@ export const fetchUserData = (id, type, navigate) => async (dispatch) => {
   } else {
      
       notifyErrorFxn("Unauthorized❌")
-      console.log("No such document!");
+      //console.log("No such document, so we are throwing unauthorized!");
   }
 }).catch((error) => {
-  console.log("Error getting document:", error);
+  //console.log("Error getting document:", error);
 });
 return user;
 };
@@ -619,10 +619,10 @@ const checkIfLessonsWatched =  doc.data().lessonsWatched?doc.data().lessonsWatch
  
   } else {
      
-      console.log("the user doesnt exist or we can't fetch it for some reason!");
+      //console.log("the user doesnt exist or we can't fetch it for some reason!");
   }
 }).catch((error) => {
-  console.log("Error updating user's lessons watched:", error);
+  //console.log("Error updating user's lessons watched:", error);
 });
 return user;
 };
@@ -630,7 +630,7 @@ return user;
 
 export const getUserProfilePic = (idArray) => async (dispatch) => {
   //var user = db.collection("users").doc(id);
-   console.log("idArray at this given moment is:",idArray)
+   //console.log("idArray at this given moment is:",idArray)
 const watchListItem =  db.collection('users').where('uid', 'in', idArray);
   
   watchListItem.get().then((snapshot) => {
@@ -648,20 +648,20 @@ const watchListItem =  db.collection('users').where('uid', 'in', idArray);
 
  
     if (profileImages.length){
-     console.log(" 145 auth action- the submitted images array is",profileImages)
+     //console.log(" 145 auth action- the submitted images array is",profileImages)
   dispatch(storeProfileImages(profileImages));  
  
       
   } else {
      
       //notifyErrorFxn("Unauthorized❌")
-      console.log("No users imagse!");
+      //console.log("No users imagse!");
   }
  }
  
   ) 
   .catch((error) => {
-  console.log("Error getting document:", error);
+  //console.log("Error getting document:", error);
 });
 
 };
@@ -669,7 +669,7 @@ const watchListItem =  db.collection('users').where('uid', 'in', idArray);
 
 export const uploadProfileImage = (profileData, file, userID, navigate, setLoading) => async (dispatch) => {
   const imageName = uuidv4() + '.' + file?.name?.split('.')?.pop();
-  console.log('File Name: ', imageName);
+  //console.log('File Name: ', imageName);
   const uploadTask = storage.ref(`profile_images/${imageName}`).put(file);
   uploadTask.on(
     "state_changed",
@@ -680,7 +680,7 @@ export const uploadProfileImage = (profileData, file, userID, navigate, setLoadi
       // setProgress(progress);
     },
     error => {
-      console.log(error);
+      //console.log(error);
     },
     () => {
       storage
@@ -688,7 +688,7 @@ export const uploadProfileImage = (profileData, file, userID, navigate, setLoadi
         .child(imageName)
         .getDownloadURL()
         .then(url => {
-          console.log('Image URL: ', url);
+          //console.log('Image URL: ', url);
           dispatch(updateProfile(profileData, userID, file, navigate, setLoading, url));
         });
     }
@@ -697,7 +697,7 @@ export const uploadProfileImage = (profileData, file, userID, navigate, setLoadi
 
 
 export const updateProfile = (profileData, userID, file, navigate, setLoading, url) => async (dispatch) => {
-    console.log("PROFILE IS UPDATED NOW--->")
+    //console.log("PROFILE IS UPDATED NOW--->")
   db.collection('users').doc(userID).update({
     telephone: profileData.telephone,
     pvExamen: profileData.pvExamen,
@@ -731,7 +731,7 @@ export const updateProfile = (profileData, userID, file, navigate, setLoading, u
             } else {
                
                 notifyErrorFxn("problème de mise à jour du profil utilisateur, veuillez réessayer")
-                console.log("No such document!");
+                //console.log("No such document!");
             }
           })
 
@@ -747,27 +747,27 @@ export const updateProfile = (profileData, userID, file, navigate, setLoading, u
         var user = db.collection("users").doc(userID);
         user.get().then((doc) => {
         if (doc.exists) {
-          // console.log("User Data:", doc.data());
+          // //console.log("User Data:", doc.data());
           dispatch(storeUserData(doc.data()));
           
         } else {
            
             notifyErrorFxn("problème de mise à jour de ce profil, veuillez réessayer")
-            console.log("No such document!");
+            //console.log("No such document!");
         }
       })
 
 
 
         setLoading(false);
-        console.log("No Password to update - so we didn't call auth.currentUser");
+        //console.log("No Password to update - so we didn't call auth.currentUser");
         notifySuccessFxn("mise à jour réussie!");
         //navigate('/dashboard/home', { replace: true });
        }
      
   }).catch((err) => {
     setLoading(false);
-    console.log("ERR-: ", err);
+    //console.log("ERR-: ", err);
   })
 }
 
@@ -778,10 +778,10 @@ export const logout = (navigate) => async (dispatch) => {
     dispatch(clearUser());
     dispatch(clearGroup());
     navigate('/external-login', { replace: true });
-    console.log('logout successful!');
+    //console.log('logout successful!');
   }).catch((error) => {
     // An error happened.
-    console.log('logout failed response: ', error.message);
+    //console.log('logout failed response: ', error.message);
   });
   
 }

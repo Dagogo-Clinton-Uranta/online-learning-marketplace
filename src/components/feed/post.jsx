@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
 function Post ({ handleConnect }) {
   const classes = useStyles();
   const {candidates } = useSelector((state) => state.candidates);
-  console.log("candidates from store",candidates)
+  //console.log("candidates from store",candidates)
 
 const [message,setMessage] =useState('')
 const { user } = useSelector((state) => state.auth);
-console.log("user id is actually:", user.uid)
+//console.log("user id is actually:", user.uid)
   const dispatch = useDispatch();
 
   const postMessage = () =>{

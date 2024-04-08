@@ -92,8 +92,8 @@ function TenePage() {
     {image:a10},
   ]
 
-console.log("PRESENT SUBJECT--->", presentSubject)
-console.log("PACK SUBJECTS--->", packSubjects)
+//console.log("PRESENT SUBJECT--->", presentSubject)
+//console.log("PACK SUBJECTS--->", packSubjects)
 
 const addToCartFxn = () => {
   
@@ -168,7 +168,7 @@ const addToCartFxn = () => {
    
     dispatch(fetchCategorySubjects(category))
     dispatch(fetchCategoryPacks(category))
-    console.log(`NOW REDIRECTING to ${category}!!!`)
+    //console.log(`NOW REDIRECTING to ${category}!!!`)
       
     setTimeout(()=>{ navigate('/dashboard/6e')},1000)
 

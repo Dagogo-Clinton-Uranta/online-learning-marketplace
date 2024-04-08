@@ -45,7 +45,7 @@ export default function RegisterForm() {
     e.preventDefault();
     setLoading(true);
     const user = {fname, lname, email, employeer, password};
-    console.log("USER: ", user);
+    //console.log("USER: ", user);
     dispatch(signup(user, navigate, setLoading)); 
   }
 

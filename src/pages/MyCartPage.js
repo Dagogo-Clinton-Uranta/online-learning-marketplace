@@ -53,7 +53,7 @@ const MyCartPage = () => {
    
     },[cart,cartPackIds])
  
-console.log("cart is ---->",cart)
+//console.log("cart is ---->",cart)
 
 
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ console.log("cart is ---->",cart)
     return acc + itemPrice;
   }, 0);
 
-  console.log("TOTAL PRICE IS-->",totalPrice)
+  //console.log("TOTAL PRICE IS-->",totalPrice)
   let amount = 100000;
   // let price;
   const [email, setEmail] = useState(user && user.email);

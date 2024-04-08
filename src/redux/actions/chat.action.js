@@ -18,7 +18,7 @@ export const addToNotices = (message,senderId ) => async (dispatch) => {
         
       })
     .then((docRef) => {
-        console.log("Document updated is: ", docRef);
+        //console.log("Document updated is: ", docRef);
          
         
         notifySuccessFxn('notice has been added to feed.✔');
@@ -39,8 +39,8 @@ export const addToNotices = (message,senderId ) => async (dispatch) => {
 export const fetchChats = (user1, user2_data) => async (dispatch) => {
     const user2 = user2_data.uid;
     const users =  {user1, user2};
-    console.log('User 1: ', user1);
-    console.log('User 2: ', user2);
+    //console.log('User 1: ', user1);
+    //console.log('User 2: ', user2);
 
      dispatch(setCurrentChat(user2_data));
      dispatch(getRealtimeChat(users))
@@ -49,7 +49,7 @@ export const fetchChats = (user1, user2_data) => async (dispatch) => {
 
 export const sendChat = (msgObj) => async (dispatch) => {
     
-    console.log('Msg Obj: ', msgObj);
+    //console.log('Msg Obj: ', msgObj);
     // const today = new Date();
     // const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
@@ -69,10 +69,10 @@ export const sendChat = (msgObj) => async (dispatch) => {
     })
     .then((snapshot) => {
         dispatch(getRealtimeChat(users))
-        console.log('Sent Chat: ', snapshot);
+        //console.log('Sent Chat: ', snapshot);
 }).catch((error) => {
         var errorMessage = error.message;
-        console.log('Error sending chat', errorMessage);
+        //console.log('Error sending chat', errorMessage);
 });
 
 };
@@ -94,8 +94,8 @@ export const getRealtimeChat = (users) => async (dispatch) => {
         });
 
         dispatch(fetchChatsSuccess(chats));
-        console.log('Realtime Fetched Chats: ', chats);
-        console.log('Realtime Chat Length: ', chats.length);
+        //console.log('Realtime Fetched Chats: ', chats);
+        //console.log('Realtime Chat Length: ', chats.length);
     })
 };
 
@@ -107,14 +107,14 @@ export const fetchInbox = (uid) => async (dispatch) => {
      .then((snapshot) => {
        const allInbox = snapshot.docs.map((doc) => ({ ...doc.data() }));
      if (allInbox.length > 0) {
-       console.log("All Inbox Data:", allInbox);
+       //console.log("All Inbox Data:", allInbox);
        dispatch(fetchInboxMessages(allInbox));
      } else {
          dispatch(fetchInboxMessages(allInbox));
-         console.log("No inbox!");
+         //console.log("No inbox!");
      }
    }).catch((error) => {
-     console.log("Error getting document:", error);
+     //console.log("Error getting document:", error);
    });
    };
 

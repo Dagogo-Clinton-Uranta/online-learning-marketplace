@@ -28,7 +28,7 @@ export default function DesktopSmallerCardPage({uid,title,author,price,lessons,t
   const [expanded, setExpanded] = React.useState(false);
   const navigate = useNavigate();
    const dispatch = useDispatch()
-  console.log("uid is actually",uid) 
+  //console.log("uid is actually",uid) 
   
   const [loading,setLoading] = React.useState(false)
 

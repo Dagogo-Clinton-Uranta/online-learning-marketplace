@@ -74,7 +74,7 @@ export default function SettingsPage() {
 
     const settingsUpdate = (e) => {
       e.preventDefault();
-    //   console.log("OLD SATE: ",state);
+    //   //console.log("OLD SATE: ",state);
       state.paymentLink = state.paymentLink == "" ? user?.paymentLink : state.paymentLink;
     //   state.imageUrl = selectedFile.selectedFile == "" ? user?.imageUrl : selectedFile.selectedFile;
     //   return;

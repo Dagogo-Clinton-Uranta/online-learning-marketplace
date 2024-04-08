@@ -48,10 +48,10 @@ function PackCoursesPage() {
   const { categorySubjects, allCategories } = useSelector((state) => state.group);
 
   const { user, error } = useSelector((state) => state.auth);
-  console.log('error is', error);
+  //console.log('error is', error);
 
   const [topics, setTopics] = useState(categorySubjects);
-  console.log('category subs are ', categorySubjects);
+  //console.log('category subs are ', categorySubjects);
 
   useEffect(() => {
     if (!user) {
@@ -131,14 +131,14 @@ function PackCoursesPage() {
 
   const populateCategory = (category) => {
     dispatch(fetchCategorySubjects(category));
-    console.log(`NOW REDIRECTING to ${category}!!!`);
+    //console.log(`NOW REDIRECTING to ${category}!!!`);
 
     setTimeout(() => {
       navigate('/dashboard/6e');
     }, 1000);
   };
 
-  console.log('PACK___DATA', location.state);
+  //console.log('PACK___DATA', location.state);
 
   return (
     <>

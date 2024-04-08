@@ -14,7 +14,7 @@ const PurchasedCourse = () => {
   const { purchasedCourses } = useSelector((state) => state.cart);
   const { cart,cartToProcess,mostRecentOrderAmount,mostRecentOrderId,mostRecentPayToken} = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  console.log("purchased courses",purchasedCourses)
+  //console.log("purchased courses",purchasedCourses)
 
     //const orangeTransactionUrl = 'http://localhost:5008/api/om/transaction';
     const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/transaction';
@@ -32,7 +32,7 @@ const PurchasedCourse = () => {
   
 
 
-  console.log("MODIFIED purchased courses-->",modifiedPurchasedCourses)
+  //console.log("MODIFIED purchased courses-->",modifiedPurchasedCourses)
 
 
   useEffect(()=>{
@@ -60,7 +60,7 @@ useEffect(()=>{
   
     dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
      
-      console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
+      //console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
       
   
       const headers = {
@@ -79,14 +79,14 @@ useEffect(()=>{
        orangeMToken: access_token
      }).then((res) => {
       
-         console.log("LOOK HERE FOR INITIATED --->", res.data);
+         //console.log("LOOK HERE FOR INITIATED --->", res.data);
          if (res.data.status && res.data.status === 'SUCCESS' ) {
            
            const cartObject = cartToProcess
            const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
            let today = new Date().toDateString();
          
-           console.log("COURSE ID ARRAY IS----->",courseIdArray)
+           //console.log("COURSE ID ARRAY IS----->",courseIdArray)
           
            dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate))
            dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id)).then(()=>{
@@ -97,8 +97,8 @@ useEffect(()=>{
   
   
          }else{
-           console.log("Res", res.data);
-           console.log("AT THE HOME PAGE, MOST RECENT ORANGE PAYMENT NOT SUCCESSFUL");  
+           //console.log("Res", res.data);
+           //console.log("AT THE HOME PAGE, MOST RECENT ORANGE PAYMENT NOT SUCCESSFUL");  
            
          }
      }).catch((error) => {
@@ -124,7 +124,7 @@ useEffect(()=>{
 
 
   const fetchChapters =(subjectId) =>{
-     console.log('THE ID I GOT IS---->',subjectId)
+     //console.log('THE ID I GOT IS---->',subjectId)
     dispatch(fetchSubjectChapters(subjectId))
     dispatch(fetchCurrentSubjectFromDB(subjectId))
 

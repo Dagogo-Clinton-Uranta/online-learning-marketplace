@@ -37,7 +37,7 @@ const SubSectionCard = ({data,index}) => {
   const navigate = useNavigate();
   const [loading,setLoading] =useState(false)
   const [lastVideoWatched,setLastVideoWatched] =useState('')
-  console.log("THE VIDEO ID IS",data.uid)
+  //console.log("THE VIDEO ID IS",data.uid)
   
   const { user} = useSelector((state) => state.auth);
 
@@ -50,7 +50,7 @@ const SubSectionCard = ({data,index}) => {
 
 
  // const sendToWatchList = (userId,videoId)=>{
- //   //console.log("this function is under construction")
+ //   ////console.log("this function is under construction")
  //   dispatch(updateVideoAndUserWatchlists(userId,videoId))
  // }
 
@@ -70,7 +70,7 @@ const SubSectionCard = ({data,index}) => {
                
                dispatch(fetchVideoSubsection(data.title,lastVideoWatched))
                 const makeRequest = async()=>{
-                  console.log("i have set the requested section as",data.title)
+                  //console.log("i have set the requested section as",data.title)
                   dispatch(setRequestedSection(data.title))
                   dispatch(fetchVideoSubsection(data.title,lastVideoWatched))}
                 //use a promise not setTimeout

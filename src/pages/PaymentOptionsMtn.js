@@ -53,11 +53,11 @@ const PaymentOptionsMtn = () => {
 
   const courseIdArray = cart.map((item)=>(item.id))
 
-  console.log("COURSE ID ARRAY IS,---->" ,courseIdArray)
+  //console.log("COURSE ID ARRAY IS,---->" ,courseIdArray)
 
    const cartToSubmit = {courses:cart,affiliateId:user &&user.affiliate}
 
-console.log("OUR USER DEETS,DO WE GET AFFILIATE?----->",cartToSubmit)
+//console.log("OUR USER DEETS,DO WE GET AFFILIATE?----->",cartToSubmit)
 
 
 document.getElementById("purchase").addEventListener("click", function () {
@@ -115,7 +115,7 @@ document.getElementById("purchase").addEventListener("click", function () {
  //     },
  //   });
 //
- //   console.log('OUR FETCHED TOKEN IS:', token);
+ //   //console.log('OUR FETCHED TOKEN IS:', token);
  //   setMomoToken(token.data.access_token);
 //
  //   //possible errors, if you do CORS, you may need to set up a server and get the token from there
@@ -172,7 +172,7 @@ document.getElementById("purchase").addEventListener("click", function () {
        axios.post(momoTokenUrl, {}, { headers })
         .then(response => {
             const access_token = response.data.access_token;
-            console.log("ACCESS-TOKEN 1ST REQUEST-->", access_token);
+            //console.log("ACCESS-TOKEN 1ST REQUEST-->", access_token);
            axios.post(momoRequestToPayUrl, {
             amount: totalPrice,
             currency: 'GNF',
@@ -186,11 +186,11 @@ document.getElementById("purchase").addEventListener("click", function () {
             payeeNote: 'Payment for order',
             momoToken: access_token
           }).then((res) => {
-              console.log("Payment completed...--->", res.data);
+              //console.log("Payment completed...--->", res.data);
               let today = new Date().toDateString();
 
             if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.payerReferenceId){
-                 console.log("OUR PAYER REFERENCE ID IS--->",res.data.payerReferenceId)
+                 //console.log("OUR PAYER REFERENCE ID IS--->",res.data.payerReferenceId)
               setReferenceStore(res.data.payerReferenceId) //,<--- maybe store it in redux for persistence
               dispatch(setTransactionReference(res.data.payerReferenceId))
 
@@ -199,7 +199,7 @@ document.getElementById("purchase").addEventListener("click", function () {
                 setIsLoadingOne(false);
                 notifyErrorFxn(`THERE WAS A PROBLEM INITIATING PAYMENT, PLEASE TRY AGAIN`)
 
-                console.log("OUR ISSUE LIES IS HERE, CHECK THROUGH RES.DATA---->",res.data)
+                //console.log("OUR ISSUE LIES IS HERE, CHECK THROUGH RES.DATA---->",res.data)
               }
           }).catch((error) => {
             setIsLoading(false);
@@ -233,7 +233,7 @@ document.getElementById("purchase").addEventListener("click", function () {
      axios.post(momoTokenUrl, {}, { headers })
      .then(response => {
       const access_token = response.data.access_token;
-      console.log("ACCESS-TOKEN 2ND REQUEST-->", access_token);
+      //console.log("ACCESS-TOKEN 2ND REQUEST-->", access_token);
 
 
           if(!transactionReference && !referenceStore){
@@ -245,7 +245,7 @@ document.getElementById("purchase").addEventListener("click", function () {
       payerReferenceId: transactionReference?transactionReference:referenceStore,
       momoToken: access_token
     }).then((res) => {
-        console.log("Payment STATUS (IN FINISH PAYMENT) HAS BEEN REQUESTED...---->", res.data);
+        //console.log("Payment STATUS (IN FINISH PAYMENT) HAS BEEN REQUESTED...---->", res.data);
         let today = new Date().toDateString();
 
       if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"){
@@ -266,7 +266,7 @@ document.getElementById("purchase").addEventListener("click", function () {
           if(res.data && res.data.reason){
             setIsLoadingOne(false)
             notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)
-            console.log("OUR REASON IS HEREEE---->",res.data.reason)
+            //console.log("OUR REASON IS HEREEE---->",res.data.reason)
           }
          
         }

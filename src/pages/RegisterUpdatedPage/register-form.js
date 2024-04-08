@@ -179,7 +179,7 @@ function RegisterForm(props) {
                   companySize
                  };
    // navigate('/dashboard/home')
-    // console.log("THIS IS USER",user)
+    // //console.log("THIS IS USER",user)
     dispatch(signup(user, navigate));
   }
 

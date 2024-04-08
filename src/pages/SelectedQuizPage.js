@@ -53,8 +53,8 @@ function SelectedQuizPage() {
           currentQuizDetailsAndAnswers,submittingSingleAnswer,
           openQuestionIndex,currentQuestionIndex } = useSelector((state) => state.group);
 
- console.log("open question index is",openQuestionIndex)
- console.log("CURRENT question index ",currentQuestionIndex)
+ //console.log("open question index is",openQuestionIndex)
+ //console.log("CURRENT question index ",currentQuestionIndex)
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
@@ -83,10 +83,10 @@ useEffect(()=>{
   setChosenId(openQuestionIndex)
   setChosenOption('')
 
- console.log("our chosen quiz is--->",chosenQuiz)
- console.log("our sorted quiz is-->",sortedQuiz)
+ //console.log("our chosen quiz is--->",chosenQuiz)
+ //console.log("our sorted quiz is-->",sortedQuiz)
 
-console.log("our QUIZ DETAILS AND ANSWER REDUX STATE IS:",currentQuizDetailsAndAnswers)
+//console.log("our QUIZ DETAILS AND ANSWER REDUX STATE IS:",currentQuizDetailsAndAnswers)
 
   if(openQuestionIndex === chosenQuiz.questionsArray.length-1 && currentQuestionIndex === chosenQuiz.questionsArray.length-1){
     setFinalQuestion(true)
@@ -128,7 +128,7 @@ let quizDetailsAndAnswersObject = {
 const [quizDetailsAndAnswers,setQuizDetailsAndAnswers] = useState(currentQuizDetailsAndAnswers===null?quizDetailsAndAnswersObject:currentQuizDetailsAndAnswers)
 
 const dropDownChecker = (focusedId) => {
-  console.log("THE focused Id is",focusedId)
+  //console.log("THE focused Id is",focusedId)
 
 if( focusedId <= openQuestionIndex){
 
@@ -163,9 +163,9 @@ const submitQuizAnswers = (userId,quizAnswersObject,navigate) =>{
  }
 
 const addToStudentAnswers = (questionNumber,chosenAnswer,questionIndex) =>{
- // console.log("QUESTION NUMBER INPUT IS:", questionNumber)
-  console.log("our chosen quiz is-->",chosenQuiz)
-  console.log("our sorted quiz is-->",sortedQuiz)
+ // //console.log("QUESTION NUMBER INPUT IS:", questionNumber)
+  //console.log("our chosen quiz is-->",chosenQuiz)
+  //console.log("our sorted quiz is-->",sortedQuiz)
 
  if(!chosenAnswer){notifyErrorFxn("please pick an answer to continue!")}
  else{
@@ -300,7 +300,7 @@ const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.b
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.question}
- { chosenId === sortedQuiz.indexOf(chapter) ? <KeyboardArrowUpIcon onClick={(index)=>{dropDownChecker(sortedQuiz.indexOf(chapter));console.log("CARET WAS CLICKED,INDEX IS:",sortedQuiz.indexOf(chapter))}}/>: <KeyboardArrowDownIcon onClick={()=>{dropDownChecker(sortedQuiz.indexOf(chapter))}}/>}
+ { chosenId === sortedQuiz.indexOf(chapter) ? <KeyboardArrowUpIcon onClick={(index)=>{dropDownChecker(sortedQuiz.indexOf(chapter));/*console.log("CARET WAS CLICKED,INDEX IS:",sortedQuiz.indexOf(chapter))*/}}/>: <KeyboardArrowDownIcon onClick={()=>{dropDownChecker(sortedQuiz.indexOf(chapter))}}/>}
  </p>
 
 </Grid>

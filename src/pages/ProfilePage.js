@@ -29,7 +29,7 @@ function ProfilePage() {
 
   const [loading, setLoading] = useState(false);
   const { user,error,registeredWithSocials } = useSelector((state) => state.auth);
-  console.log("registered with socials is",registeredWithSocials)
+  //console.log("registered with socials is",registeredWithSocials)
 
   const [selectedFile, setSelectedFile] = useState({selectedFile: [], selectedFileName: []});
   const [file, setFile] = useState();
@@ -63,14 +63,14 @@ function ProfilePage() {
 
 const settingsUpdate = () => {
   
-//   console.log("OLD SATE: ",state);
+//   //console.log("OLD SATE: ",state);
 
 //   return;
   setLoading(true);
  
   const imageUrl = user && user.imageUrl?user.imageUrl:" ";
 
-  console.log("LOOK HERE-->",telephone.substring(0,3))
+  //console.log("LOOK HERE-->",telephone.substring(0,3))
 
   if(telephone.substring(0,3) !== '224'){
 

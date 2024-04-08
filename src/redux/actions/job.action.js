@@ -5,11 +5,11 @@ import { fetchJobs, fetchSingleJob } from "../reducers/job.slice";
 export const getJobs = (uid) => async (dispatch) => {
     db.collection('Jobs').get().then((snapshot) => {
         const jobs = snapshot.docs.map((doc) => ({id: doc.id, ...doc.data() }));
-        // console.log('Jobs: ', jobs);
+        // //console.log('Jobs: ', jobs);
         dispatch(fetchJobs(jobs));
 }).catch((error) => {
         var errorMessage = error.message;
-        console.log('Error fetching jobs', errorMessage);
+        //console.log('Error fetching jobs', errorMessage);
 });
 
 };
@@ -19,13 +19,13 @@ export const getSingleJob = (id) => async (dispatch) => {
 
     job.get().then((doc) => {
     if (doc.exists) {
-        console.log("Document data:", doc.data());
+        //console.log("Document data:", doc.data());
         dispatch(fetchSingleJob(doc.data()));
     } else {
-        console.log("No such document!");
+        //console.log("No such document!");
     }
 }).catch((error) => {
-    console.log("Error getting document:", error);
+    //console.log("Error getting document:", error);
 });
 
 };
@@ -38,7 +38,7 @@ export const addJob = (job, setLoading, clearState) => async (dispatch) => {
         rate: job.rate
     })
     .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
+        //console.log("Document written with ID: ", docRef.id);
         clearState();
         setLoading(false);
         alert('Job has been added.✔');

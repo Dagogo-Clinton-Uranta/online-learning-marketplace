@@ -120,7 +120,7 @@ export default function ChatSidebar() {
         </Stack> */}
 
       </Box>
-       {console.log("displayResults: ", displayResults)}
+       {/*console.log("displayResults: ", displayResults)*/}
       <Scrollbar>
           {/* <ChatConversationList
             conversations={conversations}

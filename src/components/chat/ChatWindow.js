@@ -45,7 +45,7 @@ export default function ChatWindow() {
 
 
 
-{console.log("CHAT conversation: ", conversation)}
+{//console.log("CHAT conversation: ", conversation)}
 
   return (
     <Stack sx={{ flexGrow: 1, minWidth: '1px' }}>

@@ -50,7 +50,7 @@ export default function HomePage() {
   useEffect(() => {
     dispatch(fetchMyGroups(user?.coolers));
     dispatch(fetchMyTransactions(user?.id));
-    console.log("Transac Changed.");
+    //console.log("Transac Changed.");
   }, [user])
 
   useEffect(() => {

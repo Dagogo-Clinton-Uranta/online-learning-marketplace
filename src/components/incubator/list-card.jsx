@@ -36,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
 const ListRowCard = ({data,index,user,watched,playable}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  console.log("THE VIDEO'S  UNDER SUB LEVEL IS",data.levelInfo.underSubLevel)
+  //console.log("THE VIDEO'S  UNDER SUB LEVEL IS",data.levelInfo.underSubLevel)
 
   const[loading,setLoading] = useState(false)
 
   const sendToWatchList = (userId,videoId,underSubLevel)=>{
-    //console.log("this function is under construction")
+    ////console.log("this function is under construction")
      setLoading(true)
     dispatch(updateVideoAndUserWatchlists(userId,videoId,underSubLevel))
     setTimeout(setLoading(false),1000)

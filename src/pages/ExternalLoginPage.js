@@ -47,7 +47,7 @@ function ExternalLoginPage() {
   }
 
   const responseFacebook = (response) => {
-    console.log("THIS IS THE RESPONSE FROM OUR FB-->",response);
+    //console.log("THIS IS THE RESPONSE FROM OUR FB-->",response);
   }
   
 

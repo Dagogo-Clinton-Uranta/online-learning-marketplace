@@ -34,13 +34,13 @@ const FacebookLoginButton = () => {
   const handleLogin = () => {
     window.FB.login(function(response) {
       if (response.authResponse) {
-        console.log('You are logged in:', response.authResponse);
+        //console.log('You are logged in:', response.authResponse);
         // USING THE SUCCESSFUL FACEBOOK LOGIN DETAILS TO SIGN UP TO FIREBASE
          //dispatch(UseFacebookDetailsToSignIn(response.authResponse))
 
 
       } else {
-        console.log('User cancelled login or did not fully authorize.');
+        //console.log('User cancelled login or did not fully authorize.');
       }
     }, { scope: 'email' /* config_id: '<CONFIG_ID>'*/  }); // CONFIG ID GOES HERE
 

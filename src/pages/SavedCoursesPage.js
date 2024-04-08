@@ -73,7 +73,7 @@ const dispatch  = useDispatch()
 
 const { user } = useSelector((state) => state.auth);
 
-console.log("user is --->",user)
+//console.log("user is --->",user)
 
 
 useEffect(()=>{
@@ -101,7 +101,7 @@ const URLSound = window.URL || window.webkitURL;
 
 let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
 
-//console.log("files is",Files)
+////console.log("files is",Files)
 
 
 
@@ -117,7 +117,7 @@ useEffect(()=>{
 
 
 setSavedMedia(Files)
-console.log("download categories are!",downloadCategories)
+//console.log("download categories are!",downloadCategories)
 
 
 },[Files])
@@ -125,7 +125,7 @@ console.log("download categories are!",downloadCategories)
 
 useEffect(()=>{
 
-  console.log("saved media is now!",savedMedia)
+  //console.log("saved media is now!",savedMedia)
  
  if(savedMedia && savedMedia.length >0 ){
   savedMedia.forEach((item)=>{
@@ -138,7 +138,7 @@ useEffect(()=>{
   })
 }
 
-console.log("all download categories via courses are",downloadReload)
+//console.log("all download categories via courses are",downloadReload)
  
   },[savedMedia,downloadReload])
 

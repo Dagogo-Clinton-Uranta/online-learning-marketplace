@@ -22,7 +22,7 @@ export default function RecentTransaction() {
     {date: '18-10-2022', action: 'Payment', amount: '22,000'},
   ]
 
-  console.log("Transations: ", transactions)
+  //console.log("Transations: ", transactions)
 
 
   return (

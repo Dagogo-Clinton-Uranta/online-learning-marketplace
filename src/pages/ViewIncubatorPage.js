@@ -46,13 +46,13 @@ export default function ViewIncubatorPage() {
    const location = useLocation()
    const { allSectionVideos,requestedSection,nextUpVideo } = useSelector((state) => state.group);
    const { user} = useSelector((state) => state.auth);
-   console.log("user's info is",user)
+   //console.log("user's info is",user)
    const videoRef = useRef()
 
    const handleEsc = (event) => {
     setFullScreen(!fullScreen)
   
-    console.log("full screen is",fullScreen)
+    //console.log("full screen is",fullScreen)
 
 };
 
@@ -107,7 +107,7 @@ window.addEventListener('fullscreenchange', handleEsc);
   
    
   
-  console.log("first item of data is:",data[0])
+  //console.log("first item of data is:",data[0])
 
   useEffect(()=>{
  
@@ -131,8 +131,8 @@ window.addEventListener('fullscreenchange', handleEsc);
     //dispatch(fetchVideoSubsection(location.state.title))
      dispatch(fetchUserData(user.uid,"refresh"))
     setData(allSectionVideos)
-     console.log("WHAT IS IN THE USER'S WATCHED ARRAY ?",user.watched)
-     console.log("WHAT IS NEXT UP ?",nextUpVideo)
+     //console.log("WHAT IS IN THE USER'S WATCHED ARRAY ?",user.watched)
+     //console.log("WHAT IS NEXT UP ?",nextUpVideo)
      
   },[requestedSection,nextUpVideo])
   
@@ -210,7 +210,7 @@ window.addEventListener('fullscreenchange', handleEsc);
                
                data.length?
                data.map(((dt,i) => {
-                  console.log("DT UID IS INCLUDED?:",user.watched.includes(dt.uid))
+                  //console.log("DT UID IS INCLUDED?:",user.watched.includes(dt.uid))
                 return (
 
                     <ListRowCard data={dt} index={i} user={user.uid} watched={user.watched.includes(dt.uid)?true:false} playable={dt.uid === toPlay?true:false} />

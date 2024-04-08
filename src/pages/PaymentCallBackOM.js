@@ -43,7 +43,7 @@ const PaymentCallBackPageOM = () => {
 
    // const cart_data = urlParams.get('cart_data');
 
-   // console.log("userId is -->",userId)
+   // //console.log("userId is -->",userId)
   
 
    /* const validateToken = (token) => {
@@ -55,14 +55,14 @@ const PaymentCallBackPageOM = () => {
     const isValidToken = validateToken(token);*/
 
 
-  console.log("I HAVE REACHED THE CALLBACK PAGE, NOW I WAIT FOR 2 SECONDS---> ")
-  console.log("TEST 2 --->");
+  //console.log("I HAVE REACHED THE CALLBACK PAGE, NOW I WAIT FOR 2 SECONDS---> ")
+  //console.log("TEST 2 --->");
 
   setTimeout(()=>{  
       dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
    
-           console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
-           console.log("TEST 3 --->");
+           //console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
+           //console.log("TEST 3 --->");
 
            const headers = {
             'Content-Type': 'application/json',
@@ -79,15 +79,15 @@ const PaymentCallBackPageOM = () => {
             payToken:mostRecentPayToken,
             orangeMToken: access_token
           }).then((res) => {
-            console.log("TEST 4 --->");
-              console.log("LOOK HERE FOR INITIATED --->", res.data);
+            //console.log("TEST 4 --->");
+              //console.log("LOOK HERE FOR INITIATED --->", res.data);
               if (res.data.status && res.data.status === 'SUCCESS' ) {
                 
                 const cartObject = cartToProcess
                 const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
                 let today = new Date().toDateString();
               
-                console.log("COURSE ID ARRAY IS----->",courseIdArray)
+                //console.log("COURSE ID ARRAY IS----->",courseIdArray)
                
                 dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate))
                 dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id))/*.then(()=>{*/
@@ -126,7 +126,7 @@ const PaymentCallBackPageOM = () => {
       
 
               }else{
-                console.log("Res", res);
+                //console.log("Res", res);
                 notifyErrorFxn("PAYMENT NOT SUCCESSFUL");  
                 navigate('/dashboard/payment-options')
               }

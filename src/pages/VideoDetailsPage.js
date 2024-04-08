@@ -26,11 +26,11 @@ export default function VideoDetailsPage() {
   //   dispatch(fetchEmployeer(user.employeerID));
   // }, [])
 
-  console.log("GROUP MEMBERS: ", groupMembers);
-  console.log("Employeer: ", employeer);
+  //console.log("GROUP MEMBERS: ", groupMembers);
+  //console.log("Employeer: ", employeer);
   const myCoolerMembers = groupMembers?.length ? (
     groupMembers.map(member => {
-      console.log("MEMBER: ", member);
+      //console.log("MEMBER: ", member);
       const timestampInSeconds = member?.accountCreated?.seconds;
       const timestampInMilliseconds = timestampInSeconds * 1000 + Math.floor(member?.accountCreated?.nanoseconds / 1000000);
       const date = new Date(timestampInMilliseconds);

@@ -16,7 +16,7 @@ export default function InboxListItem({ inboxMessages, user }) {
 
   const setInboxData = (data) => {
     dispatch(setInboxDetails(data));   
-    // console.log("DATA:", data);
+    // //console.log("DATA:", data);
   }
 
   return (

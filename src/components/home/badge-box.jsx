@@ -53,7 +53,7 @@ export default function BadgeBox() {
       setPlaceHolder([...placeHolder.fill('badge')])
       //setBadgeHolder([...placeHolder.fill('badge')])
      
-      console.log("placeHolder array is",placeHolder)
+      //console.log("placeHolder array is",placeHolder)
   },[user])
 
   return (

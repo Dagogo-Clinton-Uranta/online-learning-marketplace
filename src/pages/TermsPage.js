@@ -54,7 +54,7 @@ const linkMaker = (blob) => {
 
   blobToDataURL(blob).then((url)=>{
    link =url
-   console.log("final url is",url)
+   //console.log("final url is",url)
     
     setVideoLink(url)
     

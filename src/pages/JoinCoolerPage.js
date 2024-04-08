@@ -45,9 +45,9 @@ export default function JoinCoolerPage() {
       },
       onClose: () => alert("Wait! Don't leave :("),
     }
-    console.log(user.coolers, "USER");
+    //console.log(user.coolers, "USER");
       const handleSubmit = () => {
-        let today = new Date().toLocaleDateString()
+        let today = new Date().toDateString()
          dispatch(joinGroup(groupData?.groupId, user, today, navigate));
       }
 
@@ -56,7 +56,7 @@ export default function JoinCoolerPage() {
      }
      const makePayment = () => {
       if(user?.walletBalance >= groupData?.feeInNum){
-        let today = new Date().toLocaleDateString()
+        let today = new Date().toDateString()
         dispatch(joinGroup(groupData?.groupId, user, today, navigate, user?.walletBalance, groupData?.feeInNum, groupData?.accountBal, groupData?.name, user?.accruedBalance ));
      }else{
       notifyErrorFxn("You do not have enough balance")
@@ -64,7 +64,7 @@ export default function JoinCoolerPage() {
      }
 
 useEffect(() => {
-  console.log("GroupData: ", groupData);
+  //console.log("GroupData: ", groupData);
   if(location.state == null){
    return navigate("/dashboard/cooler");
   }

@@ -48,7 +48,7 @@ export const createGroup = (groupData, user, file, navigate, setLoading, url) =>
     members: [user.id],
     accountCreated: today.toLocaleDateString("en-US", options),
 }).then((res)=>{
-    console.log("RESPONSE ID: ", res.id);
+    //console.log("RESPONSE ID: ", res.id);
     return db.collection('groups').doc(res.id).update({
       groupId: res.id,
     }).then(() => {
@@ -62,7 +62,7 @@ export const createGroup = (groupData, user, file, navigate, setLoading, url) =>
             users: [user.id, user.id],
             sentAt: today.toLocaleDateString("en-US", options),
           }).then((resp) => {
-            console.log("membersCollection RESPONSE: ", resp);
+            //console.log("membersCollection RESPONSE: ", resp);
             setLoading(false);
             db.collection('groups').doc(res.id).collection('membersCollection').doc(resp.id).update({
               id: resp.id,
@@ -88,7 +88,7 @@ export const uploadUserSettings = (groupData = 0, file = 0, user = 0) => async (
    /*LOGIC T0 RUN IF WE HAVE A PICTURE */
 
   const imageName = uuidv4() + '.' + file?.name?.split('.')?.pop();
-  console.log('File Name: ', imageName);
+  //console.log('File Name: ', imageName);
   const uploadTask = storage.ref(`profile_images/${imageName}`).put(file);
   uploadTask.on(
     "state_changed",
@@ -99,7 +99,7 @@ export const uploadUserSettings = (groupData = 0, file = 0, user = 0) => async (
       // setProgress(progress);
     },
     error => {
-      console.log(error);
+      //console.log(error);
       notifyErrorFxn("Error uploading image,please try again!")
     },
     () => {
@@ -108,7 +108,7 @@ export const uploadUserSettings = (groupData = 0, file = 0, user = 0) => async (
         .child(imageName)
         .getDownloadURL()
         .then(url => {
-          console.log('Image URL: ', url);
+          //console.log('Image URL: ', url);
           //dispatch(createGroup(groupData, user, file, navigate, setLoading, url));
  
   
@@ -123,10 +123,10 @@ export const uploadUserSettings = (groupData = 0, file = 0, user = 0) => async (
     
      user.updatePassword(groupData.newPassword).then(() => {
        // Update successful.
-       console.log("PASSWORD UPDATE WENT WELL")
+       //console.log("PASSWORD UPDATE WENT WELL")
      }).catch((error) => {
        // An error ocurred
-       console.log("PASSWORD UPDATE FAILED HORRIBLY!")
+       //console.log("PASSWORD UPDATE FAILED HORRIBLY!")
      });
 
     
@@ -196,10 +196,10 @@ if(file.length === 0 && groupData.newPassword){
 
     user.updatePassword(groupData.newPassword).then(() => {
       // Update successful.
-      console.log("PASSWORD UPDATE WENT WELL")
+      //console.log("PASSWORD UPDATE WENT WELL")
     }).catch((error) => {
       // An error ocurred
-      console.log("PASSWORD UPDATE FAILED HORRIBLY!")
+      //console.log("PASSWORD UPDATE FAILED HORRIBLY!")
     });
    
     //UPDATING USER INFORMATION
@@ -224,7 +224,7 @@ if(file.length === 0 && groupData.newPassword){
 }
 
 export const fetchMyGroups = (coolers) => async (dispatch) => {
-  console.log("Clicked...");
+  //console.log("Clicked...");
   dispatch(isItLoading(true));
   if (coolers.length) {
     const chunkSize = 10;
@@ -239,12 +239,12 @@ export const fetchMyGroups = (coolers) => async (dispatch) => {
     Promise.all(promises)
       .then((results) => {
         const myGroups = results.flat();
-        console.log("My Groups Data:", myGroups);
+        //console.log("My Groups Data:", myGroups);
         dispatch(saveMyGroup(myGroups));
         dispatch(isItLoading(false));
       })
       .catch((error) => {
-        console.log("Error getting document:", error);
+        //console.log("Error getting document:", error);
         dispatch(isItLoading(false));
       });
   } else {
@@ -268,15 +268,15 @@ export const fetchGroups = (adminID) => async (dispatch) => {
      const allGroups = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (allGroups.length > 0) {
      dispatch(isItLoading(false));
-     console.log("All Groups Data:", allGroups);
+     //console.log("All Groups Data:", allGroups);
      dispatch(saveAllGroup(allGroups));
    } else {
        dispatch(isItLoading(false));
        dispatch(saveAllGroup(allGroups));
-       console.log("No groups!");
+       //console.log("No groups!");
    }
  }).catch((error) => {
-   console.log("Error getting document:", error);
+   //console.log("Error getting document:", error);
    dispatch(isItLoading(false));
  });
  };
@@ -289,10 +289,10 @@ export const fetchGroups = (adminID) => async (dispatch) => {
   docRef.get().then((doc) => {
   const data = doc.data(); 
   dispatch(savelastWatchedVideo(data))
-  console.log("i have dispatched the latest CURRENT VIDEO")
+  //console.log("i have dispatched the latest CURRENT VIDEO")
 
 }).catch((error) => {
-  console.log("Error getting single video:", error);
+  //console.log("Error getting single video:", error);
  
 });
 
@@ -320,15 +320,15 @@ export const fetchGroups = (adminID) => async (dispatch) => {
      
    if (allSectionVids.length > 0) {
      //dispatch(isItLoading(false));
-     console.log("ALL sections FROM DATABASE(FOR THIS CATEGORY):", sortedSectionVids);
+     //console.log("ALL sections FROM DATABASE(FOR THIS CATEGORY):", sortedSectionVids);
      dispatch(saveCategoryVideos(sortedSectionVids));
    } else {
       // dispatch(isItLoading(false));
       dispatch(saveCategoryVideos(sortedSectionVids));
-       console.log("No sections for this category!");
+       //console.log("No sections for this category!");
    }
  }).catch((error) => {
-   console.log("Error getting document:", error);
+   //console.log("Error getting document:", error);
    dispatch(isItLoading(false));
  });
  };
@@ -336,7 +336,7 @@ export const fetchGroups = (adminID) => async (dispatch) => {
 
  export const fetchVideoSubsection = (chosenSection,lastVideoWatched)=> async(dispatch) =>{
   //setting upNextVideo
-  console.log('THE LAST VIDEO WATCHED IS::::',lastVideoWatched)
+  //console.log('THE LAST VIDEO WATCHED IS::::',lastVideoWatched)
 
  if(!lastVideoWatched ||lastVideoWatched === undefined){
 
@@ -348,21 +348,21 @@ export const fetchGroups = (adminID) => async (dispatch) => {
    if (startingOpenArray.length > 0) {
      
      
-     console.log("NEXT UP VIDEO IS INITIALLY:",startingOpenArray[0].uid)
+     //console.log("NEXT UP VIDEO IS INITIALLY:",startingOpenArray[0].uid)
      dispatch(saveNextUpVideo(startingOpenArray[0].uid));
     } else{
-      console.log("WE ARE NOT ABLE TO SET STARTING OPEN ARRAY AS 1.1.1 ...WHY?")
+      //console.log("WE ARE NOT ABLE TO SET STARTING OPEN ARRAY AS 1.1.1 ...WHY?")
     }})
  }
 
   else{
-    console.log('THE LAST VIDEO WATCHED IS:->',lastVideoWatched)
+    //console.log('THE LAST VIDEO WATCHED IS:->',lastVideoWatched)
 
   var docRef = db.collection("courses").doc(lastVideoWatched.trim());
   docRef.get().then((doc) => {
   const data = doc.data();
   
-console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
+//console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
   
   if(data){
   const underSubLevel = data.levelInfo.underSubLevel;
@@ -383,7 +383,7 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
 
   const finalTrimSubLevel = otherPart + endSubSectionNum.toString()
 
-  console.log('AFTER TRIMMING, THE NEXT SECTION IS',finalTrimSubLevel)
+  //console.log('AFTER TRIMMING, THE NEXT SECTION IS',finalTrimSubLevel)
 
   db.collection("courses")
   .where('levelInfo.underSubLevel', '==', finalTrimSubLevel)
@@ -392,7 +392,7 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
      const nextUpArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (nextUpArray.length > 0) {
      
-     console.log("next up array WHEN SETTING VIDEO SECTION IS:", nextUpArray);
+     //console.log("next up array WHEN SETTING VIDEO SECTION IS:", nextUpArray);
      dispatch(saveNextUpVideo(nextUpArray[0].uid));
    } else {
 
@@ -408,7 +408,7 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
     const nextSectionNumber = Number(underSubLevel.slice(first+1,next)) + 1
    
     const nextSectionFirstUnderSubLevel =  csnString + nextSectionNumber.toString()  + ".1"
-    console.log("next section's numbeR is---MIDDLE",nextSectionFirstUnderSubLevel)
+    //console.log("next section's numbeR is---MIDDLE",nextSectionFirstUnderSubLevel)
 
     db.collection("courses")
   .where('levelInfo.underSubLevel', '==', nextSectionFirstUnderSubLevel)
@@ -418,7 +418,7 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
      
     if (nextUpNextSectionArray.length > 0) {
      
-      console.log("next up, NEXT SECTION array WHEN SETTING VIDEO SECTION IS:", nextUpNextSectionArray);
+      //console.log("next up, NEXT SECTION array WHEN SETTING VIDEO SECTION IS:", nextUpNextSectionArray);
       dispatch(saveNextUpVideo(nextUpNextSectionArray[0].uid));
     } else {
 
@@ -429,7 +429,7 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
       const nextChapterNumber = Number(underSubLevel.slice(0,firstDot)) + 1
      
       const nextChapterFirstUnderSubLevel = nextChapterNumber.toString() + ".1" + ".1"
-      console.log("next section's number is",nextChapterFirstUnderSubLevel)
+      //console.log("next section's number is",nextChapterFirstUnderSubLevel)
   
       db.collection("courses")
     .where('levelInfo.underSubLevel', '==', nextChapterFirstUnderSubLevel)
@@ -438,11 +438,11 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
       const nextUpNextChapterArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
     
       if (nextUpNextChapterArray.length > 0) {
-        console.log("next up, NEXT SECTION array WHEN SETTING VIDEO SECTION IS:", nextUpNextChapterArray);
+        //console.log("next up, NEXT SECTION array WHEN SETTING VIDEO SECTION IS:", nextUpNextChapterArray);
       dispatch(saveNextUpVideo(nextUpNextChapterArray[0].uid));
       }
      else{
-      console.log("IT IS LIKELY THAT THERE ARE NO NEW SECTIONS, sAVE next UP video to null");
+      //console.log("IT IS LIKELY THAT THERE ARE NO NEW SECTIONS, sAVE next UP video to null");
       dispatch(saveNextUpVideo(null));
      }
      })
@@ -456,12 +456,12 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
       
    }
  }).catch((error) => {
-   console.log("Error getting document:", error);
+   //console.log("Error getting document:", error);
    
  });
 
   }else{
-   console.log("THERE IS AN ID TO LOOK FOR, BUT THERE IS NO DATA RETURNING FROM THE DATABASE..WHY ? ")
+   //console.log("THERE IS AN ID TO LOOK FOR, BUT THERE IS NO DATA RETURNING FROM THE DATABASE..WHY ? ")
   }
 
 })
@@ -486,22 +486,22 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
      }
      
      const sortedSectionVids = sortFunction(allSectionVids)
-     console.log( "THE NUMBER LOOKS LIKE" ,Number(sortedSectionVids[0].levelInfo.underSubLevel.replaceAll(".","")))
-   // console.log("VIDS SORTED BY SUBSECTION",sortedSectionVids)
+     //console.log( "THE NUMBER LOOKS LIKE" ,Number(sortedSectionVids[0].levelInfo.underSubLevel.replaceAll(".","")))
+   // //console.log("VIDS SORTED BY SUBSECTION",sortedSectionVids)
 
    if (sortedSectionVids.length > 0) {
     
-     console.log("SORTED FROM DATABASE:", sortedSectionVids);
+     //console.log("SORTED FROM DATABASE:", sortedSectionVids);
      dispatch(saveSectionVideos(sortedSectionVids));
      
    } else {
       
       dispatch(saveSectionVideos(sortedSectionVids));
       
-       console.log("No groups!");
+       //console.log("No groups!");
    }
  }).catch((error) => {
-   console.log("Error getting document:", error);
+   //console.log("Error getting document:", error);
    dispatch(isItLoading(false));
  });
  };
@@ -513,11 +513,11 @@ console.log("MOST RECENTLY WATCHED VIDEO'S DATA IS",data)
  export const getTeachers = ( ) => async (dispatch) => {
   db.collection('teachers').get().then((snapshot) => {
       const allTeachers = snapshot.docs.map((doc) => ({id: doc.id, ...doc.data() }));
-      // console.log('Jobs: ', jobs);
+      // //console.log('Jobs: ', jobs);
       dispatch(fetchTeachers(allTeachers));
 }).catch((error) => {
       var errorMessage = error.message;
-      console.log('Error fetching teachers', errorMessage);
+      //console.log('Error fetching teachers', errorMessage);
 });
 
 };
@@ -529,15 +529,15 @@ export const fetchAllCategories = () => async (dispatch) => {
   var categories = db.collection("categories");
   categories.get().then((snapshot) => {
     const groupMembers = snapshot.docs.map((doc) => ({ ...doc.data() }));
-    console.log("ALL CATEGORIES ARE:",groupMembers)
+    //console.log("ALL CATEGORIES ARE:",groupMembers)
     if (groupMembers.length) {
     dispatch(saveCategories(groupMembers));
   } else {
-      console.log("No categories in database!");
+      //console.log("No categories in database!");
       dispatch(saveCategories([]));
   }
 }).catch((error) => {
-  console.log("Error getting categories:", error);
+  //console.log("Error getting categories:", error);
 });
 //return user;
 };
@@ -552,7 +552,7 @@ export const updateCurrentlyWatchingOnly = (userId,videoId) => async (dispatch) 
   db.collection("users").doc(userId).update({
     currentlyWatching:firebase.firestore.FieldValue.arrayUnion(videoId)
   }).then((docRef) => {
-    console.log("user Document updated is: ", docRef);
+    //console.log("user Document updated is: ", docRef);
   
     //refreshing users watched column manually
     var user = db.collection("users").doc(userId);
@@ -577,7 +577,7 @@ export const updateCurrentlyWatchingOnly = (userId,videoId) => async (dispatch) 
 
 
 export const updateVideoAndUserWatchlists = (userId,videoId,underSubLevel) => async (dispatch) => {
-  console.log('about to add title',videoId.trim())
+  //console.log('about to add title',videoId.trim())
 
   const first  = underSubLevel.indexOf(".");
   const next = underSubLevel.indexOf(".", first+1);
@@ -592,7 +592,7 @@ export const updateVideoAndUserWatchlists = (userId,videoId,underSubLevel) => as
 
    const finalSubLevel = otherPart + endSubSectionNum.toString()
 
-   console.log('AFTER TRIMMING, THE NEXT SECTION TO get',finalSubLevel)
+   //console.log('AFTER TRIMMING, THE NEXT SECTION TO get',finalSubLevel)
   
   //const nextSubLevelNumber = Number(underSubLevel.replaceAll(".","")) + 1
   //const nextSubLevelString = nextSubLevelNumber.toString().replace(/.{1}/g, '$&.');
@@ -607,7 +607,7 @@ export const updateVideoAndUserWatchlists = (userId,videoId,underSubLevel) => as
   db.collection("courses").doc(videoId.trim()).update({
     watched:firebase.firestore.FieldValue.arrayUnion(userId)
   }).then((docRef) => {
-    console.log(" course Document updated is: ", docRef);
+    //console.log(" course Document updated is: ", docRef);
    
   })
   .catch((error) => {
@@ -625,7 +625,7 @@ export const updateVideoAndUserWatchlists = (userId,videoId,underSubLevel) => as
   watched:firebase.firestore.FieldValue.arrayUnion(videoId),
   currentlyWatching:firebase.firestore.FieldValue.arrayUnion(videoId)
 }).then((docRef) => {
-  console.log("user Document updated is: ", docRef);
+  //console.log("user Document updated is: ", docRef);
 
   //refreshing users watched column manually
   var user = db.collection("users").doc(userId);
@@ -655,7 +655,7 @@ db.collection("courses")
    if (nextUpArray.length > 0) {
 
    
-     console.log("next up array items consists of:", nextUpArray);
+     //console.log("next up array items consists of:", nextUpArray);
      dispatch(saveNextUpVideo(nextUpArray[0].uid));
 
      //updatingCurrentLevel START
@@ -664,7 +664,7 @@ db.collection("courses")
       currentLevel:finalSubLevel
       
     }).then((docRef) => {
-      console.log("user Document updated is: ", docRef);
+      //console.log("user Document updated is: ", docRef);
     
       //refreshing users watched column manually
       var user = db.collection("users").doc(userId);
@@ -694,7 +694,7 @@ db.collection("courses")
     const nextSectionNumber = Number(underSubLevel.slice(first+1,next)) + 1
    
     const nextSectionFirstUnderSubLevel =  csnString + nextSectionNumber.toString()  + ".1"
-    console.log("next section's number is---WITHIN SECTIONS O!",nextSectionFirstUnderSubLevel)
+    //console.log("next section's number is---WITHIN SECTIONS O!",nextSectionFirstUnderSubLevel)
 
     db.collection("courses")
   .where('levelInfo.underSubLevel', '==', nextSectionFirstUnderSubLevel)
@@ -707,14 +707,14 @@ db.collection("courses")
 
 
      
-      console.log("next up, NEXT SECTION array WHEN SETTING VIDEO SECTION IS:", nextUpNextSectionArray);
+      //console.log("next up, NEXT SECTION array WHEN SETTING VIDEO SECTION IS:", nextUpNextSectionArray);
 
 
       db.collection("users").doc(userId).update({
         currentLevel:nextSectionFirstUnderSubLevel
         
       }).then((docRef) => {
-        console.log("user Document updated is: ", docRef);
+        //console.log("user Document updated is: ", docRef);
       
         //refreshing users watched column manually
         var user = db.collection("users").doc(userId);
@@ -744,7 +744,7 @@ db.collection("courses")
       const nextChapterNumber = Number(underSubLevel.slice(0,firstDot)) + 1
      
       const nextChapterFirstUnderSubLevel = nextChapterNumber.toString() + ".1" + ".1"
-      console.log("next section's number is",nextChapterFirstUnderSubLevel)
+      //console.log("next section's number is",nextChapterFirstUnderSubLevel)
   
       db.collection("courses")
     .where('levelInfo.underSubLevel', '==', nextChapterFirstUnderSubLevel)
@@ -753,7 +753,7 @@ db.collection("courses")
       const nextUpNextChapterArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
     
       if (nextUpNextChapterArray.length > 0) {
-        console.log("next up, NEXT SECTION array WHEN SETTING VIDEO SECTION IS:", nextUpNextChapterArray);
+        //console.log("next up, NEXT SECTION array WHEN SETTING VIDEO SECTION IS:", nextUpNextChapterArray);
       dispatch(saveNextUpVideo(nextUpNextChapterArray[0].uid));
 
               //UPDATE OF USER BADGES !   
@@ -762,7 +762,7 @@ db.collection("courses")
     currentLevel:nextChapterFirstUnderSubLevel
     
   }).then((docRef) => {
-    console.log("user Document updated is: ", docRef);
+    //console.log("user Document updated is: ", docRef);
   
     //refreshing users watched column manually
     var user = db.collection("users").doc(userId);
@@ -784,7 +784,7 @@ db.collection("courses")
   //UPDATE OF BADGES END 
       }
      else{
-      console.log("IT IS LIKELY THAT THERE ARE NO NEW SECTIONS, sAVE next UP video to null");
+      //console.log("IT IS LIKELY THAT THERE ARE NO NEW SECTIONS, sAVE next UP video to null");
       dispatch(saveNextUpVideo(null));
 
               //UPDATE OF USER BADGES !   
@@ -792,7 +792,7 @@ db.collection("courses")
     badgesEarned:Number(underSubLevel.slice(0,firstDot)) + 1,
    
   }).then((docRef) => {
-    console.log("user Document updated is: ", docRef);
+    //console.log("user Document updated is: ", docRef);
   
     //refreshing users watched column manually
     var user = db.collection("users").doc(userId);
@@ -825,7 +825,7 @@ db.collection("courses")
      
    }
  }).catch((error) => {
-   console.log("Error getting document:", error);
+   //console.log("Error getting document:", error);
    
  });
 
@@ -837,12 +837,12 @@ db.collection("courses")
 export const addNewBadge = (userId,currentLevel) => async (dispatch)=>{
 
   
-   console.log("user's current level is",currentLevel)
+   //console.log("user's current level is",currentLevel)
 
 
   const firstDot  = currentLevel.indexOf(".");   
   const badgeNumber =Number(currentLevel.slice(0,firstDot))-1
-  console.log("BADGE NUMBER VARIABLE IS- ",badgeNumber)
+  //console.log("BADGE NUMBER VARIABLE IS- ",badgeNumber)
 
 
   
@@ -852,7 +852,7 @@ export const addNewBadge = (userId,currentLevel) => async (dispatch)=>{
     badgesEarned:badgeNumber,
   
   }).then((docRef) => {
-    console.log("user Document updated is: ", docRef);
+    //console.log("user Document updated is: ", docRef);
   
     //refreshing users watched column manually
     var user = db.collection("users").doc(userId);
@@ -904,7 +904,7 @@ setTimeout(()=>{dispatch(saveSubmittingSingleAnswer(false))},500)
 
  /*============== UPDATE A USER'S PROFILE ================ */
 export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => {
-  console.log("I have reached the users profile again")
+  //console.log("I have reached the users profile again")
   db.collection("users").doc(uid).update(
     {
       telephone:updateObject.telephone,
@@ -943,7 +943,7 @@ export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => 
   navigate('/dashboard/home')
 })
  .catch((error) => {
-   console.log("Error updating profile because:", error);
+   //console.log("Error updating profile because:", error);
    notifyErrorFxn(error)
 
 
@@ -961,14 +961,14 @@ export const fetchCategorySubjects = (category) => async (dispatch) => {
      const subjectsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (subjectsArray.length) {
     
-     console.log(`subject for ${category} are:`, subjectsArray);
+     //console.log(`subject for ${category} are:`, subjectsArray);
      dispatch(saveCategorySubjects(subjectsArray));
    } else {
      
-       console.log(`No subjects for the category; ${category}`);
+       //console.log(`No subjects for the category; ${category}`);
    }
  }).catch((error) => {
-   console.log("Error getting document:", error);
+   //console.log("Error getting document:", error);
    dispatch(isItLoading(false));
  });
  };
@@ -985,14 +985,14 @@ export const fetchCategoryPacks = (category) => async (dispatch) => {
      const packsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (packsArray.length) {
     
-     console.log(`subject for ${category} are:`, packsArray);
+     //console.log(`subject for ${category} are:`, packsArray);
      dispatch(savePacks(packsArray));
    } else {
      
-       console.log(`No packs for the category; ${category}`);
+       //console.log(`No packs for the category; ${category}`);
    }
  }).catch((error) => {
-   console.log("Error getting packs:", error);
+   //console.log("Error getting packs:", error);
    dispatch(isItLoading(false));
  });
  };
@@ -1009,14 +1009,14 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
      const subjectsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (subjectsArray.length) {
     
-     console.log(`subjects for ${category} are:`, subjectsArray);
+     //console.log(`subjects for ${category} are:`, subjectsArray);
      dispatch(savePackSubjects(subjectsArray));
    } else {
      
-       console.log(`No subjects for the category; ${category}`);
+       //console.log(`No subjects for the category; ${category}`);
    }
  }).catch((error) => {
-   console.log("Error getting subjects:", error);
+   //console.log("Error getting subjects:", error);
    dispatch(isItLoading(false));
  });
  };
@@ -1038,12 +1038,12 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
       const pastExamsArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
     if (pastExamsArray.length) {
      
-      console.log(`pastExams for T subject ${uid} are:`, pastExamsArray);
+      //console.log(`pastExams for T subject ${uid} are:`, pastExamsArray);
       dispatch(saveSubjectPastExams(pastExamsArray));
       return pastExamsArray
     } else {
      dispatch(saveSubjectPastExams([]));
-        console.log(`No past exams for the subject; ${uid}`);
+        //console.log(`No past exams for the subject; ${uid}`);
         return []
     }
   }
@@ -1059,18 +1059,18 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
      const chaptersArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (chaptersArray.length) {
     
-     console.log(`chapters for T subject ${uid} are:`, chaptersArray);
+     //console.log(`chapters for T subject ${uid} are:`, chaptersArray);
      dispatch(saveSubjectChapters(chaptersArray));
      return chaptersArray
    } else {
     dispatch(saveSubjectChapters([]));
-       console.log(`No chapters for the subject; ${uid}`);
+       //console.log(`No chapters for the subject; ${uid}`);
        return []
    }
  }).then((result)=>{
 
   let chaptersArray = [...result]
-  console.log("the chapters array FOR ALL CHAPTERS RELATING TO THIS SUBJECT IS:",chaptersArray)
+  //console.log("the chapters array FOR ALL CHAPTERS RELATING TO THIS SUBJECT IS:",chaptersArray)
 
 
   chaptersArray.forEach((item)=>{
@@ -1085,7 +1085,7 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
 
  
  .catch((error) => {
-   console.log("Error getting chapters for the subject:", error);
+   //console.log("Error getting chapters for the subject:", error);
   
  });
  };
@@ -1094,7 +1094,7 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
   /*========== SAVING THE SELECTED SUBJECT FOR WHEN A CARD IS CLICKED===========*/
   export const fetchCurrentSubjectFromDB = (id) => async (dispatch) => {
 
-    console.log("THE ID GEOGRAPHY IS SUPPOSED TO GET----->",id)
+    //console.log("THE ID GEOGRAPHY IS SUPPOSED TO GET----->",id)
    
       //dispatch(isItLoading(true));
   db.collection("sections")
@@ -1103,7 +1103,7 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
    
     const subject = doc.data(); 
 
-  console.log("WHERE GEOGRAPHY HAS A PROBLEM------>",subject)
+  //console.log("WHERE GEOGRAPHY HAS A PROBLEM------>",subject)
 
     dispatch(savePresentSubject(subject))
    })
@@ -1130,17 +1130,17 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
      const videosArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (videosArray.length) {
     
-     //console.log(`lessons for ${uid} are:`, videosArray);
+     ////console.log(`lessons for ${uid} are:`, videosArray);
     // dispatch(saveSubjectChapters(videosArray));
 
     globalLessonsArray = [...globalLessonsArray,...videosArray]
    } else {
      
-       console.log(`No lessons for the chapter,when database was checked; ${uid}`);
+       //console.log(`No lessons for the chapter,when database was checked; ${uid}`);
        globalLessonsArray = [...globalLessonsArray,...videosArray]
    }
  }).catch((error) => {
-   console.log("Error getting lessons for the chapter:", error);
+   //console.log("Error getting lessons for the chapter:", error);
  });
  };
 
@@ -1155,17 +1155,17 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
      const quizArray = snapshot.docs.map((doc) => ({ ...doc.data() }));
    if (quizArray.length) {
     
-     //console.log(`lessons for ${uid} are:`, videosArray);
+     ////console.log(`lessons for ${uid} are:`, videosArray);
     // dispatch(saveSubjectChapters(videosArray));
 
     globalQuizzesArray = [...globalQuizzesArray,...quizArray]
    } else {
      
-       console.log(`No quiz for the chapter, when database was checked; ${uid}`);
+       //console.log(`No quiz for the chapter, when database was checked; ${uid}`);
        globalQuizzesArray = [...globalQuizzesArray,...quizArray]
    }
  }).catch((error) => {
-   console.log("Error getting quizzes for the chapter:", error);
+   //console.log("Error getting quizzes for the chapter:", error);
  });
  };
 
@@ -1183,7 +1183,7 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
 
 
 }).catch((error) => {
-  console.log("Error getting single quiz:", error);
+  //console.log("Error getting single quiz:", error);
  
 });
 
@@ -1231,8 +1231,8 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
 
     gradedQuiz = {...newQuiz,resultPercentage}
    
-    console.log("AFTER GRADING THE QUIZ IS NOW",gradedQuiz)
-    console.log(" THE student's selected Answers are!!",questionsArray)
+    //console.log("AFTER GRADING THE QUIZ IS NOW",gradedQuiz)
+    //console.log(" THE student's selected Answers are!!",questionsArray)
    })
 
 
@@ -1255,11 +1255,11 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
   } else {
      
       notifyErrorFxn("Problem Submitting quiz,please check your connection and try again❌")
-      console.log("could not find the user to update their quizzes");
+      //console.log("could not find the user to update their quizzes");
   }
 }).catch((error) => {
   notifyErrorFxn("Problem Submitting quiz,please check your connection and try again❌")
-  console.log("Error getting document:", error);
+  //console.log("Error getting document:", error);
 });
 
 };

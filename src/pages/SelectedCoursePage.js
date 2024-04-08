@@ -96,21 +96,21 @@ function SelectedCoursePage() {
   const [teacherForSubject, setTeacherForSubject] = useState(teacherInFocus[0] && teacherInFocus[0])
 
 
-  console.log("the present SAVED  subject is--->:",presentSubject)
+  //console.log("the present SAVED  subject is--->:",presentSubject)
 
 
-  console.log("the chapters for this subject are--->:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
-  console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
+  //console.log("the chapters for this subject are--->:",subjectChapters.filter((item)=>(item)).sort((a,b)=>((a.chapterNumber && b.chapterNumber)?(a.chapterNumber- b.chapterNumber):1)))
+  //console.log("the lessons are for all the chapters are therefore:",allChapterLessons)
   
 
  
-  console.log("MODIFIED purchased courses-->",modifiedPurchasedCourses)
+  //console.log("MODIFIED purchased courses-->",modifiedPurchasedCourses)
  
-  console.log("CONDENSED purchased courses--->",condensedPurchasedCourses)
+  //console.log("CONDENSED purchased courses--->",condensedPurchasedCourses)
 
 /*login check */
   const { user,error } = useSelector((state) => state.auth);
-  console.log("the user's purchased courses---->:", user && user.purchasedCourses)
+  //console.log("the user's purchased courses---->:", user && user.purchasedCourses)
 
 
   useEffect(()=>{
@@ -129,7 +129,7 @@ function SelectedCoursePage() {
   
       teachers && teachers.forEach((teacher)=>(console.log(teacher.firstName + " " + teacher.lastName)))
 
-     console.log('TEACHER IN FOCUS FILTERED-->',)
+     //console.log('TEACHER IN FOCUS FILTERED-->',)
 
      setTeacherForSubject(teacherInFocus[0])
 
@@ -144,7 +144,7 @@ function SelectedCoursePage() {
    
   },[])
 
- // console.log("USER'S PURCHASED COURSES AARE--->",user.purchasedCourses)
+ // //console.log("USER'S PURCHASED COURSES AARE--->",user.purchasedCourses)
 /*login check end */
 
 
@@ -155,7 +155,7 @@ const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state)
 const { cart } = useSelector((state) => state.cart);
 const  [showPlayer,setShowPlayer] = useState(true)
 
-console.log("CART IN SELECTED COURSE PAGE is --->",cart)
+//console.log("CART IN SELECTED COURSE PAGE is --->",cart)
 
 useEffect(()=>{
 
@@ -210,7 +210,7 @@ const pauseAudio = audio => {
  const  loadPdfUrl = async()=> {
 
   try {
-    console.log("our pdf url is",pdfUrl)
+    //console.log("our pdf url is",pdfUrl)
   
    const res = await fetch("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")
 
@@ -219,13 +219,13 @@ const pauseAudio = audio => {
   returnImage.then((item)=>{ 
     blobToDataURL(item).then((url)=>{
      
-      console.log("final url is",url)
+      //console.log("final url is",url)
       setPdfUrl(url)
       
      })
 
   const newUrl = URL.createObjectURL(item)
-  console.log("our pdf url is NEW RUL",newUrl)
+  //console.log("our pdf url is NEW RUL",newUrl)
   setPdfUrl(`${newUrl}`)
  
 
@@ -234,11 +234,11 @@ const pauseAudio = audio => {
      
     }).catch((error)=>{
       notifyErrorFxn(error)
-      console.log("EERAWR",error)
+      //console.log("EERAWR",error)
     })
 
   }catch(error){
-  console.log("error in creating URL",error)
+  //console.log("error in creating URL",error)
   }
 
  }
@@ -318,7 +318,7 @@ const pauseAudio = audio => {
 
 
   const [openPdf, setOpenPdf] = React.useState(false);
-  const handleOpenPdf = () => {setOpenPdf(true);console.log("ask me for issue");setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true);setLoader(false)},6000)}
+  const handleOpenPdf = () => {setOpenPdf(true);setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true);setLoader(false)},6000)}
   const handleClosePdf = () => {setOpenPdf(false);setFrame1(true);setFrame2(true);setShowErrorPdf(false);setLoader(true);iframeCurrent=null;iframeCurrent2=null};
 
 /*MODAL MANIPULATION LOGIC */
@@ -413,7 +413,7 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration,chapterObject
 
   let returnImage= res.blob()
 
-  //console.log("RETURN IMAGE FUNCTIONALITY",returnImage)
+  ////console.log("RETURN IMAGE FUNCTIONALITY",returnImage)
 
   /*if(returnImage.type === "audio/mp3"){
     
@@ -423,9 +423,7 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration,chapterObject
  
   });
 }*/
-console.log("details for the chapter of thisdownloadable media are -->",
- chapterObject
-)
+//console.log("details for the chapter of thisdownloadable media are -->",chapterObject)
 
 gtag("event", "media-download", {
   "user-id":user && user.uid?user.uid:"no uid found",
@@ -448,7 +446,7 @@ gtag("event", "media-download", {
     let second = item
     
  
-    console.log("RETURN IMAGE FUNCTIONALITY",item)
+    //console.log("RETURN IMAGE FUNCTIONALITY",item)
       const id =db.savedCourses.add({
         courseName:courseName,
         subjectTitle:subjectTitle,
@@ -461,14 +459,14 @@ gtag("event", "media-download", {
       setStatus(`Media file ${name} successfully added. Got id ${id}`);
       setLoading(false)
       notifySuccessFxn("Téléchargement réussi!");
-      console.log("status is now:", status)
-      console.log("loading is now:", loading)
+      //console.log("status is now:", status)
+      //console.log("loading is now:", loading)
 
 
     return second
     }).catch((error)=>{
       notifyErrorFxn("error with downloading file, please try again")
-      console.log("error with downloading audio",error)
+      //console.log("error with downloading audio",error)
     })
   
     
@@ -489,8 +487,8 @@ gtag("event", "media-download", {
     setStatus(`Media file ${name} successfully added. Got id ${id}`);
     setLoading(false)
     notifySuccessFxn("Successfully Downloaded !")
-    console.log("status is now:",status)
-    console.log("loading is now:",loading)
+    //console.log("status is now:",status)
+    //console.log("loading is now:",loading)
   }
   else{
     notifyErrorFxn("Something went wrong, please try again.")
@@ -506,8 +504,8 @@ gtag("event", "media-download", {
   } catch (error) {
     setStatus(`Failed to add ${name}: ${error}`);
     notifyErrorFxn(`Failed to add media: please check your connection and try again.`)
-    console.log("status is now:",status)
-    console.log("error for downloading bonecole is:",error)
+    //console.log("status is now:",status)
+    //console.log("error for downloading bonecole is:",error)
 
   }
 
@@ -524,7 +522,7 @@ const secondSplit = firstSplit? firstSplit.split(':')[1]:""
 const thirdSplit =  secondSplit? secondSplit.split(/[0-9]/):""
 
 const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.body && firstSplit && secondSplit && thirdSplit ?thirdSplit:[])
-console.log("subjectList is:",subjectList)
+//console.log("subjectList is:",subjectList)
 
 const [loadingQuiz,setLoadingQuiz] = useState(false)
 

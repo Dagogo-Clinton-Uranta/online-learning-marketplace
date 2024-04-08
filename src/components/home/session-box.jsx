@@ -36,7 +36,7 @@ useEffect(()=>{
 useEffect(()=>{
 
   const lastWatchedId = user && user.watched[user.watched.length-1]
-  console.log("the last watched id is !:",lastWatchedId)
+  //console.log("the last watched id is !:",lastWatchedId)
 
   //dispatch(fetchSingleVideo(lastWatchedId))
 

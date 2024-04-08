@@ -104,9 +104,9 @@ function RowCard () {
           alert('Select time from the dev date selected');
          } else{
           setIsOpen(true);
-         console.log('UID: ', uid);
-         console.log('Date Val: ', date);
-         console.log('Selected Time is:', newtime);
+         //console.log('UID: ', uid);
+         //console.log('Date Val: ', date);
+         //console.log('Selected Time is:', newtime);
          }
     };
     return (

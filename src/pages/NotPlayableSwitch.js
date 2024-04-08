@@ -42,7 +42,7 @@ const NotPlayableSwitch = ({audioFile}) => {
    
      blobToDataURL(blob).then((url)=>{
       link =url
-      console.log("final url is",url)
+      //console.log("final url is",url)
       setUrlLink(url)
        return url
      })
@@ -57,7 +57,7 @@ const NotPlayableSwitch = ({audioFile}) => {
     const urlSound = URL.createObjectURL(blob)
    //const urlSound=  new File([blob], "incomingaudioclip.wav");
     
-    console.log("url OF BLOB",urlSound )
+    //console.log("url OF BLOB",urlSound )
    setUrlLink(urlSound)
   
      //return urlSound;
@@ -76,7 +76,7 @@ const NotPlayableSwitch = ({audioFile}) => {
     if (play){
     audioRef.current.pause()
     }else if(!play){
-      console.log("current.play looks like!:",audioRef.current)
+      //console.log("current.play looks like!:",audioRef.current)
       audioRef.current.play(urlLink)
     }
 

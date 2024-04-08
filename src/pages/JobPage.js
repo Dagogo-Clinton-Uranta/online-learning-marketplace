@@ -17,7 +17,7 @@ export default function JobPage() {
      setJobArr(jobs);
     }, [jobs])
   
-    console.log('jobArr: ', jobArr);
+    //console.log('jobArr: ', jobArr);
   
 
   return (

@@ -25,7 +25,7 @@ function ProfilePage() {
  
 
   const { user,error,registeredWithSocials } = useSelector((state) => state.auth);
-console.log("registered with socials is",registeredWithSocials)
+//console.log("registered with socials is",registeredWithSocials)
 
 
 useEffect(()=>{

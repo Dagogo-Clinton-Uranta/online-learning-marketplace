@@ -89,7 +89,7 @@ function CategoriesRowCard ({ id, title, body, img}) {
     const { categoryVideos,presentOpenMenu } = useSelector((state) => state.group);
 
     const { user} = useSelector((state) => state.auth);
-    console.log("user's info is",user)
+    //console.log("user's info is",user)
 
     useEffect(()=>{ 
       //this code is responsible for the right section appearing in the dropdown
@@ -116,7 +116,7 @@ function CategoriesRowCard ({ id, title, body, img}) {
     const [data,setData] = useState(categoryVideos?categoryVideos:dummyData)
 
     const fetchSubSectionAndDropDown  = (title)=> {
-      console.log("TITLE BEING PASSED IN IS",title)
+      //console.log("TITLE BEING PASSED IN IS",title)
  if(!dropDown){
       setLoading(true)
       dispatch(fetchVideoSection(title))

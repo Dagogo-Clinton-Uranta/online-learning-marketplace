@@ -37,7 +37,7 @@ export default function App() {
    //
    // 
    // setTimeout( ()=>{if(window.confirm("You are offline,if you leave the page now,you may have to reload, continue?")){
-   //   console.log("THEY LEFT ANYWAY, POOR USER")
+   //   //console.log("THEY LEFT ANYWAY, POOR USER")
    //  
    //  }
    // },2000)

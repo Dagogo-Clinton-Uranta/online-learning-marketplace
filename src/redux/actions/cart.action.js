@@ -12,11 +12,11 @@ export const saveToCart = (uid) => async (dispatch) => {
        .get()
        .then((snapshot) => {
         const myTransactions = snapshot.docs.map((doc) => ({ ...doc.data() }));
-        console.log("myTransactions: ", myTransactions);
+        //console.log("myTransactions: ", myTransactions);
         dispatch(isItLoading(false));
         dispatch(fetchTransactions(myTransactions));
      }).catch((error) => {
-       console.log("Error getting document:", error);
+       //console.log("Error getting document:", error);
        dispatch(isItLoading(false));
      });
  };
@@ -31,11 +31,11 @@ export const saveToCart = (uid) => async (dispatch) => {
     })
     .then((snapshot) => {
      
-     console.log("---->THE CART ITEMS HAVE BEEN SAVED TO THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
+     //console.log("---->THE CART ITEMS HAVE BEEN SAVED TO THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
      dispatch(isItLoading(false));
     
   }).catch((error) => {
-    console.log("Error getting document:", error);
+    //console.log("Error getting document:", error);
     notifyErrorFxn("ISSUE WITH STORAGE OF CART")
     dispatch(isItLoading(false));
   });
@@ -54,11 +54,11 @@ export const savePayTokenToDatabase = (uid,pay_token,orderAmount,orderId) => asy
     })
     .then((snapshot) => {
      
-     console.log("---->THE Order ID HAS BEEN SAVED TO THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
+     //console.log("---->THE Order ID HAS BEEN SAVED TO THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
      dispatch(isItLoading(false));
     
   }).catch((error) => {
-    console.log("Error getting document:", error);
+    //console.log("Error getting document:", error);
     notifyErrorFxn("ISSUE WITH STORAGE OF CART")
     dispatch(isItLoading(false));
   });
@@ -79,11 +79,11 @@ export const clearPayTokenFromDatabase = (uid,pay_token,orderAmount,orderId) => 
     })
     .then((snapshot) => {
      
-     console.log("---->THE Order ID HAS BEEN CLEARED FROM THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
+     //console.log("---->THE Order ID HAS BEEN CLEARED FROM THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
      dispatch(isItLoading(false));
     
   }).catch((error) => {
-    console.log("Error getting document:", error);
+    //console.log("Error getting document:", error);
     notifyErrorFxn("ISSUE WITH STORAGE OF CART")
     dispatch(isItLoading(false));
   });
@@ -100,7 +100,7 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
      
 
       if (doc.exists) {
-        // console.log("User Data:", doc.data());
+        // //console.log("User Data:", doc.data());
         dispatch(saveCartToProcess(doc.data().cartInProgress));
         dispatch(saveMostRecentOrderAmount(doc.data().mostRecentOrderAmount));
         dispatch(saveMostRecentOrderId(doc.data().mostRecentOrderId));
@@ -108,7 +108,7 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
 
       }
       else {
-        console.log("THE USER WE ARE TRYING TO GET THEIR MOST UP TO DATE CART, SEEMS TO BE MISSING")
+        //console.log("THE USER WE ARE TRYING TO GET THEIR MOST UP TO DATE CART, SEEMS TO BE MISSING")
       }
      dispatch(isItLoading(false));
 
@@ -116,9 +116,9 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
 
     
   }).catch((error) => {
-    console.log("Error getting document:", error);
+    //console.log("Error getting document:", error);
    
-    console.log("WE HAVE CART TO PROGRESS, NOW WE HAVE AN ISSUE IN DISPENSING IT TO PURCHASED COURSES")
+    //console.log("WE HAVE CART TO PROGRESS, NOW WE HAVE AN ISSUE IN DISPENSING IT TO PURCHASED COURSES")
     dispatch(isItLoading(false));
   });
 };
@@ -151,7 +151,7 @@ courses && courses.courses.map((element)=>({
    .then((snapshot) => {
      const allGroups = snapshot.docs.map((doc) => ({ purchaseId:doc.id,...doc.data() }));
    if (allGroups.length > 0) {
-      console.log("THE PURCHASED COURSE---->",allGroups)
+      //console.log("THE PURCHASED COURSE---->",allGroups)
     db.collection("purchasedCourses").doc(allGroups[0].purchaseId).update({
   
        courses:[...allGroups[0].courses,...newPurchasedCourses]
@@ -180,7 +180,7 @@ courses && courses.courses.map((element)=>({
     }).catch((error) => {
       var errorMessage = error.message;
         notifyErrorFxn("Error with Updating user !");
-        console.log('Error with buying course', errorMessage);
+        //console.log('Error with buying course', errorMessage);
        
      });
 
@@ -221,7 +221,7 @@ courses && courses.courses.map((element)=>({
  }).catch((error) => {
   var errorMessage = error.message;
     notifyErrorFxn("Error with Purchasing Course");
-    console.log('Error with buying course--->', errorMessage);
+    //console.log('Error with buying course--->', errorMessage);
     
  });
 
@@ -249,7 +249,7 @@ export const buyCourseUpdateUser = (courses, uid, today, navigate) => async (dis
   .catch((error) => {
     var errorMessage = error.message;
     notifyErrorFxn("Error with updating user's purchased courses");
-    console.log('Error with buying course', errorMessage);
+    //console.log('Error with buying course', errorMessage);
   });
 }
 
@@ -259,14 +259,14 @@ export const fetchPurchasedCourse = (uid) => async (dispatch) => {
 
   purchasedCoursesRef.get().then((snapshot) => {
     const purchasedCourses = snapshot.docs.map((doc) => ({ ...doc.data() }));
-    console.log("purchasedCourses", purchasedCourses)
+    //console.log("purchasedCourses", purchasedCourses)
     if (purchasedCourses.length) {
       dispatch(savePurchasedCourses(purchasedCourses));
     } else {
       dispatch(savePurchasedCourses([]));
     }
   }).catch((error) => {
-    console.log("Error getting purchasedCourses:", error);
+    //console.log("Error getting purchasedCourses:", error);
   });
 };
 

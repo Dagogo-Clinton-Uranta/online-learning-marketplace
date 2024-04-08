@@ -74,10 +74,10 @@ function SixePage() {
 
 
   const { user,error } = useSelector((state) => state.auth);
-console.log("error is",error)
+//console.log("error is",error)
 
 const [topics,setTopics] = useState(categorySubjects);
-console.log("category subs are ",categorySubjects)
+//console.log("category subs are ",categorySubjects)
 
 
 useEffect(()=>{
@@ -96,7 +96,7 @@ useEffect(()=>{
    
     dispatch(fetchCategorySubjects(category))
     dispatch(fetchCategoryPacks(category))
-    console.log(`NOW REDIRECTING to ${category}!!!`)
+    //console.log(`NOW REDIRECTING to ${category}!!!`)
       
     setTimeout(()=>{ navigate('/dashboard/6e')},1000)
 
@@ -235,7 +235,7 @@ useEffect(()=>{
      </Grid>
          
        <Grid container item xs={12} spacing={3} style={{ display: 'flex', justifyContent: 'center',marginBottom:"20px" }}>
-         {console.log("TOPICS____", topics)}
+         {/*console.log("TOPICS____", topics)*/}
      {topics.map((topic,i)=>(   
          <Grid item xs={6} onClick={()=>{ dispatch(fetchCurrentSubject(topic))} }
          style={{ display: 'flex', justifyContent: 'center' ,marginBottom:"20px",marginTop:"20px"}}>

@@ -50,7 +50,7 @@ function ForgotPasswordPage() {
 
   const { user,error } = useSelector((state) => state.auth);
  
-  console.log("error is",error)
+  //console.log("error is",error)
 
   useEffect(()=>{
      if(user){

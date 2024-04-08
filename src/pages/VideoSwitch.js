@@ -63,7 +63,7 @@ const VideoSwitch = ({videoFile,chapterObject,uid}) => {
    
      blobToDataURL(blob).then((url)=>{
       link =url
-      console.log("final url is",url)
+      //console.log("final url is",url)
       setUrlLink(url)
        return url
      })
@@ -78,7 +78,7 @@ const VideoSwitch = ({videoFile,chapterObject,uid}) => {
     const urlSound = URL.createObjectURL(blob)
    //const urlSound=  new File([blob], "incomingaudioclip.wav");
     
-    console.log("url OF BLOB",urlSound )
+    //console.log("url OF BLOB",urlSound )
    setUrlLink(urlSound)
   
      //return urlSound;
@@ -97,7 +97,7 @@ const VideoSwitch = ({videoFile,chapterObject,uid}) => {
     if (play){
     audioRef.current.pause()
     }else if(!play){
-      console.log("current.play looks like!:",audioRef.current)
+      //console.log("current.play looks like!:",audioRef.current)
       audioRef.current.play(urlLink)
     }
 
@@ -129,12 +129,12 @@ var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
 const videoRef = useRef(true)
 const modalRef = useRef(true)
-console.log('THIS IS DOCUMENT FULL SCREEN ELEMENT-->',document.fullscreenElement)
+//console.log('THIS IS DOCUMENT FULL SCREEN ELEMENT-->',document.fullscreenElement)
 
 
 const handleEsc = (event) => {
   
-  console.log('THIS IS DOCUMENT FULL SCREEN ELEMENT-->',document.fullscreenElement)
+  //console.log('THIS IS DOCUMENT FULL SCREEN ELEMENT-->',document.fullscreenElement)
 
 
   setOpen(false) 
@@ -160,7 +160,7 @@ const handleEsc = (event) => {
   
    window.removeEventListener('mozfullscreenchange', handleEsc)
   
-   console.log("MODAL CURRENT DETAILS ARE----->", findDOMNode(modalRef.current))
+   //console.log("MODAL CURRENT DETAILS ARE----->", findDOMNode(modalRef.current))
 
   setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
   setTimeout(()=>{setOpen(false);findDOMNode(modalRef.current).remove()},300)

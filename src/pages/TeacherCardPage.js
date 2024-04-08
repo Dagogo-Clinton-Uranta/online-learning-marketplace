@@ -42,7 +42,7 @@ export default function TeacherCardPage({uid,firstName,lastName,imageUrl,subject
   const [loading,setLoading] = React.useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  console.log("uid is actually",uid) 
+  //console.log("uid is actually",uid) 
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

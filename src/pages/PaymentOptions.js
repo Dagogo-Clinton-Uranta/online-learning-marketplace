@@ -24,7 +24,7 @@ const PaymentOptions = () => {
   const navigate = useNavigate();
   const { purchasedCourses } = useSelector((state) => state.cart);
   const { cart } = useSelector((state) => state.cart);
-  console.log("THIS IS THE STRUCTURE OF CART ITEMS--->",cart)
+  //console.log("THIS IS THE STRUCTURE OF CART ITEMS--->",cart)
   const [isLoading, setIsLoading] = useState(false);
   const totalPrice = cart.reduce((acc, item) => {
     const itemPrice = parseFloat(item.price && item.price.replace(',', ''));
@@ -107,7 +107,7 @@ const PaymentOptions = () => {
        axios.post(momoTokenUrl, {}, { headers })
         .then(response => {
             const access_token = response.data.access_token;
-            console.log("ACCESS-TOKEN IS-->", access_token);
+            //console.log("ACCESS-TOKEN IS-->", access_token);
            axios.post(momoTwoActionUrl, {
             amount: totalPrice,
             currency: 'GNF',
@@ -120,7 +120,7 @@ const PaymentOptions = () => {
             payeeNote: 'Payment for order',
             momoToken: access_token
           }).then((res) => {
-              console.log("Payment completed...---->", res.data);
+              //console.log("Payment completed...---->", res.data);
               let today = new Date().toDateString();
 
             if(/*res.data && res.data.status !== "PENDING" || res.data && res.data.status !== "FAILED"||*/ res.data && res.data.status === "SUCCESSFUL"|| res.data && res.data.status === "SUCCESS"){
@@ -131,7 +131,7 @@ const PaymentOptions = () => {
               }else{
 
                 if(res.data && res.data.reason){notifyErrorFxn(`MTN MOMO RESPONSE - ${res.data.reason}`)}
-                console.log("OUR REASON  FOR FAILURE IS HEREEE---->",res.data.reason)
+                //console.log("OUR REASON  FOR FAILURE IS HEREEE---->",res.data.reason)
               }
           }).catch((error) => {
             setIsLoading(false);
@@ -176,7 +176,7 @@ const PaymentOptions = () => {
             reference: "ref Merchant",
             orangeMToken: access_token
           }).then((res) => {
-              console.log("RESPONSE IS--->", res.data);
+              //console.log("RESPONSE IS--->", res.data);
               if (res.data.payment_url) {
                 dispatch(savePayTokenToDatabase(user.uid,res.data.pay_token,totalPrice,generateOrderId)).then(()=>{
                
@@ -184,7 +184,7 @@ const PaymentOptions = () => {
                   }
                 )
               }else{
-                console.log("Res", res);
+                //console.log("Res", res);
                 notifyErrorFxn("An error occured!");  
               }
           }).catch((error) => {

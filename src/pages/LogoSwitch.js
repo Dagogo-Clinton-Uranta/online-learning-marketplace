@@ -49,7 +49,7 @@ const LogoSwitch = ({uid,audioFile}) => {
    
      blobToDataURL(blob).then((url)=>{
       link =url
-      console.log("final url is",url)
+      //console.log("final url is",url)
       setUrlLink(url)
        return url
      })
@@ -63,7 +63,7 @@ const LogoSwitch = ({uid,audioFile}) => {
     const urlSound = URL.createObjectURL(blob)
    //const urlSound=  new File([blob], "incomingaudioclip.wav");
     
-    console.log("url OF BLOB",urlSound )
+    //console.log("url OF BLOB",urlSound )
    setUrlLink(urlSound)
   
      //return urlSound;
@@ -106,7 +106,7 @@ const LogoSwitch = ({uid,audioFile}) => {
 
     if(!trackUser.includes(uid)){
       dispatch(addToLessonsWatched(user.uid,uid))
-      console.log("I HAVE ADDED A NEW WATCHED VIDEO")
+      //console.log("I HAVE ADDED A NEW WATCHED VIDEO")
     }
 
 

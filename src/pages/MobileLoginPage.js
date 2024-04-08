@@ -47,7 +47,7 @@ function MobileLoginPage() {
 
   const { user,error } = useSelector((state) => state.auth);
  
-  console.log("error is",error)
+  //console.log("error is",error)
 
   useEffect(()=>{
      if(user){
@@ -68,7 +68,7 @@ function MobileLoginPage() {
 
 
   const handleselectedFile = event => {
-    console.log("these are the picture deets!",event.target.files[0])
+    //console.log("these are the picture deets!",event.target.files[0])
     setSelectedFile({
         selectedFile: event.target.files[0],
         selectedFileName: event.target.files[0].name
@@ -78,7 +78,7 @@ function MobileLoginPage() {
     setFileSize(event.target.files[0].size)
 };
  /* const handleselectedFile2 = event => {
-    console.log("these are the video deets!",event.target.files[0])
+    //console.log("these are the video deets!",event.target.files[0])
     setSelectedFile2({
         selectedFile2: event.target.files[0],
         selectedFileName2: event.target.files[0].name
@@ -91,7 +91,7 @@ function MobileLoginPage() {
 
 const uploadMovie = (movieData = 0,image = 0,) => {
 if(!companySize.length && !newPassword.length &&  file === undefined ){
-  console.log("THE EMPTY FIELDS ARE:",file)
+  //console.log("THE EMPTY FIELDS ARE:",file)
   notifyErrorFxn("Please fill in the field(s) you want to update!")
 }else{
  if( fileSize  > 300000){

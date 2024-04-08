@@ -41,7 +41,7 @@ export default function SampleCardPage({uid,title,author,price,lessons,time,imag
   const [loading,setLoading] = React.useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  console.log("uid is actually",uid) 
+  //console.log("uid is actually",uid) 
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

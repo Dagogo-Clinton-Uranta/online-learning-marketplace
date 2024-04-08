@@ -125,7 +125,7 @@ function IncubatorRowCard ({ id, title, body, img}) {
                
                dispatch(fetchVideoSubsection(title))
                 const makeRequest = async()=>{
-                  console.log("i have set the requested section as",title)
+                  //console.log("i have set the requested section as",title)
                   dispatch(setRequestedSection(title))
                   dispatch(fetchVideoSubsection(title))}
                 //use a promise not setTimeout

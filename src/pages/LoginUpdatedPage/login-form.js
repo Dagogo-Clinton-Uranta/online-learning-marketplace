@@ -52,15 +52,15 @@ function LoginForm(props) {
 
    const { isLoading, error,user,message } = useSelector( (state) => state.auth);
    
-   console.log("this is error",error)
+   //console.log("this is error",error)
 
 
   function onSubmit(model) {
     // dispatch(submitLogin(model));
     const email = model.email;
     const password = model.password;
-    console.log("EMAIL IS",email )
-    console.log("PASSWORD IS NOW",password)
+    //console.log("EMAIL IS",email )
+    //console.log("PASSWORD IS NOW",password)
     const user = { email, password };
     dispatch(signin(user, navigate));
     //navigate('/dashboard/home')

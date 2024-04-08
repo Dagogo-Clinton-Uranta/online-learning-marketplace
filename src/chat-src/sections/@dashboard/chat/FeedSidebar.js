@@ -106,7 +106,7 @@ const [noticeFeed,setNoticeFeed] = useState(candidates.length?candidates:rowData
     dispatch(fetchFeed());
     if(candidates.length){
     setNoticeFeed(candidates)
-    console.log("general notices looks like!",candidates)
+    //console.log("general notices looks like!",candidates)
     }
 
   }, [])
@@ -178,7 +178,7 @@ const [noticeFeed,setNoticeFeed] = useState(candidates.length?candidates:rowData
         </Stack> */}
 
       </Box>
-       {console.log("displayResults: ", displayResults)}
+       {/*console.log("displayResults: ", displayResults)*/}
       <Scrollbar>
           {/* <ChatConversationList
             conversations={conversations}

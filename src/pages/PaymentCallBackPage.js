@@ -35,7 +35,7 @@ const generateOrderId = uuid.v4()
   if (cart_data) {
       const cartObject = JSON.parse(cart_data);
 
-      console.log("CART DATA PARSED --->",JSON.parse(cart_data))
+      //console.log("CART DATA PARSED --->",JSON.parse(cart_data))
      
       let today = new Date().toDateString();
       dispatch(buyCourse(cartObject,user &&  user.uid, today, navigate));
