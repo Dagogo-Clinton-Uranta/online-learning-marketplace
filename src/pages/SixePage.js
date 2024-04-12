@@ -123,6 +123,19 @@ useEffect(()=>{
   <br/><br/>*/}
 
 
+
+
+<Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column",marginBottom:"1.5rem"}}>
+    <center>
+    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}>Challenge - Décrochez votre BAC, BEPC, ou CEE en 8 semaines avec Bonecole !</h1>
+    </center>
+
+    <center>
+    <h1 style={{position:"relative",display:"block",fontWeight:"bold",fontSize:"30px"}}> </h1>
+    </center>
+    </Grid>
+
+
     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', flexDirection:"column"}}>
     
 
