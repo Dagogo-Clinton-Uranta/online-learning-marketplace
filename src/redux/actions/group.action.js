@@ -1223,7 +1223,7 @@ export const fetchPackSubjects = (category) => async (dispatch) => {
    
      questionsArray.forEach((item,i)=>{
      
-      if(studentAnswers[i].chosenAnswer && item.correctAnswer === studentAnswers[i].chosenAnswer){
+      if(studentAnswers[i].chosenAnswer && item.correctAnswer === studentAnswers[i].chosenAnswer.optionLeter){
        resultPercentage = resultPercentage + ((Number(1/numberOfQuestions).toFixed(2))*100)
       }
 
