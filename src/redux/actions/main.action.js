@@ -135,7 +135,7 @@ setTimeout(()=>{dispatch(saveSubmittingSingleAnswer(false))},500)
 
  /*============== UPDATE A USER'S PROFILE - BONECOLE ================ */
 export const updateProfile = (uid,updateObject,navigate) => async (dispatch) => {
-  //console.log("I have reached the users profile again")
+ 
   db.collection("users").doc(uid).update(
     {
       telephone:updateObject.telephone,
