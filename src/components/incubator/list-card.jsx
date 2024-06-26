@@ -8,7 +8,7 @@ import { Circles } from 'react-loading-icons'
 import { Button } from '@mui/material';
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { useDispatch,useSelector } from 'react-redux';
-import {updateVideoAndUserWatchlists,updateCurrentlyWatchingOnly } from 'src/redux/actions/group.action'
+import {updateVideoAndUserWatchlists,updateCurrentlyWatchingOnly } from 'src/redux/actions/main.action'
 
 const useStyles = makeStyles((theme) => ({
   row: {

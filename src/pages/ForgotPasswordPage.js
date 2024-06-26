@@ -9,7 +9,7 @@ import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import Alert from '@mui/material/Alert';
 
-import {  uploadUserSettings} from 'src/redux/actions/group.action';
+import {  uploadUserSettings} from 'src/redux/actions/main.action';
 import { passwordResetEmail, signin,signInWithGoogle} from 'src/redux/actions/auth.action';
 import { logoutSuccess} from 'src/redux/reducers/auth.slice';
 

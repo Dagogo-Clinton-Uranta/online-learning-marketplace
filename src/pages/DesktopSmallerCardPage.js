@@ -21,7 +21,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSubjectChapters} from 'src/redux/actions/group.action';
+import { fetchSubjectChapters} from 'src/redux/actions/main.action';
 
 
 export default function DesktopSmallerCardPage({uid,title,author,price,lessons,time,image}) {

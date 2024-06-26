@@ -39,7 +39,7 @@ const initialState = {
 };
 
 const groupSlice = createSlice({
-  name: 'group',
+  name: 'main',
   initialState,
   reducers: {
     saveMyGroup: (state, action) => {
@@ -125,7 +125,7 @@ savelastWatchedVideo: (state, action) => {
         state.privateGroups = action.payload;
     },
     saveGroupMembers: (state, action) => {
-      state.groupMembers = action.payload;
+      state.mainMembers = action.payload;
   },
   saveSelectedAudioId: (state, action) => {
     state.selectedAudioId = action.payload;

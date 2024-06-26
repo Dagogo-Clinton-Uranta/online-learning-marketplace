@@ -4,15 +4,15 @@ import profile from 'src/assets/images/profile.jpeg'
 import { useDispatch, useSelector } from 'react-redux';
 import { Container,Grid, TextField, Button, Paper,Divider,Box} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import LogoSwitch from '../../pages/LogoSwitch';
-import VideoSwitch from '../../pages/VideoSwitch';
+import LogoSwitch from '../players/LogoSwitch';
+import VideoSwitch from '../players/VideoSwitch';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import {AiOutlineDownload} from "react-icons/ai";
 import Avatar from '@mui/material/Avatar';
 
 const CourseComponent = () => {
 const navigate = useNavigate();
-const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
+const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.main);
 const firstSplit = presentSubject.body.split('.')[1]
 const secondSplit = firstSplit? firstSplit.split(':')[1]:""
 const thirdSplit =  secondSplit? secondSplit.split(/[0-9]/):""

@@ -16,7 +16,7 @@ import { notifyErrorFxn, notifyInfoFxn,notifySuccessFxn } from 'src/utils/toast-
 import { setCurrentQuizDetailsAndAnswers,
          updateStudentQuizzesTaken,
          setPresentQuizQuestion,
-         setCurrentQuestionIndex} from 'src/redux/actions/group.action';
+         setCurrentQuestionIndex} from 'src/redux/actions/main.action';
 
 import db from '../browserDb/db'
 
@@ -51,7 +51,7 @@ function SelectedQuizPage() {
 
   const { presentSubject,chosenQuiz,
           currentQuizDetailsAndAnswers,submittingSingleAnswer,
-          openQuestionIndex,currentQuestionIndex } = useSelector((state) => state.group);
+          openQuestionIndex,currentQuestionIndex } = useSelector((state) => state.main);
 
  //console.log("open question index is",openQuestionIndex)
  //console.log("CURRENT question index ",currentQuestionIndex)
@@ -216,39 +216,9 @@ dispatch(setPresentQuizQuestion(questionIndex))
 
 
 
-
-
-
-  /*{ 
-    quizId: mkmdofmomfdso,
-   chapterId: woqmokdmoma,
-    studentAnswers: [
-      {
-        questionNumber:1,
-       chosenAnswer:A,
-  }
-  ,
-    {
-        questionNumber:2,
-       chosenAnswer:B,
-  }
-  ,
-  {
-        questionNumber:3,
-       chosenAnswer:D,
-  }
-    
-  ]
- }*/
-
-
- 
-
-
-
 const [name,setName] = useState("Sample name")
 
-//const [fileObject,setFileObj] = useState("ababa namna")
+
 const [status,setStatus] = useState(false)
 const [view,setView] = useState(new Blob())
 const [loading,setLoading] = useState("Not loafing")
@@ -265,6 +235,10 @@ const secondSplit = firstSplit? firstSplit.split(':')[1]:""
 const thirdSplit =  secondSplit? secondSplit.split(/[0-9]/):""
 
 const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.body && firstSplit && secondSplit && thirdSplit ?thirdSplit:[])
+
+/*SUBJECT INFO SAVING - END */
+
+
 
   return (
     <>
@@ -300,7 +274,7 @@ const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.b
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.question}
- { chosenId === sortedQuiz.indexOf(chapter) ? <KeyboardArrowUpIcon onClick={(index)=>{dropDownChecker(sortedQuiz.indexOf(chapter));/*console.log("CARET WAS CLICKED,INDEX IS:",sortedQuiz.indexOf(chapter))*/}}/>: <KeyboardArrowDownIcon onClick={()=>{dropDownChecker(sortedQuiz.indexOf(chapter))}}/>}
+ { chosenId === sortedQuiz.indexOf(chapter) ? <KeyboardArrowUpIcon onClick={(index)=>{dropDownChecker(sortedQuiz.indexOf(chapter));}}/>: <KeyboardArrowDownIcon onClick={()=>{dropDownChecker(sortedQuiz.indexOf(chapter))}}/>}
  </p>
 
 </Grid>
@@ -311,7 +285,11 @@ const [subjectList,setSubjectList] = useState(presentSubject && presentSubject.b
 
 { 
   chosenQuiz.questionsArray && chosenQuiz.questionsArray.length > 0?
-/* THIS IS COMMENTED OUT IN CASE OQUESTIONS ARRAY (IN QUIZ) IS CHANGED TO HAVE AN ARRAY OF OPTIONS OBJECTS, INSTEAD OF THE 4 STATIC OPTION OBJECTS WE HAVE
+
+
+/* BELOW IS FALLBACK CODE :- 
+
+THIS IS COMMENTED OUT IN CASE QUESTIONS ARRAY (IN QUIZ) IS CHANGED TO HAVE AN ARRAY OF OPTIONS OBJECTS, INSTEAD OF THE 4 STATIC OPTION OBJECTS WE HAVE
    WE DELETE THE 4 GRIDS BELOW AND REPLACE THEM BY UNCOMMENTING THIS
 
 
@@ -405,7 +383,10 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
     
     style={{ backgroundColor: "#000000",color:"#FFFFFF", paddingTop: '10px', paddingBottom: '10px', 
                      paddingRight: '30px', paddingLeft: '30px'}}>
-      {finalQuestion && (currentQuestionIndex === chosenQuiz.questionsArray.length-1) ?(submittingSingleAnswer?"submitting Quiz...":"SUBMIT QUIZ"):(submittingSingleAnswer?"saving answer...":(currentQuestionIndex<openQuestionIndex?"SAVE":"NEXT"))}
+      {finalQuestion && (currentQuestionIndex === chosenQuiz.questionsArray.length-1) ?
+      (submittingSingleAnswer?"submitting Quiz...":"SUBMIT QUIZ"):
+      (submittingSingleAnswer?"saving answer...":
+      (currentQuestionIndex<openQuestionIndex?"SAVE":"NEXT"))}
       </Button>
  
  <Divider/>
@@ -438,19 +419,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   </Grid>  
 
   
-   <center  style={{ display: 'flex', justifyContent: 'center',marginTop:"20px",marginBottom:"20px",gap:"10px" }}>
-  
- {/* 
-  <Button   variant="contained" 
-  style={{ backgroundColor: "#FFFFFF",color:"#000000",border:"1px solid black", fontSize:"12px",width:"40%",
-  padding: '8px'}}
-  onClick={()=>{submitQuizAnswers(user.uid,currentQuizDetailsAndAnswers,navigate)}}
-  >
- { loadingSubmit?"submitting...":"Submit Quiz"}
-  </Button>
-*/}
 
-</center>
 
 
 </Container>

@@ -11,7 +11,7 @@ import { notifyErrorFxn,notifyInfoFxn } from 'src/utils/toast-fxn';
 import axios from 'axios';
 import * as uuid from 'uuid';
 import { useNavigate } from 'react-router-dom';
-import {setTransactionReference} from 'src/redux/actions/group.action.js'
+import {setTransactionReference} from 'src/redux/actions/main.action.js'
 
 const PaymentOptionsMtn = () => {
   const [pcChecked, setPcChecked] = useState(false);
@@ -21,7 +21,7 @@ const PaymentOptionsMtn = () => {
 
   const { user } = useSelector((state) => state.auth);
 
-  const { transactionReference } = useSelector((state) => state.group);
+  const { transactionReference } = useSelector((state) => state.main);
  
  
   window.dataLayer = window.dataLayer || [];

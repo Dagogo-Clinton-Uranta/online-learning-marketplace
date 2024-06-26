@@ -25,7 +25,7 @@ import a10 from 'src/assets/images/10.jpeg';
 
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchCurrentSubject } from 'src/redux/actions/group.action';
+import { fetchCurrentSubject } from 'src/redux/actions/main.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -35,7 +35,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 
 import SmallerCardPage from './SmallerCardPage';
 import SampleCardPage from './SampleCardPage';
-import { fetchCategorySubjects } from 'src/redux/actions/group.action';
+import { fetchCategorySubjects } from 'src/redux/actions/main.action';
 import { PackCourses } from 'src/utils/packs-data';
 
 function PackCoursesPage() {
@@ -45,7 +45,7 @@ function PackCoursesPage() {
   const location = useLocation();
   const { packData, courses } = location.state;
 
-  const { categorySubjects, allCategories } = useSelector((state) => state.group);
+  const { categorySubjects, allCategories } = useSelector((state) => state.main);
 
   const { user, error } = useSelector((state) => state.auth);
   //console.log('error is', error);

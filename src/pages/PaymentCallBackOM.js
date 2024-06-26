@@ -17,12 +17,12 @@ const PaymentCallBackPageOM = () => {
 
 
 
-  //const orangeTransactionUrl = 'http://localhost:5008/api/om/transaction';
+  //const orangeTransactionUrl = 'http://localhost:5008/api/om/transaction'; <-- switch to this url when testing locally is involved
  const orangeTransactionUrl = 'https://boncole-server-2.vercel.app/api/om/transaction';
 
 
- //const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
- // const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
+ //const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token'; <-- switch to this url when testing locally is involved
+ // const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment'; <-- switch to this url when testing locally is involved
   const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
   const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
  
@@ -39,31 +39,13 @@ const PaymentCallBackPageOM = () => {
  
     const urlParams = new URLSearchParams(window.location.search);
     const userId= urlParams.get('user');
-    //const orderId= urlParams.get('oid'); ---> I AM NOT USING THIS FOR NOW, BUT IT'S POSSIBLE I USE IT LATER
+    //const orderId= urlParams.get('oid'); ---> NOT USING THIS FOR NOW, BUT IT'S POSSIBLE IT CAN BE USED IT LATER
 
-   // const cart_data = urlParams.get('cart_data');
-
-   // //console.log("userId is -->",userId)
-  
-
-   /* const validateToken = (token) => {
-      const expectedToken = 'AHIPS2893';
-      return token === expectedToken;
-    };
-
-    
-    const isValidToken = validateToken(token);*/
-
-
-  //console.log("I HAVE REACHED THE CALLBACK PAGE, NOW I WAIT FOR 2 SECONDS---> ")
-  //console.log("TEST 2 --->");
 
   setTimeout(()=>{  
       dispatch(fetchCartToProcessFromUser(userId)).then(()=>{ 
    
-           //console.log("I HAVE STEPPED PAST THE FUNCTION FOR FETCHING CART and PAY TOKEN NOW---> ")
-           //console.log("TEST 3 --->");
-
+          
            const headers = {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',  
@@ -79,15 +61,14 @@ const PaymentCallBackPageOM = () => {
             payToken:mostRecentPayToken,
             orangeMToken: access_token
           }).then((res) => {
-            //console.log("TEST 4 --->");
-              //console.log("LOOK HERE FOR INITIATED --->", res.data);
+            
               if (res.data.status && res.data.status === 'SUCCESS' ) {
                 
                 const cartObject = cartToProcess
                 const courseIdArray =cartObject &&  cartObject.courses.map((item)=>(item.id))
                 let today = new Date().toDateString();
               
-                //console.log("COURSE ID ARRAY IS----->",courseIdArray)
+               
                
                 dispatch(buyCourseUpdateUser(courseIdArray, user.uid, today, navigate))
                 dispatch(buyCourse(cartObject, userId, today, navigate,res.data.txnid,res.data.order_id))/*.then(()=>{*/
@@ -96,7 +77,7 @@ const PaymentCallBackPageOM = () => {
                 
                 gtag("event", "purchase", {
                   // This purchase event uses a different transaction ID
-                  // from the previous purchase event so Analytics
+                  // from the previous purchase event, so Analytics
                   // doesn't deduplicate the events.
                   // Learn more: https://support.google.com/analytics/answer/12313109
                   fullName:user && user.fullName,
@@ -126,7 +107,7 @@ const PaymentCallBackPageOM = () => {
       
 
               }else{
-                //console.log("Res", res);
+                
                 notifyErrorFxn("PAYMENT NOT SUCCESSFUL");  
                 navigate('/dashboard/payment-options')
               }

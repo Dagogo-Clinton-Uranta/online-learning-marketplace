@@ -24,18 +24,18 @@ import ReactPlayer from 'react-player'
 import { Document, Page ,pdfjs} from 'react-pdf';
 //import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
-import AudioSwitch from './AudioSwitch';
-import VideoSwitch from './VideoSwitch';
-import NotPlayableSwitch from './NotPlayableSwitch';
+import AudioSwitch from '../components/players/AudioSwitch';
+import VideoSwitch from '../components/players/VideoSwitch';
+import NotPlayableSwitch from '../components/players/NotPlayableSwitch';
 
 import {AiOutlineDownload} from "react-icons/ai";
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/main.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import Modal from '@mui/material/Modal';
-import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelectedAudio, setSelectedAudioId,setDownloadReload} from 'src/redux/actions/group.action';
+import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelectedAudio, setSelectedAudioId,setDownloadReload} from 'src/redux/actions/main.action';
 
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '../browserDb/db'
@@ -73,7 +73,7 @@ const dispatch  = useDispatch()
 
 const { user } = useSelector((state) => state.auth);
 
-//console.log("user is --->",user)
+
 
 
 useEffect(()=>{
@@ -94,14 +94,14 @@ useEffect(()=>{
     
   ]
 
-/*DEXIE MANIPULATION LOGIC */
+/*DEXIE MANIPULATION LOGIC (FOR OFFLINE DOWNLOADS) */
 const URLSound = window.URL || window.webkitURL;
 
 
 
 let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
 
-////console.log("files is",Files)
+
 
 
 
@@ -109,7 +109,7 @@ let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sam
 const [savedMedia,setSavedMedia] = useState([])
 
 const [downloadCategories,setDownloadCategories] = useState([])
-const {downloadReload } = useSelector((state) => state.group);
+const {downloadReload } = useSelector((state) => state.main);
 
 
 
@@ -117,7 +117,6 @@ useEffect(()=>{
 
 
 setSavedMedia(Files)
-//console.log("download categories are!",downloadCategories)
 
 
 },[Files])
@@ -125,8 +124,6 @@ setSavedMedia(Files)
 
 useEffect(()=>{
 
-  //console.log("saved media is now!",savedMedia)
- 
  if(savedMedia && savedMedia.length >0 ){
   savedMedia.forEach((item)=>{
     if(downloadReload.indexOf(item.subjectTitle) === -1 ){
@@ -138,7 +135,6 @@ useEffect(()=>{
   })
 }
 
-//console.log("all download categories via courses are",downloadReload)
  
   },[savedMedia,downloadReload])
 
@@ -147,6 +143,7 @@ useEffect(()=>{
 
 
 /*DEXIE MANIPULATION LOGIC END */
+
 
 
 /*PDF MANIPULATION LOGIC*/
@@ -167,7 +164,7 @@ useEffect(()=>{
 /* AUDIO MANIPULATION LOGIC*/
 const audioRef = useRef(null)
 const [play,setPlay] = useState(false)
-const { selectedAudioId,selectedAudio,selectedAudioState} = useSelector((state) => state.group);
+const { selectedAudioId,selectedAudio,selectedAudioState} = useSelector((state) => state.main);
 const  [showPlayer,setShowPlayer] = useState(true)
 
 

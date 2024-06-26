@@ -1,13 +1,7 @@
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box,CardMedia, MenuItem, Select, InputLabel} from '@mui/material';
 import { useEffect,useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UPLOADIMG from '../assets/images/upload.png';
-import bonecoleIntro from 'src/assets/images/bonecoleIntro.png'
-import startQuote from 'src/assets/images/startQuote.png'
-import endQuote from 'src/assets/images/endQuote.png'
-import bonLogo from 'src/assets/images/bonlogo.png'
-import profileImg from 'src/assets/images/randomwoman2.jpg'
-import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
+
 import {FaCaretDown} from 'react-icons/fa'
 
 
@@ -29,7 +23,7 @@ function ProfilePage() {
 
   const [loading, setLoading] = useState(false);
   const { user,error,registeredWithSocials } = useSelector((state) => state.auth);
-  //console.log("registered with socials is",registeredWithSocials)
+
 
   const [selectedFile, setSelectedFile] = useState({selectedFile: [], selectedFileName: []});
   const [file, setFile] = useState();
@@ -62,15 +56,12 @@ function ProfilePage() {
 
 
 const settingsUpdate = () => {
-  
-//   //console.log("OLD SATE: ",state);
 
-//   return;
   setLoading(true);
  
   const imageUrl = user && user.imageUrl?user.imageUrl:" ";
 
-  //console.log("LOOK HERE-->",telephone.substring(0,3))
+  //console.log("TELEPHONE COUNTRY CODE-->",telephone.substring(0,3))
 
   if(telephone.substring(0,3) !== '224'){
 
@@ -78,10 +69,6 @@ const settingsUpdate = () => {
     return
   }else{
   if(selectedFile.selectedFile.length === 0){
-    // notifyErrorFxn("You have not uploaded Image");
-    //dispatch(updateProfile(state, id, '', navigate, setLoading, imageUrl));
-   // dispatch(updateProfile(user.uid,updateObject,navigate))
-
    
     dispatch(updateProfile(updateObject, user.uid, '', navigate, setLoading, imageUrl));
 

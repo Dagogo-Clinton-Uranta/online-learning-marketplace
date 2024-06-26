@@ -13,13 +13,13 @@ import googleSI from 'src/assets/images/googleSI.svg'
 import { FaFacebookF } from "react-icons/fa";
 
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/main.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import users from 'src/_mock/user';
 import ReactFacebookLogin from 'react-facebook-login';
-import FacebookLoginButton from './FacebookLoginButton';
+import FacebookLoginButton from '../components/facebook/FacebookLoginButton';
 
 
 function ExternalLoginPage() {

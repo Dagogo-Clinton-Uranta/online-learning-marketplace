@@ -9,7 +9,8 @@ const initialState = {
   cartToProcess:{},
   mostRecentPayToken:'',
   mostRecentOrderAmount:'',
-  mostRecentOrderId:''
+  mostRecentOrderId:'',
+  isLoading:false,
 };
 
 const cartSlice = createSlice({
@@ -64,6 +65,9 @@ const cartSlice = createSlice({
         state.mostRecentOrderId = action.payload;
         
       },
+      isItLoading: (state, action) => {
+        state.isLoading = action.payload;
+    },
 
     clearCart: (state) => {
       return {
@@ -86,6 +90,7 @@ export const {
  saveMostRecentOrderId,
  saveMostRecentPayToken,
  clearCart,
+ isItLoading
 } = actions;
 
 export default reducer;

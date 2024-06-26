@@ -8,12 +8,12 @@ import randomWoman2 from 'src/assets/images/randomwoman2.jpg'
 
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/main.action.js';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
-import { TextInput } from "./TextInput.js";
-import { MessageLeft, MessageRight } from "./Message";
+import { TextInput } from "../components/bcchat/TextInput.js";
+import { MessageLeft, MessageRight } from "../components/bcchat/Message.js";
 
 import users from 'src/_mock/user';
 

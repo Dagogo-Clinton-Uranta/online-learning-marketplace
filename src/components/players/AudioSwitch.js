@@ -11,7 +11,7 @@ import { styled } from '@mui/system';
 import Modal from '@mui/material/Modal';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/redux/actions/group.action';
+import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/redux/actions/main.action';
 
 import { findDOMNode } from 'react-dom'
 
@@ -40,7 +40,7 @@ const navigate =useNavigate()
   const audioRef = useRef(true)
   const [play,setPlay] = useState(false)
   const [urlLink,setUrlLink] = useState(audioFile?audioFile:" ")
-  const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+  const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.main);
   const { user,error } = useSelector((state) => state.auth);
 
   useEffect(()=>{

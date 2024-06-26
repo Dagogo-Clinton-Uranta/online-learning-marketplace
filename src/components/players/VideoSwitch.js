@@ -15,7 +15,7 @@ import { findDOMNode } from 'react-dom'
 import { blobToDataURL } from 'blob-util'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setSelectedAudio, setSelectedAudioId, setSelectedAudioState } from 'src/redux/actions/group.action';
+import { setSelectedAudio, setSelectedAudioId, setSelectedAudioState } from 'src/redux/actions/main.action';
 import { notifyInfoFxn } from 'src/utils/toast-fxn';
 
 const VideoSwitch = ({videoFile,chapterObject,uid}) => {
@@ -56,7 +56,7 @@ const VideoSwitch = ({videoFile,chapterObject,uid}) => {
   const [urlLink,setUrlLink] = useState('')
   /*const URLSound = window.URL || window.webkitURL;*/
   const { user,error } = useSelector((state) => state.auth);
-  const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
+  const { subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.main);
 
   const linkMaker = (blob) => {
     let link;

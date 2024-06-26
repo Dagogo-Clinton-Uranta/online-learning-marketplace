@@ -35,7 +35,7 @@ import endQuote from 'src/assets/images/endQuote.png'
 import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import {fetchCategorySubjects,fetchAllCategories,fetchCurrentSubject,getTeachers, fetchCategoryPacks} from 'src/redux/actions/group.action';
+import {fetchCategorySubjects,fetchAllCategories,fetchCurrentSubject,getTeachers, fetchCategoryPacks} from 'src/redux/actions/main.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -74,10 +74,10 @@ function MobileWelcomePage() {
 
 
 const { user,error } = useSelector((state) => state.auth);
-const { allCategories,categorySubjects } = useSelector((state) => state.group);
+const { allCategories,categorySubjects } = useSelector((state) => state.main);
 const { cart,cartToProcess,mostRecentOrderAmount,mostRecentOrderId,mostRecentPayToken} = useSelector((state) => state.cart);
 const [topics,setTopics] = useState([])
-const { teachers } = useSelector((state) => state.group);
+const { teachers } = useSelector((state) => state.main);
 const [teacherArr, setTeacherArr] = useState([]/*teachers*/);
 const myRef = useRef(null)
 const executeScroll = () => myRef.current.scrollIntoView({behavior:"smooth"})
@@ -516,8 +516,15 @@ aria-describedby="modal-modal-description"
           <Grid item xs={11}  onClick={()=>{dispatch(fetchCurrentSubject(topic))}}
           style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
            <HomeCardPage 
-           uid={topic.uid} title={topic.title} image = {topic && topic.subjectImageUrl && topic.subjectImageUrl.length > 1?topic.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} author ={topic.instructor} price={topic.price} lessons={15} time={"2H 26 MINS"} /> 
-          {/*gotta pass the id into the card so we can use it when clicked */}
+           uid={topic.uid}
+           title={topic.title}
+           image = {topic && topic.subjectImageUrl && topic.subjectImageUrl.length > 1?topic.subjectImageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)}
+           author ={topic.instructor}
+           price={topic.price}
+           lessons={15} 
+           time={"2H 26 MINS"} 
+           /> 
+          {/*uid is to be passed into the card as it it used in the component to fetch further details*/}
           </Grid>
        ))}
  
@@ -538,8 +545,14 @@ aria-describedby="modal-modal-description"
           style={{ display: 'flex', justifyContent: 'center',marginTop:"20px"}}>
            
            <TeacherCardPage 
-           uid={topic.uid} firstName={topic.firstName} lastName={topic.lastName} imageUrl = {topic && topic.imageUrl && topic.imageUrl.length > 1?topic.imageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} subject ={topic.subject} bio={topic.body?topic.body : topic.bio &&topic.bio }  level={topic.level} /> 
-          {/*gotta pass the id into the card so we can use it when clicked */}
+           uid={topic.uid} 
+           firstName={topic.firstName} 
+           lastName={topic.lastName} 
+           imageUrl = {topic && topic.imageUrl && topic.imageUrl.length > 1?topic.imageUrl:(oldTopics[i] && oldTopics[i].image?oldTopics[i].image:a10)} 
+           subject ={topic.subject} bio={topic.body?topic.body : topic.bio &&topic.bio }  
+           level={topic.level} 
+           /> 
+          {/*uid is to be passed into the card as it it used in the component to fetch further details*/}
           </Grid>
        ))}
  

@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import LockIcon from '@mui/icons-material/Lock';
 import { Button } from '@mui/material';
 import { useDispatch,useSelector } from 'react-redux';
-import {updateVideoAndUserWatchlists} from 'src/redux/actions/group.action'
-import { setRequestedSection } from 'src/redux/reducers/group.slice';
-import { fetchVideoSubsection } from 'src/redux/actions/group.action';
+import {updateVideoAndUserWatchlists} from 'src/redux/actions/main.action'
+import { setRequestedSection } from 'src/redux/reducers/main.slice';
+import { fetchVideoSubsection } from 'src/redux/actions/main.action';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({

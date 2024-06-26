@@ -1,18 +1,28 @@
 import React,{useState,useEffect,useRef,useMemo} from 'react'
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
-import ReactAudioPlayer from 'react-audio-player';
+
 import soundBytes from 'src/assets/images/soundBytes.mp3'
 import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/redux/actions/group.action';
+
+import { setSelectedAudio,setSelectedAudioId,setSelectedAudioState} from 'src/redux/actions/main.action';
 import { addToLessonsWatched } from 'src/redux/actions/auth.action';
 import { blobToDataURL } from 'blob-util'
 import { useNavigate } from 'react-router-dom';
 import { notifyInfoFxn } from 'src/utils/toast-fxn';
 
 const LogoSwitch = ({uid,audioFile}) => {
+  
+    /*GOOGLE TAG MANAGER PREP FOR ADDING TO CART */
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'G-EY9BN9TW8S',{ 'debug_mode': true });
+/*GOOGLE TAG MANAGER PREP FOR ADDING TO CART - END*/
+
 
 
     /*AUDIO MANIPULATION LOGIC */
@@ -26,8 +36,8 @@ const LogoSwitch = ({uid,audioFile}) => {
  const dispatch = useDispatch()
  const navigate = useNavigate()
 
- const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
- const { presentSubject } = useSelector((state) => state.group);
+ const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.main);
+ const { presentSubject } = useSelector((state) => state.main);
 
    /*PURCHASED COURSES CHECK */
    const { purchasedCourses } = useSelector((state) => state.cart);
@@ -129,7 +139,9 @@ const LogoSwitch = ({uid,audioFile}) => {
 
  {/*AUDIO PLAYER*/}
    
-<audio    src={urlLink} type="audio/mp3"/>
+{<audio    src={urlLink} type="audio/mp3"/>}
+
+
  
 
 <span onClick={()=>{playAudio(urlLink)}} style={{color:"red",fontSize:"2.2rem",height:"6rem"}}>{play?<PauseCircleFilledIcon/>:<PlayCircleFilledWhiteIcon/>}</span>

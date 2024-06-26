@@ -11,16 +11,14 @@ import bonLogo from 'src/assets/images/bonlogo.png'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import Alert from '@mui/material/Alert';
 
-import { fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+
 
 import { signup} from 'src/redux/actions/auth.action';
 import { logoutSuccess} from 'src/redux/reducers/auth.slice';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
-import users from 'src/_mock/user';
 
-import profileImg from 'src/assets/images/randomwoman2.jpg'
 
 import {FaCaretDown} from 'react-icons/fa'
 import { MenuItem } from '@mui/material';
@@ -93,9 +91,7 @@ function MobileRegisterPage() {
   const [selectedFile2, setSelectedFile2] = useState({selectedFile2: [], selectedFileName2: []});
   const dispatch = useDispatch();
 
-  const [newPassword,setNewPassword] =useState('')
-  const [confirmPassword,setConfirmPassword] =useState('')
-  const [companySize,setCompanySize] =useState('')
+
   
   const [email,setEmail] = useState('')
   const [firstName,setFirstName] = useState('')
@@ -175,11 +171,7 @@ function MobileRegisterPage() {
     }
   }
 
-  /*const [releaseDate,setReleaseDate] =useState('')
-  const [director,setDirector] =useState('')
-  const [cast,setCast] =useState([])
-  const [description,setDescription] =useState('')
-  const [trivia,setTrivia] =useState('')*/
+
   
 
 
@@ -194,33 +186,10 @@ function MobileRegisterPage() {
     setFile(URL.createObjectURL(event.target.files[0]));
     setFileSize(event.target.files[0].size)
 };
- /* const handleselectedFile2 = event => {
-    //console.log("these are the video deets!",event.target.files[0])
-    setSelectedFile2({
-        selectedFile2: event.target.files[0],
-        selectedFileName2: event.target.files[0].name
-    });
-    setFile2(URL.createObjectURL(event.target.files[0]));
-    setFileSize2(event.target.files[0].size)
-};*/
 
 
 
-const uploadMovie = (movieData = 0,image = 0,) => {
-if(!companySize.length && !newPassword.length &&  file === undefined ){
-  //console.log("THE EMPTY FIELDS ARE:",file)
-  notifyErrorFxn("Please fill in the field(s) you want to update!")
-}else{
- if( fileSize  > 300000){
-  notifyErrorFxn("Image size too large! please upload a smaller picture.")
- }
- /*else if( fileSize2  > 20000000){
-  notifyErrorFxn("Video size too large! please upload a smaller video.")
- }*/else{
-  dispatch(uploadUserSettings(movieData,image))
- }
-}
-}
+
 
   return (
     <>

@@ -2,7 +2,7 @@ import { db, fb, auth,provider,fbProvider, storage } from '../../config/firebase
 import { clearUser, loginFailed, loginSuccess, logoutFxn, signupPending, signupFailed, storeUserData,storeProfileImages, markRegisteredWithSocials } from '../reducers/auth.slice';
 import { v4 as uuidv4 } from 'uuid';
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
-import { clearGroup } from '../reducers/group.slice';
+import { clearGroup } from '../reducers/main.slice';
 
 import "firebase/auth";
 import firebase from "firebase/app";
@@ -309,16 +309,15 @@ export const signUpWithGoogle = (navigate) => async (dispatch) => {
   
  
   dispatch(signupPending());
-  //console.log("Just before the google sign up happens!!!!")
+
   fb.auth().signInWithPopup(provider)
     
  .then((userCredential)=>{
   var user = userCredential.user;
- // //console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
+ 
   var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
   var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
 
- //console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
 
  db.collection('users')
  .where('email', '==', user.email)
@@ -427,28 +426,26 @@ export const signUpWithFacebook = (navigate) => async (dispatch) => {
   fb.auth().useDeviceLanguage();
  
   dispatch(signupPending());
-  //console.log("Just before the facebook sign up happens!!!!")
+ 
   fb.auth().signInWithPopup(provider)
     
  .then((userCredential)=>{
   var user = userCredential.user;
- // //console.log("USER CREDENTIALS FROM GOOGLE ARE----->",user)
  
- //YOU'VE NEVER ACTUALLY SIGNED UP WITH FACEBOOK BEFORE YET,
+ 
+ //SIGN UP WITH FACEBOOK HAS NOT BEEN ACTIVATED YET - AS AT JUNE 26 2024,
  // SO FIRST NAME, LAST NAME AND GTAG BELOW, MAY GIVE YOU PROBLEMS
  
  var firstName= userCredential.user.displayName?userCredential.user.displayName.split(" ")[0]:''
   var lastName = userCredential.user.displayName?userCredential.user.displayName.split(" ")[1]:''
 
- //console.log("FIRST AND LAST NAME FROM GOOGLE ARE ---->",firstName,lastName)
-
-
+ 
 
  gtag("event", "sign-up", {
   // This purchase event uses a different transaction ID
   // from the previous purchase event so Analytics
   // doesn't deduplicate the events.
-  // Learn more: https://support.google.com/analytics/answer/12313109
+  // TO Learn more: https://support.google.com/analytics/answer/12313109
   fullName:firstName + " " + lastName,
   telephone:'none',
   affiliateId:'none',

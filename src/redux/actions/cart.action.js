@@ -1,27 +1,22 @@
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
 import { db, fb, auth, storage } from '../../config/firebase';
-import { fetchTransactions, isItLoading } from '../reducers/transactions.slice';
-import { clearCart, savePurchasedCourses,saveCartPackSortIds, saveCartPackIds,saveCartToProcess,saveMostRecentOrderId, saveMostRecentOrderAmount, saveMostRecentPayToken } from '../reducers/cart.slice';
+
+import { clearCart,
+         savePurchasedCourses,
+         saveCartPackSortIds,
+         saveCartPackIds,
+         saveCartToProcess,
+         saveMostRecentOrderId,
+         saveMostRecentOrderAmount,
+         saveMostRecentPayToken,
+         isItLoading
+   } from '../reducers/cart.slice';
 import firebase from "firebase/app";
 
 
-export const saveToCart = (uid) => async (dispatch) => {
-     dispatch(isItLoading(true));
-      db.collection("transactions")
-      . where('userID', '==', uid)
-       .get()
-       .then((snapshot) => {
-        const myTransactions = snapshot.docs.map((doc) => ({ ...doc.data() }));
-        //console.log("myTransactions: ", myTransactions);
-        dispatch(isItLoading(false));
-        dispatch(fetchTransactions(myTransactions));
-     }).catch((error) => {
-       //console.log("Error getting document:", error);
-       dispatch(isItLoading(false));
-     });
- };
 
 
+/*=====CART ITEMS ARE BEING SAVED TO DB SO THAT THEY CAN BE CALLED ON ORANGE CALLBACK PAGE  ======*/
  export const saveCartToDatabase = (uid,cartToSubmit) => async (dispatch) => {
   dispatch(isItLoading(true));
    db.collection("users")
@@ -31,7 +26,7 @@ export const saveToCart = (uid) => async (dispatch) => {
     })
     .then((snapshot) => {
      
-     //console.log("---->THE CART ITEMS HAVE BEEN SAVED TO THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
+    
      dispatch(isItLoading(false));
     
   }).catch((error) => {
@@ -41,6 +36,8 @@ export const saveToCart = (uid) => async (dispatch) => {
   });
 };
 
+
+/*=====TOKEN IS BEING SAVED TO DB SO THAT THEY CAN BE CALLED ON ORANGE CALLBACK PAGE  ======*/
 export const savePayTokenToDatabase = (uid,pay_token,orderAmount,orderId) => async (dispatch) => {
   dispatch(isItLoading(true));
    db.collection("users")
@@ -54,7 +51,7 @@ export const savePayTokenToDatabase = (uid,pay_token,orderAmount,orderId) => asy
     })
     .then((snapshot) => {
      
-     //console.log("---->THE Order ID HAS BEEN SAVED TO THE DB, READY FOR USE IN THE CALLBACK PAGE<-----");
+    
      dispatch(isItLoading(false));
     
   }).catch((error) => {
@@ -65,7 +62,7 @@ export const savePayTokenToDatabase = (uid,pay_token,orderAmount,orderId) => asy
 };
 
 
-
+/*=====TOKEN IS CLEARED FROM DB AFTER VISITING ORANGE (OM) CALLBACK PAGE  ======*/
 export const clearPayTokenFromDatabase = (uid,pay_token,orderAmount,orderId) => async (dispatch) => {
   dispatch(isItLoading(true));
    db.collection("users")
@@ -123,7 +120,7 @@ export const fetchCartToProcessFromUser = (uid) => async (dispatch) => {
   });
 };
 
- 
+ /*=====ADDING COURSES TO PURCHASED COURSES COLLECTION  ======*/
 export const buyCourse = (courses, studentId, today, navigate, txnId= null ,order_id = null) => async (dispatch) => {
    //notifyErrorFxn("BUY COURSES FUNCTION IS ACTIVATED")
  const newPurchasedCourses = txnId  && order_id ?
@@ -185,9 +182,6 @@ courses && courses.courses.map((element)=>({
      });
 
 
-      
-    
-    
    } else {
     let newPurchasedCourseIds = newPurchasedCourses.map((item)=>(item.id))
     db.collection("users").doc(studentId).get().then((doc)=>{
@@ -195,7 +189,7 @@ courses && courses.courses.map((element)=>({
       db.collection("users").doc(studentId)
       .update({
         purchasedCourses:firebase.firestore.FieldValue.arrayUnion(...newPurchasedCourseIds)
-          // courses:[...allGroups[0].courses,...newPurchasedCourses]
+         
         }) 
 
 
@@ -235,11 +229,11 @@ courses && courses.courses.map((element)=>({
 
 
 
-
+ /*=====ADDING COURSES TO EACH USER, THEIR PURCHASED COURSES ARRAY IN EACH USER DOCUMENTS, OCCASIONALL THIS ARRAY WILL BE USED TO CROSS CHECK WITH THE PURCHASED COURSES ARRAY  ======*/
 export const buyCourseUpdateUser = (courses, uid, today, navigate) => async (dispatch) => {
   var userRef = db.collection("users").doc(uid);
  userRef.update({
-   purchasedCourses:db.FieldValue.arrayUnion(...courses), //<--- will this array of values spread into individual courses ids , confirm upon testing ?
+   purchasedCourses:db.FieldValue.arrayUnion(...courses),
  })
   .then(() => {
     //notifySuccessFxn("Course purchased successfully");

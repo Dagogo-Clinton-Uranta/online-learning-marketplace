@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { styled } from '@mui/material/styles';
 import CMCVid from 'src/assets/images/CMC-vid.jpg';
-import {fetchSingleVideo} from 'src/redux/actions/group.action';
+import {fetchSingleVideo} from 'src/redux/actions/main.action';
 
 
 const Img = styled('img')({
@@ -19,7 +19,7 @@ export default function SeessionBox() {
   const dispatch = useDispatch();
  
   const { user } = useSelector((state) => state.auth);
-  const { lastWatchedVideo,nextUpVideo } = useSelector((state) => state.group);
+  const { lastWatchedVideo,nextUpVideo } = useSelector((state) => state.main);
 
   const [videoTitle,setVideoTitle] = useState(lastWatchedVideo?lastWatchedVideo.title:'loading')
   const [videoSection,setVideoSection] = useState(lastWatchedVideo ?lastWatchedVideo.section:'loading')

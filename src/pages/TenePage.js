@@ -18,7 +18,7 @@ import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchCategoryPacks, fetchCategorySubjects,fetchPackSubjects ,fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/group.action';
+import { fetchCategoryPacks, fetchCategorySubjects,fetchPackSubjects ,fetchGroups, fetchMyGroups, uploadUserSettings} from 'src/redux/actions/main.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn, notifySuccessFxn } from 'src/utils/toast-fxn';
@@ -48,8 +48,8 @@ function TenePage() {
   const [chosen,setChosen] = useState(1);
 
   const { user } = useSelector((state) => state.auth);
-  const {packSubjects} = useSelector((state) => state.group);
-  const { presentSubject } = useSelector((state) => state.group);
+  const {packSubjects} = useSelector((state) => state.main);
+  const { presentSubject } = useSelector((state) => state.main);
   const { cart } = useSelector((state) => state.cart);
 
    /*GOOGLE TAG MANAGER PREP FOR ADDING TO CART */

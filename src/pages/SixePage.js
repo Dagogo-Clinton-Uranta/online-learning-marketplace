@@ -28,7 +28,7 @@ import a10 from 'src/assets/images/10.jpeg'
 
 import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 
-import { fetchCategoryPacks, fetchCurrentSubject} from 'src/redux/actions/group.action';
+import { fetchCategoryPacks, fetchCurrentSubject} from 'src/redux/actions/main.action';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
@@ -38,7 +38,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 
 import SmallerCardPage from './SmallerCardPage';
 import SampleCardPage from './SampleCardPage';
-import {fetchCategorySubjects} from 'src/redux/actions/group.action';
+import {fetchCategorySubjects} from 'src/redux/actions/main.action';
 
  
 export const oldTopics = [
@@ -70,7 +70,7 @@ function SixePage() {
   const [chosen,setChosen] = useState('');
   
 
-  const { categorySubjects, allCategories,packs} = useSelector((state) => state.group);
+  const { categorySubjects, allCategories,packs} = useSelector((state) => state.main);
 
 
   const { user,error } = useSelector((state) => state.auth);

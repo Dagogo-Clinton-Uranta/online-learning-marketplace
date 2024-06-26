@@ -6,7 +6,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import HomeBox from '../components/home/home-box';
 import PublicCoolerRowCard from 'src/components/public-cooler/public-cooler-card';
-import { fetchGroups, fetchPublicGroup } from 'src/redux/actions/group.action';
+import { fetchGroups, fetchPublicGroup } from 'src/redux/actions/main.action';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fCurrency } from '../utils/formatNumber';
@@ -23,7 +23,7 @@ export default function VideoPage() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { allGroups, publicGroups, isLoading } = useSelector((state) => state.group);
+  const { allGroups, publicGroups, isLoading } = useSelector((state) => state.main);
 
   // useEffect(() => {
   //   dispatch(fetchGroups(user.employeerID));

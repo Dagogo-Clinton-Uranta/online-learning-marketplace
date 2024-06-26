@@ -24,8 +24,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ListRowCard from 'src/components/incubator/list-card';
 import SubSectionCard from   'src/components/incubator/subSection-card';
 
-import { setRequestedSection,savePresentOpenMenu } from 'src/redux/reducers/group.slice';
-import { fetchVideoSection } from 'src/redux/actions/group.action';
+import { setRequestedSection,savePresentOpenMenu } from 'src/redux/reducers/main.slice';
+import { fetchVideoSection } from 'src/redux/actions/main.action';
 
 
 const Img = styled('img')({
@@ -85,8 +85,8 @@ function CategoriesRowCard ({ id, title, body, img}) {
     // const { allUsers, connects, isLoading } = useSelector((state) => state.user);
 
 
-    const { allSectionVideos,requestedSection } = useSelector((state) => state.group);
-    const { categoryVideos,presentOpenMenu } = useSelector((state) => state.group);
+    const { allSectionVideos,requestedSection } = useSelector((state) => state.main);
+    const { categoryVideos,presentOpenMenu } = useSelector((state) => state.main);
 
     const { user} = useSelector((state) => state.auth);
     //console.log("user's info is",user)

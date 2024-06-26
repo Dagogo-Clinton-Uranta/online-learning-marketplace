@@ -4,10 +4,8 @@ import { useDispatch as useAppDispatch, useSelector as useAppSelector } from 're
 import thunk from 'redux-thunk';
 import storage from './storage';
 import authReducer from './reducers/auth.slice';
-import groupReducer from './reducers/group.slice';
-import inboxReducer from './reducers/chat.slice';
-import candidateReducer from './reducers/candidate.slice';
-import transactionReducer from './reducers/transactions.slice';
+import mainReducer from './reducers/main.slice';
+import chatReducer from './reducers/chat.slice';
 import cartReducer from './reducers/cart.slice';
 // import chatReducer from '../chat-src/redux/slices/chat';
 
@@ -15,11 +13,11 @@ import cartReducer from './reducers/cart.slice';
 
 const reducers = combineReducers({
   auth: authReducer,
-  group: groupReducer,
+  main: mainReducer,
   cart: cartReducer,
-  inbox: inboxReducer,
-  transaction: transactionReducer,
-  candidates:candidateReducer,
+  chat: chatReducer,
+  
+ 
 });
 
 const persistConfig = {

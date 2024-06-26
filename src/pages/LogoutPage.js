@@ -11,7 +11,7 @@ import ShortDashboardLayout from 'src/layouts/dashboard/ShortDashboardLayout';
 import {FaCaretDown} from 'react-icons/fa'
 import CircularProgress from '@mui/material/CircularProgress';
 
-import {updateProfile} from 'src/redux/actions/group.action';
+import {updateProfile} from 'src/redux/actions/main.action';
 import {logout} from 'src/redux/actions/auth.action';
 
 import { useDispatch, useSelector } from 'react-redux';

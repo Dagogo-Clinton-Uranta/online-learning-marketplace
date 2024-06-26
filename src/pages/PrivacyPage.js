@@ -1,18 +1,11 @@
 import React,{useState,useEffect,useRef,useMemo} from 'react'
 import { Container,Grid, TextField, Typography, TextareaAutosize, Button, Paper,Divider,Box} from '@mui/material';
 import { styled } from '@mui/system';
-import { findDOMNode } from 'react-dom'
+
 import { useNavigate } from 'react-router-dom';
-import { blobToDataURL } from 'blob-util'
 
 
 
-
-import { useLiveQuery } from 'dexie-react-hooks';
-import db from '../browserDb/db'
-
-import soundBytes from 'src/assets/images/soundBytes.mp3'
-import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
 function PrivacyPage() {
   const navigate = useNavigate()
@@ -31,104 +24,6 @@ function PrivacyPage() {
  
 
 
-
-
-
-/*DEXIE MANIPULATION LOGIC */
-const URLSound = window.URL || window.webkitURL;
-const [savedMedia,setSavedMedia] = useState([])
-const [videoLink,setVideoLink] = useState(null)
-let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
-const linkMaker = (blob) => {
- let link;
-
-  blobToDataURL(blob).then((url)=>{
-   link =url
-   //console.log("final url is",url)
-    
-    setVideoLink(url)
-    
-  })
-
-  
-
-}
-
-useEffect(()=>{
-
-
-setSavedMedia(Files)
-
-//linkMaker(savedMedia[0].fileObject)
-},[Files])
-
-
-
-
-
-
-
-
-/*DEXIE MANIPULATION LOGIC END */
-
-
-
-
-/*MODAL MANIPULATION LOGIC */
-
-  const [open, setOpen] = React.useState(false);
- 
-/*MODAL MANIPULATION LOGIC */
-
-
- /*video manipulation logic */
- 
-  const [videoTime,setVideoTime] = useState(false)
-  const [fullScreen, setFullScreen] = useState(false);
-
-
-  
-  const videoRef = useRef(true)
- 
-
-  const handleEsc = (event) => {
-   
-    window.removeEventListener('fullscreenchange', handleEsc)
-    setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
-    
-  };
-
-
-  const doVideoActions = () => {
-    setOpen(true)
-    
-    setTimeout(
-     ()=> {
-    
-    setVideoTime(!videoTime)
-    
-     if(!videoTime){
-      findDOMNode(videoRef.current).requestFullscreen()
-      }
-    },10) 
-
-    setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
-  }
-
-  
-  
-  
-  useEffect(()=>{
- 
-    if(open === false){
-      setTimeout(()=>(window.removeEventListener('fullscreenchange', handleEsc)),10)
-    }
-
-  },[open])
-
-  /*video manipulation logic end */
-
- 
 
 
 

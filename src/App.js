@@ -8,6 +8,7 @@ import ScrollToTop from './components/scroll-to-top';
 import { StyledChart } from './components/chart';
 import './index.css';
 import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 import { notifyInfoFxn ,notifySuccessFxn} from './utils/toast-fxn';
 

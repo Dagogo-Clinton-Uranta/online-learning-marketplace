@@ -11,8 +11,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RectangleIMG from '../../assets/images/incu.png';
 import { useNavigate } from 'react-router-dom';
-import { setRequestedSection } from 'src/redux/reducers/group.slice';
-import { fetchVideoSubsection } from 'src/redux/actions/group.action';
+import { setRequestedSection } from 'src/redux/reducers/main.slice';
+import { fetchVideoSubsection } from 'src/redux/actions/main.action';
 
 
 const Img = styled('img')({

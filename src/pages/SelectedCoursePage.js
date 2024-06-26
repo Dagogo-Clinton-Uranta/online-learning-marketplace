@@ -20,16 +20,17 @@ import biology from 'src/assets/images/biology.jpeg'
 import english from 'src/assets/images/english.jpeg'
 import philosophy from 'src/assets/images/philoslib.jpeg'
 import ReactPlayer from 'react-player'
+import ReactAudioPlayer from 'react-audio-player'
 
 import { Document, Page ,pdfjs} from 'react-pdf';
 //import PDFViewer from 'pdf-viewer-reactjs'
-import MyPDFViewer from './myPdfViewer'
+import MyPDFViewer from '../components/pdf/myPdfViewer'
 
 
 //import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
-import LogoSwitch from './LogoSwitch';
-import VideoSwitch from './VideoSwitch';
+import LogoSwitch from '../components/players/LogoSwitch';
+import VideoSwitch from '../components/players/VideoSwitch';
 
 import {AiOutlineDownload} from "react-icons/ai";
 
@@ -42,13 +43,13 @@ import Modal from '@mui/material/Modal';
 import soundBytes from 'src/assets/images/soundBytes.mp3'
 import soundBytes2 from 'src/assets/images/soundBytes2.mp3'
 
-import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelectedAudio, setSelectedAudioId} from 'src/redux/actions/group.action';
+import { fetchVideosOneChapter,fetchChosenQuiz, setSelectedAudioState, setSelectedAudio, setSelectedAudioId} from 'src/redux/actions/main.action';
 
 import db from '../browserDb/db'
 
 import { blobToDataURL,dataURLToBlob,imgSrcToBlob,arrayBufferToBlob } from 'blob-util'
 import { addToCart } from 'src/redux/reducers/cart.slice';
-import NotPlayableSwitch from './NotPlayableSwitch';
+import NotPlayableSwitch from '../components/players/NotPlayableSwitch';
 import { fetchUserData } from 'src/redux/actions/auth.action';
 
 
@@ -89,8 +90,8 @@ function SelectedCoursePage() {
   const condensedPurchasedCourses =modifiedPurchasedCourses &&  modifiedPurchasedCourses.map((item)=>(item.id))
 
 
-  const { subjectPastExams,subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.group);
-  const { teachers } = useSelector((state) => state.group);
+  const { subjectPastExams,subjectChapters,allChapterLessons,allQuizzesForSubject,presentSubject } = useSelector((state) => state.main);
+  const { teachers } = useSelector((state) => state.main);
   const teacherInFocus = teachers && teachers.filter((teacher)=>((teacher.firstName + " " + teacher.lastName) == presentSubject.instructor ))
 
   const [teacherForSubject, setTeacherForSubject] = useState(teacherInFocus[0] && teacherInFocus[0])
@@ -149,9 +150,11 @@ function SelectedCoursePage() {
 
 
 /*AUDIO MANIPULATION LOGIC */
+
 const audioRef = useRef(null)
+const [timePassed,setTimePassed]  = useState(0)
 const [play,setPlay] = useState(false)
-const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.group);
+const { selectedAudioId,selectedAudio,selectedAudioState } = useSelector((state) => state.main);
 const { cart } = useSelector((state) => state.cart);
 const  [showPlayer,setShowPlayer] = useState(true)
 
@@ -321,7 +324,7 @@ const pauseAudio = audio => {
   const handleOpenPdf = () => {setOpenPdf(true);setTimeout(()=>{setFrame2(true);setIsIFrameLoaded(true)},1000);setTimeout(()=>{setShowErrorPdf(true);setLoader(false)},6000)}
   const handleClosePdf = () => {setOpenPdf(false);setFrame1(true);setFrame2(true);setShowErrorPdf(false);setLoader(true);iframeCurrent=null;iframeCurrent2=null};
 
-/*MODAL MANIPULATION LOGIC */
+/*MODAL MANIPULATION LOGIC END*/
 
 
  /*video manipulation logic */
@@ -398,7 +401,7 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration,chapterObject
     return
    }
  
-  if(presentSubject && purchasedCourses &&  !(condensedPurchasedCourses.includes(presentSubject.uid))/*true ==false*/){
+  if(presentSubject && purchasedCourses &&  !(condensedPurchasedCourses.includes(presentSubject.uid))){
     notifyInfoFxn('Please purchase course to save media.')
   }else{
 
@@ -406,24 +409,12 @@ async function saveCourse(subjectTitle,url,courseName,uid,duration,chapterObject
     
     notifyInfoFxn("Votre téléchargement a commencé")
 
-   //const res = await fetch(`https://thingproxy.freeboard.io/fetch/${url}`) UNCOMMENT THIS LATER, AND COMMENT OUT TH ONE BELOW
-   //const res = await fetch(`https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4`)
+  
    const res = await fetch(url)
 
 
   let returnImage= res.blob()
 
-  ////console.log("RETURN IMAGE FUNCTIONALITY",returnImage)
-
-  /*if(returnImage.type === "audio/mp3"){
-    
-    const id =db.savedCourses.add({
-    courseName:"Audio 1",
-    fileObject:returnImage
- 
-  });
-}*/
-//console.log("details for the chapter of thisdownloadable media are -->",chapterObject)
 
 gtag("event", "media-download", {
   "user-id":user && user.uid?user.uid:"no uid found",
@@ -459,9 +450,7 @@ gtag("event", "media-download", {
       setStatus(`Media file ${name} successfully added. Got id ${id}`);
       setLoading(false)
       notifySuccessFxn("Téléchargement réussi!");
-      //console.log("status is now:", status)
-      //console.log("loading is now:", loading)
-
+      
 
     return second
     }).catch((error)=>{
@@ -470,35 +459,7 @@ gtag("event", "media-download", {
     })
   
     
-    
-    /*.then((third)=>{
-      setView(third)
-}
-  ).then(()=>{
-  setTimeout(()=>
-  
-  {if(view.size > 0 ){
-    const id =db.savedCourses.add({
-      courseName:"Video 1",
-      fileObject:view
-   
-    });
 
-    setStatus(`Media file ${name} successfully added. Got id ${id}`);
-    setLoading(false)
-    notifySuccessFxn("Successfully Downloaded !")
-    //console.log("status is now:",status)
-    //console.log("loading is now:",loading)
-  }
-  else{
-    notifyErrorFxn("Something went wrong, please try again.")
-  }
- } , 4000)
-
-
-
-
-})*/
   
 
   } catch (error) {
@@ -507,10 +468,9 @@ gtag("event", "media-download", {
     //console.log("status is now:",status)
     //console.log("error for downloading bonecole is:",error)
 
-  }
+   }
 
-}
-
+ }
 
 }
 
@@ -597,7 +557,7 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
 
 };
 
-// presentSubject.title
+
 
   return (
     <>
@@ -617,63 +577,13 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
       >
         <Box sx={style} style={{position:"relative"}}> 
      
-      
-       
-        {/*loader && <center style={{position:"absolute",top:"50%",left:"50%"}}> <CircularProgress/> </center>*/}
-      
-        {/* ((iframeCurrent ===null || iframeCurrent2===null) && showErrorPdf) && <center style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}}><p>SOMETHING WENT WRONG,PLEASE CHECK YOUR CONNECTION AND TRY AGAIN.</p></center>*/}
-
-
-       {/* <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>*/}
-
-      {/*frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ `https://docs.google.com/viewer?url=${encodeURIComponent("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")}&embedded=true`} ></iframe>*/}
-
-     
-      {/* <iframe style={{width:"100%",height:"100%" ,display:!frame1?"none":"block"}} ref={iFrameRef} sandbox='allow-same-origin allow-scripts allow-popups' onLoad={()=>{setFrame2(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>*/}
-
-{/*frame2||isIFrameLoaded && <iframe style={{width:"100%",height:"100%"}}  ref={iFrameRef2} sandbox="allow-same-origin allow-scripts allow-popups" onLoad={()=>{setFrame1(false);setLoader(false);setShowErrorPdf(false)}} src={ "https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} ></iframe>*/}    
-
-   {<center><MyPDFViewer pdfUrl ={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} /></center>}
-   
-    {/*
-      
-      <PDFViewer
-            document={{
-                url: 'https://thingproxy.freeboard.io/fetch/https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf',
-            }}
-        />
-    
-          */}
-      
-        </Box>
-    </Modal>
-
-     {/*VIDEO MODAL */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+       {<center><MyPDFViewer pdfUrl ={"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf"} /></center>}
         
-      >
-        <Box sx={style}>
-         <ReactPlayer  
-         config={{ file: { attributes: { controlsList: 'nodownload',disablepictureinpicture: 'true' } } }} 
-                width="100%"
-                height="100%"
-                id="full-screenVideo"                                              
-                className="videoFrame"
-                url={"https://neallusmawubucket001.s3.us-east-2.amazonaws.com/Mawu+Files/Videos/Shadow.mp4"}
-                //light={thumbnail}
-                playing={true}
-                playIcon={' '}
-                controls
-                ref={videoRef}
-              //onClickPreview = {()=>{setTouch(false);}}
-               
-             />
-        </Box>
-      </Modal>
+      </Box>
+    </Modal>
+      {/*PDF MODAL END */}
+
+   
     
 
     <Grid container xs={12} style={{marginTop:"2rem",padding:"1.5rem", background:`linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),url(${chem})`,borderRadius:"0.5rem",}}>
@@ -725,13 +635,13 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
     Achat unique, accès à toutes les leçons
     </p>
 
-    <Button   variant="contained" 
+           <Button   variant="contained" 
             style={{ backgroundColor: "red",color:"#FFFFFF", fontSize:"0.9rem",width:"100%",
             padding: '8px'}}
             
             onClick={addToCartFxn}>
             Acheter maintenant
-            </Button>
+          </Button>
    
     </Grid>
     </center>}
@@ -753,7 +663,7 @@ const newItem = { id: presentSubject?.uid, title: presentSubject?.title, price: 
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {chapter.title}
- <PictureAsPdfIcon onClick={()=>{handleViewPdf(chapter.chapterPdfUrl?chapter.chapterPdfUrl:"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf",chapter)/*handleOpenPdf()*/}}  style={{fontSize:"2.2rem"}} />
+ <PictureAsPdfIcon onClick={()=>{handleViewPdf(chapter.chapterPdfUrl?chapter.chapterPdfUrl:"https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf",chapter)}}  style={{fontSize:"2.2rem"}} />
  </p>
 
 </Grid>
@@ -770,11 +680,10 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
   <Grid item xs={12} style={{ position:"relative",display: 'flex', justifyContent: 'flex-start',alignItems:"center", gap:"1rem",paddingTop:"0.8rem",borderBottom:"1px solid lightgrey"}}>
   <p style={{ display: 'flex',gap:"0.5rem",alignItems:"center"}} >{
       
-   /*  presentSubject && user &&  !(user.purchasedCourses.includes(presentSubject.uid))?
-       
-     <NotPlayableSwitch />
-  :*/
-  lesson.lessonUrl && lesson.lessonUrl.slice(lesson.lessonUrl.length-3,lesson.lessonUrl.length) ==="mp4"?<VideoSwitch uid={lesson.uid} chapterObject={chapter} videoFile={lesson.lessonUrl}/>:<LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> 
+ 
+  lesson.lessonUrl && lesson.lessonUrl.slice(lesson.lessonUrl.length-3,lesson.lessonUrl.length) ==="mp4"?
+  <VideoSwitch uid={lesson.uid} chapterObject={chapter} videoFile={lesson.lessonUrl}/>:
+  <LogoSwitch uid={lesson.uid} audioFile={lesson.lessonUrl}/> 
   
   
   }     &nbsp; {index + 1}.</p>
@@ -826,7 +735,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
 <Grid item xs={12} style={{paddingTop:"1rem",paddingBottom:"1rem"}}>
    
 <p style={{position:"relative",display: 'flex', justifyContent: 'flex-start',paddingBottom:"0.5rem",alignItems:"center",gap:"1rem"}}>
-<span onClick={()=>{fetchQuizAndNavigate(quiz.uid)}}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
+<span onClick={()=>{/*fetchQuizAndNavigate(quiz.uid)*/}}  style={{display:"flex",justifyContent:"center",alignItems:"flex-end",fontFamily:"sans-serif",backgroundColor:"red",color:"white",fontSize:"1rem",width:"1.5rem",textAlign:"center",borderRadius:"50%"}}>Q</span>
   {loadingQuiz?"LOADING QUIZ, PLEASE WAIT...":quiz.title}
  </p>
  <Divider/>
@@ -870,7 +779,7 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
     
 <p style={{position:"relative",marginLeft:"0.4rem",display: 'flex', justifyContent: 'space-between',fontWeight:"bold",fontSize:"0.9rem",paddingBottom:"0.5rem",borderBottom:"3px solid black"}}>
   {"Annales et Traités"}
- <PictureAsPdfIcon onClick={()=>{/*handleViewPdf("https://streaming.bonecole.com/courses_new/ecm_6e/Pdf/ECM+6e.pdf")*//*handleOpenPdf()*/}}  style={{fontSize:"2.2rem",display:"none"}} />
+ <PictureAsPdfIcon onClick={()=>{}}  style={{fontSize:"2.2rem",display:"none"}} />
  </p>
 
 
@@ -958,7 +867,9 @@ allChapterLessons.filter((item)=>(item.chapterId === chapter.uid)).sort((a,b)=>(
  </div> 
  }
 
-<audio controls={showPlayer}   controlsList="nodownload" ref={audioRef} src={selectedAudio} type="audio/mp3"/>
+
+
+{<audio controls={showPlayer}   controlsList="nodownload" ref={audioRef} src={selectedAudio} type="audio/mp3"/>}
 
 </div>
 

@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 
-import { fetchPackSubjects, fetchSubjectChapters} from 'src/redux/actions/group.action';
+import { fetchPackSubjects, fetchSubjectChapters} from 'src/redux/actions/main.action';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;

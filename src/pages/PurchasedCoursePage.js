@@ -3,12 +3,12 @@ import { Container, Grid, TextField, Typography, IconButton, Button } from '@mui
 import { ArrowForward, Cancel } from '@material-ui/icons';
 import { buyCourse, buyCourseUpdateUser, clearPayTokenFromDatabase, fetchCartToProcessFromUser, fetchPurchasedCourse } from '../redux/actions/cart.action';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCurrentSubjectFromDB, fetchSubjectChapters } from 'src/redux/actions/group.action';
+import { fetchCurrentSubjectFromDB, fetchSubjectChapters } from 'src/redux/actions/main.action';
 import { useNavigate } from 'react-router-dom';
 import { notifyErrorFxn } from 'src/utils/toast-fxn';
 import axios from 'axios';
 
-const PurchasedCourse = () => {
+const PurchasedCoursePage = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate()
   const { purchasedCourses } = useSelector((state) => state.cart);
@@ -192,4 +192,4 @@ useEffect(()=>{
     </Container>
   );
 };
-export default PurchasedCourse;
+export default PurchasedCoursePage;

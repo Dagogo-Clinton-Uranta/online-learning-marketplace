@@ -78,7 +78,7 @@ const generateOrderId = uuid.v4()
 
   }else{
   
-     notifyErrorFxn("NO CART DATA _ THIS IS A TESTING NOTIFICATION")
+     notifyErrorFxn("NO CART DATA")
 
 
   }
@@ -109,4 +109,4 @@ export default PaymentCallBackPage
 
 
 // http://localhost:3000/dashboard/payment-callback?cart_data=%7B%22courses%22%3A%5B%7B%22id%22%3A%223TgAn3AIYfaHahJ3afLb%22%2C%22title%22%3A%22G%C3%A9ographie+6%C3%A8me%22%2C%22price%22%3A%22500%22%7D%5D%2C%22affiliateId%22%3A%22n%2Fa%22%7D&c=MjcyMDQxNzM&paycard-description=Course+sale&paycard-auto-redirect=on&paycard-redirect-with-get=on&paycard-amount=500&paycard-callback-url=https%3A%2F%2Fbonecole.com%2Fdashboard%2Fpayment-callback&transactionReference=2403-HZPTWY&montant=500&c=MjcyMDQxNzM&paycard-operation-reference=2403-ZO5X1BKC01&paycardAmount=500&paycardCardNumber=***+***+782&paycardAccountName=undefined&paycardTransactionDescription=Paiement+PayCard+de+performance+plus+performance+plus+%5B+***+***+782+%5D&paycardTransactionDate=13%2F03%2F2024+17%3A13&paycardPaymentMethod=paycard&otvRequestId=
-//THE COMMENTED CODE ABOVE HELPS ME TEST THIS CALLBACK PAGE ON A LOCAL SERVER BY PASTING IT IN THE BROWSER
+//THE COMMENTED CODE ABOVE IS USED TO TEST THIS CALLBACK PAGE ON A LOCAL SERVER BY PASTING IT IN THE BROWSER

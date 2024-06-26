@@ -1,3 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text:400 | Josefin+Sans:400, 300, 700, 500 | Montserrat:500");
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Roboto+Flex:opsz,wght@8..144,600;8..144,700;8..144,800&display=swap');
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,600;0,700;1,400&family=Roboto+Flex:opsz,wght@8..144,600;8..144,700;8..144,800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
+
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -45,3 +54,24 @@
       transform: rotate(0deg);
     }
   }
+
+
+  /*ALL THE FONT, (ON EVERY PAGE) IS CHANGED FROM HERE*/
+* {
+   
+  font-family: 'Josefin Sans', sans-serif !important;
+
+  }
+
+  body {
+      /*background-color: black !important;*/
+     /* background: linear-gradient(rgb(255, 255, 255,0), black);*/
+     background-color: white !important;
+      
+  }
+
+
+  .cursive {
+    font-family: 'Leckerli One' !important;
+}
+

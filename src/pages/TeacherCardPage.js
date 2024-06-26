@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 
-import { fetchSubjectChapters} from 'src/redux/actions/group.action';
+import { fetchSubjectChapters} from 'src/redux/actions/main.action';
 import { BiObjectsVerticalBottom } from 'react-icons/bi';
 
 const ExpandMore = styled((props) => {

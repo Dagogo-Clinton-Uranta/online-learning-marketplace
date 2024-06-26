@@ -9,8 +9,8 @@ import { blobToDataURL } from 'blob-util'
 //import { Document, Page ,pdfjs} from 'react-pdf';
 //import { MobilePDFReader,PDFReader } from 'react-read-pdf';
 
-import AudioSwitch from './AudioSwitch';
-import VideoSwitch from './VideoSwitch';
+import AudioSwitch from '../components/players/AudioSwitch';
+import VideoSwitch from '../components/players/VideoSwitch';
 
 
 import {AiOutlineDownload} from "react-icons/ai";
@@ -39,108 +39,7 @@ function TermsPage() {
     p: 4,
   };
  
-
-
-
-
-
-/*DEXIE MANIPULATION LOGIC */
-const URLSound = window.URL || window.webkitURL;
-const [savedMedia,setSavedMedia] = useState([])
-const [videoLink,setVideoLink] = useState(null)
-let Files = useLiveQuery(() => db.savedCourses.where("courseName").notEqual("Sample name").toArray(),[]);
-const linkMaker = (blob) => {
- let link;
-
-  blobToDataURL(blob).then((url)=>{
-   link =url
-   //console.log("final url is",url)
-    
-    setVideoLink(url)
-    
-  })
-
-  
-
-}
-
-useEffect(()=>{
-
-
-setSavedMedia(Files)
-
-//linkMaker(savedMedia[0].fileObject)
-},[Files])
-
-
-
-
-
-
-
-
-/*DEXIE MANIPULATION LOGIC END */
-
-
-
-
-/*MODAL MANIPULATION LOGIC */
-
-  const [open, setOpen] = React.useState(false);
  
-/*MODAL MANIPULATION LOGIC */
-
-
- /*video manipulation logic */
- 
-  const [videoTime,setVideoTime] = useState(false)
-  const [fullScreen, setFullScreen] = useState(false);
-
-
-  
-  const videoRef = useRef(true)
- 
-
-  const handleEsc = (event) => {
-   
-    window.removeEventListener('fullscreenchange', handleEsc)
-    setTimeout(()=>{setOpen(false); setFullScreen(!fullScreen); setVideoTime(false)},10)
-    
-  };
-
-
-  const doVideoActions = () => {
-    setOpen(true)
-    
-    setTimeout(
-     ()=> {
-    
-    setVideoTime(!videoTime)
-    
-     if(!videoTime){
-      findDOMNode(videoRef.current).requestFullscreen()
-      }
-    },10) 
-
-    setTimeout(()=>(window.addEventListener('fullscreenchange', handleEsc)),1000)
-  }
-
-  
-  
-  
-  useEffect(()=>{
- 
-    if(open === false){
-      setTimeout(()=>(window.removeEventListener('fullscreenchange', handleEsc)),10)
-    }
-
-  },[open])
-
-  /*video manipulation logic end */
-
- 
-
-
 
 
 
