@@ -8,7 +8,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'src/redux/actions/auth.action';
 import { useNavigate } from 'react-router-dom';
-import randomGuy from 'src/assets/images/incu.jpg'
+import randomGuy from 'src/assets/images/random-guy.jpg'
 
 // ----------------------------------------------------------------------
 
