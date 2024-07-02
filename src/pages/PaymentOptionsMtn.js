@@ -130,9 +130,11 @@ document.getElementById("purchase").addEventListener("click", function () {
  //const momoPayStatusUrl = 'http://localhost:5008/api/paystatus'
 
 
- const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
- const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
- const momoPayStatusUrl = 'https://boncole-server-2.vercel.app/api/paystatus'
+ const momoTokenUrl = 'https://vercel-code-14me.vercel.app/api/get-token'
+ const momoRequestToPayUrl = 'https://vercel-code-14me.vercel.app/api/requesttopay';
+ const momoPayStatusUrl = 'https://vercel-code-14me.vercel.app/api/paystatus'
+
+ const newVercel = 'https://vercel-code-14me.vercel.app/'
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));

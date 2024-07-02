@@ -46,14 +46,14 @@ const PaymentOptions = () => {
  // const momoRequestToPayUrl = 'http://localhost:5001/api/requesttopay';
 
 
- const momoTokenUrl = 'https://boncole-server-2.vercel.app/api/get-token'
- const momoRequestToPayUrl = 'https://boncole-server-2.vercel.app/api/requesttopay';
- const momoTwoActionUrl = 'https://boncole-server-2.vercel.app/api/twoaction';
+ const momoTokenUrl = 'https://vercel-code-14me.vercel.app/api/get-token'
+ const momoRequestToPayUrl = 'https://vercel-code-14me.vercel.app/api/requesttopay';
+ const momoTwoActionUrl = 'https://vercel-code-14me.vercel.app/api/twoaction';
 
   //const orangeMTokenUrl = 'http://localhost:5008/api/om/get-token';
   //const orangeMPaymentUrl = 'http://localhost:5008/api/om/webpayment';
- const orangeMTokenUrl = 'https://boncole-server-2.vercel.app/api/om/get-token';
- const orangeMPaymentUrl = 'https://boncole-server-2.vercel.app/api/om/webpayment';
+ const orangeMTokenUrl = 'https://vercel-code-14me.vercel.app/api/om/get-token';
+ const orangeMPaymentUrl = 'https://vercel-code-14me.vercel.app/api/om/webpayment';
 
   useEffect(() => {
     dispatch(fetchPurchasedCourse(user?.uid));
